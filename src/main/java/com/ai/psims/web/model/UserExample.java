@@ -1,4 +1,4 @@
-package com.ai.psims.model;
+package com.ai.psims.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;

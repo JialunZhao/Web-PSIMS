@@ -1,12 +1,12 @@
-package com.ai.psims.service.impl;
+package com.ai.psims.web.service.impl;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.dao.UserMapper;
-import com.ai.psims.model.User;
-import com.ai.psims.service.IUserService;
+import com.ai.psims.web.dao.UserMapper;
+import com.ai.psims.web.model.User;
+import com.ai.psims.web.service.IUserService;
 
 
 @Service("userService")

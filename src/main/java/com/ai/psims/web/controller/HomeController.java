@@ -1,4 +1,4 @@
-package com.ai.psims.controller;
+package com.ai.psims.web.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ai.psims.model.User;
-import com.ai.psims.service.IUserService;
+import com.ai.psims.web.model.User;
+import com.ai.psims.web.service.IUserService;
 
 /**
  * Handles requests for the application home page.

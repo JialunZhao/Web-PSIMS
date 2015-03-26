@@ -91,7 +91,7 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail2">客户类型：</label>
-              <select class="form-control" value="请选择客户类型：" tabindex="1" name="herolist">
+              <select class="form-control" tabindex="1" name="herolist">
                 <option value="0">请选择客户类型：</option>
                 <option value="1">连锁</option>
                 <option value="2">商户</option>
@@ -185,7 +185,7 @@
               </div>    
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">客户类型:</span>
-                <select class="form-control" value="请选择客户类型：" tabindex="1" name="herolist">
+                <select class="form-control" tabindex="1" name="herolist">
                   <option value="0">请选择客户类型：</option>
                   <option value="1">连锁</option>
                   <option value="2">商户</option>
@@ -246,7 +246,7 @@
               </div>    
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">客户类型:</span>
-                <select class="form-control" value="请选择客户类型：" tabindex="1" name="herolist">
+                <select class="form-control" tabindex="1" name="herolist">
                   <option value="0">请选择客户类型：</option>
                   <option value="1" selected>连锁</option>
                   <option value="2">商户</option>

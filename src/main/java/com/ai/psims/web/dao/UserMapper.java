@@ -1,7 +1,7 @@
-package com.ai.psims.dao;
+package com.ai.psims.web.dao;
 
-import com.ai.psims.model.User;
-import com.ai.psims.model.UserExample;
+import com.ai.psims.web.model.User;
+import com.ai.psims.web.model.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
