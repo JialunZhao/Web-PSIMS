@@ -1,0 +1,28 @@
+
+.chart-legend ul {
+    list-style: none;
+    width: 100%;
+    margin: 30px auto 0;
+}
+.chart-legend li {
+    text-indent: 32px;
+    line-height: 48px;
+    position: relative;
+    font-weight: 200;
+    display: block;
+    float: left;
+    width: 50%;
+}
+.chart-legend  li:before {
+    display: block;
+    width: 10px;
+    height: 32px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+    content: "";
+}
+.ship:before { background-color: #637b85; }
+.rework:before { background-color: #2c9c69; }
+.admin:before { background-color: #dbba34; }
+.prod:before { background-color: #c62f29; }
