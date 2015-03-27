@@ -43,7 +43,7 @@ public class CustormerController {
 	/**
 	 * 客户管理删除客户信息
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String customerDelete(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
 		logger.info("------------Bye customer!-------------");
@@ -53,7 +53,7 @@ public class CustormerController {
 	/**
 	 * 客户管理修改客户信息
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String customerModify(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
 		logger.info("------------Bye customer!-------------");
@@ -63,7 +63,7 @@ public class CustormerController {
 	/**
 	 * 客户管理查询客户信息
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public String customerQuery(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
 		logger.info("------------Bye customer!-------------");

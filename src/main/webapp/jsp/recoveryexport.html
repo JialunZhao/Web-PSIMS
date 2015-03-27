@@ -1,10 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" pageEncoding="utf-8" %>
-
 <!DOCTYPE html>
 <html>
   <head>
-	<script src="${RESOURCE_PATH}/emall/global-theme/jquery/jquery-1.10.1.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,13 +8,13 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
-	
+
     <!-- Loading Bootstrap -->
-    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
-    <link href="../css/flatUI/flat-ui.min.css" rel="stylesheet">
-    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="./css/flatUI/flat-ui.min.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
 
 	
     <link rel="shortcut icon" href="img/favicon.ico">
@@ -58,7 +54,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="./customer.html">客户管理<span class="sr-only">(current)</span></a></li>
+            <li><a href="./customer.html">客户管理</a></li>
             <li><a href="./provider.html">供应商</a></li>
             <li><a href="./goods.html">商品管理</a></li>
             <li><a href="./storehouse.html">仓库管理</a></li>
@@ -72,7 +68,7 @@
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="./recoveryimport.html">回收物入库</a></li>
-            <li><a href="./recoveryexport.html">回收物出库</a></li>
+            <li class="active"><a href="./recoveryexport.html">回收物出库<span class="sr-only">(current)</span></a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="#">统计报表</a></li>
@@ -80,31 +76,31 @@
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h3 class="page-header">客户管理</h3>
+          <h3 class="page-header">回收物出库管理</h3>
 
           <div class="row placeholders">
           <form class="form-inline">
             <div class="form-group">
-              <label for="exampleInputName2">客户名称：</label>
-              <input type="text" class="form-control" id="exampleInputName2" placeholder="客户名称">
+              <label for="exampleInputName2">回收物名称：</label>
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="回收物出库名称">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail2">客户类型：</label>
-              <select class="form-control" tabindex="1" name="herolist">
-                <option value="0">请选择客户类型：</option>
-                <option value="1">连锁</option>
-                <option value="2">商户</option>
-                <option value="3">散户</option>
-                <option value="4">其它</option>
+              <label for="exampleInputEmail2">回收物类型：</label>
+              <select class="form-control" value="请选择回收物类型：" tabindex="1" name="herolist">
+                <option value="0">请选择回收物类型：</option>
+                <option value="1">瓶子</option>
+                <option value="2">瓶盖</option>
+                <option value="3">箱皮</option>
+                <option value="4">托盘</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail2">联系人名称：</label>
-              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="联系人名称">
+              <label for="exampleInputEmail2">回收供应商名称：</label>
+              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="回收供应商名称">
             </div>
             <div class="form-group">
-              <label for="exampleInputEmail2">联系人电话：</label>
-              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="联系人电话：">
+              <label for="exampleInputEmail2">出库日期：</label>
+              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="出库日期">
             </div>
             <button type="submit" class="btn btn-primary">搜索</button>
           </form>
@@ -112,26 +108,24 @@
 
           <div class="row placeholders ">
             <div class="col-sm-5">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcustomer">新增客户</button>
-            <button type="button" id="delbtn" class="btn btn-primary">批量删除客户</button>
-            <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除客户</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addrecoveryexport">新增回收物出库</button>
+            <button type="button" id="delbtn" class="btn btn-primary">批量删除回收物出库</button>
+            <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除回收物出库</button>
             <button type="button" id="delcancle" class="btn btn-primary" style="display:none">取消</button>
             </div>
           </div>
 
-          <h4 class="sub-header">客户清单</h4>
+          <h4 class="sub-header">回收物出库清单</h4>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th class="chk" style="display:none"><input type="checkbox" aria-label="..."></th>
                   <th>编号</th>
-                  <th>客户名称</th>
+                  <th>回收物名称</th>
                   <th>类型</th>
-                  <th>联系人名称</th>
-                  <th>联系人电话</th>
-                  <th>客户地域</th>
-                  <th>客户地地址</th>
+                  <th>供应商名称</th>
+                  <th>回收物出库数量</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -139,23 +133,19 @@
                 <tr>
                   <td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>
                   <td>1</td>
-                  <td>张老坎</td>
-                  <td>连锁</td>
-                  <td>老张</td>
-                  <td>139012345678</td>
-                  <td>朝阳</td>
-                  <td>朝阳区朝阳路18号</td>
-                  <td><a href="#" data-toggle="modal" data-target="#modifycustomer">修改</a>/<a href="#">删除</a></td>
+                  <td>燕京瓶盖</td>
+                  <td>瓶盖</td>
+                  <td>燕京集团</td>
+                  <td>2000</td>
+                  <td><a href="#" data-toggle="modal" data-target="#modifyrecoveryexport">修改</a>/<a href="#">删除</a></td>
                 </tr>
                 <tr>
                   <td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>
                   <td>2</td>
-                  <td>聚点串吧</td>
-                  <td>连锁</td>
-                  <td>老李</td>
-                  <td>139012345679</td>
-                  <td>朝阳</td>
-                  <td>朝阳区朝阳路182号</td>
+                  <td>百威小瓶</td>
+                  <td>瓶子</td>
+                  <td>百威集团</td>
+                  <td>1000</td>
                   <td><a href="#">修改</a>/<a href="#">删除</a></td>
                 </tr>
                </tbody>
@@ -167,50 +157,42 @@
 
 
     <!-- 模态框（Modal） -->
-    <!-- 添加客户模态框（Modal） -->
-    <div class="modal fade" id="addcustomer" tabindex="-1" role="dialog" 
-       aria-labelledby="addcustomer" aria-hidden="true">
+    <!-- 添加回收物出库模态框（Modal） -->
+    <div class="modal fade" id="addrecoveryexport" tabindex="-1" role="dialog" 
+       aria-labelledby="addrecoveryexport" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">新增客户资料</h4>
+            <h4 class="modal-title" id="myModalLabel">新增回收物出库资料</h4>
           </div>
           <div class="modal-body">
             <div class="row">
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
-                <input type="text" class="form-control" placeholder="客户名称">
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收物名称:</span>
+                <input type="text" class="form-control" placeholder="回收物名称">
               </div>    
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户类型:</span>
-                <select class="form-control" tabindex="1" name="herolist">
-                  <option value="0">请选择客户类型：</option>
-                  <option value="1">连锁</option>
-                  <option value="2">商户</option>
-                  <option value="3">散户</option>
-                  <option value="4">其它</option>
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收物类型:</span>
+                <select class="form-control" value="请选择回收物类型：" tabindex="1" name="herolist">
+                  <option value="0">请选择回收物类型：</option>
+                  <option value="1">瓶子</option>
+                  <option value="2">瓶盖</option>
+                  <option value="3">箱皮</option>
+                  <option value="4">托盘</option>
                 </select>
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">联系人名称:</span>
-                <input type="text" class="form-control" placeholder="联系人名称">
+                <span class="input-group-addon" style="background-color: #1abc9c;">数量:</span>
+                <input type="text" class="form-control" placeholder="数量">
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">联系人电话:</span>
-                <input type="text" class="form-control" placeholder="联系人电话">
+                <span class="input-group-addon" style="background-color: #1abc9c;">供应商名称:</span>
+                <input type="text" class="form-control" placeholder="供应商名称">
               </div>
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户地址:</span>
-                <input type="text" class="form-control" placeholder="客户地址">
-              </div>              
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户电子邮箱:</span>
-                <input type="text" class="form-control" placeholder="客户电子邮箱">
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户地域：</span>
-                <input type="text" class="form-control" placeholder="客户地域：">
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收时间:</span>
+                <input type="text" class="form-control" placeholder="回收时间">
               </div>
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">备注：</span>
@@ -228,54 +210,46 @@
 
 
     <!-- 模态框（Modal） -->
-    <!-- 修改客户模态框（Modal） -->
-    <div class="modal fade" id="modifycustomer" tabindex="-1" role="dialog" 
-       aria-labelledby="modifycustomer" aria-hidden="true">
+    <!-- 修改回收物模态框（Modal） -->
+    <div class="modal fade" id="modifyrecoveryexport" tabindex="-1" role="dialog" 
+       aria-labelledby="modifyrecoveryexport" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">修改客户资料</h4>
+            <h4 class="modal-title" id="myModalLabel">修改回收物出库资料</h4>
           </div>
           <div class="modal-body">
             <div class="row">
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
-                <input type="text" class="form-control" placeholder="客户名称" value="张老坎">
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收物名称:</span>
+                <input type="text" class="form-control" placeholder="回收物名称" value="张老坎">
               </div>    
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户类型:</span>
-                <select class="form-control" tabindex="1" name="herolist">
-                  <option value="0">请选择客户类型：</option>
-                  <option value="1" selected>连锁</option>
-                  <option value="2">商户</option>
-                  <option value="3">散户</option>
-                  <option value="4">其它</option>
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收物类型:</span>
+                <select class="form-control" value="请选择回收物类型：" tabindex="1" name="herolist">
+                  <option value="0">请选择回收物类型：</option>
+                  <option value="1" selected>瓶子</option>
+                  <option value="2">瓶盖</option>
+                  <option value="3">箱皮</option>
+                  <option value="4">托盘</option>
                 </select>
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">联系人名称:</span>
-                <input type="text" class="form-control" placeholder="联系人名称" value="老张">
+                <span class="input-group-addon" style="background-color: #1abc9c;">数量:</span>
+                <input type="text" class="form-control" placeholder="数量" value="2000">
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">联系人电话:</span>
-                <input type="text" class="form-control" placeholder="联系人电话" value="139012345678">
+                <span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
+                <input type="text" class="form-control" placeholder="客户名称" value="张老坎">
               </div>
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户地址:</span>
-                <input type="text" class="form-control" placeholder="客户地址" value="朝阳区朝阳路18号">
+                <span class="input-group-addon" style="background-color: #1abc9c;">回收时间:</span>
+                <input type="text" class="form-control" placeholder="回收时间" value="2015-03-04">
               </div>              
               <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户电子邮箱:</span>
-                <input type="text" class="form-control" placeholder="客户电子邮箱" value="zhanglk@163.com">
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">客户地域：</span>
-                <input type="text" class="form-control" placeholder="客户地域：" value="朝阳">
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">备注：</span>
-                <input type="text" class="form-control" placeholder="备注：" value=" 张老坎 连锁 老张 139012345678 朝阳 朝阳区朝阳路18号 ">
+                <input type="text" class="form-control" placeholder="备注：" value=" 回收200瓶盖 ">
               </div>
             </div>
           </div>
@@ -287,10 +261,10 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-    <script src="../js/vendor/jquery.min.js"></script>
+    <script src="./js/vendor/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../js/vendor/video.js"></script>
-    <script src="../js/flat-ui.min.js"></script>
+    <script src="./js/vendor/video.js"></script>
+    <script src="./js/flat-ui.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
       $("#delbtn").click(function(){

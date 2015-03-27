@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
+
+    <!-- Loading Bootstrap -->
+    <link href="./css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="./css/flatUI/flat-ui.min.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
+
+	
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="./js/vendor/html5shiv.js"></script>
+      <script src="./js/vendor/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">;
+            <li><a href="./sitting.html">系统设置</a></li>
+            <li><a href="./user.html">员工权限</a></li>
+            <li><a href="#">帮助</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="./customer.html">客户管理</a></li>
+            <li><a href="./provider.html">供应商</a></li>
+            <li><a href="./goods.html">商品管理</a></li>
+            <li><a href="./storehouse.html">仓库管理</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="./import.html">货品入库</a></li>
+            <li><a href="./sales.html">销售出库</a></li>
+            <li><a href="#">退货管理</a></li>
+            <li><a href="#">有效期调整</a></li>
+            <li><a href="#">销毁出库</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="./recoveryimport.html">回收物入库</a></li>
+            <li><a href="./recoveryexport.html">回收物出库</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#">统计报表</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h3 class="page-header">员工权限管理</h3>
+
+          <div class="row placeholders">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="exampleInputName2">员工名称：</label>
+              <input type="text" class="form-control" id="exampleInputName2" placeholder="回收物入库名称">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">员工性别：</label>
+              <select class="form-control" value="员工性别" tabindex="1" name="herolist">
+                <option value="0">请选择员工性别</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">部门职务：</label>
+              <select class="form-control" value="员工类型" tabindex="1" name="herolist">
+                <option value="0">请选择员工类型</option>
+                <option value="1">销售</option>
+                <option value="2">管理</option>
+                <option value="3">财务</option>
+                <option value="4">物流</option>
+                <option value="5">其它</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail2">员工联系电话：</label>
+              <input type="text" class="form-control" id="exampleInputEmail2" placeholder="员工联系电话">
+            </div>
+            <button type="submit" class="btn btn-primary">搜索</button>
+          </form>
+          </div>
+
+          <div class="row placeholders ">
+            <div class="col-sm-5">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addrecoveryimport">新增员工</button>
+            <button type="button" id="delbtn" class="btn btn-primary">批量删除员工</button>
+            <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除员工</button>
+            <button type="button" id="delcancle" class="btn btn-primary" style="display:none">取消</button>
+            </div>
+          </div>
+
+          <h4 class="sub-header">员工清单</h4>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="chk" style="display:none"><input type="checkbox" aria-label="..."></th>
+                  <th>编号</th>
+                  <th>员工名称</th>
+                  <th>登录账号</th>
+                  <th>部门职务</th>
+                  <th>联系电话</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>
+                  <td>1</td>
+                  <td>赵佳仑</td>
+                  <td>zhaojl5</td>
+                  <td>其它</td>
+                  <td>13901167343</td>
+                  <td><a href="#" data-toggle="modal" data-target="#modifyrecoveryimport">修改</a>/<a href="#">删除</a></td>
+                </tr>
+                <tr>
+                  <td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>
+                  <td>2</td>
+                  <td>小二</td>
+                  <td>xiao2</td>
+                  <td>销售</td>
+                  <td>13901234567</td>
+                  <td><a href="#">修改</a>/<a href="#">删除</a></td>
+                </tr>
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 模态框（Modal） -->
+    <!-- 添加回收物入库模态框（Modal） -->
+    <div class="modal fade" id="addrecoveryimport" tabindex="-1" role="dialog" 
+       aria-labelledby="addrecoveryimport" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">新增员工</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工名称:</span>
+                <input type="text" class="form-control" placeholder="员工名称">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工性别:</span>
+                <select class="form-control" value="请选择员工性别：" tabindex="1" name="herolist">
+                  <option value="0">请选择员工性别</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>                 
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工部门职务:</span>
+                <select class="form-control" value="请选择员工部门职务：" tabindex="1" name="herolist">
+                  <option value="0">请选择员工部门职务：</option>
+                  <option value="1">销售</option>
+                  <option value="2">管理</option>
+                  <option value="3">财务</option>
+                  <option value="4">物流</option>
+                  <option value="5">其它</option>
+                </select>
+              </div>           
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工联系电话：</span>
+                <input type="text" class="form-control" placeholder="员工联系电话">
+              </div>           
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工联系地址:</span>
+                <input type="text" class="form-control" placeholder="员工联系地址">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工身份证号码:</span>
+                <input type="text" class="form-control" placeholder="员工身份证号码">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">备注：</span>
+                <input type="text" class="form-control" placeholder="备注：">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-xs-10 col-xs-offset-2 text-left">
+                <div>
+                是否登录系统 <input type="checkbox" id="needsigninchk" aria-label="...">
+                </div>
+              </div>
+            </div>
+            <div class="row" id="needsignindiv" style="display:none">
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">登录账号:</span>
+                <input type="text" class="form-control" placeholder="登录账号">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">登录密码:</span>
+                <input type="text" class="form-control" placeholder="登录密码">
+              </div>              
+              <div class="table-responsive col-xs-10 col-xs-offset-1">
+                <table class="table text-center">
+                  <thead class="text-left">
+                    <tr class="text-left">
+                      <th>模块名称</th>
+                      <th>查询权限 <input type="checkbox" aria-label="..."></th>
+                      <th>新增修改权限 <input type="checkbox" aria-label="..."></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-left">客户管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">客户管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">供应商</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">商品管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">仓库管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">商品入库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">销售出库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">回收物入库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">回收物出库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">统计报表</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary">确认新增</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!-- 模态框（Modal） -->
+    <!-- 修改回收物模态框（Modal） -->
+    <div class="modal fade" id="modifyrecoveryimport" tabindex="-1" role="dialog" 
+       aria-labelledby="modifyrecoveryimport" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">修改员工信息</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工名称:</span>
+                <input type="text" class="form-control" placeholder="员工名称" value="赵佳仑">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工性别:</span>
+                <select class="form-control" value="请选择员工性别" tabindex="1" name="herolist">
+                  <option value="0">请选择员工性别</option>
+                  <option value="1" selected>男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>                 
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工部门职务:</span>
+                <select class="form-control" value="请选择员工部门职务：" tabindex="1" name="herolist">
+                  <option value="0">请选择员工部门职务：</option>
+                  <option value="1">销售</option>
+                  <option value="2">管理</option>
+                  <option value="3">财务</option>
+                  <option value="4">物流</option>
+                  <option value="5" selected >其它</option>
+                </select>
+              </div>           
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工联系电话：</span>
+                <input type="text" class="form-control" placeholder="员工联系电话" value="13901167343">
+              </div>           
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工联系地址:</span>
+                <input type="text" class="form-control" placeholder="员工联系地址" value="北京市">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">员工身份证号码:</span>
+                <input type="text" class="form-control" placeholder="员工身份证号码" value="110105">
+              </div>
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">备注：</span>
+                <input type="text" class="form-control" placeholder="备注：" value="研发人员">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-xs-10 col-xs-offset-2 text-left">
+                <div>
+                是否登录系统 <input type="checkbox" id="needsigninmodifychk" checked aria-label="...">
+                </div>
+              </div>
+            </div>
+            <div class="row" id="needsigninmodifydiv" >
+              <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">登录账号:</span>
+                <input type="text" class="form-control" placeholder="登录用户名" value="zhaojl5">
+              </div>             <div class="input-group col-xs-6 col-md-offset-3">
+                <span class="input-group-addon" style="background-color: #1abc9c;">登录密码:</span>
+                <input type="text" class="form-control" placeholder="登录密码" value="******">
+              </div>
+              <div class="table-responsive col-xs-10 col-xs-offset-1">
+                <table class="table text-center">
+                  <thead class="text-left">
+                    <tr class="text-left">
+                      <th>模块名称</th>
+                      <th>查询权限 <input type="checkbox" aria-label="..."></th>
+                      <th>新增修改权限 <input type="checkbox" aria-label="..."></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-left">客户管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">客户管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">供应商</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">商品管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">仓库管理</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">商品入库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">销售出库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">回收物入库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">回收物出库</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                    <tr>
+                      <td class="text-left">统计报表</td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                      <td><input type="checkbox" aria-label="..."></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary">确认修改</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="./js/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="./js/vendor/video.js"></script>
+    <script src="./js/flat-ui.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#delbtn").click(function(){
+        $("#delbtn").hide();
+        $("#delcommit").show();
+        $("#delcancle").show();
+        $(".chk").show();
+      });
+      $("#delcommit").click(function(){
+        $("#delbtn").show();
+        $("#delcommit").hide();
+        $("#delcancle").hide();
+        $(".chk").hide();
+      });
+      $("#delcancle").click(function(){
+        $("#delbtn").show();
+        $("#delcommit").hide();
+        $("#delcancle").hide();
+        $(".chk").hide();
+      });
+      $("#needsigninchk").change(function(){
+        if ($("#needsigninchk").is(':checked')){
+          $("#needsignindiv").show();
+        }else{
+          $("#needsignindiv").hide();
+        };        
+      });
+      $("#needsigninmodifychk").change(function(){
+        if ($("#needsigninmodifychk").is(':checked')){
+          $("#needsigninmodifydiv").show();
+        }else{
+          $("#needsigninmodifydiv").hide();
+        };        
+      });    
+
+    });
+    </script>
+  </body>
+</html>
