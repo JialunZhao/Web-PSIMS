@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.RecoveryExportMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.RecoveryExport" >
+    <result column="recovery_export_id" property="recoveryExportId" jdbcType="INTEGER" />
+    <result column="recovery_export_name" property="recoveryExportName" jdbcType="VARCHAR" />
+    <result column="recovery_export_type" property="recoveryExportType" jdbcType="VARCHAR" />
+    <result column="recovery_export_count" property="recoveryExportCount" jdbcType="INTEGER" />
+    <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+    <result column="provider_code" property="providerCode" jdbcType="VARCHAR" />
+    <result column="recovery_export_time" property="recoveryExportTime" jdbcType="DATE" />
+    <result column="recovery_export_status" property="recoveryExportStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ai.psims.web.model.RecoveryExport" >
+    insert into tb_recovery_export (recovery_export_id, recovery_export_name, 
+      recovery_export_type, recovery_export_count, 
+      provider_name, provider_code, recovery_export_time, 
+      recovery_export_status)
+    values (#{recoveryExportId,jdbcType=INTEGER}, #{recoveryExportName,jdbcType=VARCHAR}, 
+      #{recoveryExportType,jdbcType=VARCHAR}, #{recoveryExportCount,jdbcType=INTEGER}, 
+      #{providerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR}, #{recoveryExportTime,jdbcType=DATE}, 
+      #{recoveryExportStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.RecoveryExport" >
+    insert into tb_recovery_export
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recoveryExportId != null" >
+        recovery_export_id,
+      </if>
+      <if test="recoveryExportName != null" >
+        recovery_export_name,
+      </if>
+      <if test="recoveryExportType != null" >
+        recovery_export_type,
+      </if>
+      <if test="recoveryExportCount != null" >
+        recovery_export_count,
+      </if>
+      <if test="providerName != null" >
+        provider_name,
+      </if>
+      <if test="providerCode != null" >
+        provider_code,
+      </if>
+      <if test="recoveryExportTime != null" >
+        recovery_export_time,
+      </if>
+      <if test="recoveryExportStatus != null" >
+        recovery_export_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recoveryExportId != null" >
+        #{recoveryExportId,jdbcType=INTEGER},
+      </if>
+      <if test="recoveryExportName != null" >
+        #{recoveryExportName,jdbcType=VARCHAR},
+      </if>
+      <if test="recoveryExportType != null" >
+        #{recoveryExportType,jdbcType=VARCHAR},
+      </if>
+      <if test="recoveryExportCount != null" >
+        #{recoveryExportCount,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="providerCode != null" >
+        #{providerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recoveryExportTime != null" >
+        #{recoveryExportTime,jdbcType=DATE},
+      </if>
+      <if test="recoveryExportStatus != null" >
+        #{recoveryExportStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

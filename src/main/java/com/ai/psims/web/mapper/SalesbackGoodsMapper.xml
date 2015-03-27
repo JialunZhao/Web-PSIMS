@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.SalesbackGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.SalesbackGoods" >
+    <result column="salesback_goods_id" property="salesbackGoodsId" jdbcType="INTEGER" />
+    <result column="salesback_serial_number" property="salesbackSerialNumber" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
+    <result column="goods_amount" property="goodsAmount" jdbcType="INTEGER" />
+    <result column="goods_unit" property="goodsUnit" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="BIGINT" />
+    <result column="goods_production" property="goodsProduction" jdbcType="DATE" />
+    <result column="goods_expiration" property="goodsExpiration" jdbcType="DATE" />
+    <result column="discount_amount" property="discountAmount" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="modifytime" property="modifytime" jdbcType="DATE" />
+    <result column="endtime" property="endtime" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ai.psims.web.model.SalesbackGoods" >
+    insert into tb_salesback_goods (salesback_goods_id, salesback_serial_number, 
+      goods_id, goods_name, goods_type, 
+      goods_amount, goods_unit, goods_price, 
+      goods_production, goods_expiration, discount_amount, 
+      createtime, modifytime, endtime, 
+      remark, storage_id)
+    values (#{salesbackGoodsId,jdbcType=INTEGER}, #{salesbackSerialNumber,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
+      #{goodsAmount,jdbcType=INTEGER}, #{goodsUnit,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=BIGINT}, 
+      #{goodsProduction,jdbcType=DATE}, #{goodsExpiration,jdbcType=DATE}, #{discountAmount,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=DATE}, #{modifytime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, 
+      #{remark,jdbcType=VARCHAR}, #{storageId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.SalesbackGoods" >
+    insert into tb_salesback_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesbackGoodsId != null" >
+        salesback_goods_id,
+      </if>
+      <if test="salesbackSerialNumber != null" >
+        salesback_serial_number,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="goodsAmount != null" >
+        goods_amount,
+      </if>
+      <if test="goodsUnit != null" >
+        goods_unit,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsProduction != null" >
+        goods_production,
+      </if>
+      <if test="goodsExpiration != null" >
+        goods_expiration,
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="storageId != null" >
+        storage_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesbackGoodsId != null" >
+        #{salesbackGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="salesbackSerialNumber != null" >
+        #{salesbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAmount != null" >
+        #{goodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsUnit != null" >
+        #{goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsProduction != null" >
+        #{goodsProduction,jdbcType=DATE},
+      </if>
+      <if test="goodsExpiration != null" >
+        #{goodsExpiration,jdbcType=DATE},
+      </if>
+      <if test="discountAmount != null" >
+        #{discountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

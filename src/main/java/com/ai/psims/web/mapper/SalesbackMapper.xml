@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.SalesbackMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.Salesback" >
+    <id column="salesback_serial_number" property="salesbackSerialNumber" jdbcType="VARCHAR" />
+    <result column="sales_serial_number" property="salesSerialNumber" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="storehouse_id" property="storehouseId" jdbcType="INTEGER" />
+    <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="INTEGER" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="salesback_type" property="salesbackType" jdbcType="VARCHAR" />
+    <result column="salesback_reason" property="salesbackReason" jdbcType="VARCHAR" />
+    <result column="salesback_time" property="salesbackTime" jdbcType="DATE" />
+    <result column="salesback_refund" property="salesbackRefund" jdbcType="BIGINT" />
+    <result column="salesback_refund_type" property="salesbackRefundType" jdbcType="VARCHAR" />
+    <result column="salesback_refund_time" property="salesbackRefundTime" jdbcType="DATE" />
+    <result column="salesback_remark" property="salesbackRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    salesback_serial_number, sales_serial_number, customer_id, customer_name, storehouse_id, 
+    storehouse_name, employee_id, employee_name, salesback_type, salesback_reason, salesback_time, 
+    salesback_refund, salesback_refund_type, salesback_refund_time, salesback_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_salesback
+    where salesback_serial_number = #{salesbackSerialNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_salesback
+    where salesback_serial_number = #{salesbackSerialNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.Salesback" >
+    insert into tb_salesback (salesback_serial_number, sales_serial_number, 
+      customer_id, customer_name, storehouse_id, 
+      storehouse_name, employee_id, employee_name, 
+      salesback_type, salesback_reason, salesback_time, 
+      salesback_refund, salesback_refund_type, salesback_refund_time, 
+      salesback_remark)
+    values (#{salesbackSerialNumber,jdbcType=VARCHAR}, #{salesSerialNumber,jdbcType=VARCHAR}, 
+      #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{storehouseId,jdbcType=INTEGER}, 
+      #{storehouseName,jdbcType=VARCHAR}, #{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, 
+      #{salesbackType,jdbcType=VARCHAR}, #{salesbackReason,jdbcType=VARCHAR}, #{salesbackTime,jdbcType=DATE}, 
+      #{salesbackRefund,jdbcType=BIGINT}, #{salesbackRefundType,jdbcType=VARCHAR}, #{salesbackRefundTime,jdbcType=DATE}, 
+      #{salesbackRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.Salesback" >
+    insert into tb_salesback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesbackSerialNumber != null" >
+        salesback_serial_number,
+      </if>
+      <if test="salesSerialNumber != null" >
+        sales_serial_number,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id,
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="employeeName != null" >
+        employee_name,
+      </if>
+      <if test="salesbackType != null" >
+        salesback_type,
+      </if>
+      <if test="salesbackReason != null" >
+        salesback_reason,
+      </if>
+      <if test="salesbackTime != null" >
+        salesback_time,
+      </if>
+      <if test="salesbackRefund != null" >
+        salesback_refund,
+      </if>
+      <if test="salesbackRefundType != null" >
+        salesback_refund_type,
+      </if>
+      <if test="salesbackRefundTime != null" >
+        salesback_refund_time,
+      </if>
+      <if test="salesbackRemark != null" >
+        salesback_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesbackSerialNumber != null" >
+        #{salesbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="salesSerialNumber != null" >
+        #{salesSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackType != null" >
+        #{salesbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackReason != null" >
+        #{salesbackReason,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackTime != null" >
+        #{salesbackTime,jdbcType=DATE},
+      </if>
+      <if test="salesbackRefund != null" >
+        #{salesbackRefund,jdbcType=BIGINT},
+      </if>
+      <if test="salesbackRefundType != null" >
+        #{salesbackRefundType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackRefundTime != null" >
+        #{salesbackRefundTime,jdbcType=DATE},
+      </if>
+      <if test="salesbackRemark != null" >
+        #{salesbackRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.Salesback" >
+    update tb_salesback
+    <set >
+      <if test="salesSerialNumber != null" >
+        sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackType != null" >
+        salesback_type = #{salesbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackReason != null" >
+        salesback_reason = #{salesbackReason,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackTime != null" >
+        salesback_time = #{salesbackTime,jdbcType=DATE},
+      </if>
+      <if test="salesbackRefund != null" >
+        salesback_refund = #{salesbackRefund,jdbcType=BIGINT},
+      </if>
+      <if test="salesbackRefundType != null" >
+        salesback_refund_type = #{salesbackRefundType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesbackRefundTime != null" >
+        salesback_refund_time = #{salesbackRefundTime,jdbcType=DATE},
+      </if>
+      <if test="salesbackRemark != null" >
+        salesback_remark = #{salesbackRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where salesback_serial_number = #{salesbackSerialNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.Salesback" >
+    update tb_salesback
+    set sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      salesback_type = #{salesbackType,jdbcType=VARCHAR},
+      salesback_reason = #{salesbackReason,jdbcType=VARCHAR},
+      salesback_time = #{salesbackTime,jdbcType=DATE},
+      salesback_refund = #{salesbackRefund,jdbcType=BIGINT},
+      salesback_refund_type = #{salesbackRefundType,jdbcType=VARCHAR},
+      salesback_refund_time = #{salesbackRefundTime,jdbcType=DATE},
+      salesback_remark = #{salesbackRemark,jdbcType=VARCHAR}
+    where salesback_serial_number = #{salesbackSerialNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

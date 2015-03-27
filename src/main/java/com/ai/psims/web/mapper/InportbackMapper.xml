@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.InportbackMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.Inportback" >
+    <id column="importback_serial_number" property="importbackSerialNumber" jdbcType="VARCHAR" />
+    <result column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
+    <result column="provider_id" property="providerId" jdbcType="INTEGER" />
+    <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+    <result column="storehouse_id" property="storehouseId" jdbcType="INTEGER" />
+    <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR" />
+    <result column="importback_type" property="importbackType" jdbcType="VARCHAR" />
+    <result column="importback_reason" property="importbackReason" jdbcType="VARCHAR" />
+    <result column="importback_time" property="importbackTime" jdbcType="DATE" />
+    <result column="importback_refund" property="importbackRefund" jdbcType="BIGINT" />
+    <result column="importback_refund_type" property="importbackRefundType" jdbcType="VARCHAR" />
+    <result column="importback_refund_time" property="importbackRefundTime" jdbcType="DATE" />
+    <result column="importback_remark" property="importbackRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    importback_serial_number, import_serial_number, provider_id, provider_name, storehouse_id, 
+    storehouse_name, importback_type, importback_reason, importback_time, importback_refund, 
+    importback_refund_type, importback_refund_time, importback_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_inportback
+    where importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_inportback
+    where importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.Inportback" >
+    insert into tb_inportback (importback_serial_number, import_serial_number, 
+      provider_id, provider_name, storehouse_id, 
+      storehouse_name, importback_type, importback_reason, 
+      importback_time, importback_refund, importback_refund_type, 
+      importback_refund_time, importback_remark)
+    values (#{importbackSerialNumber,jdbcType=VARCHAR}, #{importSerialNumber,jdbcType=VARCHAR}, 
+      #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, #{storehouseId,jdbcType=INTEGER}, 
+      #{storehouseName,jdbcType=VARCHAR}, #{importbackType,jdbcType=VARCHAR}, #{importbackReason,jdbcType=VARCHAR}, 
+      #{importbackTime,jdbcType=DATE}, #{importbackRefund,jdbcType=BIGINT}, #{importbackRefundType,jdbcType=VARCHAR}, 
+      #{importbackRefundTime,jdbcType=DATE}, #{importbackRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.Inportback" >
+    insert into tb_inportback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="importbackSerialNumber != null" >
+        importback_serial_number,
+      </if>
+      <if test="importSerialNumber != null" >
+        import_serial_number,
+      </if>
+      <if test="providerId != null" >
+        provider_id,
+      </if>
+      <if test="providerName != null" >
+        provider_name,
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id,
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name,
+      </if>
+      <if test="importbackType != null" >
+        importback_type,
+      </if>
+      <if test="importbackReason != null" >
+        importback_reason,
+      </if>
+      <if test="importbackTime != null" >
+        importback_time,
+      </if>
+      <if test="importbackRefund != null" >
+        importback_refund,
+      </if>
+      <if test="importbackRefundType != null" >
+        importback_refund_type,
+      </if>
+      <if test="importbackRefundTime != null" >
+        importback_refund_time,
+      </if>
+      <if test="importbackRemark != null" >
+        importback_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="importbackSerialNumber != null" >
+        #{importbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="importSerialNumber != null" >
+        #{importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackType != null" >
+        #{importbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackReason != null" >
+        #{importbackReason,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackTime != null" >
+        #{importbackTime,jdbcType=DATE},
+      </if>
+      <if test="importbackRefund != null" >
+        #{importbackRefund,jdbcType=BIGINT},
+      </if>
+      <if test="importbackRefundType != null" >
+        #{importbackRefundType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackRefundTime != null" >
+        #{importbackRefundTime,jdbcType=DATE},
+      </if>
+      <if test="importbackRemark != null" >
+        #{importbackRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.Inportback" >
+    update tb_inportback
+    <set >
+      <if test="importSerialNumber != null" >
+        import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        provider_id = #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        provider_name = #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackType != null" >
+        importback_type = #{importbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackReason != null" >
+        importback_reason = #{importbackReason,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackTime != null" >
+        importback_time = #{importbackTime,jdbcType=DATE},
+      </if>
+      <if test="importbackRefund != null" >
+        importback_refund = #{importbackRefund,jdbcType=BIGINT},
+      </if>
+      <if test="importbackRefundType != null" >
+        importback_refund_type = #{importbackRefundType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackRefundTime != null" >
+        importback_refund_time = #{importbackRefundTime,jdbcType=DATE},
+      </if>
+      <if test="importbackRemark != null" >
+        importback_remark = #{importbackRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.Inportback" >
+    update tb_inportback
+    set import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
+      provider_id = #{providerId,jdbcType=INTEGER},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      importback_type = #{importbackType,jdbcType=VARCHAR},
+      importback_reason = #{importbackReason,jdbcType=VARCHAR},
+      importback_time = #{importbackTime,jdbcType=DATE},
+      importback_refund = #{importbackRefund,jdbcType=BIGINT},
+      importback_refund_type = #{importbackRefundType,jdbcType=VARCHAR},
+      importback_refund_time = #{importbackRefundTime,jdbcType=DATE},
+      importback_remark = #{importbackRemark,jdbcType=VARCHAR}
+    where importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

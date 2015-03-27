@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.SystemParameterMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.SystemParameter" >
+    <id column="param_id" property="paramId" jdbcType="INTEGER" />
+    <result column="p_key" property="pKey" jdbcType="VARCHAR" />
+    <result column="p_desc" property="pDesc" jdbcType="VARCHAR" />
+    <result column="p_value" property="pValue" jdbcType="VARCHAR" />
+    <result column="pp_key" property="ppKey" jdbcType="VARCHAR" />
+    <result column="pp_desc" property="ppDesc" jdbcType="VARCHAR" />
+    <result column="pp_value" property="ppValue" jdbcType="VARCHAR" />
+    <result column="p_remark" property="pRemark" jdbcType="VARCHAR" />
+    <result column="p_createtime" property="pCreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    param_id, p_key, p_desc, p_value, pp_key, pp_desc, pp_value, p_remark, p_createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_system_parameter
+    where param_id = #{paramId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_system_parameter
+    where param_id = #{paramId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.SystemParameter" >
+    insert into tb_system_parameter (param_id, p_key, p_desc, 
+      p_value, pp_key, pp_desc, 
+      pp_value, p_remark, p_createtime
+      )
+    values (#{paramId,jdbcType=INTEGER}, #{pKey,jdbcType=VARCHAR}, #{pDesc,jdbcType=VARCHAR}, 
+      #{pValue,jdbcType=VARCHAR}, #{ppKey,jdbcType=VARCHAR}, #{ppDesc,jdbcType=VARCHAR}, 
+      #{ppValue,jdbcType=VARCHAR}, #{pRemark,jdbcType=VARCHAR}, #{pCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.SystemParameter" >
+    insert into tb_system_parameter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paramId != null" >
+        param_id,
+      </if>
+      <if test="pKey != null" >
+        p_key,
+      </if>
+      <if test="pDesc != null" >
+        p_desc,
+      </if>
+      <if test="pValue != null" >
+        p_value,
+      </if>
+      <if test="ppKey != null" >
+        pp_key,
+      </if>
+      <if test="ppDesc != null" >
+        pp_desc,
+      </if>
+      <if test="ppValue != null" >
+        pp_value,
+      </if>
+      <if test="pRemark != null" >
+        p_remark,
+      </if>
+      <if test="pCreatetime != null" >
+        p_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paramId != null" >
+        #{paramId,jdbcType=INTEGER},
+      </if>
+      <if test="pKey != null" >
+        #{pKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pDesc != null" >
+        #{pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pValue != null" >
+        #{pValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ppKey != null" >
+        #{ppKey,jdbcType=VARCHAR},
+      </if>
+      <if test="ppDesc != null" >
+        #{ppDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ppValue != null" >
+        #{ppValue,jdbcType=VARCHAR},
+      </if>
+      <if test="pRemark != null" >
+        #{pRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="pCreatetime != null" >
+        #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.SystemParameter" >
+    update tb_system_parameter
+    <set >
+      <if test="pKey != null" >
+        p_key = #{pKey,jdbcType=VARCHAR},
+      </if>
+      <if test="pDesc != null" >
+        p_desc = #{pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pValue != null" >
+        p_value = #{pValue,jdbcType=VARCHAR},
+      </if>
+      <if test="ppKey != null" >
+        pp_key = #{ppKey,jdbcType=VARCHAR},
+      </if>
+      <if test="ppDesc != null" >
+        pp_desc = #{ppDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ppValue != null" >
+        pp_value = #{ppValue,jdbcType=VARCHAR},
+      </if>
+      <if test="pRemark != null" >
+        p_remark = #{pRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="pCreatetime != null" >
+        p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where param_id = #{paramId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.SystemParameter" >
+    update tb_system_parameter
+    set p_key = #{pKey,jdbcType=VARCHAR},
+      p_desc = #{pDesc,jdbcType=VARCHAR},
+      p_value = #{pValue,jdbcType=VARCHAR},
+      pp_key = #{ppKey,jdbcType=VARCHAR},
+      pp_desc = #{ppDesc,jdbcType=VARCHAR},
+      pp_value = #{ppValue,jdbcType=VARCHAR},
+      p_remark = #{pRemark,jdbcType=VARCHAR},
+      p_createtime = #{pCreatetime,jdbcType=TIMESTAMP}
+    where param_id = #{paramId,jdbcType=INTEGER}
+  </update>
+</mapper>

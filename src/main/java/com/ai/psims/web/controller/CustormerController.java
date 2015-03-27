@@ -25,6 +25,7 @@ public class CustormerController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String customerRedirect(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
+		
 		logger.info("------------Bye customer!-------------");
 		return "customer";
 	}
@@ -46,6 +47,7 @@ public class CustormerController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String customerDelete(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
+		
 		logger.info("------------Bye customer!-------------");
 		return "customer";
 	}
@@ -56,6 +58,7 @@ public class CustormerController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String customerModify(Locale locale, Model model) {
 		logger.info("------------Welcome customer!-------------");
+		
 		logger.info("------------Bye customer!-------------");
 		return "customer";
 	}

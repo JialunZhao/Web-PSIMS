@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.ImportbackGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.ImportbackGoods" >
+    <id column="importback_goods_id" property="importbackGoodsId" jdbcType="VARCHAR" />
+    <result column="importback_serial_number" property="importbackSerialNumber" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="importback_goods_type" property="importbackGoodsType" jdbcType="VARCHAR" />
+    <result column="importback_goods_amount" property="importbackGoodsAmount" jdbcType="INTEGER" />
+    <result column="importback_goods_unit" property="importbackGoodsUnit" jdbcType="VARCHAR" />
+    <result column="importback_goods_price" property="importbackGoodsPrice" jdbcType="BIGINT" />
+    <result column="importback_goods_production" property="importbackGoodsProduction" jdbcType="DATE" />
+    <result column="importback_goods_expiration" property="importbackGoodsExpiration" jdbcType="DATE" />
+    <result column="importback_discount_amount" property="importbackDiscountAmount" jdbcType="BIGINT" />
+    <result column="importback_goods_createtime" property="importbackGoodsCreatetime" jdbcType="DATE" />
+    <result column="importback_goods_modifytime" property="importbackGoodsModifytime" jdbcType="DATE" />
+    <result column="importback_goods_endtime" property="importbackGoodsEndtime" jdbcType="DATE" />
+    <result column="importback_goods_remark" property="importbackGoodsRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    importback_goods_id, importback_serial_number, goods_id, goods_name, importback_goods_type, 
+    importback_goods_amount, importback_goods_unit, importback_goods_price, importback_goods_production, 
+    importback_goods_expiration, importback_discount_amount, importback_goods_createtime, 
+    importback_goods_modifytime, importback_goods_endtime, importback_goods_remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_importback_goods
+    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_importback_goods
+    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.ImportbackGoods" >
+    insert into tb_importback_goods (importback_goods_id, importback_serial_number, 
+      goods_id, goods_name, importback_goods_type, 
+      importback_goods_amount, importback_goods_unit, 
+      importback_goods_price, importback_goods_production, 
+      importback_goods_expiration, importback_discount_amount, 
+      importback_goods_createtime, importback_goods_modifytime, 
+      importback_goods_endtime, importback_goods_remark
+      )
+    values (#{importbackGoodsId,jdbcType=VARCHAR}, #{importbackSerialNumber,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{importbackGoodsType,jdbcType=VARCHAR}, 
+      #{importbackGoodsAmount,jdbcType=INTEGER}, #{importbackGoodsUnit,jdbcType=VARCHAR}, 
+      #{importbackGoodsPrice,jdbcType=BIGINT}, #{importbackGoodsProduction,jdbcType=DATE}, 
+      #{importbackGoodsExpiration,jdbcType=DATE}, #{importbackDiscountAmount,jdbcType=BIGINT}, 
+      #{importbackGoodsCreatetime,jdbcType=DATE}, #{importbackGoodsModifytime,jdbcType=DATE}, 
+      #{importbackGoodsEndtime,jdbcType=DATE}, #{importbackGoodsRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.ImportbackGoods" >
+    insert into tb_importback_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="importbackGoodsId != null" >
+        importback_goods_id,
+      </if>
+      <if test="importbackSerialNumber != null" >
+        importback_serial_number,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="importbackGoodsType != null" >
+        importback_goods_type,
+      </if>
+      <if test="importbackGoodsAmount != null" >
+        importback_goods_amount,
+      </if>
+      <if test="importbackGoodsUnit != null" >
+        importback_goods_unit,
+      </if>
+      <if test="importbackGoodsPrice != null" >
+        importback_goods_price,
+      </if>
+      <if test="importbackGoodsProduction != null" >
+        importback_goods_production,
+      </if>
+      <if test="importbackGoodsExpiration != null" >
+        importback_goods_expiration,
+      </if>
+      <if test="importbackDiscountAmount != null" >
+        importback_discount_amount,
+      </if>
+      <if test="importbackGoodsCreatetime != null" >
+        importback_goods_createtime,
+      </if>
+      <if test="importbackGoodsModifytime != null" >
+        importback_goods_modifytime,
+      </if>
+      <if test="importbackGoodsEndtime != null" >
+        importback_goods_endtime,
+      </if>
+      <if test="importbackGoodsRemark != null" >
+        importback_goods_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="importbackGoodsId != null" >
+        #{importbackGoodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackSerialNumber != null" >
+        #{importbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsType != null" >
+        #{importbackGoodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsAmount != null" >
+        #{importbackGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="importbackGoodsUnit != null" >
+        #{importbackGoodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsPrice != null" >
+        #{importbackGoodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="importbackGoodsProduction != null" >
+        #{importbackGoodsProduction,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsExpiration != null" >
+        #{importbackGoodsExpiration,jdbcType=DATE},
+      </if>
+      <if test="importbackDiscountAmount != null" >
+        #{importbackDiscountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="importbackGoodsCreatetime != null" >
+        #{importbackGoodsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsModifytime != null" >
+        #{importbackGoodsModifytime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsEndtime != null" >
+        #{importbackGoodsEndtime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsRemark != null" >
+        #{importbackGoodsRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.ImportbackGoods" >
+    update tb_importback_goods
+    <set >
+      <if test="importbackSerialNumber != null" >
+        importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsType != null" >
+        importback_goods_type = #{importbackGoodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsAmount != null" >
+        importback_goods_amount = #{importbackGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="importbackGoodsUnit != null" >
+        importback_goods_unit = #{importbackGoodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="importbackGoodsPrice != null" >
+        importback_goods_price = #{importbackGoodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="importbackGoodsProduction != null" >
+        importback_goods_production = #{importbackGoodsProduction,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsExpiration != null" >
+        importback_goods_expiration = #{importbackGoodsExpiration,jdbcType=DATE},
+      </if>
+      <if test="importbackDiscountAmount != null" >
+        importback_discount_amount = #{importbackDiscountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="importbackGoodsCreatetime != null" >
+        importback_goods_createtime = #{importbackGoodsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsModifytime != null" >
+        importback_goods_modifytime = #{importbackGoodsModifytime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsEndtime != null" >
+        importback_goods_endtime = #{importbackGoodsEndtime,jdbcType=DATE},
+      </if>
+      <if test="importbackGoodsRemark != null" >
+        importback_goods_remark = #{importbackGoodsRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.ImportbackGoods" >
+    update tb_importback_goods
+    set importback_serial_number = #{importbackSerialNumber,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      importback_goods_type = #{importbackGoodsType,jdbcType=VARCHAR},
+      importback_goods_amount = #{importbackGoodsAmount,jdbcType=INTEGER},
+      importback_goods_unit = #{importbackGoodsUnit,jdbcType=VARCHAR},
+      importback_goods_price = #{importbackGoodsPrice,jdbcType=BIGINT},
+      importback_goods_production = #{importbackGoodsProduction,jdbcType=DATE},
+      importback_goods_expiration = #{importbackGoodsExpiration,jdbcType=DATE},
+      importback_discount_amount = #{importbackDiscountAmount,jdbcType=BIGINT},
+      importback_goods_createtime = #{importbackGoodsCreatetime,jdbcType=DATE},
+      importback_goods_modifytime = #{importbackGoodsModifytime,jdbcType=DATE},
+      importback_goods_endtime = #{importbackGoodsEndtime,jdbcType=DATE},
+      importback_goods_remark = #{importbackGoodsRemark,jdbcType=VARCHAR}
+    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

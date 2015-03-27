@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.StoragecheckMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.Storagecheck" >
+    <result column="storage_id" property="storageId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR" />
+    <result column="provider_id" property="providerId" jdbcType="INTEGER" />
+    <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+    <result column="storage_rate_current" property="storageRateCurrent" jdbcType="INTEGER" />
+    <result column="storage_rate_total" property="storageRateTotal" jdbcType="INTEGER" />
+    <result column="goods_production_date" property="goodsProductionDate" jdbcType="DATE" />
+    <result column="goods_expiration_date" property="goodsExpirationDate" jdbcType="DATE" />
+    <result column="goods_shelf_life" property="goodsShelfLife" jdbcType="INTEGER" />
+    <result column="goods_price" property="goodsPrice" jdbcType="BIGINT" />
+    <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR" />
+    <result column="storage_type" property="storageType" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="modifytime" property="modifytime" jdbcType="DATE" />
+    <result column="endtime" property="endtime" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.ai.psims.web.model.Storagecheck" >
+    insert into tb_storagecheck (storage_id, goods_id, goods_name, 
+      goods_bar_code, provider_id, provider_name, 
+      storage_rate_current, storage_rate_total, goods_production_date, 
+      goods_expiration_date, goods_shelf_life, goods_price, 
+      goods_status, storage_type, createtime, 
+      modifytime, endtime, remark, 
+      import_serial_number)
+    values (#{storageId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsBarCode,jdbcType=VARCHAR}, #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, 
+      #{storageRateCurrent,jdbcType=INTEGER}, #{storageRateTotal,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=DATE}, 
+      #{goodsExpirationDate,jdbcType=DATE}, #{goodsShelfLife,jdbcType=INTEGER}, #{goodsPrice,jdbcType=BIGINT}, 
+      #{goodsStatus,jdbcType=VARCHAR}, #{storageType,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, 
+      #{modifytime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, 
+      #{importSerialNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.Storagecheck" >
+    insert into tb_storagecheck
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="storageId != null" >
+        storage_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsBarCode != null" >
+        goods_bar_code,
+      </if>
+      <if test="providerId != null" >
+        provider_id,
+      </if>
+      <if test="providerName != null" >
+        provider_name,
+      </if>
+      <if test="storageRateCurrent != null" >
+        storage_rate_current,
+      </if>
+      <if test="storageRateTotal != null" >
+        storage_rate_total,
+      </if>
+      <if test="goodsProductionDate != null" >
+        goods_production_date,
+      </if>
+      <if test="goodsExpirationDate != null" >
+        goods_expiration_date,
+      </if>
+      <if test="goodsShelfLife != null" >
+        goods_shelf_life,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+      <if test="storageType != null" >
+        storage_type,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="importSerialNumber != null" >
+        import_serial_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="storageId != null" >
+        #{storageId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBarCode != null" >
+        #{goodsBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="providerId != null" >
+        #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storageRateCurrent != null" >
+        #{storageRateCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="storageRateTotal != null" >
+        #{storageRateTotal,jdbcType=INTEGER},
+      </if>
+      <if test="goodsProductionDate != null" >
+        #{goodsProductionDate,jdbcType=DATE},
+      </if>
+      <if test="goodsExpirationDate != null" >
+        #{goodsExpirationDate,jdbcType=DATE},
+      </if>
+      <if test="goodsShelfLife != null" >
+        #{goodsShelfLife,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="storageType != null" >
+        #{storageType,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="importSerialNumber != null" >
+        #{importSerialNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
