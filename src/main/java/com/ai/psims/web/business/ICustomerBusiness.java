@@ -1,7 +1,16 @@
 package com.ai.psims.web.business;
 
-import com.ai.psims.web.model.Customer;
+import java.util.List;
+
+import com.ai.psims.web.model.TbCustomer;
+import com.ai.psims.web.model.TbCustomerExample;
 
 public interface ICustomerBusiness {
-	public int customeradd(Customer Customeradd);
+	public int customerAdd(TbCustomer customeradd);
+
+	public int customerDelete(TbCustomerExample customerDelete);
+
+	public int customerModify(TbCustomer customerModify);
+
+	public List<TbCustomer> customerQuery(TbCustomerExample customerQuery);
 }

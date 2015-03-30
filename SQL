@@ -4,7 +4,7 @@ drop table tb_customer;
 
 create table tb_customer 
 (
-   customer_id          INT                  not null AUTO_INCREMENT,
+   customer_id          INT    not null AUTO_INCREMENT,
    customer_name        VARCHAR(200),
    customer_code        VARCHAR(200),
    contact_name         VARCHAR(20),

@@ -178,8 +178,24 @@
 								<td>139012345679</td>
 								<td>朝阳</td>
 								<td>朝阳区朝阳路182号</td>
-								<td><a href="#">修改</a>/<a href="#">删除</a></td>
+								<td><a href="#">修改</a>/<a href="javascript:void(0);"
+									onClick="delCurrentCustomer(this);">删除</a></td>
 							</tr>
+							<c:forEach var="customers" items="${customers}">
+								<tr>
+									<td class="chk" style="display: none"><input
+										type="checkbox" aria-label="..."></td>
+									<td>${customers.customerId}</td>
+									<td>${customers.customerName}</td>
+									<td>${customers.customerType}</td>
+									<td>${customers.contactName}</td>
+									<td>${customers.contactTel}</td>
+									<td>${customers.area}</td>
+									<td>${customers.contactAddr}</td>
+									<td><a href="#">修改</a>/<a href="javascript:void(0);"
+										onClick="delCurrentCustomer(this);">删除</a></td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -205,9 +221,9 @@
 
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
-									style="background-color: #1abc9c;">客户名称:</span>
-									<input
-									type="text" class="form-control" placeholder="客户名称" name="customer_name">
+									style="background-color: #1abc9c;">客户名称:</span> <input
+									type="text" class="form-control" placeholder="客户名称"
+									name="customer_name">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -223,39 +239,46 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">联系人名称:</span> <input
-									type="text" class="form-control" name="contact_name" placeholder="联系人名称">
+									type="text" class="form-control" name="contact_name"
+									placeholder="联系人名称">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">联系人电话:</span> <input
-									type="text" class="form-control" name="contact_tel" placeholder="联系人电话">
+									type="text" class="form-control" name="contact_tel"
+									placeholder="联系人电话">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">客户地址:</span> <input
-									type="text" class="form-control" name="contact_addr" placeholder="客户地址">
+									type="text" class="form-control" name="contact_addr"
+									placeholder="客户地址">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">客户电子邮箱:</span> <input
-									type="text" class="form-control" name="email" placeholder="客户电子邮箱">
+									type="text" class="form-control" name="email"
+									placeholder="客户电子邮箱">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">客户地域：</span> <input
-									type="text" class="form-control" name="area" placeholder="客户地域：">
+									type="text" class="form-control" name="area"
+									placeholder="客户地域：">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">备注：</span> <input
-									type="text" class="form-control" name="remark" placeholder="备注：">
+									type="text" class="form-control" name="remark"
+									placeholder="备注：">
 							</div>
 						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default"  data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" id="addcustomersubmit">确认新增</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary"
+						id="addcustomersubmit">确认新增</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
