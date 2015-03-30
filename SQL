@@ -1,0 +1,21 @@
+show databases;
+show tables;
+create table tb_customer 
+(
+   customer_id          INT                  not null,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   contact_name         VARCHAR(20),
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   email                VARCHAR(100),
+   area                 VARCHAR(20),
+   customer_type        VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   status               VARCHAR(200),
+   remark               VARCHAR(200),
+   constraint PK_TB_CUSTOMER primary key (customer_id)
+);
+select * from tb_customer;
