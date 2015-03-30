@@ -14,10 +14,10 @@ public class CustomerBusinesImpl implements ICustomerBusiness {
 	private ICustomerService customerService;
 
 	@Override
-	public String customeradd(Customer Customeradd) {
+	public int customeradd(Customer Customeradd) {
 		// 新增客户信息业务
-		customerService.insertCustomerinfo(Customeradd);
-		return null;
+		
+		return customerService.insertCustomerinfo(Customeradd);
 	}
 
 }

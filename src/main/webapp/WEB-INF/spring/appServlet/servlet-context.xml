@@ -45,6 +45,7 @@
 
     <resources location="/img/" mapping="/img/**"/>
     <resources location="/css/" mapping="/css/**"/>
+    <resources location="/css/fonts/" mapping="/css/fonts/**"/>
     <resources location="/js/" mapping="/js/**"/>
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
