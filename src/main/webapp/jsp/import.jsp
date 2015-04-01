@@ -1,3 +1,4 @@
+<%@page import="com.ai.psims.web.util.Constants"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,6 +12,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
+List<Import> importList=new ArrayList<Import>();
+importList=request.getAttribute("importList");
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -22,8 +25,8 @@ String date=sdf.format(new Date());
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
-
+    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>  
+	
     <!-- Loading Bootstrap -->
        
     <link href="<%=_base %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -32,6 +35,8 @@ String date=sdf.format(new Date());
     <link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
     <link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
     <link href="<%=_base %>/css/index.css" rel="stylesheet">
+    <script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
 
 	
     <link rel="shortcut icon" href="img/favicon.ico">
@@ -101,8 +106,8 @@ String date=sdf.format(new Date());
               <label for="exampleInputName2">供应商名称：</label>
               <select class="form-control" value="请选择供货商" tabindex="1" name="providerlist" id="queProviderName">
               	<option value="">请选择供货商</option>
-              	<c:forEach var="providerName" items="${providerList}" varStatus="status">
-                  <option>${providerName }</option>
+              	<c:forEach var="provider" items="${providerList}" varStatus="status">
+                  <option value="${provider.providerId }">${provider.providerName }</option>
                 </c:forEach>                  
               </select>
             </div>
@@ -110,8 +115,8 @@ String date=sdf.format(new Date());
               <label for="exampleInputEmail2">仓库名称：</label>
               <select class="form-control" value="请选择仓库" tabindex="1" name="storelist" id="queStoreName">
               	<option value="">请选择仓库</option>
-              	  <c:forEach var="storehouseName" items="${storehouseList}" varStatus="status">
-                  	<option value="${storehouseName }">${storehouseName }</option>
+              	  <c:forEach var="storehouse" items="${storehouseList}" varStatus="status">
+                  	<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
                   </c:forEach>                  
               </select>
             </div>
@@ -119,10 +124,10 @@ String date=sdf.format(new Date());
               <label for="exampleInputEmail2">支付方式：</label>
               <select class="form-control" value="请选择支付方式" tabindex="1" name="quePayMed" id="quePayMed">
                 <option value="">请选择支付方式</option>
-                <option>现金</option>
-                <option>转账</option>
-                <option>支票</option>
-                <option>赊账</option>
+                <option value="00">现金</option>
+                <option value="01">转账</option>
+                <option value="02">支票</option>
+                <option value="03">赊账</option>
               </select>
             </div>
             <div class="form-group">
@@ -133,10 +138,6 @@ String date=sdf.format(new Date());
           </form>
           </div>
           
-          <script type="text/javascript">
-          	
-          </script>
-
           <div class="row placeholders ">
             <div class="col-sm-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importgoods">新增入库单</button>
@@ -173,9 +174,9 @@ String date=sdf.format(new Date());
                   		<fmt:formatDate value="${imports.importDatetime }" pattern="yyyy-MM-dd"/>
                   	</td>
                   	<td>${imports.importBatchNumber }</td>
-                  	<td>${imports.paymentType }</td>
-                  	<td>${imports.importStatus }</td>
-                  	<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" data-toggle="modal" data-target="#importgoodsmodify" >修改</a></td>
+                  	<td><%=paymentType %></td>
+                  	<td><%=importStatus %></td>
+                  	<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData(${imports.importSerialNumber })" >修改</a></td>
                 </tr>
                 </c:forEach>         
               </tbody>
@@ -190,8 +191,7 @@ String date=sdf.format(new Date());
 
     <!-- 模态框（Modal） -->
     <!-- 添加入库单模态框（Modal） -->
-    <div class="modal fade" id="importgoods" tabindex="-1" role="dialog" 
-       aria-labelledby="importgoods" aria-hidden="true">
+    <div class="modal fade" id="importgoods" tabindex="-1" role="dialog" aria-labelledby="importgoods" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -205,42 +205,46 @@ String date=sdf.format(new Date());
                 <input type="text" class="form-control" placeholder="2015-03-03" value="<%=date %>" name="importcreatetime" id="importcreatetime">
                 <span class="input-group-addon" style="background-color: #1abc9c;">供货商名称:</span>
                 <select class="form-control" value="请选择供货商" tabindex="1" name="providerName" id="providerName">
-              	<option>请选择供货商</option>
-              	<c:forEach var="providerName" items="${providerList}" varStatus="status">
-                  <option>${providerName }</option>
-                </c:forEach>                  
+              	<option value="">请选择供货商</option>
+              	<c:forEach var="provider" items="${providerList}" varStatus="status">
+                  <option value="${provider.providerId }">${provider.providerName }</option>
+                </c:forEach>                    
               	</select>
               </div>    
               <div class="input-group col-xs-10 col-md-offset-1">
                 <span class="input-group-addon" style="background-color: #1abc9c;">存储仓库:</span>
                <select class="form-control" value="请选择仓库" tabindex="1" name="storeName" id="storeName">
-              	<option>请选择仓库</option>
-              	  <c:forEach var="storehouseName" items="${storehouseList}" varStatus="status">
-                  	<option>${storehouseName }</option>
+              	<option value="">请选择仓库</option>
+              	  <c:forEach var="storehouse" items="${storehouseList}" varStatus="status">
+                  	<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
                   </c:forEach>                  
               </select>
               <span class="input-group-addon" style="background-color: #1abc9c;">折扣方式：</span>
                 <select class="form-control" value="请选择折扣方式" tabindex="1" name="discountMed" id="discountMed">
-                  <option>请选择折扣方式</option>
-                  <option>无折扣</option>
-                  <option>奖金池</option>
+                  <option value="">请选择折扣方式</option>
+                  <option value="1">无折扣</option>
+                  <option value="2">奖金池</option>
                 </select>
               </div>
-              <div class="input-group col-xs-10 col-md-offset-1">
+              <div class="input-group col-xs-10 col-md-offset-1">                
+                <span class="input-group-addon" style="background-color: #1abc9c;">支付状态：</span>
+                <select class="form-control" value="请选择支付状态" tabindex="1" name="payStatus" id="payStatus" onchange="isPay(this.value)">
+                  <option value="">请选择支付状态</option>
+                  <option value="001">未付款</option>
+                  <option value="002">已付款</option>
+                </select>
+              </div>
+              <div class="input-group col-xs-10 col-md-offset-1" id="isPay" style="display: none">               
                 <span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
                 <select class="form-control" value="请选择支付方式" tabindex="1" name="payMed" id="payMed">
-                  <option>请选择支付方式</option>
-                  <option>现金</option>
-                  <option>转账</option>
-                  <option>支票</option>
-                  <option>赊账</option>
+                  <option value="">请选择支付方式</option>
+                  <option value="00">现金</option>
+                  <option value="01">转账</option>
+                  <option value="02">支票</option>
+                  <option value="03">赊账</option>
                 </select>
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付状态：</span>
-                <select class="form-control" value="请选择支付状态" tabindex="1" name="payStatus" id="payStatus">
-                  <option value="0">请选择支付状态</option>
-                  <option value="1">未付款</option>
-                  <option value="2">已付款</option>
-                </select>
+                <span class="input-group-addon" style="background-color: #1abc9c;">支付时间：</span>
+                <input type="text" class="form-control" placeholder="2015-03-03" value="2015-03-03" name="payTime" id="payTime">
               </div>   
               <div class="input-group col-xs-1 col-md-offset-1">
                 <button type="button" class="btn btn-primary" id="addgoodsbtn" >添加商品</button>
@@ -336,241 +340,20 @@ String date=sdf.format(new Date());
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <!-- 模态框（Modal） -->
-    <!-- 入库单打印模态框（Modal） -->
-    <div class="modal fade" id="importgoodsprint" tabindex="-1" role="dialog" 
-       aria-labelledby="importgoodsprint" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">修改商品</h4>
-          </div>
-          <div class="modal-body" id="importgoodsprintform">
-            <div class="row placeholders">
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">入库时间:</span>
-                <input type="text" class="form-control" placeholder="2015-03-03 10:12:00" value="2015-03-03 10:12:00">
-                <span class="input-group-addon" style="background-color: #1abc9c;">供货商名称:</span>
-                <select class="form-control" value="请选择供货商" tabindex="1" name="herolist">
-                  <option value="0">请选择供货商</option>
-                  <option value="1">供货商A</option>
-                  <option value="2">供货商B</option>
-                  <option value="3">供货商C</option>
-                </select>
-              </div>    
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">存储仓库:</span>
-                <select class="form-control" value="请选择仓库" tabindex="1" name="herolist">
-                  <option value="0">请选择仓库</option>
-                  <option value="1">仓库A</option>
-                  <option value="2">仓库B</option>
-                  <option value="3">仓库C</option>
-                </select>
-              </div>
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
-                <select class="form-control" value="请选择支付方式" tabindex="1" name="herolist">
-                  <option value="0">请选择支付方式</option>
-                  <option value="1">现金</option>
-                  <option value="2">转账</option>
-                  <option value="3">支票</option>
-                  <option value="4">赊账</option>
-                </select>
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付时间</span>
-                <input type="text" class="form-control" placeholder="2015-03-03 10:12:00" value="2015-03-03 10:12:00">
-              </div>   
-            </div>
-          </div>
-          <div class="modal-body" id="printaddgoodstb" >
-            <div class="row">
-              <div class="table-responsive col-xs-12">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>商品名称</th>
-                      <th>基本单位</th>
-                      <th>入库数量</th>
-                      <th>进货价格</th>
-                      <th>生产日期</th>
-                      <th>失效日期</th>
-                      <th>应付总金额</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>百威红瓶9.7度500ml</td>
-                      <td>箱</td>
-                      <td>110</td>
-                      <td>45</td>
-                      <td>2015-01-01</td>
-                      <td>2015-12-31</td>
-                      <td>4950</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">打印</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <!-- 模态框（Modal） -->
-    <!-- 入库单修改模态框（Modal） -->
-    <div class="modal fade" id="importgoodsmodify" tabindex="-1" role="dialog" 
-       aria-labelledby="importgoodsmodify" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">修改商品</h4>
-          </div>
-          <div class="modal-body" id="importgoodsmodifyform">
-            <div class="row placeholders">
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">入库时间:</span>
-                <input type="text" class="form-control" placeholder="2015-03-03 10:12:00" value="2015-03-03 10:12:00">
-                <span class="input-group-addon" style="background-color: #1abc9c;">供货商名称:</span>
-                <select class="form-control" value="请选择供货商" tabindex="1" name="herolist">
-                  <option value="0">请选择供货商</option>
-                  <option value="1">供货商A</option>
-                  <option value="2">供货商B</option>
-                  <option value="3">供货商C</option>
-                </select>
-              </div>    
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">存储仓库:</span>
-                <select class="form-control" value="请选择仓库" tabindex="1" name="herolist">
-                  <option value="0">请选择仓库</option>
-                  <option value="1">仓库A</option>
-                  <option value="2">仓库B</option>
-                  <option value="3">仓库C</option>
-                </select>
-              </div>
-              <div class="input-group col-xs-10 col-md-offset-1">
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
-                <select class="form-control" value="请选择支付方式" tabindex="1" name="herolist">
-                  <option value="0">请选择支付方式</option>
-                  <option value="1">现金</option>
-                  <option value="2">转账</option>
-                  <option value="3">支票</option>
-                  <option value="4">赊账</option>
-                </select>
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付时间</span>
-                <input type="text" class="form-control" placeholder="2015-03-03 10:12:00" value="2015-03-03 10:12:00">
-              </div>   
-              <div class="input-group col-xs-1 col-md-offset-1">
-                <button type="button" class="btn btn-primary" id="modifyaddgoodsbtn" >添加商品</button>
-              </div>
-            </div>
-          </div>
-          <div class="modal-body" id="modifyaddgoods" style="display:none">
-            <div class="row placeholders">          
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">商品名称:</span>
-                <select class="form-control" value="请选择商品" tabindex="1" name="herolist">
-                  <option value="0">请选择商品</option>
-                  <option value="1">百威金樽500ml</option>
-                  <option value="2">听可乐330ml</option>
-                  <option value="3">百威红瓶9.7度500ml</option>
-                  <option value="4">小糊涂仙52度（250ml）</option>
-                  <option value="5">酸梅汤原浆</option>
-                </select>
-              </div>    
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">基本单位:</span>
-                <input type="text" class="form-control" placeholder="基本单位" value="箱(12瓶)">
-              </div>           
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">进货价格:</span>
-                <input type="text" class="form-control" placeholder="进货价格" value="99">
-                <span class="input-group-addon">元</span>
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">销售价格:</span>
-                <input type="text" class="form-control" placeholder="无折扣销售价格" value="110">
-                <span class="input-group-addon">元</span>
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">保质期：</span>
-                <input type="text" class="form-control" placeholder="保质期" value="180">
-                <span class="input-group-addon">（天）</span>
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">生产日期：</span>
-                <input type="text" class="form-control" placeholder="生产日期" value="2015-01-01">
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">失效日期：</span>
-                <input type="text" class="form-control" placeholder="失效日期" value="2015-06-01" readonly="true"> 
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">入库数量：</span>
-                <input type="text" class="form-control" placeholder="入库数量">
-              </div>
-              <div class="input-group col-xs-6 col-md-offset-3">
-                <span class="input-group-addon" style="background-color: #1abc9c;">应付总金额</span>
-                <input type="text" class="form-control" placeholder="应付总金额" readonly="true">
-                <span class="input-group-addon">元</span>
-              </div>
-              <div class="input-group col-xs-1 col-md-offset-3">
-                <button type="button" class="btn btn-primary" id="modifyaddgoodsokbtn" >确认添加</button>
-              </div>
-            </div>
-          </div>
-          <div class="modal-body" id="modifyaddgoodstb" >
-            <div class="row">
-              <div class="table-responsive col-xs-12">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>商品名称</th>
-                      <th>基本单位</th>
-                      <th>入库数量</th>
-                      <th>进货价格</th>
-                      <th>生产日期</th>
-                      <th>失效日期</th>
-                      <th>应付总金额</th>
-                      <th>操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>百威红瓶9.7度500ml</td>
-                      <td>箱</td>
-                      <td>110</td>
-                      <td>45</td>
-                      <td>2015-01-01</td>
-                      <td>2015-12-31</td>
-                      <td>4950</td>
-                      <td><a id="delgoodstb" href="#" >删除商品</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">确认修改</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-    <script src="<%=_base %>/js/vendor/jquery.min.js"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<%=_base %>/js/vendor/video.js"></script>
     <script src="<%=_base %>/js/flat-ui.min.js"></script>
     <script type="text/javascript">
+    	function isPay(payStatus){
+    		if (payStatus=="002") {
+				$("#isPay").show();
+			}
+    	}
+    
     	function showTable(){
     		var goodsName=$("#goodsName").val();
-    		var providerName=$("#providerName").val();
+    		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax(  
                     {  
                         url:'<%=_base %>/accountController/queryGoodsDemo.do',  
@@ -604,10 +387,11 @@ String date=sdf.format(new Date());
     	function queryImportList() {
       		var selOpt = $("#importGoodListTab tbody tr");  
     		selOpt.remove();
-			var providerName=$("#queProviderName").val();
-			var storeName=$("#queStoreName").val();
+			var providerName=$("#queProviderName").find("option:selected").text();
+			var storeName=$("#queStoreName").find("option:selected").text();
 			var payMed=$("#quePayMed").val();
 			var importSerialNumber=$("#queImportSerialNumber").val();
+			var importBatchNumber,importStatus;
 			$.ajax(  
                     {  
                         url:'<%=_base %>/accountController/queryImportList.do',  
@@ -619,18 +403,24 @@ String date=sdf.format(new Date());
                         	'importSerialNumber':importSerialNumber
                         	},
                         success:function(data){  
-                        			alert(data);
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.goods);
     								for (var i = 0; i < goodsList.length; i++) {
+    											var importSerialNumber=goodsList[i].importSerialNumber;
+    											var providerName=goodsList[i].providerName;
+    											var storehouseName=goodsList[i].storehouseName;
+    											var importDatetime=goodsList[i].importDatetime;
+    											importBatchNumber=goodsList[i].importBatchNumber;
+    											var paymentType=goodsList[i].paymentType;
+    											importStatus=goodsList[i].importStatus;
 	    										$("#importGoodListTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
-	    					                  	+'<td>'+goodsList[i].importSerialNumber+'</td>'
-	    					                  	+'<td>'+goodsList[i].providerName+'</td>'
-	    					                  	+'<td>'+goodsList[i].storehouseName+'</td>'
-	    					                  	+'<td>'+goodsList[i].importDatetime+'</td>'
-	    					                  	+'<td>'+goodsList[i].importBatchNumber+'</td>'
-	    					                  	+'<td>'+goodsList[i].paymentType+'</td>'
-	    					                  	+'<td>'+goodsList[i].importStatus+'</td>'
+	    					                  	+'<td>'+importSerialNumber+'</td>'
+	    					                  	+'<td>'+providerName+'</td>'
+	    					                  	+'<td>'+storehouseName+'</td>'
+	    					                  	+'<td>'+getLocalTime(importDatetime)+'</td>'
+	    					                  	+'<td>'+importBatchNumber+'</td>'
+	    					                  	+'<td>'+paymentType+'</td>'
+	    					                  	+'<td>'+importStatus+'</td>'
 	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" data-toggle="modal" data-target="#importgoodsmodify" >修改</a></td></tr>' );
 	        								
     								}
@@ -639,21 +429,27 @@ String date=sdf.format(new Date());
                     }); 
 		}
     	
+    	function getLocalTime(nS) {
+    		var t=new Date(nS);
+    		y = t.getFullYear();
+    		m = t.getMonth()+1;
+    		d = t.getDate();
+    		return y+"-"+m+"-"+d;
+    	} 
+    	
     	function selectGoods(){
     		var selOpt = $("#goodsName option");  
     		selOpt.remove();
-    		$("#goodsName").append( "<option>请选择商品</option>" );
-    		var providerName=$("#providerName").val();
-    		$.ajax(  
-                    {  
+    		$("#goodsName").append( "<option value=''>请选择商品</option>" );
+    		var providerName=$("#providerName").find("option:selected").text();
+    		$.ajax({  
                         url:'<%=_base %>/accountController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
                         showBusi : false,
                         data:{'providerName':providerName},
-                        success:function(data)  
-                                {  
+                        success:function(data){  
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.list);
     									for (var i = 0; i < goodsList.length; i++) {
@@ -664,9 +460,20 @@ String date=sdf.format(new Date());
     							        $("#importgoodsform").hide();
     								}
                                 
-                    }  
-                );       
+                    });       
     	}
+    	
+    	function updateImportData(importSerialNumber) {
+    		var url='<%=_base %>/accountController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
+    		$.dialog({
+    			title:'修改入库单',
+    			width:900,
+    			height:700,
+    			max:false,
+    			min:false,
+    			content:'url:'+url
+    		});
+		}
     </script>
     <script type="text/javascript">
     var len=$("#addGoodsTab tbody tr").length;
@@ -690,10 +497,60 @@ String date=sdf.format(new Date());
         $(".chk").hide();
       });   
       $("#addgoodsbtn").click(function(){
-        
+    	var providerName=$("#providerName").val();
+    	var storeName=$("#storeName").val();
+    	var discountMed=$("#discountMed").val();
+    	var payStatus=$("#payStatus").val();
+    	if (checkIsNull(providerName)) {
+			alert("请选择供应商");
+			return;
+		}
+    	if (checkIsNull(storeName)) {
+			alert("请选择仓库");
+			return;
+		}
+    	if (checkIsNull(discountMed)) {
+			alert("请选择折扣方式");
+			return;
+		}
+    	if (checkIsNull(payStatus)) {
+			alert("请选择支付状态");
+			return;
+		}
+    	if (payStatus=="002") {
+    		var payMed=$("#payMed").val();
+    		var payTime=$("#payTime").val();
+    		if (checkIsNull(payMed)) {
+    			alert("请选择支付方式");
+    			return;
+    		}
+    		if (checkIsNull(payTime)) {
+    			alert("请选择支付时间");
+    			return;
+    		}else if(checkDataFomat(payTime)){
+				return;
+			};
+		}
         selectGoods();
         
       }); 
+      
+      function checkIsNull(str){
+    	  if(str==null||str==""){
+    		  return true;
+    	  }
+    	  return false;
+      }
+      
+      function checkDataFomat(data){
+    	  var a = /^(\d{4})-(\d{2})-(\d{2})$/;
+    	  if (!a.test(data)) { 
+    		  alert("日期格式不正确!正确格式为:yyyy-mm-dd"); 
+    		  return true;
+    	  };
+    	  return false;
+      }
+      
       $("#addgoodsokbtn").click(function(){
         
         var goodsName=$("#goodsName").val();
@@ -703,6 +560,18 @@ String date=sdf.format(new Date());
         var goodsExpirationDate=$("#goodsExpirationDate").val();
         var goodsCount=$("#goodsCount").val();
         var goodsAllPay=$("#goodsAllPay").val();
+        if (checkIsNull(goodsName)) {
+			alert("请选择入库商品名称");
+			return;
+		}
+        if (checkIsNull(goodsProductionDate)) {
+			alert("请选择入库商品生产日期");
+			return;
+		}
+        if (checkIsNull(goodsCount)) {
+			alert("请选择入库商品数量");
+			return;
+		}
         $("#addGoodsTab tbody").append("<tr id="+len+">"
 					+"<td>"+goodsName+"</td>"
 					+"<td>"+goodsUnit+"</td>"
@@ -742,12 +611,13 @@ String date=sdf.format(new Date());
       
       $("#suerAdd").click(function(){
     	  var goodList="";
-    	  var storeName=$("#storeName").val();
-    	  var providerName=$("#providerName").val();
+    	  var storeName=$("#storeName").find("option:selected").text();
+    	  var providerName=$("#providerName").find("option:selected").text();
     	  var discountMed=$("#discountMed").val();
     	  var importcreatetime=$("#importcreatetime").val();
     	  var payMed=$("#payMed").val();
     	  var payStatus=$("#payStatus").val();
+    	  var payTime=$("#payTime").val();
     	  $('#addGoodsTab tbody tr').find('td').each(function() {
     		  goodList=goodList+$(this).text() + ',';
           });
@@ -763,14 +633,14 @@ String date=sdf.format(new Date());
                     	    'discountMed':discountMed,
                     	    'payMed':payMed,
                     	    'importcreatetime':importcreatetime,
-                    	    'payStatus':payStatus,},
+                    	    'payStatus':payStatus,
+                    	    'payTime':payTime},
                       success:function(data){
                     	  if($.parseJSON(data).RES_RESULT=="SUCCESS"){
                     		  alert("成功添加入库单");
                     	  }else{
                     		  alert("添加入库单失败");
                     	  }
-                    	  alert(data);
                     	  
                     	  $("#importgoods").hide();
                     	  $("#addgoodstb").hide();
@@ -805,6 +675,18 @@ String date=sdf.format(new Date());
           var goodsExpirationDate=$("#goodsExpirationDate").val();
           var goodsCount=$("#goodsCount").val();
           var goodsAllPay=$("#goodsAllPay").val();
+          if (checkIsNull(goodsName)) {
+  			alert("请选择入库商品名称");
+  			return;
+  		  }
+          if (checkIsNull(goodsProductionDate)) {
+  			alert("请选择入库商品生产日期");
+  			return;
+  		  }
+          if (checkIsNull(goodsCount)) {
+  			alert("请选择入库商品数量");
+  			return;
+  		  }
           $("#addGoodsTab tbody").append("<tr id="+len+">"
         		  						+"<td>"+goodsName+"</td>"
         		  						+"<td>"+goodsUnit+"</td>"
@@ -833,6 +715,9 @@ String date=sdf.format(new Date());
     </script>
     <script type="text/javascript">
               		function getGoodsExpirationDate(goodsProductionDate){
+              			if (checkDataFomat(goodsProductionDate)) {
+							return;
+						}
               			var goodsShelfLife=$("#goodsShelfLife").val();
               			var goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
               			$("#goodsExpirationDate").val(goodsExpirationDate);
@@ -863,6 +748,15 @@ String date=sdf.format(new Date());
               			var goodsAllPay=goodsCount*goodsPrice;
               			$("#goodsAllPay").val(goodsAllPay);
               		}
+              		
+              		function checkDataFomat(data){
+                  	  var a = /^(\d{4})-(\d{2})-(\d{2})$/;
+                  	  if (!a.test(data)) { 
+                  		  alert("日期格式不正确!正确格式为:yyyy-mm-dd"); 
+                  		  return true;
+                  	  };
+                  	  return false;
+                    }
 
       </script>
   </body>
