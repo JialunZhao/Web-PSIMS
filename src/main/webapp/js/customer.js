@@ -19,7 +19,7 @@ $("#addcustomersubmit").click(function customeradd() {
 		// 'remark' : remark
 		// },
 		success : function(data) {
-			alert("jQueryForm得到返回值: " + data);
+			$('#addcustomer').modal('hide');
 
 		},
 	});
@@ -39,26 +39,51 @@ function delCurrentCustomer(obj) {
 		},
 		success : function(data) {
 			$(obj).parent().parent().remove();
-			alert(customer_id);
+
 		},
 	});
 }
 // 修改客户信息
-function delCurrentCustomer(obj) {
+// 1.修改模态框数据获取
+function modifyCurrentCustomer(obj) {
 	// console.dir(obj);
-	// 获取选中行的id
 	var customer_id = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
 		type : 'POST',
-		async : true,
-		url : 'deleteCustomer.do',
-		// data : $('#addcustomerForm').serialize(),
+		async : false,
+		url : 'queryCustomer.do',
+		dataType : 'json',
 		data : {
 			'customer_id' : customer_id
 		},
 		success : function(data) {
-			$(obj).parent().parent().remove();
-			alert(customer_id);
+			console.dir(data);
+			$('#modify_customerId').val(data[0].customerId)
+			$('#modify_customerName').val(data[0].customerName)
+			$('#modify_customerType').val(data[0].customerType)
+			$('#modify_contactName').val(data[0].contactName)
+			$('#modify_contactTel').val(data[0].contactTel)
+			$('#modify_contactAddr').val(data[0].contactAddr)
+			$('#modify_email').val(data[0].email)
+			$('#modify_area').val(data[0].area)
+			$('#modify_remark').val(data[0].remark)
+			$('#modifycustomer').modal('show');
+		},
+	});
+
+};
+
+// 2.修改后信息传输
+function modifyCurrentCustomerInfo(obj) {
+	// console.dir(obj);
+	// 获取选中行的id
+	$.ajax({
+		type : 'POST',
+		async : false,
+		url : 'modify.do',
+		data : $('#modify_customerForm').serialize(),
+		success : function(data) {
+			alert("1");
 		},
 	});
 }

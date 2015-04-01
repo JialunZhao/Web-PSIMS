@@ -97,14 +97,14 @@
 				<h3 class="page-header">客户管理</h3>
 
 				<div class="row placeholders">
-					<form class="form-inline">
+					<form class="form-inline" action="" method="get" >
 						<div class="form-group">
-							<label for="exampleInputName2">客户名称：</label> <input type="text"
-								class="form-control" id="exampleInputName2" placeholder="客户名称">
+							<label for="query_customerName">客户名称：</label> <input type="text"
+								class="form-control" id="query_customerName" name="query_customerName" placeholder="客户名称">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">客户类型：</label> <select
-								class="form-control" tabindex="1" name="herolist">
+							<label for="query_customerType">客户类型：</label> <select
+								class="form-control" tabindex="1" id="query_customerType" name="query_customerType">
 								<option value="0">请选择客户类型：</option>
 								<option value="1">连锁</option>
 								<option value="2">商户</option>
@@ -113,12 +113,12 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">联系人名称：</label> <input type="text"
-								class="form-control" id="exampleInputEmail2" placeholder="联系人名称">
+							<label for="query_contactName">联系人名称：</label> <input type="text"
+								class="form-control" id="query_contactName" name="query_contactName" placeholder="联系人名称">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">联系人电话：</label> <input type="text"
-								class="form-control" id="exampleInputEmail2"
+							<label for="query_contactTel">联系人电话：</label> <input type="text"
+								class="form-control" id="query_contactTel" name="query_contactTel"
 								placeholder="联系人电话：">
 						</div>
 						<button type="submit" class="btn btn-primary">搜索</button>
@@ -165,8 +165,8 @@
 								<td>139012345678</td>
 								<td>朝阳</td>
 								<td>朝阳区朝阳路18号</td>
-								<td><a href="#" data-toggle="modal"
-									data-target="#modifycustomer">修改</a>/<a href="#">删除</a></td>
+								<td><a href="javascript:void(0);"
+									onClick="modifyCurrentCustomer(this)">修改</a>/<a href="#">删除</a></td>
 							</tr>
 							<tr>
 								<td class="chk" style="display: none"><input
@@ -192,8 +192,9 @@
 									<td>${customers.contactTel}</td>
 									<td>${customers.area}</td>
 									<td>${customers.contactAddr}</td>
-									<td><a href="#">修改</a>/<a href="javascript:void(0);"
-										onClick="delCurrentCustomer(this);">删除</a></td>
+									<td><a href="javascript:void(0);"
+										onClick="modifyCurrentCustomer(this)">修改</a>/<a
+										href="javascript:void(0);" onClick="delCurrentCustomer(this);">删除</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -217,7 +218,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<form id="addcustomerForm" action="action.aspx" method="post">
+						<form id="addcustomerForm" >
 
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -301,61 +302,73 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户名称:</span> <input
-								type="text" class="form-control" placeholder="客户名称" value="张老坎">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户类型:</span> <select
-								class="form-control" tabindex="1" name="herolist">
-								<option value="0">请选择客户类型：</option>
-								<option value="1" selected>连锁</option>
-								<option value="2">商户</option>
-								<option value="3">散户</option>
-								<option value="4">其它</option>
-							</select>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">联系人名称:</span> <input
-								type="text" class="form-control" placeholder="联系人名称" value="老张">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">联系人电话:</span> <input
-								type="text" class="form-control" placeholder="联系人电话"
-								value="139012345678">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户地址:</span> <input
-								type="text" class="form-control" placeholder="客户地址"
-								value="朝阳区朝阳路18号">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户电子邮箱:</span> <input
-								type="text" class="form-control" placeholder="客户电子邮箱"
-								value="zhanglk@163.com">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户地域：</span> <input
-								type="text" class="form-control" placeholder="客户地域：" value="朝阳">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">备注：</span> <input type="text"
-								class="form-control" placeholder="备注："
-								value=" 张老坎 连锁 老张 139012345678 朝阳 朝阳区朝阳路18号 ">
-						</div>
+						<form id="modify_customerForm" action="action.aspx" method="post">
+							<input type="hidden" id="modify_customerId"
+								name="modify_customerId"  value="">
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户名称:</span> <input
+									type="text" class="form-control" id="modify_customerName"
+									name="modify_customerName" placeholder="客户名称" value="张老坎">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户类型:</span> <select
+									class="form-control" tabindex="1" id="modify_customerType"
+									name="modify_customerType">
+									<option value="0">请选择客户类型：</option>
+									<option value="1" selected>连锁</option>
+									<option value="2">商户</option>
+									<option value="3">散户</option>
+									<option value="4">其它</option>
+								</select>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">联系人名称:</span> <input
+									type="text" class="form-control" id="modify_contactName"
+									name="modify_contactName" placeholder="联系人名称" value="老张">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">联系人电话:</span> <input
+									type="text" class="form-control" id="modify_contactTel"
+									name="modify_contactTel" placeholder="联系人电话"
+									value="139012345678">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户地址:</span> <input
+									type="text" class="form-control" id="modify_contactAddr"
+									name="modify_contactAddr" placeholder="客户地址" value="朝阳区朝阳路18号">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户电子邮箱:</span> <input
+									type="text" class="form-control" id="modify_email"
+									name="modify_email" placeholder="客户电子邮箱"
+									value="zhanglk@163.com">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户地域：</span> <input
+									type="text" class="form-control" id="modify_area"
+									name="modify_area" placeholder="客户地域：" value="朝阳">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">备注：</span> <input
+									type="text" class="form-control" id="modify_remark"
+									name="modify_remark" placeholder="备注："
+									value=" 张老坎 连锁 老张 139012345678 朝阳 朝阳区朝阳路18号 ">
+							</div>
+						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary">确认修改</button>
+					<button type="button" class="btn btn-primary"
+						onClick="modifyCurrentCustomerInfo(this)">确认修改</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->

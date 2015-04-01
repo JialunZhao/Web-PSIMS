@@ -34,7 +34,6 @@ public class CustomerServiceImpl implements ICustomerService {
 		logger.info("queryCustomer");
 		List<TbCustomer> customersList = null;
 		customersList = tbCustomerMapper.selectByExample(tbCustomerExample);
-		tbCustomerMapper.deleteByExample(tbCustomerExample);
 		return customersList;
 	}
 
