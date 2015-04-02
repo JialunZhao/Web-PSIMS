@@ -32,4 +32,16 @@ public class ImportServiceImpl implements IImportService {
 		return importMapper.selectByColum(m);
 	}
 
+	public Import selectByPrimaryKey(String importSerialNumber) {
+		return importMapper.selectByPrimaryKey(importSerialNumber);
+	}
+
+	public int updateImport(Import import1) {
+		return importMapper.updateByPrimaryKeySelective(import1);
+	}
+
+	public int deleteImport(String importSerialNumber) {
+		return importMapper.deleteByPrimaryKey(importSerialNumber);
+	}
+
 }

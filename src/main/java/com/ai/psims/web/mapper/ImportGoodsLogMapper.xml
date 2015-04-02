@@ -19,18 +19,22 @@
     <result column="import_goods_modifytime" property="importGoodsModifytime" jdbcType="DATE" />
     <result column="import_goods_endtime" property="importGoodsEndtime" jdbcType="DATE" />
     <result column="import_goods_remark" property="importGoodsRemark" jdbcType="VARCHAR" />
+    <result column="import_goods_total_price" property="importGoodsTotalPrice" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     log_id, log_datetime, import_goods_id, import_serial_number, goods_id, goods_name, 
     import_goods_type, import_goods_amount, import_goods_unit, import_goods_price, import_goods_production_date, 
     import_goods_expiration_date, import_discount_amount, import_goods_createtime, import_goods_modifytime, 
-    import_goods_endtime, import_goods_remark
+    import_goods_endtime, import_goods_remark, import_goods_total_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_import_goods_log
     where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <select id="selectId" resultType="java.lang.Integer">
+    select log_id from tb_import_goods_log
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_import_goods_log
@@ -43,14 +47,16 @@
       import_goods_price, import_goods_production_date, 
       import_goods_expiration_date, import_discount_amount, 
       import_goods_createtime, import_goods_modifytime, 
-      import_goods_endtime, import_goods_remark)
+      import_goods_endtime, import_goods_remark, import_goods_total_price
+      )
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{importGoodsId,jdbcType=INTEGER}, 
       #{importSerialNumber,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
       #{importGoodsType,jdbcType=VARCHAR}, #{importGoodsAmount,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}, 
       #{importGoodsPrice,jdbcType=BIGINT}, #{importGoodsProductionDate,jdbcType=DATE}, 
       #{importGoodsExpirationDate,jdbcType=DATE}, #{importDiscountAmount,jdbcType=BIGINT}, 
       #{importGoodsCreatetime,jdbcType=DATE}, #{importGoodsModifytime,jdbcType=DATE}, 
-      #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR})
+      #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR}, #{importGoodsTotalPrice,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.ImportGoodsLog" >
     insert into tb_import_goods_log
@@ -106,6 +112,9 @@
       <if test="importGoodsRemark != null" >
         import_goods_remark,
       </if>
+      <if test="importGoodsTotalPrice != null" >
+        import_goods_total_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="logId != null" >
@@ -158,6 +167,9 @@
       </if>
       <if test="importGoodsRemark != null" >
         #{importGoodsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsTotalPrice != null" >
+        #{importGoodsTotalPrice,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -212,6 +224,9 @@
       <if test="importGoodsRemark != null" >
         import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
       </if>
+      <if test="importGoodsTotalPrice != null" >
+        import_goods_total_price = #{importGoodsTotalPrice,jdbcType=BIGINT},
+      </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
@@ -232,7 +247,8 @@
       import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
       import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
       import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
-      import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR}
+      import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
+      import_goods_total_price = #{importGoodsTotalPrice,jdbcType=BIGINT}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

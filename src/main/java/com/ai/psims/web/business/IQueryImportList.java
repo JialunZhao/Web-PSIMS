@@ -7,4 +7,6 @@ import com.ai.psims.web.model.Import;
 
 public interface IQueryImportList {
 	public List<Import> queryImportByColum(Map<String, String> m);
+
+	public Import selectByPrimaryKey(String importSerialNumber);
 }

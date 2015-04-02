@@ -16,6 +16,7 @@ import com.ai.psims.web.model.Storehouse;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.IProviderService;
 import com.ai.psims.web.service.IStorehouseService;
+import com.ai.psims.web.util.CreateIdUtil;
 
 @Service
 public class QueryBus implements IQueryBus {
@@ -23,38 +24,19 @@ public class QueryBus implements IQueryBus {
 	private IProviderService providerService;
 	@Resource(name = "storehouseServiceImpl")
 	private IStorehouseService storehouseService;
-	@Resource(name="goodsServiceImpl")
+	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
-	@Resource(name="importMapper")
+	@Resource(name = "importMapper")
 	private ImportMapper importMapper;
 
-	public List<String> queryProvider() {
+	public List<Provider> queryProvider() {
 		List<Provider> pList = new ArrayList<Provider>();
-		List<String> providerName = new ArrayList<String>();
 		pList = providerService.queryProvider();
-		for (Provider provider : pList) {
-			providerName.add(provider.getProviderName());
-		}
-		if (providerName.size() != 0) {
-			return providerName;
-		} else {
-			return null;
-		}
-
+		return pList;
 	}
 
-	public List<String> queryStorehouse() {
-		List<Storehouse> sList = new ArrayList<Storehouse>();
-		List<String> storehouseName = new ArrayList<String>();
-		sList = storehouseService.queryStorehouse();
-		for (Storehouse storehouse : sList) {
-			storehouseName.add(storehouse.getStorehouseName());
-		}
-		if (storehouseName.size() != 0) {
-			return storehouseName;
-		} else {
-			return null;
-		}
+	public List<Storehouse> queryStorehouse() {
+		return storehouseService.queryStorehouse();
 	}
 
 	public List<Goods> queryGoodsByName(String goodsName) {
@@ -62,6 +44,12 @@ public class QueryBus implements IQueryBus {
 	}
 
 	public List<Import> queryImport() {
-		return importMapper.selectAll();
+		List<Import> importList = new ArrayList<Import>();
+		importList =importMapper.selectAll();
+		for (Import import1 : importList) {
+			import1.setImportStatus(CreateIdUtil.getTranslation(import1.getImportStatus()));
+			import1.setPaymentType(CreateIdUtil.getTranslation(import1.getPaymentType()));
+		}
+		return importList;
 	}
 }

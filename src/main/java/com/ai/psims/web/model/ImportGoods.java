@@ -3,153 +3,167 @@ package com.ai.psims.web.model;
 import java.util.Date;
 
 public class ImportGoods {
-    private Integer importGoodsId;
+	private Integer importGoodsId;
 
-    private String importSerialNumber;
+	private String importSerialNumber;
 
-    private Integer goodsId;
+	private Integer goodsId;
 
-    private String goodsName;
+	private String goodsName;
 
-    private String importGoodsType;
+	private String importGoodsType;
 
-    private Integer importGoodsAmount;
+	private Integer importGoodsAmount;
 
-    private String importGoodsUnit;
+	private String importGoodsUnit;
 
-    private Long importGoodsPrice;
+	private Long importGoodsPrice;
 
-    private Date importGoodsProductionDate;
+	private Date importGoodsProductionDate;
 
-    private Date importGoodsExpirationDate;
+	private Date importGoodsExpirationDate;
 
-    private Long importDiscountAmount;
+	private Long importDiscountAmount;
 
-    private Date importGoodsCreatetime;
+	private Date importGoodsCreatetime;
 
-    private Date importGoodsModifytime;
+	private Date importGoodsModifytime;
 
-    private Date importGoodsEndtime;
+	private Date importGoodsEndtime;
 
-    private String importGoodsRemark;
+	private String importGoodsRemark;
 
-    public Integer getImportGoodsId() {
-        return importGoodsId;
-    }
+	private Long importGoodsTotalPrice;
 
-    public void setImportGoodsId(Integer importGoodsId) {
-        this.importGoodsId = importGoodsId;
-    }
+	public Long getImportGoodsTotalPrice() {
+		return importGoodsTotalPrice;
+	}
 
-    public String getImportSerialNumber() {
-        return importSerialNumber;
-    }
+	public void setImportGoodsTotalPrice(Long importGoodsTotalPrice) {
+		this.importGoodsTotalPrice = importGoodsTotalPrice;
+	}
 
-    public void setImportSerialNumber(String importSerialNumber) {
-        this.importSerialNumber = importSerialNumber == null ? null : importSerialNumber.trim();
-    }
+	public Integer getImportGoodsId() {
+		return importGoodsId;
+	}
 
-    public Integer getGoodsId() {
-        return goodsId;
-    }
+	public void setImportGoodsId(Integer importGoodsId) {
+		this.importGoodsId = importGoodsId;
+	}
 
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
+	public String getImportSerialNumber() {
+		return importSerialNumber;
+	}
 
-    public String getGoodsName() {
-        return goodsName;
-    }
+	public void setImportSerialNumber(String importSerialNumber) {
+		this.importSerialNumber = importSerialNumber == null ? null
+				: importSerialNumber.trim();
+	}
 
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName == null ? null : goodsName.trim();
-    }
+	public Integer getGoodsId() {
+		return goodsId;
+	}
 
-    public String getImportGoodsType() {
-        return importGoodsType;
-    }
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
+	}
 
-    public void setImportGoodsType(String importGoodsType) {
-        this.importGoodsType = importGoodsType == null ? null : importGoodsType.trim();
-    }
+	public String getGoodsName() {
+		return goodsName;
+	}
 
-    public Integer getImportGoodsAmount() {
-        return importGoodsAmount;
-    }
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName == null ? null : goodsName.trim();
+	}
 
-    public void setImportGoodsAmount(Integer importGoodsAmount) {
-        this.importGoodsAmount = importGoodsAmount;
-    }
+	public String getImportGoodsType() {
+		return importGoodsType;
+	}
 
-    public String getImportGoodsUnit() {
-        return importGoodsUnit;
-    }
+	public void setImportGoodsType(String importGoodsType) {
+		this.importGoodsType = importGoodsType == null ? null : importGoodsType
+				.trim();
+	}
 
-    public void setImportGoodsUnit(String importGoodsUnit) {
-        this.importGoodsUnit = importGoodsUnit == null ? null : importGoodsUnit.trim();
-    }
+	public Integer getImportGoodsAmount() {
+		return importGoodsAmount;
+	}
 
-    public Long getImportGoodsPrice() {
-        return importGoodsPrice;
-    }
+	public void setImportGoodsAmount(Integer importGoodsAmount) {
+		this.importGoodsAmount = importGoodsAmount;
+	}
 
-    public void setImportGoodsPrice(Long importGoodsPrice) {
-        this.importGoodsPrice = importGoodsPrice;
-    }
+	public String getImportGoodsUnit() {
+		return importGoodsUnit;
+	}
 
-    public Date getImportGoodsProductionDate() {
-        return importGoodsProductionDate;
-    }
+	public void setImportGoodsUnit(String importGoodsUnit) {
+		this.importGoodsUnit = importGoodsUnit == null ? null : importGoodsUnit
+				.trim();
+	}
 
-    public void setImportGoodsProductionDate(Date importGoodsProductionDate) {
-        this.importGoodsProductionDate = importGoodsProductionDate;
-    }
+	public Long getImportGoodsPrice() {
+		return importGoodsPrice;
+	}
 
-    public Date getImportGoodsExpirationDate() {
-        return importGoodsExpirationDate;
-    }
+	public void setImportGoodsPrice(Long importGoodsPrice) {
+		this.importGoodsPrice = importGoodsPrice;
+	}
 
-    public void setImportGoodsExpirationDate(Date importGoodsExpirationDate) {
-        this.importGoodsExpirationDate = importGoodsExpirationDate;
-    }
+	public Date getImportGoodsProductionDate() {
+		return importGoodsProductionDate;
+	}
 
-    public Long getImportDiscountAmount() {
-        return importDiscountAmount;
-    }
+	public void setImportGoodsProductionDate(Date importGoodsProductionDate) {
+		this.importGoodsProductionDate = importGoodsProductionDate;
+	}
 
-    public void setImportDiscountAmount(Long importDiscountAmount) {
-        this.importDiscountAmount = importDiscountAmount;
-    }
+	public Date getImportGoodsExpirationDate() {
+		return importGoodsExpirationDate;
+	}
 
-    public Date getImportGoodsCreatetime() {
-        return importGoodsCreatetime;
-    }
+	public void setImportGoodsExpirationDate(Date importGoodsExpirationDate) {
+		this.importGoodsExpirationDate = importGoodsExpirationDate;
+	}
 
-    public void setImportGoodsCreatetime(Date importGoodsCreatetime) {
-        this.importGoodsCreatetime = importGoodsCreatetime;
-    }
+	public Long getImportDiscountAmount() {
+		return importDiscountAmount;
+	}
 
-    public Date getImportGoodsModifytime() {
-        return importGoodsModifytime;
-    }
+	public void setImportDiscountAmount(Long importDiscountAmount) {
+		this.importDiscountAmount = importDiscountAmount;
+	}
 
-    public void setImportGoodsModifytime(Date importGoodsModifytime) {
-        this.importGoodsModifytime = importGoodsModifytime;
-    }
+	public Date getImportGoodsCreatetime() {
+		return importGoodsCreatetime;
+	}
 
-    public Date getImportGoodsEndtime() {
-        return importGoodsEndtime;
-    }
+	public void setImportGoodsCreatetime(Date importGoodsCreatetime) {
+		this.importGoodsCreatetime = importGoodsCreatetime;
+	}
 
-    public void setImportGoodsEndtime(Date importGoodsEndtime) {
-        this.importGoodsEndtime = importGoodsEndtime;
-    }
+	public Date getImportGoodsModifytime() {
+		return importGoodsModifytime;
+	}
 
-    public String getImportGoodsRemark() {
-        return importGoodsRemark;
-    }
+	public void setImportGoodsModifytime(Date importGoodsModifytime) {
+		this.importGoodsModifytime = importGoodsModifytime;
+	}
 
-    public void setImportGoodsRemark(String importGoodsRemark) {
-        this.importGoodsRemark = importGoodsRemark == null ? null : importGoodsRemark.trim();
-    }
+	public Date getImportGoodsEndtime() {
+		return importGoodsEndtime;
+	}
+
+	public void setImportGoodsEndtime(Date importGoodsEndtime) {
+		this.importGoodsEndtime = importGoodsEndtime;
+	}
+
+	public String getImportGoodsRemark() {
+		return importGoodsRemark;
+	}
+
+	public void setImportGoodsRemark(String importGoodsRemark) {
+		this.importGoodsRemark = importGoodsRemark == null ? null
+				: importGoodsRemark.trim();
+	}
 }

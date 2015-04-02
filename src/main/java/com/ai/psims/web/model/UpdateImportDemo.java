@@ -1,0 +1,111 @@
+package com.ai.psims.web.model;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class UpdateImportDemo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public List<ImportGoods> importGoodsList;
+	public String providerId;
+	public String storehouseId;
+	public String paymentType;
+	public String importStatus;
+	public String payTime;
+	public String importSerialNumber;
+	public String storehouseName;
+	public String providerName;
+
+	public UpdateImportDemo(List<ImportGoods> importGoodsList,
+			String providerId, String storehouseId, String paymentType,
+			String importStatus, String payTime, String importSerialNumber,
+			String storehouseName, String providerName) {
+		super();
+		this.importGoodsList = importGoodsList;
+		this.providerId = providerId;
+		this.storehouseId = storehouseId;
+		this.paymentType = paymentType;
+		this.importStatus = importStatus;
+		this.payTime = payTime;
+		this.importSerialNumber = importSerialNumber;
+		this.storehouseName = storehouseName;
+		this.providerName = providerName;
+	}
+
+	public String getStorehouseName() {
+		return storehouseName;
+	}
+
+	public void setStorehouseName(String storehouseName) {
+		this.storehouseName = storehouseName;
+	}
+
+	public String getProviderName() {
+		return providerName;
+	}
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+
+	public List<ImportGoods> getImportGoodsList() {
+		return importGoodsList;
+	}
+
+	public void setImportGoodsList(List<ImportGoods> importGoodsList) {
+		this.importGoodsList = importGoodsList;
+	}
+
+	public String getImportSerialNumber() {
+		return importSerialNumber;
+	}
+
+	public void setImportSerialNumber(String importSerialNumber) {
+		this.importSerialNumber = importSerialNumber;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getStorehouseId() {
+		return storehouseId;
+	}
+
+	public void setStorehouseId(String storehouseId) {
+		this.storehouseId = storehouseId;
+	}
+
+	public String getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public String getImportStatus() {
+		return importStatus;
+	}
+
+	public void setImportStatus(String importStatus) {
+		this.importStatus = importStatus;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
+	}
+
+}

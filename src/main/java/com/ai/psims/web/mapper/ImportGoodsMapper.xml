@@ -10,6 +10,7 @@
     <result column="import_goods_amount" property="importGoodsAmount" jdbcType="INTEGER" />
     <result column="import_goods_unit" property="importGoodsUnit" jdbcType="VARCHAR" />
     <result column="import_goods_price" property="importGoodsPrice" jdbcType="BIGINT" />
+    <result column="import_goods_total_price" property="importGoodsTotalPrice" jdbcType="BIGINT" />
     <result column="import_goods_production_date" property="importGoodsProductionDate" jdbcType="DATE" />
     <result column="import_goods_expiration_date" property="importGoodsExpirationDate" jdbcType="DATE" />
     <result column="import_discount_amount" property="importDiscountAmount" jdbcType="BIGINT" />
@@ -22,13 +23,20 @@
     import_goods_id, import_serial_number, goods_id, goods_name, import_goods_type, import_goods_amount, 
     import_goods_unit, import_goods_price, import_goods_production_date, import_goods_expiration_date, 
     import_discount_amount, import_goods_createtime, import_goods_modifytime, import_goods_endtime, 
-    import_goods_remark
+    import_goods_remark,import_goods_total_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_import_goods
     where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectBySerNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_import_goods
+    where import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
   </select>
   
   <select id="selectId" resultType="java.lang.Integer">
@@ -45,14 +53,14 @@
       import_goods_amount, import_goods_unit, import_goods_price, 
       import_goods_production_date, import_goods_expiration_date, 
       import_discount_amount, import_goods_createtime, 
-      import_goods_modifytime, import_goods_endtime, import_goods_remark
+      import_goods_modifytime, import_goods_endtime, import_goods_remark,import_goods_total_price
       )
     values (#{importGoodsId,jdbcType=INTEGER}, #{importSerialNumber,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{importGoodsType,jdbcType=VARCHAR}, 
       #{importGoodsAmount,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}, #{importGoodsPrice,jdbcType=BIGINT}, 
       #{importGoodsProductionDate,jdbcType=DATE}, #{importGoodsExpirationDate,jdbcType=DATE}, 
       #{importDiscountAmount,jdbcType=BIGINT}, #{importGoodsCreatetime,jdbcType=DATE}, 
-      #{importGoodsModifytime,jdbcType=DATE}, #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR}
+      #{importGoodsModifytime,jdbcType=DATE}, #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR}, #{importGoodsTotalPrice,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.ImportGoods" >
@@ -103,6 +111,9 @@
       <if test="importGoodsRemark != null" >
         import_goods_remark,
       </if>
+      <if test="importGoodsTotalPrice != null" >
+        import_goods_total_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="importGoodsId != null" >
@@ -149,6 +160,9 @@
       </if>
       <if test="importGoodsRemark != null" >
         #{importGoodsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsTotalPrice != null" >
+        #{importGoodsTotalPrice,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -197,6 +211,9 @@
       <if test="importGoodsRemark != null" >
         import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
       </if>
+      <if test="importGoodsTotalPrice != null" >
+        import_goods_total_price = #{importGoodsTotalPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
   </update>
@@ -215,6 +232,7 @@
       import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
       import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
       import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
+      import_goods_total_price = #{importGoodsTotalPrice,jdbcType=VARCHAR},
       import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR}
     where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
   </update>
