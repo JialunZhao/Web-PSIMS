@@ -8,7 +8,7 @@ import com.ai.psims.web.model.TbCustomerExample;
 public interface ICustomerBusiness {
 	public int customerAdd(TbCustomer customeradd);
 
-	public int customerDelete(TbCustomerExample customerDelete);
+	public int customerDelete(TbCustomer customerDelete);
 
 	public int customerModify(TbCustomer customerModify);
 

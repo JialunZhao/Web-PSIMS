@@ -14,13 +14,22 @@ public class CreateIdUtil {
 		for (Integer integer : IdList) {
 			if (integer == id) {
 				getNewId(selectIdMapper);
-			} 
+			}
 		}
 		return id;
 	}
 
 	public static String getTranslation(String str) {
 		String result = null;
+		if (str.equals(Constants.CommonStatus.Invalid_Str)) {
+			result = Constants.CommonStatus.Invalid_Code;
+		}
+		if (str.equals(Constants.CommonStatus.Normal_Str)) {
+			result = Constants.CommonStatus.Normal_Code;
+		}
+		if (str.equals(Constants.CommonStatus.Exception_Str)) {
+			result = Constants.CommonStatus.Exception_Code;
+		}
 		if (str.equals(Constants.ImportStatus.GOODSARRIVAL)) {
 			result = Constants.ImportStatus.GOODSARRIVAL01;
 		}

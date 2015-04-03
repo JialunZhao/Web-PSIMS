@@ -1,13 +1,11 @@
-//新增客户提交
+//新增客户 
+//1.提交数据
 $("#addcustomersubmit").click(function customeradd() {
-	// alert($("#addcustomerForm").serialize());
-
 	$.ajax({
 		type : 'POST',
 		async : true,
 		url : 'addcustomer.do',
 		data : $('#addcustomerForm').serialize(),
-
 		// data : {
 		// 'customer_name' : customer_name,
 		// 'customer_type' : customer_type,
@@ -20,10 +18,12 @@ $("#addcustomersubmit").click(function customeradd() {
 		// },
 		success : function(data) {
 			$('#addcustomer').modal('hide');
-
+			window.location.href = "customer";
 		},
 	});
 });
+// 2.刷新列表
+
 // 删除客户信息
 function delCurrentCustomer(obj) {
 	// console.dir(obj);
@@ -83,7 +83,8 @@ function modifyCurrentCustomerInfo(obj) {
 		url : 'modify.do',
 		data : $('#modify_customerForm').serialize(),
 		success : function(data) {
-			alert("1");
+			$('#modifycustomer').modal('hide');
+			window.location.href = "customer";
 		},
 	});
 }

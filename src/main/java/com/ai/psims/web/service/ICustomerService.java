@@ -9,9 +9,11 @@ public interface ICustomerService {
 
 	public int insertCustomerInfo(TbCustomer customerAdd);
 
-	public int deleteCustomerInfo(TbCustomerExample customerDelete);
+	public int deleteCustomerInfo(TbCustomer customerDelete);
 
 	public int modifyCustomerInfo(TbCustomer customerModify);
+	
+	public int backupCustomerInfo(TbCustomer customerBackup);
 
 	public List<TbCustomer> queryCustomer(TbCustomerExample customerQuery);
 }

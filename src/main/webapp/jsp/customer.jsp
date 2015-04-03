@@ -97,7 +97,7 @@
 				<h3 class="page-header">客户管理</h3>
 
 				<div class="row placeholders">
-					<form class="form-inline" action="" method="get" >
+					<form class="form-inline" action="customer" method="get" >
 						<div class="form-group">
 							<label for="query_customerName">客户名称：</label> <input type="text"
 								class="form-control" id="query_customerName" name="query_customerName" placeholder="客户名称">
@@ -218,7 +218,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<form id="addcustomerForm" >
+						<form id="addcustomerForm"  >
 
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
