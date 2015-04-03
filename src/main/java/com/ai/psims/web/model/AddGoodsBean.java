@@ -1,6 +1,12 @@
 package com.ai.psims.web.model;
 
-public class AddGoodsBean {
+import java.io.Serializable;
+
+public class AddGoodsBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String goodList;
 	private String providerName;
 	private String storeName;
@@ -8,10 +14,14 @@ public class AddGoodsBean {
 	private String payMed;
 	private String payStatus;
 	private String importcreatetime;
+	private String payTime;
+	private String providerId;
+	private String storeId;
 
 	public AddGoodsBean(String goodList, String providerName, String storeName,
 			String discountMed, String payMed, String payStatus,
-			String importcreatetime) {
+			String importcreatetime, String payTime, String providerId,
+			String storeId) {
 		super();
 		this.goodList = goodList;
 		this.providerName = providerName;
@@ -19,7 +29,34 @@ public class AddGoodsBean {
 		this.discountMed = discountMed;
 		this.payMed = payMed;
 		this.payStatus = payStatus;
+		this.payTime = payTime;
+		this.providerId = providerId;
+		this.storeId = storeId;
 		this.setImportcreatetime(importcreatetime);
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
 	}
 
 	public String getGoodList() {

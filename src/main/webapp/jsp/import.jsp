@@ -12,8 +12,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
-List<Import> importList=new ArrayList<Import>();
-importList=request.getAttribute("importList");
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,7 +23,9 @@ importList=request.getAttribute("importList");
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>  
+    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>    
+	<%-- <jsp:include page="updataimportdata.jsp" flush="true"></jsp:include> --%>
+	<%-- <jsp:include page="common.jsp" flush="true"></jsp:include> --%>
 	
     <!-- Loading Bootstrap -->
        
@@ -174,9 +174,9 @@ importList=request.getAttribute("importList");
                   		<fmt:formatDate value="${imports.importDatetime }" pattern="yyyy-MM-dd"/>
                   	</td>
                   	<td>${imports.importBatchNumber }</td>
-                  	<td><%=paymentType %></td>
-                  	<td><%=importStatus %></td>
-                  	<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData(${imports.importSerialNumber })" >修改</a></td>
+                  	<td>${imports.paymentType }</td>
+                  	<td>${imports.importStatus }</td>
+                  	<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData(${imports.importSerialNumber })" >修改</a>/<a href="#" onclick="deleteImportData(${imports.importSerialNumber })" >删除</a></td>
                 </tr>
                 </c:forEach>         
               </tbody>
@@ -188,9 +188,11 @@ importList=request.getAttribute("importList");
 
 
 
-     <!-- 模态框（Modal） -->
+
+    <!-- 模态框（Modal） -->
     <!-- 添加入库单模态框（Modal） -->
-    <div class="modal fade" id="importgoods" tabindex="-1" role="dialog" aria-labelledby="importgoods" aria-hidden="true">
+    <div class="modal fade" id="importgoods" tabindex="-1" role="dialog" 
+       aria-labelledby="importgoods" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -221,16 +223,16 @@ importList=request.getAttribute("importList");
               <span class="input-group-addon" style="background-color: #1abc9c;">折扣方式：</span>
                 <select class="form-control" value="请选择折扣方式" tabindex="1" name="discountMed" id="discountMed">
                   <option value="">请选择折扣方式</option>
-                  <option value="1">无折扣</option>
-                  <option value="2">奖金池</option>
+                  <option value="20">无折扣</option>
+                  <option value="21">奖金池</option>
                 </select>
               </div>
               <div class="input-group col-xs-10 col-md-offset-1">                
                 <span class="input-group-addon" style="background-color: #1abc9c;">支付状态：</span>
                 <select class="form-control" value="请选择支付状态" tabindex="1" name="payStatus" id="payStatus" onchange="isPay(this.value)">
                   <option value="">请选择支付状态</option>
-                  <option value="001">未付款</option>
-                  <option value="002">已付款</option>
+                  <option value="10">未付款</option>
+                  <option value="11">已付款</option>
                 </select>
               </div>
               <div class="input-group col-xs-10 col-md-offset-1" id="isPay" style="display: none">               
@@ -304,10 +306,11 @@ importList=request.getAttribute("importList");
 
           <div class="modal-body" id="addgoodstb" style="display:none">
             <div class="row">
-              <div class="table-responsive col-xs-12">
+              <div class="table-responsive col-xs-15">
                 <table class="table table-striped" id="addGoodsTab">
                   <thead>
                     <tr>
+                      <th>商品ID</th>
                       <th>商品名称</th>
                       <th>基本单位</th>
                       <th>入库数量</th>
@@ -324,7 +327,7 @@ importList=request.getAttribute("importList");
               </div>
               
               <div class="input-group col-xs-1">
-               	<button type="button" class="btn btn-primary" id="suerAdd" >确认新增</button>
+               	<button type="submit" class="btn btn-primary" id="suerAdd" >确认新增</button>
               </div>
             </div>
           </div>
@@ -345,13 +348,16 @@ importList=request.getAttribute("importList");
     <script src="<%=_base %>/js/flat-ui.min.js"></script>
     <script type="text/javascript">
     	function isPay(payStatus){
-    		if (payStatus=="002") {
+    		if (payStatus=="11") {
 				$("#isPay").show();
+			}else {
+				$("#isPay").hide();
 			}
     	}
     
     	function showTable(){
-    		var goodsName=$("#goodsName").val();
+    		var goodsCode=$("#goodsName").val();
+    		var goodsName=$("#goodsName").find("option:selected").text();
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax(  
                     {  
@@ -386,18 +392,17 @@ importList=request.getAttribute("importList");
     	function queryImportList() {
       		var selOpt = $("#importGoodListTab tbody tr");  
     		selOpt.remove();
-			var providerName=$("#queProviderName").find("option:selected").text();
-			var storeName=$("#queStoreName").find("option:selected").text();
+			var providerId=$("#queProviderName").val();
+			var storeId=$("#queStoreName").val();
 			var payMed=$("#quePayMed").val();
 			var importSerialNumber=$("#queImportSerialNumber").val();
-			var importBatchNumber,importStatus;
 			$.ajax(  
                     {  
                         url:'<%=_base %>/accountController/queryImportList.do',  
                         type:"post",  
                         async:true,
-                        data:{'providerName':providerName,
-                        	'storeName':storeName,
+                        data:{'providerId':providerId,
+                        	'storeId':storeId,
                         	'payMed':payMed,
                         	'importSerialNumber':importSerialNumber
                         	},
@@ -405,22 +410,15 @@ importList=request.getAttribute("importList");
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.goods);
     								for (var i = 0; i < goodsList.length; i++) {
-    											var importSerialNumber=goodsList[i].importSerialNumber;
-    											var providerName=goodsList[i].providerName;
-    											var storehouseName=goodsList[i].storehouseName;
-    											var importDatetime=goodsList[i].importDatetime;
-    											importBatchNumber=goodsList[i].importBatchNumber;
-    											var paymentType=goodsList[i].paymentType;
-    											importStatus=goodsList[i].importStatus;
 	    										$("#importGoodListTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
-	    					                  	+'<td>'+importSerialNumber+'</td>'
-	    					                  	+'<td>'+providerName+'</td>'
-	    					                  	+'<td>'+storehouseName+'</td>'
-	    					                  	+'<td>'+getLocalTime(importDatetime)+'</td>'
-	    					                  	+'<td>'+importBatchNumber+'</td>'
-	    					                  	+'<td>'+paymentType+'</td>'
-	    					                  	+'<td>'+importStatus+'</td>'
-	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" data-toggle="modal" data-target="#importgoodsmodify" >修改</a></td></tr>' );
+	    					                  	+'<td>'+isNull(goodsList[i].importSerialNumber)+'</td>'
+	    					                  	+'<td>'+isNull(goodsList[i].providerName)+'</td>'
+	    					                  	+'<td>'+isNull(goodsList[i].storehouseName)+'</td>'
+	    					                  	+'<td>'+getLocalTime(goodsList[i].importDatetime)+'</td>'
+	    					                  	+'<td>'+isNull(goodsList[i].importBatchNumber)+'</td>'
+	    					                  	+'<td>'+isNull(goodsList[i].paymentType)+'</td>'
+	    					                  	+'<td>'+isNull(goodsList[i].importStatus)+'</td>'
+	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a></td></tr>' );
 	        								
     								}
                                 
@@ -428,7 +426,17 @@ importList=request.getAttribute("importList");
                     }); 
 		}
     	
+    	function isNull(str) {
+			if(str==null){
+				str="";
+			}
+			return str;
+		}
+    	
     	function getLocalTime(nS) {
+    		if(nS==null){
+				return "";
+			}
     		var t=new Date(nS);
     		y = t.getFullYear();
     		m = t.getMonth()+1;
@@ -452,7 +460,7 @@ importList=request.getAttribute("importList");
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.list);
     									for (var i = 0; i < goodsList.length; i++) {
-        									$("#goodsName").append( "<option>"+goodsList[i].goodsName+"</option>" );
+        									$("#goodsName").append( "<option value='"+goodsList[i].goodsId+"'>"+goodsList[i].goodsName+"</option>" );
         								}
     									$("#addgoods").show();
     							        $("#addgoodsbtn").hide();
@@ -473,6 +481,26 @@ importList=request.getAttribute("importList");
     			content:'url:'+url
     		});
 		}
+    	
+    	function deleteImportData(importSerialNumber){
+    		$.ajax({  
+                url:'<%=_base %>/accountController/deleteImportData.do',  
+                type:"post",  
+                async:false,
+                modal : true,
+                showBusi : false,
+                data:{'importSerialNumber':importSerialNumber},
+                success:function(data){  
+                	if($.parseJSON(data).RES_RESULT=="SUCCESS"){
+              		  alert("成功删除入库单");
+              		  location.reload();
+              	  	}else{
+              		  alert("添加删除单失败");
+              	  	}
+				}
+                        
+            });       
+    	}
     </script>
     <script type="text/javascript">
     var len=$("#addGoodsTab tbody tr").length;
@@ -516,7 +544,7 @@ importList=request.getAttribute("importList");
 			alert("请选择支付状态");
 			return;
 		}
-    	if (payStatus=="002") {
+    	if (payStatus=="11") {
     		var payMed=$("#payMed").val();
     		var payTime=$("#payTime").val();
     		if (checkIsNull(payMed)) {
@@ -551,8 +579,8 @@ importList=request.getAttribute("importList");
       }
       
       $("#addgoodsokbtn").click(function(){
-        
-        var goodsName=$("#goodsName").val();
+    	var goodsId=$("#goodsName").val();
+        var goodsName=$("#goodsName").find("option:selected").text();
         var goodsUnit=$("#goodsUnit").val();
         var goodsPrice=$("#goodsPrice").val();
         var goodsProductionDate=$("#goodsProductionDate").val();
@@ -572,6 +600,7 @@ importList=request.getAttribute("importList");
 			return;
 		}
         $("#addGoodsTab tbody").append("<tr id="+len+">"
+					+"<td>"+goodsId+"</td>"
 					+"<td>"+goodsName+"</td>"
 					+"<td>"+goodsUnit+"</td>"
 					+"<td>"+goodsCount+"</td>"
@@ -611,12 +640,21 @@ importList=request.getAttribute("importList");
       $("#suerAdd").click(function(){
     	  var goodList="";
     	  var storeName=$("#storeName").find("option:selected").text();
+    	  var storeId=$("#storeName").val();
     	  var providerName=$("#providerName").find("option:selected").text();
+    	  var providerId=$("#providerName").val();
     	  var discountMed=$("#discountMed").val();
     	  var importcreatetime=$("#importcreatetime").val();
-    	  var payMed=$("#payMed").val();
-    	  var payStatus=$("#payStatus").val();
-    	  var payTime=$("#payTime").val();
+    	  var payMed,payTime;
+    	  var payStatus=$("#payStatus").val();    	  
+    	  if (payStatus==<%=Constants.PayStatus.NOPAY %>) {
+    		  payMed="";
+    		  payTime="";
+		  }else {
+			  payMed=$("#payMed").val();
+			  payTime=$("#payTime").val();
+		  }
+    	  
     	  $('#addGoodsTab tbody tr').find('td').each(function() {
     		  goodList=goodList+$(this).text() + ',';
           });
@@ -632,15 +670,19 @@ importList=request.getAttribute("importList");
                     	    'discountMed':discountMed,
                     	    'payMed':payMed,
                     	    'importcreatetime':importcreatetime,
+                    	    'storeId':storeId,
+                    	    'providerId':providerId,
                     	    'payStatus':payStatus,
                     	    'payTime':payTime},
                       success:function(data){
                     	  if($.parseJSON(data).RES_RESULT=="SUCCESS"){
                     		  alert("成功添加入库单");
+                    		  location.reload();
                     	  }else{
                     		  alert("添加入库单失败");
                     	  }
-                    	  
+                    	  var selOpt = $("#addGoodsTab tbody tr");  
+                  		  selOpt.remove();
                     	  $("#importgoods").hide();
                     	  $("#addgoodstb").hide();
                     	  $("#importgoodsform").show();
@@ -667,7 +709,8 @@ importList=request.getAttribute("importList");
     	  }
         }); 
       $("#continAddgoodsokbtn").click(function(){
-    	  var goodsName=$("#goodsName").val();
+    	  var goodsId=$("#goodsName").val();
+    	  var goodsName=$("#goodsName").find("option:selected").text();
           var goodsUnit=$("#goodsUnit").val();
           var goodsPrice=$("#goodsPrice").val();
           var goodsProductionDate=$("#goodsProductionDate").val();
@@ -687,6 +730,7 @@ importList=request.getAttribute("importList");
   			return;
   		  }
           $("#addGoodsTab tbody").append("<tr id="+len+">"
+        		  						+"<td>"+goodsId+"</td>"
         		  						+"<td>"+goodsName+"</td>"
         		  						+"<td>"+goodsUnit+"</td>"
         		  						+"<td>"+goodsCount+"</td>"

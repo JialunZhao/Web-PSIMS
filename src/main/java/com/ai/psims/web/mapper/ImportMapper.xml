@@ -33,11 +33,11 @@
     <include refid="Base_Column_List" />
     from tb_import ST
     <where>   
-         <if test="providerName!=null and providerName!='' ">   
-             ST.provider_name LIKE CONCAT(CONCAT('%', #{providerName}),'%')    
+         <if test="providerId!=null and providerId!='' ">   
+             ST.provider_id LIKE CONCAT(CONCAT('%', #{providerId}),'%')    
          </if>   
-         <if test="storehouseName!= null and storehouseName!= '' ">   
-             AND ST.storehouse_name LIKE CONCAT(CONCAT('%', #{storehouseName}),'%')    
+         <if test="storehouseId!= null and storehouseId!= '' ">   
+             AND ST.storehouse_Id LIKE CONCAT(CONCAT('%', #{storehouseId}),'%')    
          </if>   
          <if test="importSerialNumber!=null and importSerialNumber!= '' ">   
              AND ST.import_serial_number LIKE CONCAT(CONCAT('%', #{importSerialNumber}),'%')   

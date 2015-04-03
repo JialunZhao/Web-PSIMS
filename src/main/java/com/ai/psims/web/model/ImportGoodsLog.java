@@ -37,6 +37,8 @@ public class ImportGoodsLog {
 
     private String importGoodsRemark;
 
+    private Long importGoodsTotalPrice;
+
     public Integer getLogId() {
         return logId;
     }
@@ -171,5 +173,13 @@ public class ImportGoodsLog {
 
     public void setImportGoodsRemark(String importGoodsRemark) {
         this.importGoodsRemark = importGoodsRemark == null ? null : importGoodsRemark.trim();
+    }
+
+    public Long getImportGoodsTotalPrice() {
+        return importGoodsTotalPrice;
+    }
+
+    public void setImportGoodsTotalPrice(Long importGoodsTotalPrice) {
+        this.importGoodsTotalPrice = importGoodsTotalPrice;
     }
 }

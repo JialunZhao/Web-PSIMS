@@ -25,7 +25,13 @@ public class ImportLog {
 
     private String importRemark;
 
-    private String column10;
+    private Integer providerId;
+
+    private String providerName;
+
+    private String storehouseName;
+
+    private Integer storehouseId;
 
     public Integer getLogId() {
         return logId;
@@ -115,11 +121,35 @@ public class ImportLog {
         this.importRemark = importRemark == null ? null : importRemark.trim();
     }
 
-    public String getColumn10() {
-        return column10;
+    public Integer getProviderId() {
+        return providerId;
     }
 
-    public void setColumn10(String column10) {
-        this.column10 = column10 == null ? null : column10.trim();
+    public void setProviderId(Integer providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName == null ? null : providerName.trim();
+    }
+
+    public String getStorehouseName() {
+        return storehouseName;
+    }
+
+    public void setStorehouseName(String storehouseName) {
+        this.storehouseName = storehouseName == null ? null : storehouseName.trim();
+    }
+
+    public Integer getStorehouseId() {
+        return storehouseId;
+    }
+
+    public void setStorehouseId(Integer storehouseId) {
+        this.storehouseId = storehouseId;
     }
 }

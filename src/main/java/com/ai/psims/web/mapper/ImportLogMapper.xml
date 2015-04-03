@@ -13,18 +13,24 @@
     <result column="import_type" property="importType" jdbcType="VARCHAR" />
     <result column="import_status" property="importStatus" jdbcType="VARCHAR" />
     <result column="import_remark" property="importRemark" jdbcType="VARCHAR" />
-    <result column="Column_10" property="column10" jdbcType="CHAR" />
+    <result column="provider_id" property="providerId" jdbcType="INTEGER" />
+    <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+    <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR" />
+    <result column="storehouse_id" property="storehouseId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     log_id, log_datetime, import_serial_number, import_datetime, import_batch_number, 
     import_total_price, payment_type, payment_time, import_type, import_status, import_remark, 
-    Column_10
+    provider_id, provider_name, storehouse_name, storehouse_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_import_log
     where log_id = #{logId,jdbcType=INTEGER}
+  </select>
+  <select id="selectId" resultType="java.lang.Integer">
+    select log_id from tb_import_log
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_import_log
@@ -34,12 +40,14 @@
     insert into tb_import_log (log_id, log_datetime, import_serial_number, 
       import_datetime, import_batch_number, import_total_price, 
       payment_type, payment_time, import_type, 
-      import_status, import_remark, Column_10
+      import_status, import_remark, provider_id, 
+      provider_name, storehouse_name, storehouse_id
       )
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{importSerialNumber,jdbcType=VARCHAR}, 
       #{importDatetime,jdbcType=DATE}, #{importBatchNumber,jdbcType=VARCHAR}, #{importTotalPrice,jdbcType=BIGINT}, 
       #{paymentType,jdbcType=VARCHAR}, #{paymentTime,jdbcType=DATE}, #{importType,jdbcType=VARCHAR}, 
-      #{importStatus,jdbcType=VARCHAR}, #{importRemark,jdbcType=VARCHAR}, #{column10,jdbcType=CHAR}
+      #{importStatus,jdbcType=VARCHAR}, #{importRemark,jdbcType=VARCHAR}, #{providerId,jdbcType=INTEGER}, 
+      #{providerName,jdbcType=VARCHAR}, #{storehouseName,jdbcType=VARCHAR}, #{storehouseId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.ImportLog" >
@@ -78,8 +86,17 @@
       <if test="importRemark != null" >
         import_remark,
       </if>
-      <if test="column10 != null" >
-        Column_10,
+      <if test="providerId != null" >
+        provider_id,
+      </if>
+      <if test="providerName != null" >
+        provider_name,
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name,
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -116,8 +133,17 @@
       <if test="importRemark != null" >
         #{importRemark,jdbcType=VARCHAR},
       </if>
-      <if test="column10 != null" >
-        #{column10,jdbcType=CHAR},
+      <if test="providerId != null" >
+        #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseName != null" >
+        #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        #{storehouseId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -154,8 +180,17 @@
       <if test="importRemark != null" >
         import_remark = #{importRemark,jdbcType=VARCHAR},
       </if>
-      <if test="column10 != null" >
-        Column_10 = #{column10,jdbcType=CHAR},
+      <if test="providerId != null" >
+        provider_id = #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null" >
+        provider_name = #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id = #{storehouseId,jdbcType=INTEGER},
       </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
@@ -172,7 +207,10 @@
       import_type = #{importType,jdbcType=VARCHAR},
       import_status = #{importStatus,jdbcType=VARCHAR},
       import_remark = #{importRemark,jdbcType=VARCHAR},
-      Column_10 = #{column10,jdbcType=CHAR}
+      provider_id = #{providerId,jdbcType=INTEGER},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      storehouse_id = #{storehouseId,jdbcType=INTEGER}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

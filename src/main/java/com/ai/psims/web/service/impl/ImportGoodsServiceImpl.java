@@ -1,5 +1,7 @@
 package com.ai.psims.web.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,22 @@ public class ImportGoodsServiceImpl implements IImportGoodsService {
 	public int insertImportGoods(ImportGoods importGoods) {
 		importGoods.setImportGoodsId(CreateIdUtil.getNewId(importGoodsMapper));
 		return importGoodsMapper.insert(importGoods);
+	}
+
+	public List<ImportGoods> selBySerNum(String importSerialNumber) {
+		return importGoodsMapper.selectBySerNum(importSerialNumber);
+	}
+
+	public int updateImportGoods(ImportGoods importGoods) {
+		return importGoodsMapper.updateByPrimaryKeySelective(importGoods);
+	}
+
+	public ImportGoods selectByPrimaryKey(Integer importGoodsId) {
+		return importGoodsMapper.selectByPrimaryKey(importGoodsId);
+	}
+
+	public int deleteByPrimaryKey(Integer importGoodsId) {
+		return importGoodsMapper.deleteByPrimaryKey(importGoodsId);
 	}
 
 }

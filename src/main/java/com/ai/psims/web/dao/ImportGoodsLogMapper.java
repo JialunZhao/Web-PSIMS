@@ -2,7 +2,7 @@ package com.ai.psims.web.dao;
 
 import com.ai.psims.web.model.ImportGoodsLog;
 
-public interface ImportGoodsLogMapper {
+public interface ImportGoodsLogMapper extends SelectIdMapper{
     int deleteByPrimaryKey(Integer logId);
 
     int insert(ImportGoodsLog record);

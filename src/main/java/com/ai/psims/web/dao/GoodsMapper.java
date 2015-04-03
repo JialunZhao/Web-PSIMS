@@ -1,21 +1,30 @@
 package com.ai.psims.web.dao;
 
-import java.util.List;
-
 import com.ai.psims.web.model.Goods;
+import com.ai.psims.web.model.GoodsExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
-	int deleteByPrimaryKey(Integer goodsId);
+    int countByExample(GoodsExample example);
 
-	int insert(Goods record);
+    int deleteByExample(GoodsExample example);
 
-	int insertSelective(Goods record);
+    int deleteByPrimaryKey(Integer goodsId);
 
-	Goods selectByPrimaryKey(Integer goodsId);
+    int insert(Goods record);
 
-	List<Goods> selectByGoodsName(String goodsName);
+    int insertSelective(Goods record);
 
-	int updateByPrimaryKeySelective(Goods record);
+    List<Goods> selectByExample(GoodsExample example);
 
-	int updateByPrimaryKey(Goods record);
+    Goods selectByPrimaryKey(Integer goodsId);
+
+    int updateByExampleSelective(@Param("record") Goods record, @Param("example") GoodsExample example);
+
+    int updateByExample(@Param("record") Goods record, @Param("example") GoodsExample example);
+
+    int updateByPrimaryKeySelective(Goods record);
+
+    int updateByPrimaryKey(Goods record);
 }
