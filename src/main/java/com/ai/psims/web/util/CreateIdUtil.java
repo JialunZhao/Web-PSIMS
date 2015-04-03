@@ -16,7 +16,7 @@ public class CreateIdUtil {
 				getNewId(selectIdMapper);
 			} 
 		}
-		return id; 
+		return id;
 	}
 
 	public static String getTranslation(String str) {
