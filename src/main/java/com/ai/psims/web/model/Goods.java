@@ -15,14 +15,6 @@ public class Goods {
 
     private String goodsBarCode;
 
-    private Integer goodsCurrentStock;
-
-    private Integer goodsTotalStock;
-
-    private Date goodsProductionDate;
-
-    private Date goodsExpirationDate;
-
     private Integer goodsShelfLife;
 
     private Long goodsProfit;
@@ -113,38 +105,6 @@ public class Goods {
 
     public void setGoodsBarCode(String goodsBarCode) {
         this.goodsBarCode = goodsBarCode == null ? null : goodsBarCode.trim();
-    }
-
-    public Integer getGoodsCurrentStock() {
-        return goodsCurrentStock;
-    }
-
-    public void setGoodsCurrentStock(Integer goodsCurrentStock) {
-        this.goodsCurrentStock = goodsCurrentStock;
-    }
-
-    public Integer getGoodsTotalStock() {
-        return goodsTotalStock;
-    }
-
-    public void setGoodsTotalStock(Integer goodsTotalStock) {
-        this.goodsTotalStock = goodsTotalStock;
-    }
-
-    public Date getGoodsProductionDate() {
-        return goodsProductionDate;
-    }
-
-    public void setGoodsProductionDate(Date goodsProductionDate) {
-        this.goodsProductionDate = goodsProductionDate;
-    }
-
-    public Date getGoodsExpirationDate() {
-        return goodsExpirationDate;
-    }
-
-    public void setGoodsExpirationDate(Date goodsExpirationDate) {
-        this.goodsExpirationDate = goodsExpirationDate;
     }
 
     public Integer getGoodsShelfLife() {

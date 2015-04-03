@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ai.psims.web.business.IAddGoodsImportList;
-import com.ai.psims.web.business.IQueryGoodsDemoByProvider;
 import com.ai.psims.web.business.IQueryImportList;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddGoodsBean;
-import com.ai.psims.web.model.GoodsDemo;
+import com.ai.psims.web.model.Goods;
+import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.ImportGoods;
 import com.ai.psims.web.model.Provider;
@@ -33,8 +33,6 @@ import com.alibaba.fastjson.JSONObject;
 public class ImportController extends BaseController {
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
-	@Resource(name = "queryGoodsDemoByProviderImpl")
-	private IQueryGoodsDemoByProvider queryGoodsDemoByProvider;
 	@Resource(name = "addGoodsImportListImpl")
 	private IAddGoodsImportList addGoodsImportList;
 	@Resource(name = "queryImportListImpl")
@@ -55,14 +53,19 @@ public class ImportController extends BaseController {
 
 	}
 
+	@SuppressWarnings("null")
 	@RequestMapping("/queryGoods")
 	public void queryGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String providerName = request.getParameter("providerName");
+		GoodsExample goodsExample = new GoodsExample();
 		JSONObject data = new JSONObject();
-		List<GoodsDemo> goodsList = new ArrayList<GoodsDemo>();
-		goodsList = queryGoodsDemoByProvider.queryGoodsDemo(providerName);
-		if (goodsList == null || goodsList.size() == 0) {
+		List<Goods> goodsList = new ArrayList<Goods>();
+		if (providerName != null || providerName != "") {
+			goodsExample.createCriteria().andProviderNameEqualTo(providerName);
+		}
+		goodsList = queryBus.queryGoodsByName(goodsExample);
+		if (goodsList == null && goodsList.size() == 0) {
 			responseFailed(response, "....", data);
 		} else {
 			data.put("list", JSON.toJSONString(goodsList));
@@ -98,10 +101,18 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String goodsName = request.getParameter("goodsName");
 		String providerName = request.getParameter("providerName");
-		System.err.println(goodsName + ":" + providerName);
+		GoodsExample goodsExample = new GoodsExample();
+		List<Goods> goodsList = new ArrayList<Goods>();
 		JSONObject data = new JSONObject();
-		GoodsDemo goods = new GoodsDemo();
-		goods = queryGoodsDemoByProvider.select(goodsName, providerName);
+		Goods goods = new Goods();
+		if (goodsName != null && goodsName != "") {
+			goodsExample.createCriteria().andGoodsNameEqualTo(goodsName);
+		}
+		if (providerName != null || providerName != "") {
+			goodsExample.createCriteria().andProviderNameEqualTo(providerName);
+		}
+		goodsList = queryBus.queryGoodsByName(goodsExample);
+		goods = goodsList.get(0);
 		if (goods == null) {
 			responseFailed(response, "....", data);
 		} else {
@@ -155,8 +166,7 @@ public class ImportController extends BaseController {
 		}
 
 	}
-	
-	
+
 	@RequestMapping("/deleteImportData")
 	public void deleteImportData(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -187,8 +197,8 @@ public class ImportController extends BaseController {
 		String importSerialNumber = request.getParameter("importSerialNumber");
 		String storehouseName = request.getParameter("storehouseName");
 		String providerName = request.getParameter("providerName");
-		storehouseName=URLDecoder.decode(storehouseName);
-		providerName=URLDecoder.decode(providerName);
+		storehouseName = URLDecoder.decode(storehouseName);
+		providerName = URLDecoder.decode(providerName);
 		String goodsAmounts[] = goodsAmountList.split(",");
 		String goodsTotalPrices[] = goodsTotalPriceList.split(",");
 		String importGoodsIds[] = importGoodsIdList.split(",");
@@ -203,8 +213,9 @@ public class ImportController extends BaseController {
 		}
 		UpdateImportDemo updateImportDemo = new UpdateImportDemo(
 				importGoodsLists, providerId, storehouseId, paymentType,
-				importStatus, payTime,importSerialNumber,storehouseName,providerName);
-		String result=addGoodsImportList.updateImportGoods(updateImportDemo);
+				importStatus, payTime, importSerialNumber, storehouseName,
+				providerName);
+		String result = addGoodsImportList.updateImportGoods(updateImportDemo);
 		request.setAttribute("result", result);
 		return "import";
 	}

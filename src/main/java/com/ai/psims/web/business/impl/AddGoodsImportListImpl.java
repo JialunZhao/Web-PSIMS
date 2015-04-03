@@ -11,18 +11,21 @@ import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.business.IAddGoodsImportList;
 import com.ai.psims.web.model.AddGoodsBean;
+import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.ImportGoods;
 import com.ai.psims.web.model.ImportGoodsLog;
 import com.ai.psims.web.model.ImportLog;
+import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.UpdateImportDemo;
+import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.IImportGoodsLogService;
 import com.ai.psims.web.service.IImportGoodsService;
 import com.ai.psims.web.service.IImportLogService;
 import com.ai.psims.web.service.IImportService;
+import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
 
-@SuppressWarnings("unused")
 @Service
 public class AddGoodsImportListImpl implements IAddGoodsImportList {
 	@Resource(name = "importServiceImpl")
@@ -33,6 +36,10 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 	private IImportGoodsLogService importGoodsLogService;
 	@Resource(name = "importLogServiceImpl")
 	private IImportLogService importLogService;
+	@Resource(name = "storagecheckServiceImpl")
+	private IStoragecheckService storagecheckService;
+	@Resource(name = "goodsServiceImpl")
+	private IGoodsService goodsService;
 
 	public String addGoodsList(AddGoodsBean goodsBean) {
 		java.util.Date date = new java.util.Date();
@@ -98,29 +105,68 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 
 	public String updateImportGoods(UpdateImportDemo updateImportDemo) {
 		List<ImportGoods> importGoodsList = new ArrayList<ImportGoods>();
+		List<ImportGoods> begigImportGoodsList = new ArrayList<ImportGoods>();
 		importGoodsList = updateImportDemo.getImportGoodsList();
 		for (ImportGoods importGoods : importGoodsList) {
 			ImportGoods importGood = importGoodsService
 					.selectByPrimaryKey(importGoods.getImportGoodsId());
-			ImportGoodsLog importGoodsLog = getLog(importGood);
-			importGoodsLogService.insertImportGoodsLog(importGoodsLog);
-			importGoodsService.updateImportGoods(importGoods);
+			begigImportGoodsList.add(importGood);
 		}
-		Import import1 = new Import();
-		import1.setImportSerialNumber(updateImportDemo.getImportSerialNumber());
-		import1.setImportStatus(updateImportDemo.getImportStatus());
-		import1.setPaymentType(updateImportDemo.getPaymentType());
-		import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
-		import1.setProviderId(Integer.parseInt(updateImportDemo.getProviderId()));
-		import1.setStorehouseId(Integer.parseInt(updateImportDemo
-				.getStorehouseId()));
-		import1.setProviderName(updateImportDemo.getProviderName());
-		import1.setStorehouseName(updateImportDemo.getStorehouseName());
 		Import import2 = importService.selectByPrimaryKey(updateImportDemo
 				.getImportSerialNumber());
-		ImportLog importLog = getImpLog(import2);
-		importLogService.insertImportLog(importLog);
-		importService.updateImport(import1);
+		if (updateImportDemo.getImportStatus().equals(
+				Constants.ImportStatus.GOODSIMPORT)) {
+			for (ImportGoods importGoods : begigImportGoodsList) {
+				Storagecheck storagecheck = new Storagecheck();
+				Goods goods = goodsService
+						.selectByKey(importGoods.getGoodsId());
+				storagecheck.setGoodsId(importGoods.getGoodsId());
+				storagecheck.setGoodsName(importGoods.getGoodsName());
+				storagecheck.setProviderId(goods.getProviderId());
+				storagecheck.setProviderName(goods.getProviderName());
+				storagecheck.setStorageRateTotal(importGoods
+						.getImportGoodsAmount());
+				storagecheck.setStorageRateCurrent(importGoods
+						.getImportGoodsAmount());
+				storagecheck.setGoodsProductionDate(importGoods
+						.getImportGoodsProductionDate());
+				storagecheck.setGoodsExpirationDate(importGoods
+						.getImportGoodsExpirationDate());
+				storagecheck.setGoodsShelfLife(goods.getGoodsShelfLife());
+				storagecheck.setGoodsPrice(goods.getGoodsPrice());
+				storagecheck
+						.setGoodsStatus(Constants.ImportGoodsStatus.CANSALE);
+				storagecheck.setImportSerialNumber(importGoods
+						.getImportSerialNumber());
+				storagecheckService.insert(storagecheck);
+			}
+			// deleteImportData(updateImportDemo.getImportSerialNumber());
+
+		} else {
+			for (ImportGoods importGoods : importGoodsList) {
+				ImportGoods importGood = importGoodsService
+						.selectByPrimaryKey(importGoods.getImportGoodsId());
+				ImportGoodsLog importGoodsLog = getLog(importGood);
+				importGoodsLogService.insertImportGoodsLog(importGoodsLog);
+				importGoodsService.updateImportGoods(importGoods);
+			}
+			Import import1 = new Import();
+			import1.setImportSerialNumber(updateImportDemo
+					.getImportSerialNumber());
+			import1.setImportStatus(updateImportDemo.getImportStatus());
+			import1.setPaymentType(updateImportDemo.getPaymentType());
+			import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
+			import1.setProviderId(Integer.parseInt(updateImportDemo
+					.getProviderId()));
+			import1.setStorehouseId(Integer.parseInt(updateImportDemo
+					.getStorehouseId()));
+			import1.setProviderName(updateImportDemo.getProviderName());
+			import1.setStorehouseName(updateImportDemo.getStorehouseName());
+
+			ImportLog importLog = getImpLog(import2);
+			importLogService.insertImportLog(importLog);
+			importService.updateImport(import1);
+		}
 		return "SUCCESS";
 	}
 
@@ -188,6 +234,15 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 		}
 
 		return "SUCCESS";
+	}
+
+	public Long getShelifLife(java.util.Date CreateData,
+			java.util.Date expirData) {
+		long CreateDataLong = CreateData.getTime();
+		long expirDataLong = expirData.getTime();
+		long shelifLife = (expirDataLong - CreateDataLong)
+				/ (1000 * 60 * 60 * 24);
+		return shelifLife;
 	}
 
 }

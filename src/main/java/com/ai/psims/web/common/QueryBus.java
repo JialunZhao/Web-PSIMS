@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.dao.ImportMapper;
 import com.ai.psims.web.model.Goods;
+import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.Provider;
 import com.ai.psims.web.model.Storehouse;
@@ -39,16 +40,18 @@ public class QueryBus implements IQueryBus {
 		return storehouseService.queryStorehouse();
 	}
 
-	public List<Goods> queryGoodsByName(String goodsName) {
-		return goodsService.queryGoodsByName(goodsName);
+	public List<Goods> queryGoodsByName(GoodsExample example) {
+		return goodsService.selectByExample(example);
 	}
 
 	public List<Import> queryImport() {
 		List<Import> importList = new ArrayList<Import>();
-		importList =importMapper.selectAll();
+		importList = importMapper.selectAll();
 		for (Import import1 : importList) {
-			import1.setImportStatus(CreateIdUtil.getTranslation(import1.getImportStatus()));
-			import1.setPaymentType(CreateIdUtil.getTranslation(import1.getPaymentType()));
+			import1.setImportStatus(CreateIdUtil.getTranslation(import1
+					.getImportStatus()));
+			import1.setPaymentType(CreateIdUtil.getTranslation(import1
+					.getPaymentType()));
 		}
 		return importList;
 	}

@@ -3,15 +3,10 @@ package com.ai.psims.web.service;
 import java.util.List;
 
 import com.ai.psims.web.model.Goods;
+import com.ai.psims.web.model.GoodsExample;
 
 public interface IGoodsService {
-	public Goods queryGoodsByKey(Integer id);
-	
-	public int deleteGoodsByKey(Integer id);
-	
-	public int updateGoodsByKey(Goods goods);
-	
-	public int insertGoods(Goods goods);
-	
-	public List<Goods> queryGoodsByName(String goodsName);
+	public List<Goods> selectByExample(GoodsExample example);
+
+	public Goods selectByKey(Integer goodsId);
 }
