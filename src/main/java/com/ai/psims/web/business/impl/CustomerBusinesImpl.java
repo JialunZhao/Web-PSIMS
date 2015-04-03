@@ -37,8 +37,9 @@ public class CustomerBusinesImpl implements ICustomerBusiness {
 	}
 
 	@Override
-	public int customerDelete(TbCustomerExample customerDelete) {
+	public int customerDelete(TbCustomer customerDelete) {
 		// 删除客户信息业务
+		customerService.backupCustomerInfo(customerDelete);
 		logger.info("customerDelete");
 		return customerService.deleteCustomerInfo(customerDelete);
 	}
@@ -46,6 +47,7 @@ public class CustomerBusinesImpl implements ICustomerBusiness {
 	@Override
 	public int customerModify(TbCustomer customerModify) {
 		// 修改客户信息业务
+		customerService.backupCustomerInfo(customerModify);
 		logger.info("customerModify");
 		return customerService.modifyCustomerInfo(customerModify);
 	}

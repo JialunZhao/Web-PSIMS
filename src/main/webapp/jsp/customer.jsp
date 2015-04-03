@@ -22,15 +22,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
-<title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
+<link rel="icon" href="<%=_base %>/img/favicon.ico">
+<title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO +path</title>
 
 <!-- Loading Bootstrap -->
-<link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<%=_base %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 <!-- Loading Flat UI -->
-<link href="../css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="../css/dashboard.css" rel="stylesheet">
+<link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
+<link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
 
 
 <link rel="shortcut icon" href="img/favicon.ico">
@@ -71,7 +71,7 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="./customer.html">客户管理<span
+					<li class="active"><a href="customer">客户管理<span
 							class="sr-only">(current)</span></a></li>
 					<li><a href="./provider.html">供应商</a></li>
 					<li><a href="./goods.html">商品管理</a></li>
@@ -97,7 +97,7 @@
 				<h3 class="page-header">客户管理</h3>
 
 				<div class="row placeholders">
-					<form class="form-inline" action="" method="get" >
+					<form class="form-inline" action="customer" method="get" >
 						<div class="form-group">
 							<label for="query_customerName">客户名称：</label> <input type="text"
 								class="form-control" id="query_customerName" name="query_customerName" placeholder="客户名称">
@@ -218,7 +218,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<form id="addcustomerForm" >
+						<form id="addcustomerForm"  >
 
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -377,11 +377,11 @@
 	</div>
 	<!-- /.modal -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-	<script src="../js/vendor/jquery.min.js"></script>
+	<script src="<%=_base %>/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="../js/vendor/video.js"></script>
-	<script src="../js/flat-ui.min.js"></script>
-	<script src="../js/customer.js"></script>
+	<script src="<%=_base %>/js/vendor/video.js"></script>
+	<script src="<%=_base %>/js/flat-ui.min.js"></script>
+	<script src="<%=_base %>/js/customer.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#delbtn").click(function() {

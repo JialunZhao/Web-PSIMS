@@ -45,3 +45,4 @@ create table tb_customer_log
    remark               VARCHAR(200),
    constraint PK_TB_CUSTOMER_LOG primary key (log_id)
 );
+select * from tb_customer_log;

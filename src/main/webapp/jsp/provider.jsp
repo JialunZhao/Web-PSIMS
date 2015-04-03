@@ -1,3 +1,19 @@
+<%@page import="java.util.*"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+	String path = request.getContextPath();
+	String _base = path;
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String date = sdf.format(new Date());
+%>
 <!DOCTYPE html>
 <html>
   <head>

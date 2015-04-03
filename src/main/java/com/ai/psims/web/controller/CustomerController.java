@@ -35,7 +35,7 @@ public class CustomerController extends BaseController {
 	/**
 	 * 客户管理页面跳转
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customerRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome customer page!-------------");
@@ -44,15 +44,16 @@ public class CustomerController extends BaseController {
 		TbCustomerExample tbCustomerExample = new TbCustomerExample();
 		// 2.获取参数
 		String customer_name = request.getParameter("query_customerName") == "" ? null
-				: "%"+request.getParameter("query_customerName")+"%";
+				: request.getParameter("query_customerName");
 		String customer_type = request.getParameter("query_customerType") == "" ? null
 				: request.getParameter("query_customerType");
 		String contact_name = request.getParameter("query_contactName") == "" ? null
-				: "%"+request.getParameter("query_contactName")+"%";
+				: request.getParameter("query_contactName");
 		String contact_tel = request.getParameter("query_contactTel") == "" ? null
-				: "%"+request.getParameter("query_contactTel")+"%";
+				: request.getParameter("query_contactTel");
 		// 3.数据校验
 		if (customer_name != null && customer_name.length() > 0) {
+			customer_name = "%" + customer_name + "%";
 			tbCustomerExample.createCriteria().andCustomerNameLike(
 					customer_name);
 		}
@@ -63,15 +64,17 @@ public class CustomerController extends BaseController {
 			}
 		}
 		if (contact_name != null && contact_name.length() > 0) {
-			tbCustomerExample.createCriteria().andContactNameLike(
-					contact_name);
+			contact_name = "%" + contact_name + "%";
+			tbCustomerExample.createCriteria().andContactNameLike(contact_name);
 		}
 		if (contact_tel != null && contact_tel.length() > 0) {
-			tbCustomerExample.createCriteria()
-					.andContactTelLike(contact_tel);
+			contact_tel = "%" + contact_tel + "%";
+			tbCustomerExample.createCriteria().andContactTelLike(contact_tel);
 		}
 
 		// 4.业务处理
+		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
+		tbCustomerExample.createCriteria().andStatusEqualTo("01");
 		customers = customerBusiness.customerQuery(tbCustomerExample);
 		// 5.返回结果
 		request.setAttribute("customers", customers);
@@ -103,7 +106,7 @@ public class CustomerController extends BaseController {
 		// String createtime_str = request.getParameter("createtime");
 		// String modifytime_str = request.getParameter("modifytime");
 		// String endtime_str = request.getParameter("endtime");
-		String status = request.getParameter("status");
+		// String status = request.getParameter("status");
 		String remark = request.getParameter("remark");
 		Date createtime = new Date();
 
@@ -117,7 +120,8 @@ public class CustomerController extends BaseController {
 		customeradd.setArea(area);
 		customeradd.setCustomerType(customer_type);
 		customeradd.setCreatetime(createtime);
-		customeradd.setStatus(status);
+		customeradd.setStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
+
 		customeradd.setRemark(remark);
 
 		// 4.业务处理
@@ -137,19 +141,24 @@ public class CustomerController extends BaseController {
 			HttpServletResponse response) {
 		logger.info("------------Welcome deletecustomer! -------------");
 		// 1.初始化
-		TbCustomerExample tbCustomerExample = new TbCustomerExample();
+		TbCustomer tbCustomer = new TbCustomer();
 		// 2.获取参数
 		String customer_id = request.getParameter("customer_id");
-		int customerid = 0;
 		// 3.数据校验
 		if (customer_id != null && customer_id.length() > 0) {
-			customerid = Integer.parseInt(customer_id);
-			tbCustomerExample.createCriteria().andCustomerIdEqualTo(customerid);
+			tbCustomer.setCustomerId(Integer.parseInt(customer_id));
 		}
 		// 4.业务处理
-		int res = customerBusiness.customerDelete(tbCustomerExample);
+		// 逻辑删除 修改状态为 00-失效 （记录状态 00-失效 01-正常 99-异常）
+		tbCustomer.setStatus("01");
+		int res = customerBusiness.customerModify(tbCustomer);
 		toString();
 		logger.info(String.valueOf(res));
+
+		// --弃用-- 改为逻辑删除
+		// int res = customerBusiness.customerDelete(tbCustomerExample);
+		// toString();
+		// logger.info(String.valueOf(res));
 		// 5.返回结果
 		logger.info("------------Bye deletecustomer! -------------");
 		return "customer";
@@ -180,7 +189,7 @@ public class CustomerController extends BaseController {
 		// String createtime_str = request.getParameter("createtime");
 		// String modifytime_str = request.getParameter("modifytime");
 		// String endtime_str = request.getParameter("endtime");
-		String status = request.getParameter("modify_status");
+		// String status = request.getParameter("modify_status");
 		String remark = request.getParameter("modify_remark");
 		Date modifytime = new Date();
 
@@ -197,7 +206,7 @@ public class CustomerController extends BaseController {
 		tbCustomer.setArea(area);
 		tbCustomer.setCustomerType(customer_type);
 		tbCustomer.setModifytime(modifytime);
-		tbCustomer.setStatus(status);
+		// tbCustomer.setStatus("01");
 		tbCustomer.setRemark(remark);
 		// 4.业务处理
 		int res = customerBusiness.customerModify(tbCustomer);
@@ -248,6 +257,8 @@ public class CustomerController extends BaseController {
 					.andContactTelEqualTo(contact_tel);
 		}
 		// 4.业务处理
+		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
+		tbCustomerExample.createCriteria().andStatusEqualTo("01");
 		tbCustomers = customerBusiness.customerQuery(tbCustomerExample);
 		request.setAttribute("tbCustomers", tbCustomers);
 		// 5.返回结果
