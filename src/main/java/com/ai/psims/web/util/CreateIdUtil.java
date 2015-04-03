@@ -14,7 +14,7 @@ public class CreateIdUtil {
 		for (Integer integer : IdList) {
 			if (integer == id) {
 				getNewId(selectIdMapper);
-			}
+			} 
 		}
 		return id;
 	}
