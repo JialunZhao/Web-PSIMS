@@ -31,7 +31,7 @@ public class ProviderController extends BaseController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(ProviderController.class);
 
-	@Resource(name = "providerBusinesImpl")
+	@Resource(name = "providerBusinessImpl")
 	private IProviderBusiness ProviderBusiness;
 
 	/**

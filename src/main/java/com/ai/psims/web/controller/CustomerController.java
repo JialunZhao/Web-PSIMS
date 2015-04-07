@@ -29,7 +29,7 @@ public class CustomerController extends BaseController {
 	private static final Logger logger = LoggerFactory
 			.getLogger(CustomerController.class);
 
-	@Resource(name = "customerBusinesImpl")
+	@Resource(name = "customerBusinessImpl")
 	private ICustomerBusiness customerBusiness;
 
 	/**

@@ -14,10 +14,10 @@ import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.service.IProviderService;
 
 @Service
-public class ProviderBusinesImpl implements IProviderBusiness {
+public class ProviderBusinessImpl implements IProviderBusiness {
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(ProviderBusinesImpl.class);
+			.getLogger(ProviderBusinessImpl.class);
 	
 	@Resource(name = "providerServiceImpl")
 	private IProviderService providerService;

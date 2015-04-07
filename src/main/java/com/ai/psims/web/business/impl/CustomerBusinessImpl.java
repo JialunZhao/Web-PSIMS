@@ -14,10 +14,10 @@ import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.service.ICustomerService;
 
 @Service
-public class CustomerBusinesImpl implements ICustomerBusiness {
+public class CustomerBusinessImpl implements ICustomerBusiness {
 	
 	private static final Logger logger = LoggerFactory
-			.getLogger(CustomerBusinesImpl.class);
+			.getLogger(CustomerBusinessImpl.class);
 	
 	@Resource(name = "customerServiceImpl")
 	private ICustomerService customerService;

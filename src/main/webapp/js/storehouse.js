@@ -1,11 +1,11 @@
 //新增客户 
 //1.提交数据
-$("#addprovidersubmit").click(function provideradd() {
+$("#addStorehouseSubmit").click(function addStorehouseSubmit() {
 	$.ajax({
 		type : 'POST',
 		async : true,
-		url : 'addProvider.do',
-		data : $('#addproviderForm').serialize(),
+		url : 'addStorehouse.do',
+		data : $('#addStorehouseForm').serialize(),
 		// data : {
 		// 'customer_name' : customer_name,
 		// 'customer_type' : customer_type,
@@ -17,15 +17,15 @@ $("#addprovidersubmit").click(function provideradd() {
 		// 'remark' : remark
 		// },
 		success : function(data) {
-			$('#addprovider').modal('hide');
-			window.location.href = "provider";
+			$('#addStorehouse').modal('hide');
+			window.location.href = "storehouse";
 		},
 	});
 });
 // 2.刷新列表
 
 // 删除客户信息
-function delCurrentProvider(obj) {
+function delCurrentStorehouse(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
 	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
@@ -45,7 +45,7 @@ function delCurrentProvider(obj) {
 }
 // 修改客户信息
 // 1.修改模态框数据获取
-function modifyCurrentProvider(obj) {
+function modifyCurrentStorehouse(obj) {
 	// console.dir(obj);
 	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
