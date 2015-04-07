@@ -14,10 +14,11 @@ import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.Provider;
 import com.ai.psims.web.model.Storehouse;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
+import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.service.ICustomerService;
 import com.ai.psims.web.service.IEmployeeService;
 import com.ai.psims.web.service.IGoodsService;
@@ -40,9 +41,10 @@ public class QueryBus implements IQueryBus {
 	@Resource(name = "employeeServiceImpl")
 	private IEmployeeService employeeService;
 
-	public List<Provider> queryProvider() {
-		List<Provider> pList = new ArrayList<Provider>();
-		pList = providerService.queryProvider();
+	public List<TbProvider> queryProvider() {
+		List<TbProvider> pList = new ArrayList<TbProvider>();
+		TbProviderExample tbProviderExample=new  TbProviderExample();
+		pList = providerService.queryProvider(tbProviderExample);
 		return pList;
 	}
 

@@ -22,8 +22,8 @@ import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.ImportGoods;
-import com.ai.psims.web.model.Provider;
 import com.ai.psims.web.model.Storehouse;
+import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -33,6 +33,7 @@ import com.alibaba.fastjson.JSONObject;
 public class ImportController extends BaseController {
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
+	
 	@Resource(name = "addGoodsImportListImpl")
 	private IAddGoodsImportList addGoodsImportList;
 	@Resource(name = "queryImportListImpl")
@@ -40,7 +41,7 @@ public class ImportController extends BaseController {
 
 	@RequestMapping("/showProvider")
 	public String showProvider(HttpServletRequest request) throws Exception {
-		List<Provider> provider = new ArrayList<Provider>();
+		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<Storehouse> storehouse = new ArrayList<Storehouse>();
 		List<Import> importList = new ArrayList<Import>();
 		importList = queryBus.queryImport();
@@ -129,7 +130,7 @@ public class ImportController extends BaseController {
 		List<ImportGoods> importGoodsList = new ArrayList<ImportGoods>();
 		importGoodsList = addGoodsImportList.selBySerNum(importSerialNumber);
 		import1 = queryImportList.selectByPrimaryKey(importSerialNumber);
-		List<Provider> provider = new ArrayList<Provider>();
+		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<Storehouse> storehouse = new ArrayList<Storehouse>();
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();

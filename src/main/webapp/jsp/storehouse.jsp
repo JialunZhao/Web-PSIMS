@@ -98,15 +98,16 @@
 				<h3 class="page-header">仓库管理</h3>
 
 				<div class="row placeholders">
-					<form class="form-inline">
+					<form class="form-inline" action="storehouse" method="get">
 						<div class="form-group">
-							<label for="exampleInputName2">仓库名称：</label> <input type="text"
-								class="form-control" id="exampleInputName2" placeholder="仓库名称">
+							<label for="query_storehouseName">仓库名称：</label> <input type="text"
+								class="form-control" id="query_storehouseName"
+								name="query_storehouseName" placeholder="仓库名称">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">仓库类型：</label> <select
-								class="form-control" value="请选择仓库类型：" tabindex="1"
-								name="herolist">
+							<label for="query_type">仓库类型：</label> <select
+								class="form-control" id="query_type"
+								name="query_type" value="请选择仓库类型：" tabindex="1">
 								<option value="0">请选择仓库类型：</option>
 								<option value="1">通用仓库</option>
 								<option value="2">专用仓库</option>
@@ -115,13 +116,14 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">联系人名称：</label> <input type="text"
-								class="form-control" id="exampleInputEmail2" placeholder="联系人名称">
+							<label for="query_contactName">联系人名称：</label> <input type="text"
+								class="form-control" id="query_contactName"
+								name="query_contactName" placeholder="联系人名称">
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">联系人电话：</label> <input type="text"
-								class="form-control" id="exampleInputEmail2"
-								placeholder="联系人电话：">
+							<label for="query_contactTel">联系人电话：</label> <input type="text"
+								class="form-control" id="query_contactTel"
+								name="query_contactTel" placeholder="联系人电话：">
 						</div>
 						<button type="submit" class="btn btn-primary">搜索</button>
 					</form>
@@ -195,7 +197,8 @@
 									<td>${storehouses.contactAddress}</td>
 									<td><a href="javascript:void(0);"
 										onClick="modifyCurrentStorehouse(this)">修改</a>/<a
-										href="javascript:void(0);" onClick="delCurrentStorehouse(this);">删除</a></td>
+										href="javascript:void(0);"
+										onClick="delCurrentStorehouse(this);">删除</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -291,8 +294,8 @@
 
 	<!-- 模态框（Modal） -->
 	<!-- 修改仓库模态框（Modal） -->
-	<div class="modal fade" id="modifycustomer" tabindex="-1" role="dialog"
-		aria-labelledby="modifycustomer" aria-hidden="true">
+	<div class="modal fade" id="modify_storehouse" tabindex="-1"
+		role="dialog" aria-labelledby="modify_storehouse" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -302,61 +305,69 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">仓库名称:</span> <input
-								type="text" class="form-control" placeholder="仓库名称" value="张老坎">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">仓库类型:</span> <select
-								class="form-control" value="请选择仓库类型：" tabindex="1"
-								name="herolist">
-								<option value="0">请选择仓库类型：</option>
-								<option value="1">通用仓库</option>
-								<option value="2">专用仓库</option>
-								<option value="3">中转仓库</option>
-								<option value="4">其它</option>
-							</select>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">联系人名称:</span> <input
-								type="text" class="form-control" placeholder="联系人名称" value="老张">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">联系人电话:</span> <input
-								type="text" class="form-control" placeholder="联系人电话"
-								value="139012345678">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">仓库地址:</span> <input
-								type="text" class="form-control" placeholder="仓库地址"
-								value="朝阳区朝阳路18号">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">仓库状态:</span> <input
-								type="text" class="form-control" placeholder="仓库状态" value="可用">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">仓库所属地域：</span> <input
-								type="text" class="form-control" placeholder="仓库所属地域" value="朝阳">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">备注：</span> <input type="text"
-								class="form-control" placeholder="备注："
-								value=" 张老坎 连锁 老张 139012345678 朝阳 朝阳区朝阳路18号 ">
-						</div>
+						<form id="modify_storehouseForm">
+							<input type="hidden" id="modify_storehouseId"
+								name="modify_storehouseId" value="">
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">仓库名称:</span> <input
+									type="text" class="form-control" id="modify_storehouseName"
+									name="modify_storehouseName" placeholder="仓库名称">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">仓库类型:</span> <select
+									class="form-control" id="modify_type" name="modify_type"
+									tabindex="1">
+									<option value="0">请选择仓库类型：</option>
+									<option value="1">通用仓库</option>
+									<option value="2">专用仓库</option>
+									<option value="3">中转仓库</option>
+									<option value="4">其它</option>
+								</select>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">联系人名称:</span> <input
+									type="text" class="form-control" id="modify_contactName"
+									name="modify_contactName" placeholder="联系人名称">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">联系人电话:</span> <input
+									type="text" class="form-control" id="modify_contactTel"
+									name="modify_contactTel" placeholder="联系人电话">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">仓库地址:</span> <input
+									type="text" class="form-control" id="modify_contactAddress"
+									name="modify_contactAddress" placeholder="仓库地址">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">仓库状态:</span> <input
+									type="text" class="form-control" id="modify_status"
+									name="modify_status" placeholder="仓库状态">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">仓库所属地域：</span> <input
+									type="text" class="form-control" id="modify_area"
+									name="modify_area" placeholder="仓库所属地域">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">备注：</span> <input
+									type="text" class="form-control" id="modify_remark"
+									name="modify_remark" placeholder="备注：">
+							</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary">确认修改</button>
+					<button type="button" class="btn btn-primary"
+						onClick="modifyCurrentStorehuseInfo(this)">确认修改</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->

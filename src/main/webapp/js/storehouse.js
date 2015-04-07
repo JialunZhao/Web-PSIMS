@@ -28,14 +28,14 @@ $("#addStorehouseSubmit").click(function addStorehouseSubmit() {
 function delCurrentStorehouse(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
-	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
+	var storehouseId = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
 		type : 'POST',
 		async : true,
-		url : 'deleteProvider.do',
+		url : 'deleteStorehouse.do',
 		// data : $('#addcustomerForm').serialize(),
 		data : {
-			'provider_id' : provider_id
+			'storehouseId' : storehouseId
 		},
 		success : function(data) {
 			$(obj).parent().parent().remove();
@@ -47,45 +47,44 @@ function delCurrentStorehouse(obj) {
 // 1.修改模态框数据获取
 function modifyCurrentStorehouse(obj) {
 	// console.dir(obj);
-	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
+	var storehouseId = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
 		type : 'POST',
 		async : false,
-		url : 'queryProvider.do',
+		url : 'queryStorehouse.do',
 		dataType : 'json',
 		data : {
-			'provider_id' : provider_id
+			'storehouseId' : storehouseId
 		},
 		success : function(data) {
 			console.dir(data);
-			$('#modify_providerId').val(data[0].providerId)
-			$('#modify_providerName').val(data[0].providerName)
-			$('#modify_providerType').val(data[0].providerType)
-			$('#modify_providerPrizePool').val(data[0].providerPrizePool)
-			$('#modify_providerContactName').val(data[0].providerContactName)
-			$('#modify_providerContactTel').val(data[0].providerContactTel)
-			$('#modify_providerContactAddress').val(data[0].providerContactAddress)
-			$('#modify_providerContactEmail').val(data[0].providerContactEmail)
-			$('#modify_providerArea').val(data[0].providerArea)
-			$('#modify_providerRemark').val(data[0].providerRemark)
-			$('#modifyprovider').modal('show');
+			$('#modify_storehouseId').val(data[0].storehouseId)
+			$('#modify_storehouseName').val(data[0].storehouseName)
+			$('#modify_type').val(data[0].type)
+			$('#modify_contactName').val(data[0].contactName)
+			$('#modify_contactTel').val(data[0].contactTel)
+			$('#modify_contactAddress').val(data[0].contactAddress)
+			$('#modify_status').val(data[0].contactEmail)
+			$('#modify_area').val(data[0].area)
+			$('#modify_remark').val(data[0].remark)
+			$('#modify_storehouse').modal('show');
 		},
 	});
 
 };
 
 // 2.修改后信息传输
-function modifyCurrentProviderInfo(obj) {
+function modifyCurrentStorehuseInfo(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
 	$.ajax({
 		type : 'POST',
 		async : false,
 		url : 'modify.do',
-		data : $('#modify_providerForm').serialize(),
+		data : $('#modify_storehouseForm').serialize(),
 		success : function(data) {
-			$('#modifyprovider').modal('hide');
-			window.location.href = "provider";
+			$('#modify_storehouse').modal('hide');
+			window.location.href = "storehouse";
 		},
 	});
 }

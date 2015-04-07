@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.dao.TbProviderMapper;
 import com.ai.psims.web.dao.TbProviderLogMapper;
-import com.ai.psims.web.model.Provider;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbProviderLog;

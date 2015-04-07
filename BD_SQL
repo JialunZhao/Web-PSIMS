@@ -1,53 +1,82 @@
 show databases;
 show tables;
-drop table tb_customer;
-
-create table tb_customer 
-(
-   customer_id          INT    not null AUTO_INCREMENT,
-   customer_name        VARCHAR(200),
-   customer_code        VARCHAR(200),
-   contact_name         VARCHAR(20),
-   contact_tel          VARCHAR(20),
-   contact_addr         VARCHAR(200),
-   email                VARCHAR(100),
-   area                 VARCHAR(20),
-   customer_type        VARCHAR(2),
-   createtime           DATE,
-   modifytime           DATE,
-   endtime              DATE,
-   status               VARCHAR(200),
-   remark               VARCHAR(200),
-   constraint PK_TB_CUSTOMER primary key (customer_id)
-);
-drop table tb_customer_log cascade constraints;
 
 /*==============================================================*/
-/* Table: tb_customer_log                                       */
+/* Table: tb_storehouse_log                                     */
 /*==============================================================*/
-create table tb_customer_log 
+create table tb_storehouse_log 
 (
    log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
-   customer_id          INT,
-   customer_name        VARCHAR(200),
-   customer_code        VARCHAR(200),
-   contact_name         VARCHAR(20),
-   contact_tel          VARCHAR(20),
-   contact_addr         VARCHAR(200),
-   email                VARCHAR(100),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   storehouse_code      VARCHAR(20),
    area                 VARCHAR(20),
-   customer_type        VARCHAR(2),
+   type                 VARCHAR(10),
+   contact_name         VARCHAR(10),
+   contact_tel          VARCHAR(20),
+   contact_fax          VARCHAR(20),
+   contact_email        VARCHAR(100),
+   contact_address      VARCHAR(200),
+   status               VARCHAR(2),
    createtime           DATE,
    modifytime           DATE,
    endtime              DATE,
-   status               VARCHAR(200),
    remark               VARCHAR(200),
-   constraint PK_TB_CUSTOMER_LOG primary key (log_id)
+   constraint PK_TB_STOREHOUSE_LOG primary key (log_id)
 );
-select * from tb_customer_log;
 
-drop table tb_provider cascade constraints;
+/*==============================================================*/
+/* Table: tb_storehouse                                         */
+/*==============================================================*/
+create table tb_storehouse 
+(
+   storehouse_id        INT                  not null,
+   storehouse_name      VARCHAR(200),
+   storehouse_code      VARCHAR(20),
+   area                 VARCHAR(20),
+   type                 VARCHAR(10),
+   contact_name         VARCHAR(10),
+   contact_tel          VARCHAR(20),
+   contact_fax          VARCHAR(20),
+   contact_email        VARCHAR(100),
+   contact_address      VARCHAR(200),
+   status               VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   remark               VARCHAR(200),
+   constraint PK_TB_STOREHOUSE primary key (storehouse_id)
+);
+
+/*==============================================================*/
+/* Table: tb_provider_log                                       */
+/*==============================================================*/
+create table tb_provider_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   provider_contact_name VARCHAR(10),
+   provider_contact_tel VARCHAR(20),
+   provider_contact_fax VARCHAR(20),
+   provider_contact_email VARCHAR(100),
+   provider_prize_pool  BIGINT,
+   provider_contact_address VARCHAR(200),
+   provider_bank_name   VARCHAR(100),
+   provider_bank_account_name VARCHAR(200),
+   provider_bank_account_code VARCHAR(200),
+   provider_taxid       VARCHAR(100),
+   provider_area        VARCHAR(20),
+   provider_status      VARCHAR(2),
+   provider_createtime  DATETIME,
+   provider_modifytime  DATETIME,
+   provider_endtime     DATETIME,
+   provider_remark      VARCHAR(200),
+   constraint PK_TB_PROVIDER_LOG primary key (log_id)
+);
 
 /*==============================================================*/
 /* Table: tb_provider                                           */
@@ -68,6 +97,7 @@ create table tb_provider
    provider_prize_pool  BIGINT,
    provider_taxid       VARCHAR(100),
    provider_area        VARCHAR(20),
+   provider_type        VARCHAR(2),
    provider_status      VARCHAR(2),
    provider_createtime  DATETIME,
    provider_modifytime  DATETIME,
@@ -76,10 +106,776 @@ create table tb_provider
    constraint PK_TB_PROVIDER primary key (provider_id)
 );
 
-comment on table tb_provider is
-'供应商基本信息：单位名称、联系人、联系电话、传真、联系地址、银行账号、税号、e-mail、所属地区。';
+/*==============================================================*/
+/* Table: tb_import_goods_log                                   */
+/*==============================================================*/
+create table tb_import_goods_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   import_goods_id      INT,
+   import_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   import_goods_type    VARCHAR(2),
+   import_goods_amount  INT,
+   import_goods_unit    VARCHAR(20),
+   import_goods_price   BIGINT,
+   import_goods_production_date DATE,
+   import_goods_expiration_date DATE,
+   import_goods_total_price BIGINT,
+   import_discount_amount BIGINT,
+   import_goods_createtime DATE,
+   import_goods_modifytime DATE,
+   import_goods_endtime DATE,
+   import_goods_remark  VARCHAR(200),
+   constraint PK_TB_IMPORT_GOODS_LOG primary key (log_id)
+);
 
-comment on column tb_provider.provider_status is
-'00 失效
-01 正常';
+/*==============================================================*/
+/* Table: tb_import_goods                                       */
+/*==============================================================*/
+create table tb_import_goods 
+(
+   import_goods_id      INT                  not null,
+   import_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   import_goods_type    VARCHAR(2),
+   import_goods_amount  INT,
+   import_goods_unit    VARCHAR(20),
+   import_goods_price   BIGINT,
+   import_goods_production_date DATE,
+   import_goods_expiration_date DATE,
+   import_goods_total_price BIGINT,
+   import_discount_amount BIGINT,
+   import_goods_createtime DATE,
+   import_goods_modifytime DATE,
+   import_goods_endtime DATE,
+   import_goods_remark  VARCHAR(200),
+   constraint PK_TB_IMPORT_GOODS primary key (import_goods_id)
+);
 
+/*==============================================================*/
+/* Table: tb_import_log                                         */
+/*==============================================================*/
+create table tb_import_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   import_serial_number VARCHAR(200),
+   import_datetime      DATE,
+   import_batch_number  VARCHAR(200),
+   import_total_price   BIGINT,
+   payment_type         VARCHAR(2),
+   payment_time         DATE,
+   import_type          VARCHAR(2),
+   import_status        VARCHAR(2),
+   import_remark        VARCHAR(200),
+   Column_10            CHAR(10),
+   constraint PK_TB_IMPORT_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_import                                             */
+/*==============================================================*/
+create table tb_import 
+(
+   import_serial_number VARCHAR(200)         not null,
+   import_datetime      DATE,
+   import_batch_number  VARCHAR(200),
+   import_total_price   BIGINT,
+   payment_type         VARCHAR(2),
+   payment_time         DATE,
+   import_type          VARCHAR(2),
+   import_status        VARCHAR(2),
+   import_remark        VARCHAR(200),
+   constraint PK_TB_IMPORT primary key (import_serial_number)
+);
+
+/*==============================================================*/
+/* Table: tb_importback_goods_log                               */
+/*==============================================================*/
+create table tb_importback_goods_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   importback_goods_id  VARCHAR(200),
+   importback_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   importback_goods_type VARCHAR(2),
+   importback_goods_amount INT,
+   importback_goods_unit VARCHAR(20),
+   importback_goods_price BIGINT,
+   importback_goods_production DATE,
+   importback_goods_expiration DATE,
+   importback_discount_amount BIGINT,
+   importback_goods_createtime DATE,
+   importback_goods_modifytime DATE,
+   importback_goods_endtime DATE,
+   importback_goods_remark VARCHAR(200),
+   constraint PK_TB_IMPORTBACK_GOODS_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_importback_goods                                   */
+/*==============================================================*/
+create table tb_importback_goods 
+(
+   importback_goods_id  VARCHAR(200)         not null,
+   importback_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   importback_goods_type VARCHAR(2),
+   importback_goods_amount INT,
+   importback_goods_unit VARCHAR(20),
+   importback_goods_price BIGINT,
+   importback_goods_production DATE,
+   importback_goods_expiration DATE,
+   importback_discount_amount BIGINT,
+   importback_goods_createtime DATE,
+   importback_goods_modifytime DATE,
+   importback_goods_endtime DATE,
+   importback_goods_remark VARCHAR(200),
+   constraint PK_TB_IMPORTBACK_GOODS primary key (importback_goods_id)
+);
+
+/*==============================================================*/
+/* Table: tb_inportback_log                                     */
+/*==============================================================*/
+create table tb_inportback_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   importback_serial_number VARCHAR(200),
+   import_serial_number VARCHAR(200),
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   importback_type      VARCHAR(2),
+   importback_reason    VARCHAR(200),
+   importback_time      DATE,
+   importback_refund    BIGINT,
+   importback_refund_type VARCHAR(2),
+   importback_refund_time DATE,
+   importback_remark    VARCHAR(200),
+   constraint PK_TB_INPORTBACK_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_inportback                                         */
+/*==============================================================*/
+create table tb_inportback 
+(
+   importback_serial_number VARCHAR(200)         not null,
+   import_serial_number VARCHAR(200),
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   importback_type      VARCHAR(2),
+   importback_reason    VARCHAR(200),
+   importback_time      DATE,
+   importback_refund    BIGINT,
+   importback_refund_type VARCHAR(2),
+   importback_refund_time DATE,
+   importback_remark    VARCHAR(200),
+   constraint PK_TB_INPORTBACK primary key (importback_serial_number)
+);
+
+/*==============================================================*/
+/* Table: tb_user2menu_log                                      */
+/*==============================================================*/
+create table tb_user2menu_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   user2menu_id         INT,
+   user_id              VARCHAR(20),
+   menu_id              VARCHAR(20),
+   user2menu_status     VARCHAR(2),
+   remark               VARCHAR(200),
+   createtime           DATETIME,
+   modifytime           DATETIME,
+   endtime              DATETIME,
+   constraint PK_TB_USER2MENU_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_user2menu                                          */
+/*==============================================================*/
+create table tb_user2menu 
+(
+   user2menu_id         INT                  not null,
+   user_id              VARCHAR(20),
+   menu_id              VARCHAR(20),
+   user2menu_status     VARCHAR(2),
+   remark               VARCHAR(200),
+   createtime           DATETIME,
+   modifytime           DATETIME,
+   endtime              DATETIME,
+   constraint PK_TB_USER2MENU primary key (user2menu_id)
+);
+
+/*==============================================================*/
+/* Table: tb_employee                                           */
+/*==============================================================*/
+create table tb_employee 
+(
+   employee_id          INT                  not null,
+   employee_name        VARCHAR(20),
+   employee_code        VARCHAR(20),
+   sex                  VARCHAR(5),
+   birthday             DATE,
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   role                 VARCHAR(20),
+   status               VARCHAR(2),
+   remark               VARCHAR(200),
+   createtime           DATETIME,
+   modifytime           DATETIME,
+   endtime              DATETIME,
+   是否登录系统               CHAR(10),
+   登录密码                 CHAR(10),
+   constraint PK_TB_EMPLOYEE primary key (employee_id)
+);
+
+/*==============================================================*/
+/* Table: tb_employee_log                                       */
+/*==============================================================*/
+create table tb_employee_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   employee_id          INT,
+   employee_name        VARCHAR(20),
+   employee_code        VARCHAR(20),
+   sex                  VARCHAR(5),
+   birthday             DATE,
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   role                 VARCHAR(20),
+   status               VARCHAR(2),
+   remark               VARCHAR(200),
+   createtime           DATETIME,
+   modifytime           DATETIME,
+   endtime              DATETIME,
+   constraint PK_TB_EMPLOYEE_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_goods2customer_log                                 */
+/*==============================================================*/
+create table tb_goods2customer_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   goods2customer_id    CHAR(10),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_code           VARCHAR(20),
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   goods_version        INT,
+   goods_unit           VARCHAR(20),
+   goods_bar_code       VARCHAR(200),
+   goods_shelf_life     INT,
+   goods_price          BIGINT,
+   goods_discount       INT,
+   goods_discount_amount BIGINT,
+   goods_type           VARCHAR(2),
+   goods_status         VARCHAR(2),
+   goods_createtime     DATE,
+   goods_modifytime     DATE,
+   goods_endtime        DATE,
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   quarter_rebate       BIGINT,
+   annual_rebate        BIGINT,
+   provider_subsidy     BIGINT,
+   provider_package_subsidy BIGINT,
+   customer_subsidy     BIGINT,
+   other_subsidy        BIGINT,
+   goods_actual_cost    BIGINT,
+   goods_profit         BIGINT,
+   remark               VARCHAR(200),
+   constraint PK_TB_GOODS2CUSTOMER_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_goods2customer                                     */
+/*==============================================================*/
+create table tb_goods2customer 
+(
+   goods2customer_id    CHAR(10)             not null,
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_code           VARCHAR(20),
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   goods_version        INT,
+   goods_unit           VARCHAR(20),
+   goods_bar_code       VARCHAR(200),
+   goods_shelf_life     INT,
+   goods_price          BIGINT,
+   goods_discount       INT,
+   goods_discount_amount BIGINT,
+   goods_type           VARCHAR(2),
+   goods_status         VARCHAR(2),
+   goods_createtime     DATE,
+   goods_modifytime     DATE,
+   goods_endtime        DATE,
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   quarter_rebate       BIGINT,
+   annual_rebate        BIGINT,
+   provider_subsidy     BIGINT,
+   provider_package_subsidy BIGINT,
+   customer_subsidy     BIGINT,
+   other_subsidy        BIGINT,
+   goods_actual_cost    BIGINT,
+   goods_profit         BIGINT,
+   remark               VARCHAR(200),
+   constraint PK_TB_GOODS2CUSTOMER primary key (goods2customer_id)
+);
+
+/*==============================================================*/
+/* Table: tb_goods_log                                          */
+/*==============================================================*/
+create table tb_goods_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_code           VARCHAR(20),
+   goods_version        INT,
+   goods_unit           VARCHAR(20),
+   goods_bar_code       VARCHAR(200),
+   goods_current_stock  INT,
+   goods_total_stock    INT,
+   goods_production_date DATE,
+   goods_expiration_date DATE,
+   goods_shelf_life     INT,
+   goods_profit         BIGINT,
+   goods_price          BIGINT,
+   goods_discount_amount BIGINT,
+   goods_type           VARCHAR(2),
+   goods_status         VARCHAR(2),
+   goods_createtime     DATE,
+   goods_modifytime     DATE,
+   goods_endtime        DATE,
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   remark               VARCHAR(200),
+   goods_discount       INT,
+   quarter_rebate       BIGINT,
+   annual_rebate        BIGINT,
+   provider_subsidy     BIGINT,
+   provider_package_subsidy BIGINT,
+   customer_subsidy     BIGINT,
+   other_subsidy        BIGINT,
+   goods_actual_cost    BIGINT,
+   storage_warning      INT,
+   shelf_life_warning   INT,
+   constraint PK_TB_GOODS_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_goods                                              */
+/*==============================================================*/
+create table tb_goods 
+(
+   goods_id             INT                  not null,
+   goods_name           VARCHAR(200),
+   goods_code           VARCHAR(20),
+   goods_version        INT,
+   goods_unit           VARCHAR(20),
+   goods_bar_code       VARCHAR(200),
+   goods_current_stock  INT,
+   goods_total_stock    INT,
+   goods_production_date DATE,
+   goods_expiration_date DATE,
+   goods_shelf_life     INT,
+   goods_profit         BIGINT,
+   goods_price          BIGINT,
+   goods_discount_amount BIGINT,
+   goods_type           VARCHAR(2),
+   goods_status         VARCHAR(2),
+   goods_createtime     DATE,
+   goods_modifytime     DATE,
+   goods_endtime        DATE,
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   remark               VARCHAR(200),
+   goods_discount       INT,
+   quarter_rebate       BIGINT,
+   annual_rebate        BIGINT,
+   provider_subsidy     BIGINT,
+   provider_package_subsidy BIGINT,
+   customer_subsidy     BIGINT,
+   other_subsidy        BIGINT,
+   goods_actual_cost    BIGINT,
+   storage_warning      INT,
+   shelf_life_warning   INT,
+   constraint PK_TB_GOODS primary key (goods_id)
+);
+
+/*==============================================================*/
+/* Table: tb_customer_log                                       */
+/*==============================================================*/
+create table tb_customer_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   contact_name         VARCHAR(20),
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   email                VARCHAR(100),
+   area                 VARCHAR(20),
+   customer_type        VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   status               VARCHAR(200),
+   remark               VARCHAR(200),
+   constraint PK_TB_CUSTOMER_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_customer                                           */
+/*==============================================================*/
+create table tb_customer 
+(
+   customer_id          INT                  not null,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   contact_name         VARCHAR(20),
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   email                VARCHAR(100),
+   area                 VARCHAR(20),
+   customer_type        VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   status               VARCHAR(200),
+   remark               VARCHAR(200),
+   constraint PK_TB_CUSTOMER primary key (customer_id)
+);
+
+/*==============================================================*/
+/* Table: tb_storagecheck_log                                   */
+/*==============================================================*/
+create table tb_storagecheck_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   storage_id           INT,
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_bar_code       VARCHAR(200),
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   storage_rate_current INT,
+   storage_rate_total   INT,
+   goods_production_date DATE,
+   goods_expiration_date DATE,
+   goods_shelf_life     INT,
+   goods_price          BIGINT,
+   goods_status         VARCHAR(2),
+   storage_type         VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   remark               VARCHAR(200),
+   import_serial_number VARCHAR(200),
+   constraint PK_TB_STORAGECHECK_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_storagecheck                                       */
+/*==============================================================*/
+create table tb_storagecheck 
+(
+   storage_id           INT,
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_bar_code       VARCHAR(200),
+   provider_id          INT,
+   provider_name        VARCHAR(200),
+   storage_rate_current INT,
+   storage_rate_total   INT,
+   goods_production_date DATE,
+   goods_expiration_date DATE,
+   goods_shelf_life     INT,
+   goods_price          BIGINT,
+   goods_status         VARCHAR(2),
+   storage_type         VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   remark               VARCHAR(200),
+   import_serial_number VARCHAR(200)
+);
+
+/*==============================================================*/
+/* Table: tb_system_parameter                                   */
+/*==============================================================*/
+create table tb_system_parameter 
+(
+   param_id             INT                  not null,
+   p_key                VARCHAR(45),
+   p_desc               VARCHAR(45),
+   p_value              VARCHAR(45),
+   pp_key               VARCHAR(45),
+   pp_desc              VARCHAR(45),
+   pp_value             VARCHAR(45),
+   p_remark             VARCHAR(200),
+   p_createtime         DATETIME,
+   constraint PK_TB_SYSTEM_PARAMETER primary key (param_id)
+);
+
+/*==============================================================*/
+/* Table: tb_system_parameter_log                               */
+/*==============================================================*/
+create table tb_system_parameter_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   param_id             INT,
+   p_key                VARCHAR(45),
+   p_desc               VARCHAR(45),
+   p_value              VARCHAR(45),
+   pp_key               VARCHAR(45),
+   pp_desc              VARCHAR(45),
+   pp_value             VARCHAR(45),
+   p_remark             VARCHAR(200),
+   p_createtime         DATETIME,
+   constraint PK_TB_SYSTEM_PARAMETER_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_menu                                               */
+/*==============================================================*/
+create table tb_menu 
+(
+   menu_id              INT                  not null,
+   menu_name            VARCHAR(20),
+   menu_status          VARCHAR(20),
+   menu_code            VARCHAR(20),
+   remark               VARCHAR(200),
+   createtime           DATETIME,
+   modifytime           DATETIME,
+   endtime              DATETIME,
+   constraint PK_TB_MENU primary key (menu_id)
+);
+
+/*==============================================================*/
+/* Table: tb_sales_goods_log                                    */
+/*==============================================================*/
+create table tb_sales_goods_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   sales_goods_id       INT,
+   sales_serial_number  VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   sales_goods_type     VARCHAR(2),
+   sales_goods_amount   INT,
+   sales_goods_unit     VARCHAR(20),
+   sales_goods_price    BIGINT,
+   sales_goods_production_date DATE,
+   sales_goods_expiration_date DATE,
+   sales_goods_total_price BIGINT,
+   sales_discount_amount BIGINT,
+   sales_final_amount   BIGINT,
+   sales_goods_createtime DATE,
+   sales_goods_modifytime DATE,
+   sales_goods_endtime  DATE,
+   sales_goods_remark   VARCHAR(200),
+   storage_id           INT,
+   constraint PK_TB_SALES_GOODS_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_sales_goods                                        */
+/*==============================================================*/
+create table tb_sales_goods 
+(
+   sales_goods_id       INT                  not null,
+   sales_serial_number  VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   sales_goods_type     VARCHAR(2),
+   sales_goods_amount   INT,
+   sales_goods_unit     VARCHAR(20),
+   sales_goods_price    BIGINT,
+   sales_goods_production_date DATE,
+   sales_goods_expiration_date DATE,
+   sales_goods_total_price BIGINT,
+   sales_discount_amount BIGINT,
+   sales_final_amount   BIGINT,
+   sales_goods_createtime DATE,
+   sales_goods_modifytime DATE,
+   sales_goods_endtime  DATE,
+   sales_goods_remark   VARCHAR(200),
+   storage_id           INT,
+   constraint PK_TB_SALES_GOODS primary key (sales_goods_id)
+);
+
+/*==============================================================*/
+/* Table: tb_sales_log                                          */
+/*==============================================================*/
+create table tb_sales_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   sales_serial_number  VARCHAR(200),
+   sales_date           DATE,
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   employee_id          INT,
+   employee_name        VARCHAR(20),
+   income_type          VARCHAR(2),
+   income_time          DATE,
+   sales_total_price    BIGINT,
+   sales_status         VARCHAR(2),
+   sales_type           VARCHAR(2),
+   sales_remark         VARCHAR(200),
+   constraint PK_TB_SALES_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_sales                                              */
+/*==============================================================*/
+create table tb_sales 
+(
+   sales_serial_number  VARCHAR(200)         not null,
+   sales_date           DATE,
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   employee_id          INT,
+   employee_name        VARCHAR(20),
+   income_type          VARCHAR(2),
+   income_time          DATE,
+   sales_total_price    BIGINT,
+   sales_status         VARCHAR(2),
+   sales_type           VARCHAR(2),
+   sales_remark         VARCHAR(200),
+   constraint PK_TB_SALES primary key (sales_serial_number)
+);
+
+/*==============================================================*/
+/* Table: tb_salesback_goods_log                                */
+/*==============================================================*/
+create table tb_salesback_goods_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   salesback_goods_id   INT,
+   salesback_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_type           VARCHAR(2),
+   goods_amount         INT,
+   goods_unit           VARCHAR(20),
+   goods_price          BIGINT,
+   goods_production     DATE,
+   goods_expiration     DATE,
+   discount_amount      BIGINT,
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   remark               VARCHAR(200),
+   storage_id           INT,
+   constraint PK_TB_SALESBACK_GOODS_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_salesback_goods                                    */
+/*==============================================================*/
+create table tb_salesback_goods 
+(
+   salesback_goods_id   INT                  not null,
+   salesback_serial_number VARCHAR(200),
+   goods_id             INT,
+   goods_name           VARCHAR(200),
+   goods_type           VARCHAR(2),
+   goods_amount         INT,
+   goods_unit           VARCHAR(20),
+   goods_price          BIGINT,
+   goods_production     DATE,
+   goods_expiration     DATE,
+   discount_amount      BIGINT,
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   remark               VARCHAR(200),
+   storage_id           INT,
+   constraint PK_TB_SALESBACK_GOODS primary key (salesback_goods_id)
+);
+
+/*==============================================================*/
+/* Table: tb_salesback_log                                      */
+/*==============================================================*/
+create table tb_salesback_log 
+(
+   log_id               INT                  not null,
+   log_datetime         DATETIME,
+   salesback_serial_number VARCHAR(200),
+   sales_serial_number  VARCHAR(200),
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   employee_id          INT,
+   employee_name        VARCHAR(20),
+   salesback_type       VARCHAR(2),
+   salesback_reason     VARCHAR(200),
+   salesback_time       DATE,
+   salesback_refund     BIGINT,
+   salesback_refund_type VARCHAR(2),
+   salesback_refund_time DATE,
+   salesback_remark     VARCHAR(200),
+   constraint PK_TB_SALESBACK_LOG primary key (log_id)
+);
+
+/*==============================================================*/
+/* Table: tb_salesback                                          */
+/*==============================================================*/
+create table tb_salesback 
+(
+   salesback_serial_number VARCHAR(200)         not null,
+   sales_serial_number  VARCHAR(200),
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   storehouse_id        INT,
+   storehouse_name      VARCHAR(200),
+   employee_id          INT,
+   employee_name        VARCHAR(20),
+   salesback_type       VARCHAR(2),
+   salesback_reason     VARCHAR(200),
+   salesback_time       DATE,
+   salesback_refund     BIGINT,
+   salesback_refund_type VARCHAR(2),
+   salesback_refund_time DATE,
+   salesback_remark     VARCHAR(200),
+   constraint PK_TB_SALESBACK primary key (salesback_serial_number)
+);

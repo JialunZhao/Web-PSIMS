@@ -53,7 +53,7 @@ public class StorehouseController extends BaseController {
 		// 2.获取参数
 		String storehouse_name = request.getParameter("query_storehouseName") == "" ? null
 				: request.getParameter("query_storehouseName");
-		String storehouse_type = request.getParameter("query_storehouseType") == "" ? null
+		String storehouse_type = request.getParameter("query_Type") == "" ? null
 				: request.getParameter("query_storehouseType");
 		String contact_name = request.getParameter("query_contactName") == "" ? null
 				: request.getParameter("query_contactName");
@@ -152,10 +152,10 @@ public class StorehouseController extends BaseController {
 		// 1.初始化
 		TbStorehouse tbStorehouse = new TbStorehouse();
 		// 2.获取参数
-		String storehouse_id = request.getParameter("storehouse_id");
+		String storehouseId = request.getParameter("storehouseId");
 		// 3.数据校验
-		if (storehouse_id != null && storehouse_id.length() > 0) {
-			tbStorehouse.setStorehouseId(Integer.parseInt(storehouse_id));
+		if (storehouseId != null && storehouseId.length() > 0) {
+			tbStorehouse.setStorehouseId(Integer.parseInt(storehouseId));
 		}
 		// 4.业务处理
 		// 逻辑删除 修改状态为 00-失效 （记录状态 00-失效 01-正常 99-异常）
@@ -239,35 +239,35 @@ public class StorehouseController extends BaseController {
 		TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
 		int storehouseid = 0;
 		// 2.获取参数
-		String storehouse_id = request.getParameter("storehouse_id");
-		String storehouse_name = request.getParameter("storehouse_name");
-		String storehouse_type = request.getParameter("storehouse_type");
-		String contact_name = request.getParameter("contact_name");
-		String contact_tel = request.getParameter("contact_tel");
+		String storehouseId = request.getParameter("storehouseId");
+		String storehouseName = request.getParameter("storehouseName");
+		String type = request.getParameter("type");
+		String contactName = request.getParameter("contactName");
+		String contactTel = request.getParameter("contactTel");
 		// 3.数据校验
-		if (storehouse_id != null && storehouse_id.length() > 0) {
-			storehouseid = Integer.parseInt(storehouse_id);
+		if (storehouseId != null && storehouseId.length() > 0) {
+			storehouseid = Integer.parseInt(storehouseId);
 			tbStorehouseExample.createCriteria().andStorehouseIdEqualTo(storehouseid);
 		}
-		if (storehouse_name != null && storehouse_name.length() > 0) {
+		if (storehouseName != null && storehouseName.length() > 0) {
 			tbStorehouseExample.createCriteria().andStorehouseNameEqualTo(
-					contact_name);
+					storehouseName);
 		}
-		if (storehouse_type != null && storehouse_type.length() > 0) {
+		if (type != null && type.length() > 0) {
 			tbStorehouseExample.createCriteria().andTypeEqualTo(
-					storehouse_type);
+					type);
 		}
-		if (contact_name != null && contact_name.length() > 0) {
+		if (contactName != null && contactName.length() > 0) {
 			tbStorehouseExample.createCriteria().andContactNameEqualTo(
-					contact_name);
+					contactName);
 		}
-		if (contact_tel != null && contact_tel.length() > 0) {
+		if (contactTel != null && contactTel.length() > 0) {
 			tbStorehouseExample.createCriteria()
-					.andContactTelEqualTo(contact_tel);
+					.andContactTelEqualTo(contactTel);
 		}
 		// 4.业务处理
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
-		tbStorehouseExample.createCriteria().andStatusEqualTo("01");
+  		tbStorehouseExample.createCriteria().andStatusNotEqualTo("00");
 		tbStorehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
 		request.setAttribute("tbStorehouses", tbStorehouses);
 		// 5.返回结果

@@ -2,10 +2,8 @@ package com.ai.psims.web.controller;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -20,13 +18,10 @@ import com.ai.psims.web.business.IAddGoodsImportList;
 import com.ai.psims.web.business.IQueryImportList;
 import com.ai.psims.web.business.ISalesBusiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
-import com.ai.psims.web.model.AddGoodsBean;
 import com.ai.psims.web.model.AddSalesGoodsBean;
 import com.ai.psims.web.model.Employee;
 import com.ai.psims.web.model.EmployeeExample;
-import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.ImportGoods;
-import com.ai.psims.web.model.Provider;
 import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesExample;
 import com.ai.psims.web.model.SalesGoods;
