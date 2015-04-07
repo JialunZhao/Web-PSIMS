@@ -1,11 +1,11 @@
 //新增客户 
 //1.提交数据
-$("#addcustomersubmit").click(function customeradd() {
+$("#addprovidersubmit").click(function customeradd() {
 	$.ajax({
 		type : 'POST',
 		async : true,
-		url : 'addCustomer.do',
-		data : $('#addcustomerForm').serialize(),
+		url : 'addProvider.do',
+		data : $('#addproviderForm').serialize(),
 		// data : {
 		// 'customer_name' : customer_name,
 		// 'customer_type' : customer_type,
@@ -17,25 +17,25 @@ $("#addcustomersubmit").click(function customeradd() {
 		// 'remark' : remark
 		// },
 		success : function(data) {
-			$('#addcustomer').modal('hide');
-			window.location.href = "customer";
+			$('#addprovider').modal('hide');
+			window.location.href = "provider";
 		},
 	});
 });
 // 2.刷新列表
 
 // 删除客户信息
-function delCurrentCustomer(obj) {
+function delCurrentProvider(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
-	var customer_id = $(obj).parent().parent().children("td").get(1).innerHTML;
+	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
 		type : 'POST',
 		async : true,
-		url : 'deleteCustomer.do',
+		url : 'deleteProvider.do',
 		// data : $('#addcustomerForm').serialize(),
 		data : {
-			'customer_id' : customer_id
+			'provider_id' : provider_id
 		},
 		success : function(data) {
 			$(obj).parent().parent().remove();
@@ -45,46 +45,47 @@ function delCurrentCustomer(obj) {
 }
 // 修改客户信息
 // 1.修改模态框数据获取
-function modifyCurrentCustomer(obj) {
+function modifyCurrentProvider(obj) {
 	// console.dir(obj);
-	var customer_id = $(obj).parent().parent().children("td").get(1).innerHTML;
+	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
 	$.ajax({
 		type : 'POST',
 		async : false,
-		url : 'queryCustomer.do',
+		url : 'queryProvider.do',
 		dataType : 'json',
 		data : {
-			'customer_id' : customer_id
+			'provider_id' : provider_id
 		},
 		success : function(data) {
 			console.dir(data);
-			$('#modify_customerId').val(data[0].customerId)
-			$('#modify_customerName').val(data[0].customerName)
-			$('#modify_customerType').val(data[0].customerType)
-			$('#modify_contactName').val(data[0].contactName)
-			$('#modify_contactTel').val(data[0].contactTel)
-			$('#modify_contactAddr').val(data[0].contactAddr)
-			$('#modify_email').val(data[0].email)
-			$('#modify_area').val(data[0].area)
-			$('#modify_remark').val(data[0].remark)
-			$('#modifycustomer').modal('show');
+			$('#modify_providerId').val(data[0].providerId)
+			$('#modify_providerName').val(data[0].providerName)
+			$('#modify_providerType').val(data[0].providerType)
+			$('#modify_providerPrizePool').val(data[0].providerPrizePool)
+			$('#modify_providerContactName').val(data[0].providerContactName)
+			$('#modify_providerContactTel').val(data[0].providerContactTel)
+			$('#modify_providerContactAddress').val(data[0].providerContactAddress)
+			$('#modify_providerContactEmail').val(data[0].providerContactEmail)
+			$('#modify_providerArea').val(data[0].providerArea)
+			$('#modify_providerRemark').val(data[0].providerRemark)
+			$('#modifyprovider').modal('show');
 		},
 	});
 
 };
 
 // 2.修改后信息传输
-function modifyCurrentCustomerInfo(obj) {
+function modifyCurrentProviderInfo(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
 	$.ajax({
 		type : 'POST',
 		async : false,
 		url : 'modify.do',
-		data : $('#modify_customerForm').serialize(),
+		data : $('#modify_providerForm').serialize(),
 		success : function(data) {
-			$('#modifycustomer').modal('hide');
-			window.location.href = "customer";
+			$('#modifyprovider').modal('hide');
+			window.location.href = "provider";
 		},
 	});
 }

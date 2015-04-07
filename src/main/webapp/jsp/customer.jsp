@@ -23,7 +23,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="<%=_base %>/img/favicon.ico">
-<title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO +path</title>
+<title>北京市金瑞超达商贸有限公司-食品库存管理系统</title>
 
 <!-- Loading Bootstrap -->
 <link href="<%=_base %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -52,7 +52,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="./index.html">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
+				<a class="navbar-brand" href="./index.html">北京市金瑞超达商贸有限公司-食品库存管理系统</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -73,7 +73,7 @@
 				<ul class="nav nav-sidebar">
 					<li class="active"><a href="customer">客户管理<span
 							class="sr-only">(current)</span></a></li>
-					<li><a href="./provider.html">供应商</a></li>
+					<li><a href="../providerController/provider">供应商</a></li>
 					<li><a href="./goods.html">商品管理</a></li>
 					<li><a href="./storehouse.html">仓库管理</a></li>
 				</ul>

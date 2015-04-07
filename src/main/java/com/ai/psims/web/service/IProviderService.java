@@ -2,16 +2,17 @@ package com.ai.psims.web.service;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Provider;
+import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbProviderExample;
 
 public interface IProviderService {
-	public Provider queryProviderByKey(Integer id);
+	public int insertProviderInfo(TbProvider providerAdd);
+
+	public int deleteProviderInfo(TbProvider providerDelete);
+
+	public int modifyProviderInfo(TbProvider providerModify);
 	
-	public List<Provider> queryProvider();
-	
-	public int deleteProviderByKey(Integer id);
-	
-	public int updateProviderByKey(Provider Provider);
-	
-	public int insertProvider(Provider Provider);
+	public int backupProviderInfo(TbProvider providerBackup);
+
+	public List<TbProvider> queryProvider(TbProviderExample providerQuery);
 }

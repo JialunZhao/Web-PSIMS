@@ -35,6 +35,14 @@ public class CustomerController extends BaseController {
 	/**
 	 * 客户管理页面跳转
 	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String customerRedirectGET(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		return "redirect:/customerController/customer";
+	} 
+	/**
+	 * 客户管理页面跳转
+	 */
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customerRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -86,7 +94,7 @@ public class CustomerController extends BaseController {
 	/**
 	 * 客户管理新增客户信息
 	 */
-	@RequestMapping(value = "/addcustomer", method = RequestMethod.POST)
+	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	public String tbCustomer(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome customer add info!-------------");
@@ -150,7 +158,7 @@ public class CustomerController extends BaseController {
 		}
 		// 4.业务处理
 		// 逻辑删除 修改状态为 00-失效 （记录状态 00-失效 01-正常 99-异常）
-		tbCustomer.setStatus("01");
+		tbCustomer.setStatus("00");
 		int res = customerBusiness.customerModify(tbCustomer);
 		toString();
 		logger.info(String.valueOf(res));

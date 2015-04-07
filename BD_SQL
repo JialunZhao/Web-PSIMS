@@ -1,1 +1,85 @@
-select * from tb_customer a where  a.customer_name like "赵%";
+show databases;
+show tables;
+drop table tb_customer;
+
+create table tb_customer 
+(
+   customer_id          INT    not null AUTO_INCREMENT,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   contact_name         VARCHAR(20),
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   email                VARCHAR(100),
+   area                 VARCHAR(20),
+   customer_type        VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   status               VARCHAR(200),
+   remark               VARCHAR(200),
+   constraint PK_TB_CUSTOMER primary key (customer_id)
+);
+drop table tb_customer_log cascade constraints;
+
+/*==============================================================*/
+/* Table: tb_customer_log                                       */
+/*==============================================================*/
+create table tb_customer_log 
+(
+   log_id               INT                  not null AUTO_INCREMENT,
+   log_datetime         DATETIME,
+   customer_id          INT,
+   customer_name        VARCHAR(200),
+   customer_code        VARCHAR(200),
+   contact_name         VARCHAR(20),
+   contact_tel          VARCHAR(20),
+   contact_addr         VARCHAR(200),
+   email                VARCHAR(100),
+   area                 VARCHAR(20),
+   customer_type        VARCHAR(2),
+   createtime           DATE,
+   modifytime           DATE,
+   endtime              DATE,
+   status               VARCHAR(200),
+   remark               VARCHAR(200),
+   constraint PK_TB_CUSTOMER_LOG primary key (log_id)
+);
+select * from tb_customer_log;
+
+drop table tb_provider cascade constraints;
+
+/*==============================================================*/
+/* Table: tb_provider                                           */
+/*==============================================================*/
+create table tb_provider 
+(
+   provider_id          INT                  not null,
+   provider_name        VARCHAR(200),
+   provider_code        VARCHAR(20),
+   provider_contact_name VARCHAR(10),
+   provider_contact_tel VARCHAR(20),
+   provider_contact_fax VARCHAR(20),
+   provider_contact_email VARCHAR(100),
+   provider_contact_address VARCHAR(200),
+   provider_bank_name   VARCHAR(100),
+   provider_bank_account_name VARCHAR(200),
+   provider_bank_account_code VARCHAR(200),
+   provider_prize_pool  BIGINT,
+   provider_taxid       VARCHAR(100),
+   provider_area        VARCHAR(20),
+   provider_status      VARCHAR(2),
+   provider_createtime  DATETIME,
+   provider_modifytime  DATETIME,
+   provider_endtime     DATETIME,
+   provider_remark      VARCHAR(200),
+   constraint PK_TB_PROVIDER primary key (provider_id)
+);
+
+comment on table tb_provider is
+'供应商基本信息：单位名称、联系人、联系电话、传真、联系地址、银行账号、税号、e-mail、所属地区。';
+
+comment on column tb_provider.provider_status is
+'00 失效
+01 正常';
+
