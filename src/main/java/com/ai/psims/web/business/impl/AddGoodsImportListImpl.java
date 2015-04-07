@@ -138,9 +138,34 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 						.setGoodsStatus(Constants.ImportGoodsStatus.CANSALE);
 				storagecheck.setImportSerialNumber(importGoods
 						.getImportSerialNumber());
+				storagecheck.setImportGoodsUnit(goods.getGoodsUnit());
+				storagecheck.setStorageWarning(goods.getStorageWarning());
+				storagecheck.setShelfLifeWarning(goods.getShelfLifeWarning());
 				storagecheckService.insert(storagecheck);
 			}
-			// deleteImportData(updateImportDemo.getImportSerialNumber());
+			for (ImportGoods importGoods : importGoodsList) {
+				ImportGoods importGood = importGoodsService
+						.selectByPrimaryKey(importGoods.getImportGoodsId());
+				ImportGoodsLog importGoodsLog = getLog(importGood);
+				importGoodsLogService.insertImportGoodsLog(importGoodsLog);
+				importGoodsService.updateImportGoods(importGoods);
+			}
+			Import import1 = new Import();
+			import1.setImportSerialNumber(updateImportDemo
+					.getImportSerialNumber());
+			import1.setImportStatus(updateImportDemo.getImportStatus());
+			import1.setPaymentType(updateImportDemo.getPaymentType());
+			import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
+			import1.setProviderId(Integer.parseInt(updateImportDemo
+					.getProviderId()));
+			import1.setStorehouseId(Integer.parseInt(updateImportDemo
+					.getStorehouseId()));
+			import1.setProviderName(updateImportDemo.getProviderName());
+			import1.setStorehouseName(updateImportDemo.getStorehouseName());
+
+			ImportLog importLog = getImpLog(import2);
+			importLogService.insertImportLog(importLog);
+			importService.updateImport(import1);
 
 		} else {
 			for (ImportGoods importGoods : importGoodsList) {

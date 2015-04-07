@@ -1341,6 +1341,196 @@ public class StoragecheckExample {
             addCriterion("import_serial_number not between", value1, value2, "importSerialNumber");
             return (Criteria) this;
         }
+
+        public Criteria andImportGoodsUnitIsNull() {
+            addCriterion("import_goods_unit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitIsNotNull() {
+            addCriterion("import_goods_unit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitEqualTo(String value) {
+            addCriterion("import_goods_unit =", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitNotEqualTo(String value) {
+            addCriterion("import_goods_unit <>", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitGreaterThan(String value) {
+            addCriterion("import_goods_unit >", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitGreaterThanOrEqualTo(String value) {
+            addCriterion("import_goods_unit >=", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitLessThan(String value) {
+            addCriterion("import_goods_unit <", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitLessThanOrEqualTo(String value) {
+            addCriterion("import_goods_unit <=", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitLike(String value) {
+            addCriterion("import_goods_unit like", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitNotLike(String value) {
+            addCriterion("import_goods_unit not like", value, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitIn(List<String> values) {
+            addCriterion("import_goods_unit in", values, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitNotIn(List<String> values) {
+            addCriterion("import_goods_unit not in", values, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitBetween(String value1, String value2) {
+            addCriterion("import_goods_unit between", value1, value2, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportGoodsUnitNotBetween(String value1, String value2) {
+            addCriterion("import_goods_unit not between", value1, value2, "importGoodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningIsNull() {
+            addCriterion("storage_warning is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningIsNotNull() {
+            addCriterion("storage_warning is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningEqualTo(Integer value) {
+            addCriterion("storage_warning =", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningNotEqualTo(Integer value) {
+            addCriterion("storage_warning <>", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningGreaterThan(Integer value) {
+            addCriterion("storage_warning >", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningGreaterThanOrEqualTo(Integer value) {
+            addCriterion("storage_warning >=", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningLessThan(Integer value) {
+            addCriterion("storage_warning <", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningLessThanOrEqualTo(Integer value) {
+            addCriterion("storage_warning <=", value, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningIn(List<Integer> values) {
+            addCriterion("storage_warning in", values, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningNotIn(List<Integer> values) {
+            addCriterion("storage_warning not in", values, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningBetween(Integer value1, Integer value2) {
+            addCriterion("storage_warning between", value1, value2, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andStorageWarningNotBetween(Integer value1, Integer value2) {
+            addCriterion("storage_warning not between", value1, value2, "storageWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningIsNull() {
+            addCriterion("shelf_life_warning is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningIsNotNull() {
+            addCriterion("shelf_life_warning is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningEqualTo(Integer value) {
+            addCriterion("shelf_life_warning =", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningNotEqualTo(Integer value) {
+            addCriterion("shelf_life_warning <>", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningGreaterThan(Integer value) {
+            addCriterion("shelf_life_warning >", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shelf_life_warning >=", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningLessThan(Integer value) {
+            addCriterion("shelf_life_warning <", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningLessThanOrEqualTo(Integer value) {
+            addCriterion("shelf_life_warning <=", value, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningIn(List<Integer> values) {
+            addCriterion("shelf_life_warning in", values, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningNotIn(List<Integer> values) {
+            addCriterion("shelf_life_warning not in", values, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningBetween(Integer value1, Integer value2) {
+            addCriterion("shelf_life_warning between", value1, value2, "shelfLifeWarning");
+            return (Criteria) this;
+        }
+
+        public Criteria andShelfLifeWarningNotBetween(Integer value1, Integer value2) {
+            addCriterion("shelf_life_warning not between", value1, value2, "shelfLifeWarning");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
