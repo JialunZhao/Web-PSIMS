@@ -348,7 +348,7 @@ String date=sdf.format(new Date());
     <script src="<%=_base %>/js/flat-ui.min.js"></script>
     <script type="text/javascript">
     	function isPay(payStatus){
-    		if (payStatus=="11") {
+    		if (payStatus=="<%=Constants.PayStatus.YESPAY %>") {
 				$("#isPay").show();
 			}else {
 				$("#isPay").hide();

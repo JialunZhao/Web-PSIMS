@@ -29,6 +29,8 @@ public class Sales {
 
     private String salesRemark;
 
+    private Long salesTotalPrice;
+
     public String getSalesSerialNumber() {
         return salesSerialNumber;
     }
@@ -131,5 +133,13 @@ public class Sales {
 
     public void setSalesRemark(String salesRemark) {
         this.salesRemark = salesRemark == null ? null : salesRemark.trim();
+    }
+
+    public Long getSalesTotalPrice() {
+        return salesTotalPrice;
+    }
+
+    public void setSalesTotalPrice(Long salesTotalPrice) {
+        this.salesTotalPrice = salesTotalPrice;
     }
 }

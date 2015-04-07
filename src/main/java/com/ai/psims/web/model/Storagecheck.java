@@ -41,6 +41,12 @@ public class Storagecheck {
 
     private String importSerialNumber;
 
+    private String importGoodsUnit;
+
+    private Integer storageWarning;
+
+    private Integer shelfLifeWarning;
+
     public Integer getStorageId() {
         return storageId;
     }
@@ -191,5 +197,29 @@ public class Storagecheck {
 
     public void setImportSerialNumber(String importSerialNumber) {
         this.importSerialNumber = importSerialNumber == null ? null : importSerialNumber.trim();
+    }
+
+    public String getImportGoodsUnit() {
+        return importGoodsUnit;
+    }
+
+    public void setImportGoodsUnit(String importGoodsUnit) {
+        this.importGoodsUnit = importGoodsUnit == null ? null : importGoodsUnit.trim();
+    }
+
+    public Integer getStorageWarning() {
+        return storageWarning;
+    }
+
+    public void setStorageWarning(Integer storageWarning) {
+        this.storageWarning = storageWarning;
+    }
+
+    public Integer getShelfLifeWarning() {
+        return shelfLifeWarning;
+    }
+
+    public void setShelfLifeWarning(Integer shelfLifeWarning) {
+        this.shelfLifeWarning = shelfLifeWarning;
     }
 }

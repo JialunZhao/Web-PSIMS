@@ -1,15 +1,28 @@
 package com.ai.psims.web.dao;
 
 import com.ai.psims.web.model.Employee;
+import com.ai.psims.web.model.EmployeeExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface EmployeeMapper {
+    int countByExample(EmployeeExample example);
+
+    int deleteByExample(EmployeeExample example);
+
     int deleteByPrimaryKey(Integer employeeId);
 
     int insert(Employee record);
 
     int insertSelective(Employee record);
 
+    List<Employee> selectByExample(EmployeeExample example);
+
     Employee selectByPrimaryKey(Integer employeeId);
+
+    int updateByExampleSelective(@Param("record") Employee record, @Param("example") EmployeeExample example);
+
+    int updateByExample(@Param("record") Employee record, @Param("example") EmployeeExample example);
 
     int updateByPrimaryKeySelective(Employee record);
 
