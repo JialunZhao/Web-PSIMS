@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/main/resources/jdbc.properties=UTF-8
 encoding//src/main/webapp/jsp/customer.jsp=UTF-8
+encoding//src/main/webapp/jsp/goods.jsp=UTF-8
 encoding//src/main/webapp/jsp/storehouse.jsp=UTF-8
