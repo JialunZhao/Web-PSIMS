@@ -14,10 +14,82 @@
     <result column="p_remark" property="pRemark" jdbcType="VARCHAR" />
     <result column="p_createtime" property="pCreatetime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     log_id, log_datetime, param_id, p_key, p_desc, p_value, pp_key, pp_desc, pp_value, 
     p_remark, p_createtime
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.SystemParameterLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_system_parameter_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -27,6 +99,12 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_system_parameter_log
     where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.SystemParameterLogExample" >
+    delete from tb_system_parameter_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.SystemParameterLog" >
     insert into tb_system_parameter_log (log_id, log_datetime, param_id, 
@@ -111,6 +189,70 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.SystemParameterLogExample" resultType="java.lang.Integer" >
+    select count(*) from tb_system_parameter_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_system_parameter_log
+    <set >
+      <if test="record.logId != null" >
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logDatetime != null" >
+        log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paramId != null" >
+        param_id = #{record.paramId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pKey != null" >
+        p_key = #{record.pKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pDesc != null" >
+        p_desc = #{record.pDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pValue != null" >
+        p_value = #{record.pValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppKey != null" >
+        pp_key = #{record.ppKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppDesc != null" >
+        pp_desc = #{record.ppDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ppValue != null" >
+        pp_value = #{record.ppValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pRemark != null" >
+        p_remark = #{record.pRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pCreatetime != null" >
+        p_createtime = #{record.pCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_system_parameter_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      param_id = #{record.paramId,jdbcType=INTEGER},
+      p_key = #{record.pKey,jdbcType=VARCHAR},
+      p_desc = #{record.pDesc,jdbcType=VARCHAR},
+      p_value = #{record.pValue,jdbcType=VARCHAR},
+      pp_key = #{record.ppKey,jdbcType=VARCHAR},
+      pp_desc = #{record.ppDesc,jdbcType=VARCHAR},
+      pp_value = #{record.ppValue,jdbcType=VARCHAR},
+      p_remark = #{record.pRemark,jdbcType=VARCHAR},
+      p_createtime = #{record.pCreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.SystemParameterLog" >
     update tb_system_parameter_log
     <set >

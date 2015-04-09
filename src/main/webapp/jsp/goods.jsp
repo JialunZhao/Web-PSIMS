@@ -96,15 +96,17 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h3 class="page-header">商品管理</h3>
 
-				<div class="row placeholders col-sm-12" >
-					<form class="form-inline" action="goods" method="get" >
+				<div class="row placeholders col-sm-12">
+					<form class="form-inline" action="goods" method="get">
 						<div class="form-group">
 							<label for="query_goodsName">商品名称：</label> <input type="text"
-								class="form-control" id="query_goodsName" name="query_goodsName" placeholder="商品名称">
+								class="form-control" id="query_goodsName" name="query_goodsName"
+								placeholder="商品名称">
 						</div>
 						<div class="form-group">
 							<label for="query_goodsType">商品类型：</label> <select
-								class="form-control" id="query_goodsType" name="query_goodsType"  tabindex="1">
+								class="form-control" id="query_goodsType" name="query_goodsType"
+								tabindex="1">
 								<option value="0">请选择商品类型：</option>
 								<option value="1">啤酒</option>
 								<option value="2">白酒</option>
@@ -114,12 +116,13 @@
 						</div>
 						<div class="form-group">
 							<label for="query_goodsPrice">销售价格：</label> <input type="text"
-								class="form-control" id="query_goodsPrice" name="query_goodsPrice" placeholder="商品价格">
+								class="form-control" id="query_goodsPrice"
+								name="query_goodsPrice" placeholder="商品价格">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail2">保质期：</label> <input type="text"
-								class="form-control" id="query_goodsShelfLife" name="query_goodsShelfLife" 
-								placeholder="保质期（天）">
+								class="form-control" id="query_goodsShelfLife"
+								name="query_goodsShelfLife" placeholder="保质期（天）">
 						</div>
 						<button type="submit" class="btn btn-primary">搜索</button>
 					</form>
@@ -246,13 +249,13 @@
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">销售价格:</span> <input
 									type="text" class="form-control" name="goodsPrice"
-									placeholder="无折扣销售价格"> <span class="input-group-addon">元</span>
+									placeholder="销售价格"> <span class="input-group-addon">元</span>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">商品利润:</span> <input
 									type="text" class="form-control" name="goodsProfit"
-									placeholder="进货折扣"> <span class="input-group-addon">%</span>
+									placeholder="商品利润"> <span class="input-group-addon">%</span>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -263,14 +266,20 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">保质期预警值：</span> <input
-									type="text" class="form-control" name="shelfLifeWarning"
-									placeholder="保质期"> <span class="input-group-addon">（天）</span>
+									type="text" class="form-control" name="shelfLifePrewarning"
+									placeholder="保质期预警值"> <span class="input-group-addon">（天）</span>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">库存量预警值：</span> <input
-									type="text" class="form-control" name="storageWarning"
-									placeholder="保质期"> <span class="input-group-addon">（天）</span>
+									type="text" class="form-control" name="storagePrewarning"
+									placeholder="库存量预警值"> <span class="input-group-addon">（天）</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">备注：</span> <input
+									type="text" class="form-control" id="remark"
+									name="remark" placeholder="备注：" value="">
 							</div>
 						</form>
 
@@ -286,6 +295,110 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+
+
+	<!-- 模态框（Modal） -->
+	<!-- 修改商品模态框（Modal） -->
+	<div class="modal fade" id="modifygoods" tabindex="-1" role="dialog"
+		aria-labelledby="addgoods" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改商品</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form id="modifyGoodsForm">
+							<input type="hidden" id="modify_goodsId" name="modify_goodsId"
+								value="">
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品名称:</span> <input
+									type="text" class="form-control" id="modify_goodsName" value=""
+									name="modify_goodsName" placeholder="商品名称">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品类型:</span> <select
+									class="form-control" tabindex="1" id="modify_goodsType"
+									name="modify_goodsType">
+									<option value="0">请选择商品类型：</option>
+									<option value="1">啤酒</option>
+									<option value="2">白酒</option>
+									<option value="3">饮料</option>
+									<option value="4">原料</option>
+								</select>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">基本单位:</span> <input
+									type="text" class="form-control" id="modify_goodsUnit" value=""
+									name="modify_goodsUnit" placeholder="基本单位">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">进货价格:</span> <input
+									type="text" class="form-control" id="modify_goodsActualCost"
+									value="" name="modify_goodsActualCost" placeholder="进货价格">
+								<span class="input-group-addon">元</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">销售价格:</span> <input
+									type="text" class="form-control" id="modify_goodsPrice"
+									value="" name="modify_goodsPrice" placeholder="销售价格"> <span
+									class="input-group-addon">元</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品利润:</span> <input
+									type="text" class="form-control" id="modify_goodsProfit"
+									value="" name="modify_goodsProfit" placeholder="商品利润">
+								<span class="input-group-addon">%</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">保质期：</span> <input
+									type="text" class="form-control" id="modify_goodsShelfLife"
+									value="" name="modify_goodsShelfLife" placeholder="保质期">
+								<span class="input-group-addon">（天）</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">保质期预警值：</span> <input
+									type="text" class="form-control" id="modify_shelfLifePrewarning"
+									value="" name="modify_shelfLifePrewarning" placeholder="保质期预警值">
+								<span class="input-group-addon">（天）</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">库存量预警值：</span> <input
+									type="text" class="form-control" id="modify_storagePrewarning"
+									value="" name="modify_storagePrewarning" placeholder="库存量预警值">
+								<span class="input-group-addon">（天）</span>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">备注：</span> <input
+									type="text" class="form-control" id="modify_remark"
+									name="modify_remark" placeholder="备注：" value="">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" onClick="modifyCurrentGoodsInfo(this)">确认修改</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
 
 	<!-- 配置商品对应客户折扣模态框（Modal） -->
 	<div class="modal fade" id="goods2customer" tabindex="-1" role="dialog"
@@ -349,67 +462,6 @@
 	<!-- /.modal -->
 
 
-	<!-- 模态框（Modal） -->
-	<!-- 添加商品模态框（Modal） -->
-	<div class="modal fade" id="modifygoods" tabindex="-1" role="dialog"
-		aria-labelledby="addgoods" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">修改商品</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品名称:</span> <input
-								type="text" class="form-control" placeholder="商品名称"
-								value="百威金樽500ml">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品类型:</span> <input
-								type="text" class="form-control" placeholder="商品类型" value="啤酒">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">基本单位:</span> <input
-								type="text" class="form-control" placeholder="基本单位"
-								value="箱(12瓶)">
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">进货价格:</span> <input
-								type="text" class="form-control" placeholder="进货价格" value="99">
-							<span class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">销售价格:</span> <input
-								type="text" class="form-control" placeholder="无折扣销售价格"
-								value="110"> <span class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">保质期：</span> <input
-								type="text" class="form-control" placeholder="保质期" value="180">
-							<span class="input-group-addon">（天）</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary">确认修改</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<script src="<%=_base%>/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

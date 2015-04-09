@@ -11,6 +11,8 @@ public class Menu {
 
     private String menuCode;
 
+    private String menuUrl;
+
     private String remark;
 
     private Date createtime;
@@ -49,6 +51,14 @@ public class Menu {
 
     public void setMenuCode(String menuCode) {
         this.menuCode = menuCode == null ? null : menuCode.trim();
+    }
+
+    public String getMenuUrl() {
+        return menuUrl;
+    }
+
+    public void setMenuUrl(String menuUrl) {
+        this.menuUrl = menuUrl == null ? null : menuUrl.trim();
     }
 
     public String getRemark() {

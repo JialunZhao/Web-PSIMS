@@ -31,7 +31,7 @@ create table tb_storehouse_log
 /*==============================================================*/
 create table tb_storehouse 
 (
-   storehouse_id        INT                  not null,
+   storehouse_id        INT                  not null AUTO_INCREMENT,
    storehouse_name      VARCHAR(200),
    storehouse_code      VARCHAR(20),
    area                 VARCHAR(20),
@@ -54,7 +54,7 @@ create table tb_storehouse
 /*==============================================================*/
 create table tb_provider_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    provider_id          INT,
    provider_name        VARCHAR(200),
@@ -83,7 +83,7 @@ create table tb_provider_log
 /*==============================================================*/
 create table tb_provider 
 (
-   provider_id          INT                  not null,
+   provider_id          INT                  not null AUTO_INCREMENT,
    provider_name        VARCHAR(200),
    provider_code        VARCHAR(20),
    provider_contact_name VARCHAR(10),
@@ -111,7 +111,7 @@ create table tb_provider
 /*==============================================================*/
 create table tb_import_goods_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    import_goods_id      INT,
    import_serial_number VARCHAR(200),
@@ -137,7 +137,7 @@ create table tb_import_goods_log
 /*==============================================================*/
 create table tb_import_goods 
 (
-   import_goods_id      INT                  not null,
+   import_goods_id      INT                  not null AUTO_INCREMENT,
    import_serial_number VARCHAR(200),
    goods_id             INT,
    goods_name           VARCHAR(200),
@@ -161,7 +161,7 @@ create table tb_import_goods
 /*==============================================================*/
 create table tb_import_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    import_serial_number VARCHAR(200),
    import_datetime      DATE,
@@ -181,7 +181,7 @@ create table tb_import_log
 /*==============================================================*/
 create table tb_import 
 (
-   import_serial_number VARCHAR(200)         not null,
+   import_serial_number VARCHAR(200)         not null AUTO_INCREMENT,
    import_datetime      DATE,
    import_batch_number  VARCHAR(200),
    import_total_price   BIGINT,
@@ -198,7 +198,7 @@ create table tb_import
 /*==============================================================*/
 create table tb_importback_goods_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    importback_goods_id  VARCHAR(200),
    importback_serial_number VARCHAR(200),
@@ -223,7 +223,7 @@ create table tb_importback_goods_log
 /*==============================================================*/
 create table tb_importback_goods 
 (
-   importback_goods_id  VARCHAR(200)         not null,
+   importback_goods_id  VARCHAR(200)         not null AUTO_INCREMENT,
    importback_serial_number VARCHAR(200),
    goods_id             INT,
    goods_name           VARCHAR(200),
@@ -246,7 +246,7 @@ create table tb_importback_goods
 /*==============================================================*/
 create table tb_inportback_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    importback_serial_number VARCHAR(200),
    import_serial_number VARCHAR(200),
@@ -269,7 +269,7 @@ create table tb_inportback_log
 /*==============================================================*/
 create table tb_inportback 
 (
-   importback_serial_number VARCHAR(200)         not null,
+   importback_serial_number VARCHAR(200)         not null AUTO_INCREMENT,
    import_serial_number VARCHAR(200),
    provider_id          INT,
    provider_name        VARCHAR(200),
@@ -290,7 +290,7 @@ create table tb_inportback
 /*==============================================================*/
 create table tb_user2menu_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    user2menu_id         INT,
    user_id              VARCHAR(20),
@@ -308,7 +308,7 @@ create table tb_user2menu_log
 /*==============================================================*/
 create table tb_user2menu 
 (
-   user2menu_id         INT                  not null,
+   user2menu_id         INT                  not null AUTO_INCREMENT,
    user_id              VARCHAR(20),
    menu_id              VARCHAR(20),
    user2menu_status     VARCHAR(2),
@@ -324,7 +324,7 @@ create table tb_user2menu
 /*==============================================================*/
 create table tb_employee 
 (
-   employee_id          INT                  not null,
+   employee_id          INT                  not null AUTO_INCREMENT,
    employee_name        VARCHAR(20),
    employee_code        VARCHAR(20),
    sex                  VARCHAR(5),
@@ -347,7 +347,7 @@ create table tb_employee
 /*==============================================================*/
 create table tb_employee_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    employee_id          INT,
    employee_name        VARCHAR(20),
@@ -370,7 +370,7 @@ create table tb_employee_log
 /*==============================================================*/
 create table tb_goods2customer_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    goods2customer_id    CHAR(10),
    goods_id             INT,
@@ -411,7 +411,7 @@ create table tb_goods2customer_log
 /*==============================================================*/
 create table tb_goods2customer 
 (
-   goods2customer_id    CHAR(10)             not null,
+   goods2customer_id    CHAR(10)             not null AUTO_INCREMENT,
    goods_id             INT,
    goods_name           VARCHAR(200),
    goods_code           VARCHAR(20),
@@ -450,7 +450,7 @@ create table tb_goods2customer
 /*==============================================================*/
 create table tb_goods_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    goods_id             INT,
    goods_name           VARCHAR(200),
@@ -493,7 +493,7 @@ create table tb_goods_log
 /*==============================================================*/
 create table tb_goods 
 (
-   goods_id             INT                  not null,
+   goods_id             INT                  not null AUTO_INCREMENT,
    goods_name           VARCHAR(200),
    goods_code           VARCHAR(20),
    goods_version        INT,
@@ -534,7 +534,7 @@ create table tb_goods
 /*==============================================================*/
 create table tb_customer_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    customer_id          INT,
    customer_name        VARCHAR(200),
@@ -558,7 +558,7 @@ create table tb_customer_log
 /*==============================================================*/
 create table tb_customer 
 (
-   customer_id          INT                  not null,
+   customer_id          INT                  not null AUTO_INCREMENT,
    customer_name        VARCHAR(200),
    customer_code        VARCHAR(200),
    contact_name         VARCHAR(20),
@@ -580,7 +580,7 @@ create table tb_customer
 /*==============================================================*/
 create table tb_storagecheck_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    storage_id           INT,
    goods_id             INT,
@@ -635,7 +635,7 @@ create table tb_storagecheck
 /*==============================================================*/
 create table tb_system_parameter 
 (
-   param_id             INT                  not null,
+   param_id             INT                  not null AUTO_INCREMENT,
    p_key                VARCHAR(45),
    p_desc               VARCHAR(45),
    p_value              VARCHAR(45),
@@ -652,7 +652,7 @@ create table tb_system_parameter
 /*==============================================================*/
 create table tb_system_parameter_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    param_id             INT,
    p_key                VARCHAR(45),
@@ -671,7 +671,7 @@ create table tb_system_parameter_log
 /*==============================================================*/
 create table tb_menu 
 (
-   menu_id              INT                  not null,
+   menu_id              INT                  not null AUTO_INCREMENT,
    menu_name            VARCHAR(20),
    menu_status          VARCHAR(20),
    menu_code            VARCHAR(20),
@@ -687,7 +687,7 @@ create table tb_menu
 /*==============================================================*/
 create table tb_sales_goods_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    sales_goods_id       INT,
    sales_serial_number  VARCHAR(200),
@@ -715,7 +715,7 @@ create table tb_sales_goods_log
 /*==============================================================*/
 create table tb_sales_goods 
 (
-   sales_goods_id       INT                  not null,
+   sales_goods_id       INT                  not null AUTO_INCREMENT,
    sales_serial_number  VARCHAR(200),
    goods_id             INT,
    goods_name           VARCHAR(200),
@@ -741,7 +741,7 @@ create table tb_sales_goods
 /*==============================================================*/
 create table tb_sales_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    sales_serial_number  VARCHAR(200),
    sales_date           DATE,
@@ -765,7 +765,7 @@ create table tb_sales_log
 /*==============================================================*/
 create table tb_sales 
 (
-   sales_serial_number  VARCHAR(200)         not null,
+   sales_serial_number  VARCHAR(200)         not null AUTO_INCREMENT,
    sales_date           DATE,
    customer_id          INT,
    customer_name        VARCHAR(200),
@@ -787,7 +787,7 @@ create table tb_sales
 /*==============================================================*/
 create table tb_salesback_goods_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    salesback_goods_id   INT,
    salesback_serial_number VARCHAR(200),
@@ -813,7 +813,7 @@ create table tb_salesback_goods_log
 /*==============================================================*/
 create table tb_salesback_goods 
 (
-   salesback_goods_id   INT                  not null,
+   salesback_goods_id   INT                  not null AUTO_INCREMENT,
    salesback_serial_number VARCHAR(200),
    goods_id             INT,
    goods_name           VARCHAR(200),
@@ -837,7 +837,7 @@ create table tb_salesback_goods
 /*==============================================================*/
 create table tb_salesback_log 
 (
-   log_id               INT                  not null,
+   log_id               INT                  not null AUTO_INCREMENT,
    log_datetime         DATETIME,
    salesback_serial_number VARCHAR(200),
    sales_serial_number  VARCHAR(200),
@@ -862,7 +862,7 @@ create table tb_salesback_log
 /*==============================================================*/
 create table tb_salesback 
 (
-   salesback_serial_number VARCHAR(200)         not null,
+   salesback_serial_number VARCHAR(200)         not null AUTO_INCREMENT,
    sales_serial_number  VARCHAR(200),
    customer_id          INT,
    customer_name        VARCHAR(200),

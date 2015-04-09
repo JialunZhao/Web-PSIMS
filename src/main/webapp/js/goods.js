@@ -48,16 +48,18 @@ function modifyCurrentGoods(obj) {
 		},
 		success : function(data) {
 			console.dir(data);
-			$('#modify_customerId').val(data[0].customerId)
-			$('#modify_customerName').val(data[0].customerName)
-			$('#modify_customerType').val(data[0].customerType)
-			$('#modify_contactName').val(data[0].contactName)
-			$('#modify_contactTel').val(data[0].contactTel)
-			$('#modify_contactAddr').val(data[0].contactAddr)
-			$('#modify_email').val(data[0].email)
-			$('#modify_area').val(data[0].area)
+			$('#modify_goodsId').val(data[0].goodsId)
+			$('#modify_goodsName').val(data[0].goodsName)
+			$('#modify_goodsType').val(data[0].goodsType)
+			$('#modify_goodsUnit').val(data[0].goodsUnit)
+			$('#modify_goodsActualCost').val(data[0].goodsActualCost)
+			$('#modify_goodsPrice').val(data[0].goodsPrice)
+			$('#modify_goodsProfit').val(data[0].goodsProfit)
+			$('#modify_goodsShelfLife').val(data[0].goodsShelfLife)
+			$('#modify_shelfLifePrewarning').val(data[0].shelfLifePrewarning)
+			$('#modify_storagePrewarning').val(data[0].storagePrewarning)
 			$('#modify_remark').val(data[0].remark)
-			$('#modifycustomer').modal('show');
+			$('#modifygoods').modal('show');
 		},
 	});
 };
@@ -70,10 +72,10 @@ function modifyCurrentGoodsInfo(obj) {
 		type : 'POST',
 		async : false,
 		url : 'modify.do',
-		data : $('#modify_customerForm').serialize(),
+		data : $('#modifyGoodsForm').serialize(),
 		success : function(data) {
-			$('#modifycustomer').modal('hide');
-			window.location.href = "customer";
+			$('#modifygoods').modal('hide');
+			window.location.href = "goods";
 		},
 	});
 }

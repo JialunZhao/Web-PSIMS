@@ -21,6 +21,8 @@ public class SystemParameter {
 
     private Date pCreatetime;
 
+    private String pParentid;
+
     public Integer getParamId() {
         return paramId;
     }
@@ -91,5 +93,13 @@ public class SystemParameter {
 
     public void setpCreatetime(Date pCreatetime) {
         this.pCreatetime = pCreatetime;
+    }
+
+    public String getpParentid() {
+        return pParentid;
+    }
+
+    public void setpParentid(String pParentid) {
+        this.pParentid = pParentid == null ? null : pParentid.trim();
     }
 }

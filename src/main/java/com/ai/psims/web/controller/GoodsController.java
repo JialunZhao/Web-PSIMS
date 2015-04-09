@@ -49,6 +49,14 @@ public class GoodsController extends BaseController {
 	public String goodsRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome goods page!-------------");
+		// 0 权限管理
+//		// 0.1  userid \
+//		TbGoodsExample tbGoodsExample = new TbGoodsExample();
+//		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
+//		criteria.NameLike(goods);
+//		retuen err;
+//		
+		
 		// 1.初始化
 		List<TbGoods> goodss;
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
@@ -254,44 +262,48 @@ public class GoodsController extends BaseController {
 		// 1.初始化
 		TbGoods tbGoods = new TbGoods();
 
-				// 2.获取参数
-				String goodsName = request.getParameter("goodsName") == "" ? null : request.getParameter("goodsName");
-				String goodsCode = request.getParameter("goodsCode") == null ? request.getParameter("goodsName") : request.getParameter("goodsCode");
-				String goodsVersion = request.getParameter("goodsVersion") == "" ? null : request.getParameter("goodsVersion");
-				String goodsUnit = request.getParameter("goodsUnit") == "" ? null : request.getParameter("goodsUnit");
-				String goodsBarCode = request.getParameter("goodsBarCode") == "" ? null : request.getParameter("goodsBarCode");
-				String goodsCurrentStock = request.getParameter("goodsCurrentStock") == "" ? null : request.getParameter("goodsCurrentStock");
-				String goodsTotalStock = request.getParameter("goodsTotalStock") == "" ? null : request.getParameter("goodsTotalStock");
-//				String goodsProductionDate = request.getParameter("goodsProductionDate") == "" ? null : request.getParameter("goodsProductionDate");
-//				String goodsExpirationDate = request.getParameter("goodsExpirationDate") == "" ? null : request.getParameter("goodsExpirationDate");
-				String goodsShelfLife = request.getParameter("goodsShelfLife") == "" ? null : request.getParameter("goodsShelfLife");
-				String goodsProfit = request.getParameter("goodsProfit") == "" ? null : request.getParameter("goodsProfit");
-				String goodsPrice = request.getParameter("goodsPrice") == "" ? null : request.getParameter("goodsPrice");
-				String goodsDiscountAmount = request.getParameter("goodsDiscountAmount") == "" ? null : request.getParameter("goodsDiscountAmount");
-				String goodsType = request.getParameter("goodsType") == "" ? null : request.getParameter("goodsType");
-				String goodsStatus = request.getParameter("goodsStatus") == "" ? null : request.getParameter("goodsStatus");
-//				String goodsCreatetime = request.getParameter("goodsCreatetime") == "" ? null : request.getParameter("goodsCreatetime");
-//				String goodsModifytime = request.getParameter("goodsModifytime") == "" ? null : request.getParameter("goodsModifytime");
-//				String goodsEndtime = request.getParameter("goodsEndtime") == "" ? null : request.getParameter("goodsEndtime");
-				String providerId = request.getParameter("providerId") == "" ? null : request.getParameter("providerId");
-				String providerName = request.getParameter("providerName") == "" ? null : request.getParameter("providerName");
-				String providerCode = request.getParameter("providerCode") == "" ? null : request.getParameter("providerCode");
-				String remark = request.getParameter("remark") == "" ? null : request.getParameter("remark");
-				String goodsDiscount = request.getParameter("goodsDiscount") == "" ? null : request.getParameter("goodsDiscount");
-				String quarterRebate = request.getParameter("quarterRebate") == "" ? null : request.getParameter("quarterRebate");
-				String annualRebate = request.getParameter("annualRebate") == "" ? null : request.getParameter("annualRebate");
-				String providerSubsidy = request.getParameter("providerSubsidy") == "" ? null : request.getParameter("providerSubsidy");
-				String providerPackageSubsidy = request.getParameter("providerPackageSubsidy") == "" ? null : request.getParameter("providerPackageSubsidy");
-				String customerSubsidy = request.getParameter("customerSubsidy") == "" ? null : request.getParameter("customerSubsidy");
-				String otherSubsidy = request.getParameter("otherSubsidy") == "" ? null : request.getParameter("otherSubsidy");
-				String goodsActualCost = request.getParameter("goodsActualCost") == "" ? null : request.getParameter("goodsActualCost");
-				String storagePrewarning = request.getParameter("storagePrewarning") == "" ? null : request.getParameter("storagePrewarning");
-				String shelfLifePrewarning = request.getParameter("shelfLifePrewarning") == "" ? null : request.getParameter("shelfLifePrewarning");
+				// 2.获取参数modify_goodsId
+		String goodsId = request.getParameter("modify_goodsId") == "" ? null : request.getParameter("modify_goodsId");
+		String goodsName = request.getParameter("modify_goodsName") == "" ? null : request.getParameter("modify_goodsName");
+				String goodsCode = request.getParameter("modify_goodsCode") == null ? request.getParameter("modify_goodsName") : request.getParameter("modify_goodsCode");
+				String goodsVersion = request.getParameter("modify_goodsVersion") == "" ? null : request.getParameter("modify_goodsVersion");
+				String goodsUnit = request.getParameter("modify_goodsUnit") == "" ? null : request.getParameter("modify_goodsUnit");
+				String goodsBarCode = request.getParameter("modify_goodsBarCode") == "" ? null : request.getParameter("modify_goodsBarCode");
+				String goodsCurrentStock = request.getParameter("modify_goodsCurrentStock") == "" ? null : request.getParameter("modify_goodsCurrentStock");
+				String goodsTotalStock = request.getParameter("modify_goodsTotalStock") == "" ? null : request.getParameter("modify_goodsTotalStock");
+//				String goodsProductionDate = request.getParameter("modify_goodsProductionDate") == "" ? null : request.getParameter("modify_goodsProductionDate");
+//				String goodsExpirationDate = request.getParameter("modify_goodsExpirationDate") == "" ? null : request.getParameter("modify_goodsExpirationDate");
+				String goodsShelfLife = request.getParameter("modify_goodsShelfLife") == "" ? null : request.getParameter("modify_goodsShelfLife");
+				String goodsProfit = request.getParameter("modify_goodsProfit") == "" ? null : request.getParameter("modify_goodsProfit");
+				String goodsPrice = request.getParameter("modify_goodsPrice") == "" ? null : request.getParameter("modify_goodsPrice");
+				String goodsDiscountAmount = request.getParameter("modify_goodsDiscountAmount") == "" ? null : request.getParameter("modify_goodsDiscountAmount");
+				String goodsType = request.getParameter("modify_goodsType") == "" ? null : request.getParameter("modify_goodsType");
+				String goodsStatus = request.getParameter("modify_goodsStatus") == "" ? null : request.getParameter("modify_goodsStatus");
+//				String goodsCreatetime = request.getParameter("modify_goodsCreatetime") == "" ? null : request.getParameter("modify_goodsCreatetime");
+//				String goodsModifytime = request.getParameter("modify_goodsModifytime") == "" ? null : request.getParameter("modify_goodsModifytime");
+//				String goodsEndtime = request.getParameter("modify_goodsEndtime") == "" ? null : request.getParameter("modify_goodsEndtime");
+				String providerId = request.getParameter("modify_providerId") == "" ? null : request.getParameter("modify_providerId");
+				String providerName = request.getParameter("modify_providerName") == "" ? null : request.getParameter("modify_providerName");
+				String providerCode = request.getParameter("modify_providerCode") == "" ? null : request.getParameter("modify_providerCode");
+				String remark = request.getParameter("modify_remark") == "" ? null : request.getParameter("modify_remark");
+				String goodsDiscount = request.getParameter("modify_goodsDiscount") == "" ? null : request.getParameter("modify_goodsDiscount");
+				String quarterRebate = request.getParameter("modify_quarterRebate") == "" ? null : request.getParameter("modify_quarterRebate");
+				String annualRebate = request.getParameter("modify_annualRebate") == "" ? null : request.getParameter("modify_annualRebate");
+				String providerSubsidy = request.getParameter("modify_providerSubsidy") == "" ? null : request.getParameter("modify_providerSubsidy");
+				String providerPackageSubsidy = request.getParameter("modify_providerPackageSubsidy") == "" ? null : request.getParameter("modify_providerPackageSubsidy");
+				String customerSubsidy = request.getParameter("modify_customerSubsidy") == "" ? null : request.getParameter("modify_customerSubsidy");
+				String otherSubsidy = request.getParameter("modify_otherSubsidy") == "" ? null : request.getParameter("modify_otherSubsidy");
+				String goodsActualCost = request.getParameter("modify_goodsActualCost") == "" ? null : request.getParameter("modify_goodsActualCost");
+				String storagePrewarning = request.getParameter("modify_storagePrewarning") == "" ? null : request.getParameter("modify_storagePrewarning");
+				String shelfLifePrewarning = request.getParameter("modify_shelfLifePrewarning") == "" ? null : request.getParameter("modify_shelfLifePrewarning");
 
-				Date goodsCreatetime = new Date();
+				Date goodsModifytime = new Date();
 
 
 				// 3.数据校验
+				if (goodsId != null && goodsId.length() > 0) {
+					tbGoods.setGoodsId(Integer.parseInt(goodsId));
+				}
 				tbGoods.setGoodsName(goodsName);
 				tbGoods.setGoodsCode(goodsCode);
 				if (goodsVersion != null && goodsVersion.length() > 0) {
@@ -321,8 +333,8 @@ public class GoodsController extends BaseController {
 				}
 				tbGoods.setGoodsType(goodsType);
 				tbGoods.setGoodsStatus(goodsStatus);
-				tbGoods.setGoodsCreatetime(goodsCreatetime);
-//				tbGoods.setGoodsModifytime(goodsModifytime);
+//				tbGoods.setGoodsCreatetime(goodsCreatetime);
+				tbGoods.setGoodsModifytime(goodsModifytime);
 //				tbGoods.setGoodsEndtime(goodsEndtime);
 				if (providerId != null && providerId.length() > 0) {
 					tbGoods.setProviderId(Integer.parseInt(providerId));
