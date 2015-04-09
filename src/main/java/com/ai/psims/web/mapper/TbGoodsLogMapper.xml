@@ -35,8 +35,8 @@
     <result column="customer_subsidy" property="customerSubsidy" jdbcType="BIGINT" />
     <result column="other_subsidy" property="otherSubsidy" jdbcType="BIGINT" />
     <result column="goods_actual_cost" property="goodsActualCost" jdbcType="BIGINT" />
-    <result column="storage_warning" property="storageWarning" jdbcType="INTEGER" />
-    <result column="shelf_life_warning" property="shelfLifeWarning" jdbcType="INTEGER" />
+    <result column="storage_prewarning" property="storagePrewarning" jdbcType="INTEGER" />
+    <result column="shelf_life_prewarning" property="shelfLifePrewarning" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -102,7 +102,7 @@
     goods_shelf_life, goods_profit, goods_price, goods_discount_amount, goods_type, goods_status, 
     goods_createtime, goods_modifytime, goods_endtime, provider_id, provider_name, provider_code, 
     remark, goods_discount, quarter_rebate, annual_rebate, provider_subsidy, provider_package_subsidy, 
-    customer_subsidy, other_subsidy, goods_actual_cost, storage_warning, shelf_life_warning
+    customer_subsidy, other_subsidy, goods_actual_cost, storage_prewarning, shelf_life_prewarning
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbGoodsLogExample" >
     select
@@ -146,7 +146,7 @@
       remark, goods_discount, quarter_rebate, 
       annual_rebate, provider_subsidy, provider_package_subsidy, 
       customer_subsidy, other_subsidy, goods_actual_cost, 
-      storage_warning, shelf_life_warning)
+      storage_prewarning, shelf_life_prewarning)
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsVersion,jdbcType=INTEGER}, 
       #{goodsUnit,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, #{goodsCurrentStock,jdbcType=INTEGER}, 
@@ -158,7 +158,7 @@
       #{remark,jdbcType=VARCHAR}, #{goodsDiscount,jdbcType=INTEGER}, #{quarterRebate,jdbcType=BIGINT}, 
       #{annualRebate,jdbcType=BIGINT}, #{providerSubsidy,jdbcType=BIGINT}, #{providerPackageSubsidy,jdbcType=BIGINT}, 
       #{customerSubsidy,jdbcType=BIGINT}, #{otherSubsidy,jdbcType=BIGINT}, #{goodsActualCost,jdbcType=BIGINT}, 
-      #{storageWarning,jdbcType=INTEGER}, #{shelfLifeWarning,jdbcType=INTEGER})
+      #{storagePrewarning,jdbcType=INTEGER}, #{shelfLifePrewarning,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbGoodsLog" >
     insert into tb_goods_log
@@ -262,11 +262,11 @@
       <if test="goodsActualCost != null" >
         goods_actual_cost,
       </if>
-      <if test="storageWarning != null" >
-        storage_warning,
+      <if test="storagePrewarning != null" >
+        storage_prewarning,
       </if>
-      <if test="shelfLifeWarning != null" >
-        shelf_life_warning,
+      <if test="shelfLifePrewarning != null" >
+        shelf_life_prewarning,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -369,11 +369,11 @@
       <if test="goodsActualCost != null" >
         #{goodsActualCost,jdbcType=BIGINT},
       </if>
-      <if test="storageWarning != null" >
-        #{storageWarning,jdbcType=INTEGER},
+      <if test="storagePrewarning != null" >
+        #{storagePrewarning,jdbcType=INTEGER},
       </if>
-      <if test="shelfLifeWarning != null" >
-        #{shelfLifeWarning,jdbcType=INTEGER},
+      <if test="shelfLifePrewarning != null" >
+        #{shelfLifePrewarning,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -485,11 +485,11 @@
       <if test="record.goodsActualCost != null" >
         goods_actual_cost = #{record.goodsActualCost,jdbcType=BIGINT},
       </if>
-      <if test="record.storageWarning != null" >
-        storage_warning = #{record.storageWarning,jdbcType=INTEGER},
+      <if test="record.storagePrewarning != null" >
+        storage_prewarning = #{record.storagePrewarning,jdbcType=INTEGER},
       </if>
-      <if test="record.shelfLifeWarning != null" >
-        shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER},
+      <if test="record.shelfLifePrewarning != null" >
+        shelf_life_prewarning = #{record.shelfLifePrewarning,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -531,8 +531,8 @@
       customer_subsidy = #{record.customerSubsidy,jdbcType=BIGINT},
       other_subsidy = #{record.otherSubsidy,jdbcType=BIGINT},
       goods_actual_cost = #{record.goodsActualCost,jdbcType=BIGINT},
-      storage_warning = #{record.storageWarning,jdbcType=INTEGER},
-      shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER}
+      storage_prewarning = #{record.storagePrewarning,jdbcType=INTEGER},
+      shelf_life_prewarning = #{record.shelfLifePrewarning,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -636,11 +636,11 @@
       <if test="goodsActualCost != null" >
         goods_actual_cost = #{goodsActualCost,jdbcType=BIGINT},
       </if>
-      <if test="storageWarning != null" >
-        storage_warning = #{storageWarning,jdbcType=INTEGER},
+      <if test="storagePrewarning != null" >
+        storage_prewarning = #{storagePrewarning,jdbcType=INTEGER},
       </if>
-      <if test="shelfLifeWarning != null" >
-        shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER},
+      <if test="shelfLifePrewarning != null" >
+        shelf_life_prewarning = #{shelfLifePrewarning,jdbcType=INTEGER},
       </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
@@ -679,8 +679,8 @@
       customer_subsidy = #{customerSubsidy,jdbcType=BIGINT},
       other_subsidy = #{otherSubsidy,jdbcType=BIGINT},
       goods_actual_cost = #{goodsActualCost,jdbcType=BIGINT},
-      storage_warning = #{storageWarning,jdbcType=INTEGER},
-      shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER}
+      storage_prewarning = #{storagePrewarning,jdbcType=INTEGER},
+      shelf_life_prewarning = #{shelfLifePrewarning,jdbcType=INTEGER}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

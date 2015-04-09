@@ -2082,123 +2082,123 @@ public class TbGoodsExample {
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningIsNull() {
-            addCriterion("storage_warning is null");
+        public Criteria andStoragePrewarningIsNull() {
+            addCriterion("storage_prewarning is null");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningIsNotNull() {
-            addCriterion("storage_warning is not null");
+        public Criteria andStoragePrewarningIsNotNull() {
+            addCriterion("storage_prewarning is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningEqualTo(Integer value) {
-            addCriterion("storage_warning =", value, "storageWarning");
+        public Criteria andStoragePrewarningEqualTo(Integer value) {
+            addCriterion("storage_prewarning =", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningNotEqualTo(Integer value) {
-            addCriterion("storage_warning <>", value, "storageWarning");
+        public Criteria andStoragePrewarningNotEqualTo(Integer value) {
+            addCriterion("storage_prewarning <>", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningGreaterThan(Integer value) {
-            addCriterion("storage_warning >", value, "storageWarning");
+        public Criteria andStoragePrewarningGreaterThan(Integer value) {
+            addCriterion("storage_prewarning >", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningGreaterThanOrEqualTo(Integer value) {
-            addCriterion("storage_warning >=", value, "storageWarning");
+        public Criteria andStoragePrewarningGreaterThanOrEqualTo(Integer value) {
+            addCriterion("storage_prewarning >=", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningLessThan(Integer value) {
-            addCriterion("storage_warning <", value, "storageWarning");
+        public Criteria andStoragePrewarningLessThan(Integer value) {
+            addCriterion("storage_prewarning <", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningLessThanOrEqualTo(Integer value) {
-            addCriterion("storage_warning <=", value, "storageWarning");
+        public Criteria andStoragePrewarningLessThanOrEqualTo(Integer value) {
+            addCriterion("storage_prewarning <=", value, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningIn(List<Integer> values) {
-            addCriterion("storage_warning in", values, "storageWarning");
+        public Criteria andStoragePrewarningIn(List<Integer> values) {
+            addCriterion("storage_prewarning in", values, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningNotIn(List<Integer> values) {
-            addCriterion("storage_warning not in", values, "storageWarning");
+        public Criteria andStoragePrewarningNotIn(List<Integer> values) {
+            addCriterion("storage_prewarning not in", values, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningBetween(Integer value1, Integer value2) {
-            addCriterion("storage_warning between", value1, value2, "storageWarning");
+        public Criteria andStoragePrewarningBetween(Integer value1, Integer value2) {
+            addCriterion("storage_prewarning between", value1, value2, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andStorageWarningNotBetween(Integer value1, Integer value2) {
-            addCriterion("storage_warning not between", value1, value2, "storageWarning");
+        public Criteria andStoragePrewarningNotBetween(Integer value1, Integer value2) {
+            addCriterion("storage_prewarning not between", value1, value2, "storagePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningIsNull() {
-            addCriterion("shelf_life_warning is null");
+        public Criteria andShelfLifePrewarningIsNull() {
+            addCriterion("shelf_life_prewarning is null");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningIsNotNull() {
-            addCriterion("shelf_life_warning is not null");
+        public Criteria andShelfLifePrewarningIsNotNull() {
+            addCriterion("shelf_life_prewarning is not null");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningEqualTo(Integer value) {
-            addCriterion("shelf_life_warning =", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningEqualTo(Integer value) {
+            addCriterion("shelf_life_prewarning =", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningNotEqualTo(Integer value) {
-            addCriterion("shelf_life_warning <>", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningNotEqualTo(Integer value) {
+            addCriterion("shelf_life_prewarning <>", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningGreaterThan(Integer value) {
-            addCriterion("shelf_life_warning >", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningGreaterThan(Integer value) {
+            addCriterion("shelf_life_prewarning >", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningGreaterThanOrEqualTo(Integer value) {
-            addCriterion("shelf_life_warning >=", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningGreaterThanOrEqualTo(Integer value) {
+            addCriterion("shelf_life_prewarning >=", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningLessThan(Integer value) {
-            addCriterion("shelf_life_warning <", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningLessThan(Integer value) {
+            addCriterion("shelf_life_prewarning <", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningLessThanOrEqualTo(Integer value) {
-            addCriterion("shelf_life_warning <=", value, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningLessThanOrEqualTo(Integer value) {
+            addCriterion("shelf_life_prewarning <=", value, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningIn(List<Integer> values) {
-            addCriterion("shelf_life_warning in", values, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningIn(List<Integer> values) {
+            addCriterion("shelf_life_prewarning in", values, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningNotIn(List<Integer> values) {
-            addCriterion("shelf_life_warning not in", values, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningNotIn(List<Integer> values) {
+            addCriterion("shelf_life_prewarning not in", values, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningBetween(Integer value1, Integer value2) {
-            addCriterion("shelf_life_warning between", value1, value2, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningBetween(Integer value1, Integer value2) {
+            addCriterion("shelf_life_prewarning between", value1, value2, "shelfLifePrewarning");
             return (Criteria) this;
         }
 
-        public Criteria andShelfLifeWarningNotBetween(Integer value1, Integer value2) {
-            addCriterion("shelf_life_warning not between", value1, value2, "shelfLifeWarning");
+        public Criteria andShelfLifePrewarningNotBetween(Integer value1, Integer value2) {
+            addCriterion("shelf_life_prewarning not between", value1, value2, "shelfLifePrewarning");
             return (Criteria) this;
         }
     }

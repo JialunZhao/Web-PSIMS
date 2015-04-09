@@ -117,8 +117,8 @@ public class GoodsServiceImpl implements IGoodsService {
 		tbGoodsLog.setCustomerSubsidy(tbGoodsbackup.get(0).getCustomerSubsidy());
 		tbGoodsLog.setOtherSubsidy(tbGoodsbackup.get(0).getOtherSubsidy());
 		tbGoodsLog.setGoodsActualCost(tbGoodsbackup.get(0).getGoodsActualCost());
-		tbGoodsLog.setStorageWarning(tbGoodsbackup.get(0).getStorageWarning());
-		tbGoodsLog.setShelfLifeWarning(tbGoodsbackup.get(0).getShelfLifeWarning());
+		tbGoodsLog.setStoragePrewarning(tbGoodsbackup.get(0).getStoragePrewarning());
+		tbGoodsLog.setShelfLifePrewarning(tbGoodsbackup.get(0).getShelfLifePrewarning());
 		return tbGoodsLogMapper.insert(tbGoodsLog);
 	}
 	
