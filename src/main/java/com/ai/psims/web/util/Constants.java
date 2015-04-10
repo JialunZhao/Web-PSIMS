@@ -10,7 +10,7 @@ public class Constants {
 		public static final String Normal_Str = "正常";
 		public static final String Exception_Code = "99";// 异常
 		public static final String Exception_Str = "异常";
-	}
+	} 
 	
 	// 支付方式
 	public static class PayMed {
