@@ -1,4 +1,4 @@
-show databases;
+show databases;123
 show tables;
 drop table tb_customer;
 
