@@ -19,6 +19,89 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="storage_id" property="storageId" jdbcType="INTEGER" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    salesback_goods_id, salesback_serial_number, goods_id, goods_name, goods_type, goods_amount, 
+    goods_unit, goods_price, goods_production, goods_expiration, discount_amount, createtime, 
+    modifytime, endtime, remark, storage_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.SalesbackGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_salesback_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.SalesbackGoodsExample" >
+    delete from tb_salesback_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.SalesbackGoods" >
     insert into tb_salesback_goods (salesback_goods_id, salesback_serial_number, 
       goods_id, goods_name, goods_type, 
@@ -136,4 +219,88 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.SalesbackGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from tb_salesback_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_salesback_goods
+    <set >
+      <if test="record.salesbackGoodsId != null" >
+        salesback_goods_id = #{record.salesbackGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesbackSerialNumber != null" >
+        salesback_serial_number = #{record.salesbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsType != null" >
+        goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsAmount != null" >
+        goods_amount = #{record.goodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsUnit != null" >
+        goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsProduction != null" >
+        goods_production = #{record.goodsProduction,jdbcType=DATE},
+      </if>
+      <if test="record.goodsExpiration != null" >
+        goods_expiration = #{record.goodsExpiration,jdbcType=DATE},
+      </if>
+      <if test="record.discountAmount != null" >
+        discount_amount = #{record.discountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=DATE},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageId != null" >
+        storage_id = #{record.storageId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_salesback_goods
+    set salesback_goods_id = #{record.salesbackGoodsId,jdbcType=INTEGER},
+      salesback_serial_number = #{record.salesbackSerialNumber,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_type = #{record.goodsType,jdbcType=VARCHAR},
+      goods_amount = #{record.goodsAmount,jdbcType=INTEGER},
+      goods_unit = #{record.goodsUnit,jdbcType=VARCHAR},
+      goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+      goods_production = #{record.goodsProduction,jdbcType=DATE},
+      goods_expiration = #{record.goodsExpiration,jdbcType=DATE},
+      discount_amount = #{record.discountAmount,jdbcType=BIGINT},
+      createtime = #{record.createtime,jdbcType=DATE},
+      modifytime = #{record.modifytime,jdbcType=DATE},
+      endtime = #{record.endtime,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      storage_id = #{record.storageId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
 </mapper>

@@ -18,11 +18,83 @@
     <result column="salesback_refund_time" property="salesbackRefundTime" jdbcType="DATE" />
     <result column="salesback_remark" property="salesbackRemark" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     salesback_serial_number, sales_serial_number, customer_id, customer_name, storehouse_id, 
     storehouse_name, employee_id, employee_name, salesback_type, salesback_reason, salesback_time, 
     salesback_refund, salesback_refund_type, salesback_refund_time, salesback_remark
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.SalesbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_salesback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -32,6 +104,12 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_salesback
     where salesback_serial_number = #{salesbackSerialNumber,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.SalesbackExample" >
+    delete from tb_salesback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.Salesback" >
     insert into tb_salesback (salesback_serial_number, sales_serial_number, 
@@ -144,6 +222,86 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.SalesbackExample" resultType="java.lang.Integer" >
+    select count(*) from tb_salesback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_salesback
+    <set >
+      <if test="record.salesbackSerialNumber != null" >
+        salesback_serial_number = #{record.salesbackSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesSerialNumber != null" >
+        sales_serial_number = #{record.salesSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storehouseId != null" >
+        storehouse_id = #{record.storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storehouseName != null" >
+        storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesbackType != null" >
+        salesback_type = #{record.salesbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesbackReason != null" >
+        salesback_reason = #{record.salesbackReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesbackTime != null" >
+        salesback_time = #{record.salesbackTime,jdbcType=DATE},
+      </if>
+      <if test="record.salesbackRefund != null" >
+        salesback_refund = #{record.salesbackRefund,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesbackRefundType != null" >
+        salesback_refund_type = #{record.salesbackRefundType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesbackRefundTime != null" >
+        salesback_refund_time = #{record.salesbackRefundTime,jdbcType=DATE},
+      </if>
+      <if test="record.salesbackRemark != null" >
+        salesback_remark = #{record.salesbackRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_salesback
+    set salesback_serial_number = #{record.salesbackSerialNumber,jdbcType=VARCHAR},
+      sales_serial_number = #{record.salesSerialNumber,jdbcType=VARCHAR},
+      customer_id = #{record.customerId,jdbcType=INTEGER},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      storehouse_id = #{record.storehouseId,jdbcType=INTEGER},
+      storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=INTEGER},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      salesback_type = #{record.salesbackType,jdbcType=VARCHAR},
+      salesback_reason = #{record.salesbackReason,jdbcType=VARCHAR},
+      salesback_time = #{record.salesbackTime,jdbcType=DATE},
+      salesback_refund = #{record.salesbackRefund,jdbcType=BIGINT},
+      salesback_refund_type = #{record.salesbackRefundType,jdbcType=VARCHAR},
+      salesback_refund_time = #{record.salesbackRefundTime,jdbcType=DATE},
+      salesback_remark = #{record.salesbackRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.Salesback" >
     update tb_salesback
     <set >

@@ -14,25 +14,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ai.psims.web.business.IAddGoodsImportList;
-import com.ai.psims.web.business.IQueryImportList;
 import com.ai.psims.web.business.ISalesBusiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddSalesGoodsBean;
 import com.ai.psims.web.model.Employee;
 import com.ai.psims.web.model.EmployeeExample;
-import com.ai.psims.web.model.ImportGoods;
 import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesExample;
 import com.ai.psims.web.model.SalesGoods;
 import com.ai.psims.web.model.SalesGoodsExample;
+import com.ai.psims.web.model.SalesUpdataGoods;
+import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.StoragecheckExample.Criteria;
-import com.ai.psims.web.model.Storehouse;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
-import com.ai.psims.web.model.UpdateImportDemo;
+import com.ai.psims.web.model.TbStorehouse;
+import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -44,20 +43,21 @@ public class SalesController extends BaseController {
 	private IQueryBus queryBus;
 	@Resource(name = "salesBusinessImpl")
 	private ISalesBusiness salesBusiness;
-	@Resource(name = "addGoodsImportListImpl")
-	private IAddGoodsImportList addGoodsImportList;
-	@Resource(name = "queryImportListImpl")
-	private IQueryImportList queryImportList;
+	@Resource(name = "storagecheckServiceImpl")
+	private IStoragecheckService storagecheckService;
 
 	@RequestMapping("/init")
-	public String showProvider(HttpServletRequest request) throws Exception {
+	public String init(HttpServletRequest request) throws Exception {
 		List<TbCustomer> customersList = new ArrayList<TbCustomer>();
 		List<Employee> employeesList = new ArrayList<Employee>();
 		List<Sales> salesList = new ArrayList<Sales>();
 		SalesExample salesExample = new SalesExample();
+		salesExample.createCriteria().andSalesStatusNotEqualTo("00");
 		TbCustomerExample customerExample = new TbCustomerExample();
+		customerExample.createCriteria().andEndtimeIsNull();
 		EmployeeExample employeeExample = new EmployeeExample();
-		List<Storehouse> storehouse = new ArrayList<Storehouse>();
+		employeeExample.createCriteria().andEndtimeIsNull();
+		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		salesList = salesBusiness.selectByExample(salesExample);
 		employeesList = queryBus.queryEmployee(employeeExample);
 		customersList = queryBus.queryCustomer(customerExample);
@@ -77,8 +77,9 @@ public class SalesController extends BaseController {
 		JSONObject data = new JSONObject();
 		List<Storagecheck> storagechecksList = new ArrayList<Storagecheck>();
 		StoragecheckExample storagecheckExample = new StoragecheckExample();
-		storagecheckExample.createCriteria().andGoodsStatusEqualTo(
-				Constants.ImportGoodsStatus.CANSALE);
+		Criteria criteria = storagecheckExample.createCriteria();
+		criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
+		criteria.andEndtimeIsNull();
 		storagechecksList = salesBusiness
 				.queryStrStoragechecks(storagecheckExample);
 		Set<String> goodsNameSet = new HashSet<String>();
@@ -138,6 +139,7 @@ public class SalesController extends BaseController {
 		if (salesSerialNumber != null && salesSerialNumber != "") {
 			criteria.andSalesSerialNumberLike("%" + salesSerialNumber + "%");
 		}
+		criteria.andSalesStatusNotEqualTo("00");
 		salesList = salesBusiness.selectByExample(salesExample);
 		if (salesList == null) {
 			responseFailed(response, "....", data);
@@ -160,7 +162,7 @@ public class SalesController extends BaseController {
 			goodsName = URLDecoder.decode(goodsName);
 			criteria.andGoodsNameEqualTo(goodsName);
 		}
-
+		criteria.andEndtimeIsNull();
 		storagechecksList = salesBusiness
 				.queryStrStoragechecks(storagecheckExample);
 		request.setAttribute("storagechecksList", storagechecksList);
@@ -173,12 +175,34 @@ public class SalesController extends BaseController {
 		String salesSerialNumber = request.getParameter("salesSerialNumber");
 		Sales sales = new Sales();
 		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
+		List<SalesUpdataGoods> salesUpdataGoodsList = new ArrayList<SalesUpdataGoods>();
 		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
 		SalesGoodsExample example = new SalesGoodsExample();
-		example.createCriteria().andSalesSerialNumberEqualTo(salesSerialNumber);
+		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
+				.createCriteria();
+		criteria.andSalesSerialNumberEqualTo(salesSerialNumber);
+		criteria.andSalesGoodsEndtimeIsNull();
 		salesGoodsList = salesBusiness.selectSalesGoods(example);
 
-		request.setAttribute("salesGoodsList", salesGoodsList);
+		for (SalesGoods salesGoods : salesGoodsList) {
+			SalesUpdataGoods saUpdataGoods = new SalesUpdataGoods();
+			Storagecheck storagecheck = new Storagecheck();
+			storagecheck = storagecheckService.selectByKey(salesGoods
+					.getStorageId());
+			saUpdataGoods.setGoodsName(salesGoods.getGoodsName());
+			saUpdataGoods.setSalesGoodsAmount(salesGoods.getSalesGoodsAmount());
+			saUpdataGoods.setSalesGoodsId(salesGoods.getSalesGoodsId());
+			saUpdataGoods.setSalesGoodsPrice(salesGoods.getSalesGoodsPrice());
+			saUpdataGoods.setSalesGoodsTotalPrice(salesGoods
+					.getSalesGoodsTotalPrice());
+			saUpdataGoods.setSalesSerialNumber(salesGoods
+					.getSalesSerialNumber());
+			saUpdataGoods.setStorageRateCurrent(storagecheck
+					.getStorageRateCurrent());
+			salesUpdataGoodsList.add(saUpdataGoods);
+		}
+
+		request.setAttribute("salesGoodsList", salesUpdataGoodsList);
 		request.setAttribute("sales", sales);
 		return "updatasalesdata";
 	}
@@ -193,19 +217,15 @@ public class SalesController extends BaseController {
 		String storeId = request.getParameter("storeId");
 		String customerName = request.getParameter("customerName");
 		String customerId = request.getParameter("customerId");
-		String payMed = request.getParameter("payMed");
 		String salesListCreateTime = request
 				.getParameter("salesListCreateTime");
 		String employeeName = request.getParameter("employeeName");
-		String payStatus = request.getParameter("payStatus");
 		String employeeId = request.getParameter("employeeId");
-		String payTime = request.getParameter("payTime");
-		String discountMed = request.getParameter("discountMed");
 
 		AddSalesGoodsBean addGoodsBean = new AddSalesGoodsBean(storageIdList,
-				customerName, storeName, customerId, payMed, payStatus,
-				salesListCreateTime, payTime, employeeName, storeId,
-				employeeId, salesCountList, salesPriceList, discountMed);
+				customerName, storeName, customerId, salesListCreateTime,
+				employeeName, storeId, employeeId, salesCountList,
+				salesPriceList);
 		String result = salesBusiness.addSalesList(addGoodsBean);
 		JSONObject data = new JSONObject();
 		if (result == null) {
@@ -219,8 +239,8 @@ public class SalesController extends BaseController {
 	@RequestMapping("/deleteImportData")
 	public void deleteImportData(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String importSerialNumber = request.getParameter("importSerialNumber");
-		String result = addGoodsImportList.deleteImportData(importSerialNumber);
+		String salesSerialNumber = request.getParameter("salesSerialNumber");
+		String result = salesBusiness.deleteSalesData(salesSerialNumber);
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "....", data);
@@ -230,41 +250,20 @@ public class SalesController extends BaseController {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/updataImprotGoodsList")
 	public String updataImprotGoodsList(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		String salesGoodsIdList = request.getParameter("salesGoodsIdList");
 		String goodsAmountList = request.getParameter("goodsAmountList");
-		String goodsTotalPriceList = request
-				.getParameter("goodsTotalPriceList");
-		String importGoodsIdList = request.getParameter("importGoodsIdList");
-		String providerId = request.getParameter("providerId");
-		String storehouseId = request.getParameter("storehouseId");
-		String paymentType = request.getParameter("paymentType");
-		String importStatus = request.getParameter("importStatus");
+		String salesSerialNumber = request.getParameter("salesSerialNumber");
+		String salesStatus = request.getParameter("salesStatus");
+		String payMed = request.getParameter("payMed");
+		String creditCount = request.getParameter("creditCount");
 		String payTime = request.getParameter("payTime");
-		String importSerialNumber = request.getParameter("importSerialNumber");
-		String storehouseName = request.getParameter("storehouseName");
-		String providerName = request.getParameter("providerName");
-		storehouseName = URLDecoder.decode(storehouseName);
-		providerName = URLDecoder.decode(providerName);
-		String goodsAmounts[] = goodsAmountList.split(",");
-		String goodsTotalPrices[] = goodsTotalPriceList.split(",");
-		String importGoodsIds[] = importGoodsIdList.split(",");
-		List<ImportGoods> importGoodsLists = new ArrayList<ImportGoods>();
-		for (int i = 0; i < importGoodsIds.length; i++) {
-			ImportGoods importGoods = new ImportGoods();
-			importGoods.setImportGoodsId(Integer.parseInt(importGoodsIds[i]));
-			importGoods.setImportGoodsTotalPrice(Long
-					.parseLong(goodsTotalPrices[i]));
-			importGoods.setImportGoodsAmount(Integer.parseInt(goodsAmounts[i]));
-			importGoodsLists.add(importGoods);
-		}
-		UpdateImportDemo updateImportDemo = new UpdateImportDemo(
-				importGoodsLists, providerId, storehouseId, paymentType,
-				importStatus, payTime, importSerialNumber, storehouseName,
-				providerName);
-		String result = addGoodsImportList.updateImportGoods(updateImportDemo);
+		SalesUpdateData salesUpdateData = new SalesUpdateData(salesGoodsIdList,
+				goodsAmountList, salesSerialNumber, salesStatus, payMed,
+				creditCount, payTime);
+		String result = salesBusiness.updateSalesData(salesUpdateData);
 		request.setAttribute("result", result);
 		return "import";
 	}

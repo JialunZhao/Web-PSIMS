@@ -7,18 +7,19 @@ import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.Storehouse;
+
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbStorehouse;
 
 public interface IQueryBus {
 	public List<TbProvider> queryProvider();
 
-	public List<Storehouse> queryStorehouse();
+	public List<TbStorehouse> queryStorehouse();
 
 	public List<Goods> queryGoodsByName(GoodsExample example);
-	
+
 	public List<Employee> queryEmployee(EmployeeExample employeeExample);
 
 	public List<TbCustomer> queryCustomer(TbCustomerExample customerExample);

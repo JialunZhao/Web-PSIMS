@@ -33,69 +33,76 @@
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">出库时间:</span>
 				<input type="text" class="form-control" placeholder=""
-					value="<fmt:formatDate value="${sales.salesDate }" pattern="yyyy-MM-dd"/>" readonly="readonly" style="font-weight: bold;">
+					value="<fmt:formatDate value="${sales.salesDate }" pattern="yyyy-MM-dd"/>">
 				<span class="input-group-addon" style="background-color: #1abc9c;">业务员名称:</span>
-				<input type="text" value="${sales.salesDate }" readonly="readonly" style="font-weight: bold;">
+				<select class="form-control" value="${sales.employeeName }" tabindex="1" name="employeeName" id="employeeName">
+					<option value="${sales.employeeId }">${sales.employeeName }</option>
+				</select>
 			</div>
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
-				<input type="text" value="${sales.salesDate }" readonly="readonly" style="font-weight: bold;">
+				<select class="form-control" value="${sales.customerName }" tabindex="1" name="customerName" id="customerName">
+					<option value="${sales.customerId }">${sales.customerName }</option>
+				</select>
 				<span class="input-group-addon" style="background-color: #1abc9c;">仓库名称:</span>
-				<input type="text" value="${sales.salesDate }" readonly="readonly" style="font-weight: bold;">
-				<span class="input-group-addon" style="background-color: #1abc9c;">库存状态：</span>
-                <select class="form-control" value="请选择入库状态" tabindex="1" name="importStatus" id="importStatus"  onchange="showPayMet(this.value)">
-                	<c:if test="${import1.importStatus==32 }">
-                		<option value="<%=Constants.ImportStatus.GOODSARRIVAL %>"><%=Constants.ImportStatus.GOODSARRIVAL01 %></option>
-                  		<option value="<%=Constants.ImportStatus.GOODSIMPORT %>"><%=Constants.ImportStatus.GOODSIMPORT01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERNOPAY %>"><%=Constants.ImportStatus.ORDERNOPAY01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERYESPAY %>"><%=Constants.ImportStatus.ORDERYESPAY01 %></option>
-                	</c:if>
-                	<c:if test="${import1.importStatus==33 }">
-                		<option value="<%=Constants.ImportStatus.GOODSIMPORT %>"><%=Constants.ImportStatus.GOODSIMPORT01 %></option>
-                  		<option value="<%=Constants.ImportStatus.GOODSARRIVAL %>"><%=Constants.ImportStatus.GOODSARRIVAL01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERNOPAY %>"><%=Constants.ImportStatus.ORDERNOPAY01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERYESPAY %>"><%=Constants.ImportStatus.ORDERYESPAY01 %></option>
-                	</c:if>
-                	<c:if test="${import1.importStatus==30 }">
-                		<option value="<%=Constants.ImportStatus.ORDERNOPAY %>"><%=Constants.ImportStatus.ORDERNOPAY01 %></option>
-                  		<option value="<%=Constants.ImportStatus.GOODSARRIVAL %>"><%=Constants.ImportStatus.GOODSARRIVAL01 %></option>
-                  		<option value="<%=Constants.ImportStatus.GOODSIMPORT %>"><%=Constants.ImportStatus.GOODSIMPORT01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERYESPAY %>"><%=Constants.ImportStatus.ORDERYESPAY01 %></option>
-                	</c:if>
-                	<c:if test="${import1.importStatus==31 }">
-                  		<option value="<%=Constants.ImportStatus.ORDERYESPAY %>"><%=Constants.ImportStatus.ORDERYESPAY01 %></option>
-                		<option value="<%=Constants.ImportStatus.GOODSARRIVAL %>"><%=Constants.ImportStatus.GOODSARRIVAL01 %></option>
-                  		<option value="<%=Constants.ImportStatus.GOODSIMPORT %>"><%=Constants.ImportStatus.GOODSIMPORT01 %></option>
-                  		<option value="<%=Constants.ImportStatus.ORDERNOPAY %>"><%=Constants.ImportStatus.ORDERNOPAY01 %></option>
-                	</c:if>                  
-                </select>
+				<select class="form-control" value="${sales.storehouseName }" tabindex="1" name="storehouseName" id="storehouseName">
+					<option value="${sales.storehouseId }">${sales.storehouseName }</option>
+				</select>
+			</div>
+			<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">销售状态:</span>
+				<select class="form-control" value="请选择销售状态" tabindex="1"	name="salesStatus" id="salesStatus"	onchange="showPayMet(this.value)">
+					<c:if test="${sales.salesStatus eq 'DO' }">
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'C' }">
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'OO' }">
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'OS' }">
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'S' }">
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+					</c:if>
+				</select>
 			</div>
 			<div class="input-group col-xs-10 col-md-offset-1" id="payM" style="display: none">
 				<span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
-				<select class="form-control" value="请选择支付方式" tabindex="1"
-					name="paymentType" id="paymentType">
-					<c:if test="${import1.paymentType==null||import1.paymentType=='' }">
-						<option value="">请选择支付方式</option>
-                  		<option value="<%=Constants.PayMed.CASH %>"><%=Constants.PayMed.CASH01 %></option>
-                  		<option value="<%=Constants.PayMed.CHEQUE %>"><%=Constants.PayMed.CHEQUE01 %></option>
-                  		<option value="<%=Constants.PayMed.TICK %>"><%=Constants.PayMed.TICK01 %></option>
-                  		<option value="<%=Constants.PayMed.TRANSFERS %>"><%=Constants.PayMed.TRANSFERS01 %></option>
-                	</c:if>                 	
-                	<c:if test="${import1.paymentType==02 }">
-                  		<option value="<%=Constants.PayMed.CHEQUE %>"><%=Constants.PayMed.CHEQUE01 %></option>
-                	</c:if> 
-                	<c:if test="${import1.paymentType==03 }">
-                  		<option value="<%=Constants.PayMed.TICK %>"><%=Constants.PayMed.TICK01 %></option>
-                	</c:if> 
-                	<c:if test="${import1.paymentType==01 }">
-                  		<option value="<%=Constants.PayMed.TRANSFERS %>"><%=Constants.PayMed.TRANSFERS01 %></option>
-                	</c:if>
-                	<c:if test="${import1.paymentType==00 }">
-                  		<option value="<%=Constants.PayMed.CASH %>"><%=Constants.PayMed.CASH01 %></option>
-                	</c:if> 					
-				</select> <span class="input-group-addon" style="background-color: #1abc9c;">支付时间</span>
-				<input type="text" class="form-control"
-					placeholder="2015-03-03" value="2015-03-03" onblur="checkFomt(this.value)" id="payTime" name="payTime">
+				<select class="form-control" value="请选择支付方式" tabindex="1" name="payMed" id="payMed">
+					<option value="<%=Constants.PayMed.CASH %>"><%=Constants.PayMed.CASH01 %></option>
+					<option value="<%=Constants.PayMed.CHEQUE %>"><%=Constants.PayMed.CHEQUE01 %></option>
+					<option value="<%=Constants.PayMed.TICK %>"><%=Constants.PayMed.TICK01 %></option>
+					<option value="<%=Constants.PayMed.TRANSFERS %>"><%=Constants.PayMed.TRANSFERS01 %></option>
+				</select>
+				<span class="input-group-addon" style="background-color: #1abc9c;">支付时间</span>
+				<input type="text" class="form-control" value="2015-01-01" id="payTime">
+			</div>
+			<div class="input-group col-xs-10 col-md-offset-1" id="creditC" style="display: none">
+				<span class="input-group-addon" style="background-color: #1abc9c;">赊账金额：</span>
+				<input type="text" class="form-control" value="" id="creditCount">
 			</div>
 		</div>
 		<div class="row placeholders" id="addgoodstb">
@@ -104,24 +111,26 @@
                 <table class="table table-striped" id="addGoodsTab">
                   <thead>
                     <tr>
-                      <th>入库流水号</th>
+                      <th>销售流水号</th>
                       <th>商品名称</th>
                       <th>商品单价</th>
+                      <th>原始库存量</th>
                       <th>进货数量</th>
                       <th>商品总价</th>
                     </tr>
                   </thead>
                   <tbody>
-                  	<c:forEach items="${importGoodsList }" var="importGoods" varStatus="status">
+                  	<c:forEach items="${salesGoodsList }" var="salesGoods" varStatus="status">
                   		<tr>
-                  			<td>${importGoods.importSerialNumber }</td>
-                  			<td>${importGoods.goodsName }</td>
-                  			<td style="display: none">${importGoods.importGoodsId }</td>
-                  			<td>${importGoods.importGoodsPrice }</td>
+                  			<td style="display: none;">${salesGoods.salesGoodsId }</td>
+                  			<td>${salesGoods.salesSerialNumber }</td>
+                  			<td>${salesGoods.goodsName }</td>
+                  			<td id="goodsPrice${status.index }">${salesGoods.salesGoodsPrice }</td>
+                  			<td id="goodsAmountRate${status.index }">${salesGoods.storageRateCurrent+salesGoods.salesGoodsAmount }</td>
                   			<td>
-                  				<input type="text" name="goodsAmount" value="${importGoods.importGoodsAmount }" onblur="getTotalPrict(${importGoods.importGoodsAmount })">
+                  				<input type="text" id="goodsAmount${status.index }" value="${salesGoods.salesGoodsAmount }" onblur="getTotalPrict(${status.index })">
                   			</td>
-                  			<td>${importGoods.importGoodsTotalPrice }</td>
+                  			<td id="totalPrice${status.index }">${salesGoods.salesGoodsTotalPrice }</td>
                   		</tr>
                   	</c:forEach>
                   </tbody>
@@ -137,72 +146,66 @@
 	
 	<script type="text/javascript">
 	var api = frameElement.api, W = api.opener;
-		showPayMet('${import1.importStatus}');
+		showPayMet('${sales.salesStatus }');
 		function suerUpdate(){
-			var providerId=$("#providerName").val();
-			var providerName=$("#providerName").find("option:selected").text();
-			var storehouseId=$("#storehouseName").val();
-			var storehouseName=$("#storehouseName").find("option:selected").text();
-			var importStatus=$("#importStatus").val();
-			var paymentType=$("#paymentType").val();
-			var importSerialNumber;
-			var payTime=$("#payTime").val();
-			var importGoodsIdList="";
+			var salesSerialNumber="${sales.salesSerialNumber}";
+			var salesGoodsIdList="";
 			var goodsAmountList="";
-			var goodsTotalPriceList="";
+			var salesStatus=$("#salesStatus").val();
+			var payMed="";
+			var payTime="";
+			var creditCount="";
+			var i=0;
+			
+			if(salesStatus=='<%=Constants.SalesStatus.SQUARE%>'){
+				payMed=$("#payMed").val();
+				payTime=$("#payTime").val();
+			}
+			if (salesStatus=='<%=Constants.SalesStatus.CREDIT%>') {
+				creditCount=$("#creditCount").val();
+			}
+			
 			$('#addGoodsTab tbody tr').find('td').each(function(){
 				if ($(this).index() == "0") {
-					importSerialNumber=$(this).text();
-		         }
-				 if ($(this).index() == "2") {
-					 importGoodsIdList=importGoodsIdList+$(this).text()+",";
-		         }
-				 if ($(this).index() == "5") {
-					 goodsTotalPriceList=goodsTotalPriceList+$(this).text()+",";
-		         }
+					salesGoodsIdList=salesGoodsIdList+$(this).text()+",";
+					goodsAmountList=goodsAmountList+$("#goodsAmount"+i).val()+",";
+					i++;
+		        }
 			});
-			$("input[name=goodsAmount]").each(function(){
-				goodsAmountList=goodsAmountList+$(this).val()+",";
-			})
-			 var url="<%=_base %>/accountController/updataImprotGoodsList.do?providerId="
-					+ providerId + "&storehouseName="
-					+ encodeURI(encodeURI(storehouseName)) + "&providerName="
-					+ encodeURI(encodeURI(providerName)) + "&storehouseId="
-					+ storehouseId+ "&importStatus="
-					+ importStatus+ "&payTime="
-					+ payTime+ "&importSerialNumber="
-					+ importSerialNumber+ "&paymentType="
-					+ paymentType+ "&goodsAmountList="
-					+ goodsAmountList+ "&goodsTotalPriceList="
-					+ goodsTotalPriceList+ "&importGoodsIdList="
-					+ importGoodsIdList;
+			
+			var url="<%=_base %>/salesController/updataImprotGoodsList.do?salesGoodsIdList="
+					+ salesGoodsIdList + "&salesStatus="
+					+ salesStatus + "&payMed="
+					+ payMed + "&creditCount="
+					+ creditCount + "&payTime="
+					+ payTime + "&salesSerialNumber="
+					+ salesSerialNumber + "&goodsAmountList="
+					+ goodsAmountList;
 			api.reload(this, url);
-			$("#paymentType").val("");
 			W.location.reload();
 			api.close();
 		}
 		
-		function getTotalPrict(){
-			var importGoodsPrice;
-			var importGoodsAmount=new Array();
-			var i=0;
-			$("input[name=goodsAmount]").each(function(){
-				importGoodsAmount.push($(this).val());
-			})
-			$('#addGoodsTab tbody tr').find('td').each(function(){
-				if ($(this).index() == "3") {
-					importGoodsPrice=$(this).text();
-		         }
-				 if ($(this).index() == "5") { 
-					 this.innerHTML=importGoodsPrice*importGoodsAmount[i++];
-		         }
-			});
+		function getTotalPrict(index){
+			var goodsPrice=$("#goodsPrice"+index).text();
+			var goodsAmount=$("#goodsAmount"+index).val();
+			var goodsAmountRate=$("#goodsAmountRate"+index).text();
+			if(goodsAmount>goodsAmountRate){
+				alert("库存不足");
+				return;
+			}
+			$("#totalPrice"+index).text(goodsPrice*goodsAmount);
 		}
 		
-		function showPayMet(val){
-			if(val!=<%=Constants.ImportStatus.ORDERNOPAY %>){
+		function showPayMet(value){
+			if(value=='<%=Constants.SalesStatus.SQUARE%>'){
 				$("#payM").show();
+				$("#creditC").hide();
+			}else if (value=='<%=Constants.SalesStatus.CREDIT%>') {
+				$("#creditC").show();
+				$("#payM").hide();
 			}else {
+				$("#creditC").hide();
 				$("#payM").hide();
 			}
 		}

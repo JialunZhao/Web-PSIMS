@@ -13,4 +13,12 @@ public interface ISalesService {
 	public List<Sales> selectByExample(SalesExample example);
 
 	public Sales selectByKey(String salesSerialNumber);
+
+	public int updateSales(Sales sales);
+
+	public int updateSalesByKey(Sales sales);
+
+	public int deleteSales(String salesSerialNumber);
+
+	public int insertToLog(Sales sales);
 }

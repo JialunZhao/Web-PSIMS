@@ -7,6 +7,7 @@ import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesExample;
 import com.ai.psims.web.model.SalesGoods;
 import com.ai.psims.web.model.SalesGoodsExample;
+import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
 
@@ -23,4 +24,8 @@ public interface ISalesBusiness {
 	public Sales selectSalesByKey(String salesSerialNumber);
 
 	public List<SalesGoods> selectSalesGoods(SalesGoodsExample example);
+
+	public String updateSalesData(SalesUpdateData salesUpdateData);
+
+	public String deleteSalesData(String salesSerialNumber);
 }

@@ -23,13 +23,88 @@
     <result column="endtime" property="endtime" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
+    <result column="storage_warning" property="storageWarning" jdbcType="INTEGER" />
+    <result column="shelf_life_warning" property="shelfLifeWarning" jdbcType="INTEGER" />
+    <result column="import_goods_unit" property="importGoodsUnit" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     log_id, log_datetime, storage_id, goods_id, goods_name, goods_bar_code, provider_id, 
     provider_name, storage_rate_current, storage_rate_total, goods_production_date, goods_expiration_date, 
     goods_shelf_life, goods_price, goods_status, storage_type, createtime, modifytime, 
-    endtime, remark, import_serial_number
+    endtime, remark, import_serial_number, storage_warning, shelf_life_warning, import_goods_unit
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.StoragecheckLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_storagecheck_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -40,6 +115,12 @@
     delete from tb_storagecheck_log
     where log_id = #{logId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.StoragecheckLogExample" >
+    delete from tb_storagecheck_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.StoragecheckLog" >
     insert into tb_storagecheck_log (log_id, log_datetime, storage_id, 
       goods_id, goods_name, goods_bar_code, 
@@ -47,7 +128,8 @@
       storage_rate_total, goods_production_date, goods_expiration_date, 
       goods_shelf_life, goods_price, goods_status, 
       storage_type, createtime, modifytime, 
-      endtime, remark, import_serial_number
+      endtime, remark, import_serial_number, 
+      storage_warning, shelf_life_warning, import_goods_unit
       )
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{storageId,jdbcType=INTEGER}, 
       #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, 
@@ -55,7 +137,8 @@
       #{storageRateTotal,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=DATE}, #{goodsExpirationDate,jdbcType=DATE}, 
       #{goodsShelfLife,jdbcType=INTEGER}, #{goodsPrice,jdbcType=BIGINT}, #{goodsStatus,jdbcType=VARCHAR}, 
       #{storageType,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, #{modifytime,jdbcType=DATE}, 
-      #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{importSerialNumber,jdbcType=VARCHAR}
+      #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}, #{importSerialNumber,jdbcType=VARCHAR}, 
+      #{storageWarning,jdbcType=INTEGER}, #{shelfLifeWarning,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.StoragecheckLog" >
@@ -124,6 +207,15 @@
       <if test="importSerialNumber != null" >
         import_serial_number,
       </if>
+      <if test="storageWarning != null" >
+        storage_warning,
+      </if>
+      <if test="shelfLifeWarning != null" >
+        shelf_life_warning,
+      </if>
+      <if test="importGoodsUnit != null" >
+        import_goods_unit,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="logId != null" >
@@ -189,8 +281,133 @@
       <if test="importSerialNumber != null" >
         #{importSerialNumber,jdbcType=VARCHAR},
       </if>
+      <if test="storageWarning != null" >
+        #{storageWarning,jdbcType=INTEGER},
+      </if>
+      <if test="shelfLifeWarning != null" >
+        #{shelfLifeWarning,jdbcType=INTEGER},
+      </if>
+      <if test="importGoodsUnit != null" >
+        #{importGoodsUnit,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.StoragecheckLogExample" resultType="java.lang.Integer" >
+    select count(*) from tb_storagecheck_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_storagecheck_log
+    <set >
+      <if test="record.logId != null" >
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logDatetime != null" >
+        log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.storageId != null" >
+        storage_id = #{record.storageId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsBarCode != null" >
+        goods_bar_code = #{record.goodsBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerId != null" >
+        provider_id = #{record.providerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.providerName != null" >
+        provider_name = #{record.providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageRateCurrent != null" >
+        storage_rate_current = #{record.storageRateCurrent,jdbcType=INTEGER},
+      </if>
+      <if test="record.storageRateTotal != null" >
+        storage_rate_total = #{record.storageRateTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsProductionDate != null" >
+        goods_production_date = #{record.goodsProductionDate,jdbcType=DATE},
+      </if>
+      <if test="record.goodsExpirationDate != null" >
+        goods_expiration_date = #{record.goodsExpirationDate,jdbcType=DATE},
+      </if>
+      <if test="record.goodsShelfLife != null" >
+        goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsStatus != null" >
+        goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageType != null" >
+        storage_type = #{record.storageType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=DATE},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importSerialNumber != null" >
+        import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageWarning != null" >
+        storage_warning = #{record.storageWarning,jdbcType=INTEGER},
+      </if>
+      <if test="record.shelfLifeWarning != null" >
+        shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER},
+      </if>
+      <if test="record.importGoodsUnit != null" >
+        import_goods_unit = #{record.importGoodsUnit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_storagecheck_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      storage_id = #{record.storageId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_bar_code = #{record.goodsBarCode,jdbcType=VARCHAR},
+      provider_id = #{record.providerId,jdbcType=INTEGER},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      storage_rate_current = #{record.storageRateCurrent,jdbcType=INTEGER},
+      storage_rate_total = #{record.storageRateTotal,jdbcType=INTEGER},
+      goods_production_date = #{record.goodsProductionDate,jdbcType=DATE},
+      goods_expiration_date = #{record.goodsExpirationDate,jdbcType=DATE},
+      goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
+      goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+      goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
+      storage_type = #{record.storageType,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=DATE},
+      modifytime = #{record.modifytime,jdbcType=DATE},
+      endtime = #{record.endtime,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      storage_warning = #{record.storageWarning,jdbcType=INTEGER},
+      shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER},
+      import_goods_unit = #{record.importGoodsUnit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.StoragecheckLog" >
     update tb_storagecheck_log
     <set >
@@ -254,6 +471,15 @@
       <if test="importSerialNumber != null" >
         import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
       </if>
+      <if test="storageWarning != null" >
+        storage_warning = #{storageWarning,jdbcType=INTEGER},
+      </if>
+      <if test="shelfLifeWarning != null" >
+        shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER},
+      </if>
+      <if test="importGoodsUnit != null" >
+        import_goods_unit = #{importGoodsUnit,jdbcType=VARCHAR},
+      </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
@@ -278,7 +504,10 @@
       modifytime = #{modifytime,jdbcType=DATE},
       endtime = #{endtime,jdbcType=DATE},
       remark = #{remark,jdbcType=VARCHAR},
-      import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
+      import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
+      storage_warning = #{storageWarning,jdbcType=INTEGER},
+      shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER},
+      import_goods_unit = #{importGoodsUnit,jdbcType=VARCHAR}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

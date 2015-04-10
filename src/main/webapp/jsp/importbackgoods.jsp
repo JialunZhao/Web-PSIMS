@@ -101,7 +101,7 @@ String date=sdf.format(new Date());
 			</div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h3 class="page-header">货品入库</h3>
+				<h3 class="page-header">供货商货品退货</h3>
 
 				<div class="row placeholders">
 					<form class="form-inline">
@@ -128,19 +128,8 @@ String date=sdf.format(new Date());
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">支付方式：</label> <select
-								class="form-control" value="请选择支付方式" tabindex="1"
-								name="quePayMed" id="quePayMed">
-								<option value="">请选择支付方式</option>
-								<option value="00">现金</option>
-								<option value="01">转账</option>
-								<option value="02">支票</option>
-								<option value="03">赊账</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="exampleInputEmail2">入库流水号</label> <input type="text"
-								class="form-control" id="queImportSerialNumber"
+							<label for="exampleInputEmail2">入库退货流水号</label> <input
+								type="text" class="form-control" id="queImportSerialNumber"
 								placeholder="入库流水号">
 						</div>
 						<button type="button" class="btn btn-primary"
@@ -151,7 +140,7 @@ String date=sdf.format(new Date());
 				<div class="row placeholders ">
 					<div class="col-sm-2">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#importgoods">新增入库单</button>
+							data-target="#importgoods">新增入库退货单</button>
 						<!-- <button type="button" class="btn btn-primary" onclick="showAddDialog()">新增入库单</button> -->
 						<!--  <button type="button" id="delbtn" class="btn btn-primary">批量删除入库单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的入库单</button>
@@ -165,29 +154,30 @@ String date=sdf.format(new Date());
 							<tr>
 								<th class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></th>
+								<th>退货流水号</th>
 								<th>入库流水号</th>
-								<th>供应商名称</th>
-								<th>仓库名称</th>
-								<th>入库日期</th>
-								<th>入库批次号</th>
-								<th>支付方式</th>
-								<th>入库状态</th>
+								<th>退货时间</th>
+								<th>退款金额</th>
+								<th>退款方式</th>
+								<th>退货状态</th>
+								<th>退货原因</th>
 								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="imports" items="${importList}" varStatus="status">
+							<c:forEach var="importbacks" items="${importbacksList}"
+								varStatus="status">
 								<tr>
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
-									<td>${imports.importSerialNumber }</td>
-									<td>${imports.providerName }</td>
-									<td>${imports.storehouseName }</td>
-									<td><fmt:formatDate value="${imports.importDatetime }"
+									<td>${importbacks.importbackSerialNumber }</td>
+									<td>${importbacks.importSerialNumber }</td>
+									<td><fmt:formatDate value="${importbacks.importbackTime }"
 											pattern="yyyy-MM-dd" /></td>
-									<td>${imports.importBatchNumber }</td>
-									<td>${imports.paymentType }</td>
-									<td>${imports.importStatus }</td>
+									<td>${importbacks.importbackRefund }</td>
+									<td>${importbacks.importbackRefundType }</td>
+									<td>${importbacks.importbackStatus }</td>
+									<td>${importbacks.importbackRemark }</td>
 									<td><a href="#" data-toggle="modal"
 										data-target="#importgoodsprint">打印</a>/<a href="#"
 										onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
@@ -214,25 +204,16 @@ String date=sdf.format(new Date());
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">新增入库单</h4>
+					<h4 class="modal-title" id="myModalLabel">新增入库退货单</h4>
 				</div>
 				<div class="modal-body" id="importgoodsform">
 					<div class="row placeholders">
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">入库时间:</span> <input
-								type="text" class="form-control" placeholder="2015-03-03"
-								value="<%=date %>" name="importcreatetime" id="importcreatetime">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">供货商名称:</span> <select
-								class="form-control" value="请选择供货商" tabindex="1"
-								name="providerName" id="providerName">
-								<option value="">请选择供货商</option>
-								<c:forEach var="provider" items="${providerList}"
-									varStatus="status">
-									<option value="${provider.providerId }">${provider.providerName }</option>
-								</c:forEach>
-							</select>
+								style="background-color: #1abc9c;">入库流水号:</span> <input
+								type="text" class="form-control" value="" id=""> <span
+								class="input-group-addon" style="background-color: #1abc9c;">退货时间:</span>
+							<input type="text" class="form-control" value="<%=date %>" id="">
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
@@ -416,7 +397,7 @@ String date=sdf.format(new Date());
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax(  
                     {  
-                        url:'<%=_base %>/importController/queryGoodsDemo.do',  
+                        url:'<%=_base %>/accountController/queryGoodsDemo.do',  
                         type:"post",  
                         async:true,  
                         data:{'goodsName':goodsName,
@@ -453,7 +434,7 @@ String date=sdf.format(new Date());
 			var importSerialNumber=$("#queImportSerialNumber").val();
 			$.ajax(  
                     {  
-                        url:'<%=_base %>/importController/queryImportList.do',  
+                        url:'<%=_base %>/accountController/queryImportList.do',  
                         type:"post",  
                         async:true,
                         data:{'providerId':providerId,
@@ -505,7 +486,7 @@ String date=sdf.format(new Date());
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax({  
-                        url:'<%=_base %>/importController/queryGoods.do',  
+                        url:'<%=_base %>/accountController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
@@ -526,7 +507,7 @@ String date=sdf.format(new Date());
     	}
     	
     	function updateImportData(importSerialNumber) {
-    		var url='<%=_base %>/importController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
+    		var url='<%=_base %>/accountController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
     		$.dialog({
     			title:'修改入库单',
     			width:900,
@@ -539,7 +520,7 @@ String date=sdf.format(new Date());
     	
     	function deleteImportData(importSerialNumber){
     		$.ajax({  
-                url:'<%=_base %>/importController/deleteImportData.do',  
+                url:'<%=_base %>/accountController/deleteImportData.do',  
                 type:"post",  
                 async:false,
                 modal : true,
@@ -715,7 +696,7 @@ String date=sdf.format(new Date());
           });
     	  $.ajax(  
                   {  
-                      url:'<%=_base %>/importController/addImprotGoodsList.do',  
+                      url:'<%=_base %>/accountController/addImprotGoodsList.do',  
                       type:"post",  
                       async:false,
                       traditional:true,

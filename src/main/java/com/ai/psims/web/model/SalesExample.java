@@ -1051,6 +1051,66 @@ public class SalesExample {
             addCriterion("sales_total_price not between", value1, value2, "salesTotalPrice");
             return (Criteria) this;
         }
+
+        public Criteria andCreditCountIsNull() {
+            addCriterion("credit_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountIsNotNull() {
+            addCriterion("credit_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountEqualTo(Long value) {
+            addCriterion("credit_count =", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountNotEqualTo(Long value) {
+            addCriterion("credit_count <>", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountGreaterThan(Long value) {
+            addCriterion("credit_count >", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountGreaterThanOrEqualTo(Long value) {
+            addCriterion("credit_count >=", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountLessThan(Long value) {
+            addCriterion("credit_count <", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountLessThanOrEqualTo(Long value) {
+            addCriterion("credit_count <=", value, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountIn(List<Long> values) {
+            addCriterion("credit_count in", values, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountNotIn(List<Long> values) {
+            addCriterion("credit_count not in", values, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountBetween(Long value1, Long value2) {
+            addCriterion("credit_count between", value1, value2, "creditCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditCountNotBetween(Long value1, Long value2) {
+            addCriterion("credit_count not between", value1, value2, "creditCount");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

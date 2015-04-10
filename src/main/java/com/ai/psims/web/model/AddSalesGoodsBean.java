@@ -11,45 +11,28 @@ public class AddSalesGoodsBean implements Serializable {
 	private String customerName;
 	private String storeName;
 	private String customerId;
-	private String payMed;
-	private String payStatus;
 	private String salesListCreateTime;
-	private String payTime;
 	private String employeeName;
 	private String storeId;
 	private String employeeId;
 	private String salesCountList;
 	private String salesPriceList;
-	private String discountMed;
 
 	public AddSalesGoodsBean(String storageIdList, String customerName,
-			String storeName, String customerId, String payMed,
-			String payStatus, String salesListCreateTime, String payTime,
+			String storeName, String customerId, String salesListCreateTime,
 			String employeeName, String storeId, String employeeId,
-			String salesCountList, String salesPriceList, String discountMed) {
+			String salesCountList, String salesPriceList) {
 		super();
 		this.storageIdList = storageIdList;
 		this.customerName = customerName;
 		this.storeName = storeName;
 		this.customerId = customerId;
-		this.payMed = payMed;
-		this.payStatus = payStatus;
 		this.salesListCreateTime = salesListCreateTime;
-		this.payTime = payTime;
 		this.employeeName = employeeName;
 		this.storeId = storeId;
 		this.employeeId = employeeId;
 		this.salesCountList = salesCountList;
 		this.salesPriceList = salesPriceList;
-		this.discountMed = discountMed;
-	}
-
-	public String getDiscountMed() {
-		return discountMed;
-	}
-
-	public void setDiscountMed(String discountMed) {
-		this.discountMed = discountMed;
 	}
 
 	public String getStorageIdList() {
@@ -100,36 +83,12 @@ public class AddSalesGoodsBean implements Serializable {
 		this.customerId = customerId;
 	}
 
-	public String getPayMed() {
-		return payMed;
-	}
-
-	public void setPayMed(String payMed) {
-		this.payMed = payMed;
-	}
-
-	public String getPayStatus() {
-		return payStatus;
-	}
-
-	public void setPayStatus(String payStatus) {
-		this.payStatus = payStatus;
-	}
-
 	public String getSalesListCreateTime() {
 		return salesListCreateTime;
 	}
 
 	public void setSalesListCreateTime(String salesListCreateTime) {
 		this.salesListCreateTime = salesListCreateTime;
-	}
-
-	public String getPayTime() {
-		return payTime;
-	}
-
-	public void setPayTime(String payTime) {
-		this.payTime = payTime;
 	}
 
 	public String getEmployeeName() {

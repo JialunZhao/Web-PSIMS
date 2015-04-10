@@ -21,8 +21,6 @@ public interface SalesMapper {
     List<Sales> selectByExample(SalesExample example);
 
     Sales selectByPrimaryKey(String salesSerialNumber);
-    
-    String selectSalesSerialNumber(String salesSerialNumber);
 
     int updateByExampleSelective(@Param("record") Sales record, @Param("example") SalesExample example);
 
@@ -31,4 +29,6 @@ public interface SalesMapper {
     int updateByPrimaryKeySelective(Sales record);
 
     int updateByPrimaryKey(Sales record);
+
+	String selectSalesSerialNumber(String salesSerialNumber);
 }

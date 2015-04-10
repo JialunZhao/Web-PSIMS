@@ -14,14 +14,12 @@ import com.ai.psims.web.model.AddGoodsBean;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.Import;
 import com.ai.psims.web.model.ImportGoods;
-import com.ai.psims.web.model.ImportGoodsLog;
-import com.ai.psims.web.model.ImportLog;
+import com.ai.psims.web.model.ImportGoodsExample;
+import com.ai.psims.web.model.ImportGoodsExample.Criteria;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.service.IGoodsService;
-import com.ai.psims.web.service.IImportGoodsLogService;
 import com.ai.psims.web.service.IImportGoodsService;
-import com.ai.psims.web.service.IImportLogService;
 import com.ai.psims.web.service.IImportService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
@@ -32,10 +30,6 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 	private IImportService importService;
 	@Resource(name = "importGoodsServiceImpl")
 	private IImportGoodsService importGoodsService;
-	@Resource(name = "importGoodsLogServiceImpl")
-	private IImportGoodsLogService importGoodsLogService;
-	@Resource(name = "importLogServiceImpl")
-	private IImportLogService importLogService;
 	@Resource(name = "storagecheckServiceImpl")
 	private IStoragecheckService storagecheckService;
 	@Resource(name = "goodsServiceImpl")
@@ -99,7 +93,13 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 
 	public List<ImportGoods> selBySerNum(String importSerialNumber) {
 		List<ImportGoods> importGoodsList = new ArrayList<ImportGoods>();
-		importGoodsList = importGoodsService.selBySerNum(importSerialNumber);
+		ImportGoodsExample example = new ImportGoodsExample();
+		Criteria criteria = example.createCriteria();
+		if (importSerialNumber != null && importSerialNumber != "") {
+			criteria.andImportSerialNumberEqualTo(importSerialNumber);
+		}
+		criteria.andImportGoodsEndtimeIsNull();
+		importGoodsList = importGoodsService.selectByExample(example);
 		return importGoodsList;
 	}
 
@@ -112,8 +112,6 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 					.selectByPrimaryKey(importGoods.getImportGoodsId());
 			begigImportGoodsList.add(importGood);
 		}
-		Import import2 = importService.selectByPrimaryKey(updateImportDemo
-				.getImportSerialNumber());
 		if (updateImportDemo.getImportStatus().equals(
 				Constants.ImportStatus.GOODSIMPORT)) {
 			for (ImportGoods importGoods : begigImportGoodsList) {
@@ -143,117 +141,36 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 				storagecheck.setShelfLifeWarning(goods.getShelfLifeWarning());
 				storagecheckService.insert(storagecheck);
 			}
-			for (ImportGoods importGoods : importGoodsList) {
-				ImportGoods importGood = importGoodsService
-						.selectByPrimaryKey(importGoods.getImportGoodsId());
-				ImportGoodsLog importGoodsLog = getLog(importGood);
-				importGoodsLogService.insertImportGoodsLog(importGoodsLog);
-				importGoodsService.updateImportGoods(importGoods);
-			}
-			Import import1 = new Import();
-			import1.setImportSerialNumber(updateImportDemo
-					.getImportSerialNumber());
-			import1.setImportStatus(updateImportDemo.getImportStatus());
-			import1.setPaymentType(updateImportDemo.getPaymentType());
-			import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
-			import1.setProviderId(Integer.parseInt(updateImportDemo
-					.getProviderId()));
-			import1.setStorehouseId(Integer.parseInt(updateImportDemo
-					.getStorehouseId()));
-			import1.setProviderName(updateImportDemo.getProviderName());
-			import1.setStorehouseName(updateImportDemo.getStorehouseName());
 
-			ImportLog importLog = getImpLog(import2);
-			importLogService.insertImportLog(importLog);
-			importService.updateImport(import1);
-
-		} else {
-			for (ImportGoods importGoods : importGoodsList) {
-				ImportGoods importGood = importGoodsService
-						.selectByPrimaryKey(importGoods.getImportGoodsId());
-				ImportGoodsLog importGoodsLog = getLog(importGood);
-				importGoodsLogService.insertImportGoodsLog(importGoodsLog);
-				importGoodsService.updateImportGoods(importGoods);
-			}
-			Import import1 = new Import();
-			import1.setImportSerialNumber(updateImportDemo
-					.getImportSerialNumber());
-			import1.setImportStatus(updateImportDemo.getImportStatus());
-			import1.setPaymentType(updateImportDemo.getPaymentType());
-			import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
-			import1.setProviderId(Integer.parseInt(updateImportDemo
-					.getProviderId()));
-			import1.setStorehouseId(Integer.parseInt(updateImportDemo
-					.getStorehouseId()));
-			import1.setProviderName(updateImportDemo.getProviderName());
-			import1.setStorehouseName(updateImportDemo.getStorehouseName());
-
-			ImportLog importLog = getImpLog(import2);
-			importLogService.insertImportLog(importLog);
-			importService.updateImport(import1);
 		}
+		for (ImportGoods importGoods : importGoodsList) {
+			importGoodsService.updateByKey(importGoods);
+		}
+		Import import1 = new Import();
+		import1.setImportSerialNumber(updateImportDemo.getImportSerialNumber());
+		import1.setImportStatus(updateImportDemo.getImportStatus());
+		import1.setPaymentType(updateImportDemo.getPaymentType());
+		import1.setPaymentTime(Date.valueOf(updateImportDemo.getPayTime()));
+		import1.setProviderId(Integer.parseInt(updateImportDemo.getProviderId()));
+		import1.setStorehouseId(Integer.parseInt(updateImportDemo
+				.getStorehouseId()));
+		import1.setProviderName(updateImportDemo.getProviderName());
+		import1.setStorehouseName(updateImportDemo.getStorehouseName());
+		importService.updateByKey(import1);
+
 		return "SUCCESS";
 	}
 
-	public ImportGoodsLog getLog(ImportGoods importGoods) {
-		ImportGoodsLog importGoodsLog = new ImportGoodsLog();
-		importGoodsLog.setLogDatetime(new java.util.Date());
-		importGoodsLog.setImportGoodsId(importGoods.getImportGoodsId());
-		importGoodsLog.setImportSerialNumber(importGoods
-				.getImportSerialNumber());
-		importGoodsLog.setGoodsId(importGoods.getGoodsId());
-		importGoodsLog.setGoodsName(importGoods.getGoodsName());
-		importGoodsLog.setImportGoodsType(importGoods.getImportGoodsType());
-		importGoodsLog.setImportGoodsAmount(importGoods.getImportGoodsAmount());
-		importGoodsLog.setImportGoodsUnit(importGoods.getImportGoodsUnit());
-		importGoodsLog.setImportGoodsPrice(importGoods.getImportGoodsPrice());
-		importGoodsLog.setImportGoodsProductionDate(importGoods
-				.getImportGoodsProductionDate());
-		importGoodsLog.setImportGoodsExpirationDate(importGoods
-				.getImportGoodsExpirationDate());
-		importGoodsLog.setImportDiscountAmount(importGoods
-				.getImportDiscountAmount());
-		importGoodsLog.setImportGoodsCreatetime(importGoods
-				.getImportGoodsCreatetime());
-		importGoodsLog.setImportGoodsModifytime(importGoods
-				.getImportGoodsModifytime());
-		importGoodsLog.setImportGoodsEndtime(importGoods
-				.getImportGoodsEndtime());
-		importGoodsLog.setImportGoodsRemark(importGoods.getImportGoodsRemark());
-		importGoodsLog.setImportGoodsTotalPrice(importGoods
-				.getImportGoodsTotalPrice());
-		return importGoodsLog;
-	}
-
-	public ImportLog getImpLog(Import import1) {
-		ImportLog importLog = new ImportLog();
-		importLog.setLogDatetime(new java.util.Date());
-		importLog.setImportSerialNumber(import1.getImportSerialNumber());
-		importLog.setImportDatetime(import1.getImportDatetime());
-		importLog.setImportBatchNumber(import1.getImportBatchNumber());
-		importLog.setImportTotalPrice(import1.getImportTotalPrice());
-		importLog.setPaymentType(import1.getPaymentType());
-		importLog.setPaymentTime(import1.getPaymentTime());
-		importLog.setImportType(import1.getImportType());
-		importLog.setImportStatus(import1.getImportStatus());
-		importLog.setImportRemark(import1.getImportRemark());
-		importLog.setProviderId(import1.getProviderId());
-		importLog.setProviderName(import1.getProviderName());
-		importLog.setStorehouseId(import1.getStorehouseId());
-		importLog.setStorehouseName(import1.getStorehouseName());
-		return importLog;
-	}
-
 	public String deleteImportData(String importSerialNumber) {
-		Import import1 = importService.selectByPrimaryKey(importSerialNumber);
 		List<ImportGoods> importGoodsList = new ArrayList<ImportGoods>();
-		importGoodsList = importGoodsService.selBySerNum(importSerialNumber);
-		ImportLog importLog = getImpLog(import1);
-		importLogService.insertImportLog(importLog);
+		ImportGoodsExample example = new ImportGoodsExample();
+		if (importSerialNumber != null && importSerialNumber != "") {
+			example.createCriteria().andImportSerialNumberEqualTo(
+					importSerialNumber);
+		}
+		importGoodsList = importGoodsService.selectByExample(example);
 		importService.deleteImport(importSerialNumber);
 		for (ImportGoods importGoods : importGoodsList) {
-			ImportGoodsLog importGoodsLog = getLog(importGoods);
-			importGoodsLogService.insertImportGoodsLog(importGoodsLog);
 			importGoodsService.deleteByPrimaryKey(importGoods
 					.getImportGoodsId());
 		}

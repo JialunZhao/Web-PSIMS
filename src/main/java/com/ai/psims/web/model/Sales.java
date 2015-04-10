@@ -31,6 +31,8 @@ public class Sales {
 
     private Long salesTotalPrice;
 
+    private Long creditCount;
+
     public String getSalesSerialNumber() {
         return salesSerialNumber;
     }
@@ -141,5 +143,13 @@ public class Sales {
 
     public void setSalesTotalPrice(Long salesTotalPrice) {
         this.salesTotalPrice = salesTotalPrice;
+    }
+
+    public Long getCreditCount() {
+        return creditCount;
+    }
+
+    public void setCreditCount(Long creditCount) {
+        this.creditCount = creditCount;
     }
 }

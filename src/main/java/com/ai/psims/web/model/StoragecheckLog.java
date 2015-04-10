@@ -45,6 +45,12 @@ public class StoragecheckLog {
 
     private String importSerialNumber;
 
+    private Integer storageWarning;
+
+    private Integer shelfLifeWarning;
+
+    private String importGoodsUnit;
+
     public Integer getLogId() {
         return logId;
     }
@@ -211,5 +217,29 @@ public class StoragecheckLog {
 
     public void setImportSerialNumber(String importSerialNumber) {
         this.importSerialNumber = importSerialNumber == null ? null : importSerialNumber.trim();
+    }
+
+    public Integer getStorageWarning() {
+        return storageWarning;
+    }
+
+    public void setStorageWarning(Integer storageWarning) {
+        this.storageWarning = storageWarning;
+    }
+
+    public Integer getShelfLifeWarning() {
+        return shelfLifeWarning;
+    }
+
+    public void setShelfLifeWarning(Integer shelfLifeWarning) {
+        this.shelfLifeWarning = shelfLifeWarning;
+    }
+
+    public String getImportGoodsUnit() {
+        return importGoodsUnit;
+    }
+
+    public void setImportGoodsUnit(String importGoodsUnit) {
+        this.importGoodsUnit = importGoodsUnit == null ? null : importGoodsUnit.trim();
     }
 }

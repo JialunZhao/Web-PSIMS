@@ -18,23 +18,98 @@
     <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR" />
     <result column="storehouse_id" property="storehouseId" jdbcType="INTEGER" />
   </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     log_id, log_datetime, import_serial_number, import_datetime, import_batch_number, 
     import_total_price, payment_type, payment_time, import_type, import_status, import_remark, 
     provider_id, provider_name, storehouse_name, storehouse_id
   </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.ImportLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_import_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_import_log
     where log_id = #{logId,jdbcType=INTEGER}
   </select>
-  <select id="selectId" resultType="java.lang.Integer">
-    select log_id from tb_import_log
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_import_log
     where log_id = #{logId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.ImportLogExample" >
+    delete from tb_import_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.ImportLog" >
     insert into tb_import_log (log_id, log_datetime, import_serial_number, 
@@ -147,6 +222,86 @@
       </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.ImportLogExample" resultType="java.lang.Integer" >
+    select count(*) from tb_import_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_import_log
+    <set >
+      <if test="record.logId != null" >
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logDatetime != null" >
+        log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.importSerialNumber != null" >
+        import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importDatetime != null" >
+        import_datetime = #{record.importDatetime,jdbcType=DATE},
+      </if>
+      <if test="record.importBatchNumber != null" >
+        import_batch_number = #{record.importBatchNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importTotalPrice != null" >
+        import_total_price = #{record.importTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentTime != null" >
+        payment_time = #{record.paymentTime,jdbcType=DATE},
+      </if>
+      <if test="record.importType != null" >
+        import_type = #{record.importType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importStatus != null" >
+        import_status = #{record.importStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importRemark != null" >
+        import_remark = #{record.importRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerId != null" >
+        provider_id = #{record.providerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.providerName != null" >
+        provider_name = #{record.providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storehouseName != null" >
+        storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storehouseId != null" >
+        storehouse_id = #{record.storehouseId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_import_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      import_datetime = #{record.importDatetime,jdbcType=DATE},
+      import_batch_number = #{record.importBatchNumber,jdbcType=VARCHAR},
+      import_total_price = #{record.importTotalPrice,jdbcType=BIGINT},
+      payment_type = #{record.paymentType,jdbcType=VARCHAR},
+      payment_time = #{record.paymentTime,jdbcType=DATE},
+      import_type = #{record.importType,jdbcType=VARCHAR},
+      import_status = #{record.importStatus,jdbcType=VARCHAR},
+      import_remark = #{record.importRemark,jdbcType=VARCHAR},
+      provider_id = #{record.providerId,jdbcType=INTEGER},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      storehouse_id = #{record.storehouseId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.ImportLog" >
     update tb_import_log
     <set >

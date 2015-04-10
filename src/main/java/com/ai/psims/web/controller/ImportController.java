@@ -2,9 +2,7 @@ package com.ai.psims.web.controller;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +19,17 @@ import com.ai.psims.web.model.AddGoodsBean;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
+import com.ai.psims.web.model.ImportExample;
+import com.ai.psims.web.model.ImportExample.Criteria;
 import com.ai.psims.web.model.ImportGoods;
-import com.ai.psims.web.model.Storehouse;
 import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
-@RequestMapping("/accountController")
+@RequestMapping("/importController")
 public class ImportController extends BaseController {
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
@@ -39,10 +39,11 @@ public class ImportController extends BaseController {
 	@Resource(name = "queryImportListImpl")
 	private IQueryImportList queryImportList;
 
-	@RequestMapping("/showProvider")
-	public String showProvider(HttpServletRequest request) throws Exception {
+
+	@RequestMapping("/init")
+	public String init(HttpServletRequest request) throws Exception {
 		List<TbProvider> provider = new ArrayList<TbProvider>();
-		List<Storehouse> storehouse = new ArrayList<Storehouse>();
+		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		List<Import> importList = new ArrayList<Import>();
 		importList = queryBus.queryImport();
 		provider = queryBus.queryProvider();
@@ -62,9 +63,12 @@ public class ImportController extends BaseController {
 		GoodsExample goodsExample = new GoodsExample();
 		JSONObject data = new JSONObject();
 		List<Goods> goodsList = new ArrayList<Goods>();
-		if (providerName != null || providerName != "") {
-			goodsExample.createCriteria().andProviderNameEqualTo(providerName);
+		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+				.createCriteria();
+		if (providerName != null && providerName != "") {
+			criteria.andProviderNameEqualTo(providerName);
 		}
+		criteria.andGoodsEndtimeIsNull();
 		goodsList = queryBus.queryGoodsByName(goodsExample);
 		if (goodsList == null && goodsList.size() == 0) {
 			responseFailed(response, "....", data);
@@ -81,14 +85,24 @@ public class ImportController extends BaseController {
 		String storeId = request.getParameter("storeId");
 		String payMed = request.getParameter("payMed");
 		String importSerialNumber = request.getParameter("importSerialNumber");
-		Map<String, String> m = new HashMap<String, String>();
+		ImportExample example = new ImportExample();
+		Criteria criteria = example.createCriteria();
 		JSONObject data = new JSONObject();
-		m.put("providerId", providerId);
-		m.put("storeId", storeId);
-		m.put("paymentType", payMed);
-		m.put("importSerialNumber", importSerialNumber);
+		if (providerId != null && providerId != "") {
+			criteria.andProviderIdEqualTo(Integer.parseInt(providerId));
+		}
+		if (storeId != null && storeId != "") {
+			criteria.andStorehouseIdEqualTo(Integer.parseInt(storeId));
+		}
+		if (payMed != null && payMed != "") {
+			criteria.andPaymentTypeEqualTo(payMed);
+		}
+		if (importSerialNumber != null && importSerialNumber != "") {
+			criteria.andImportSerialNumberLike("%" + importSerialNumber + "%");
+		}
+		criteria.andImportStatusNotEqualTo("00");
 		List<Import> importList = new ArrayList<Import>();
-		importList = queryImportList.queryImportByColum(m);
+		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
 			responseFailed(response, "....", data);
 		} else {
@@ -103,15 +117,18 @@ public class ImportController extends BaseController {
 		String goodsName = request.getParameter("goodsName");
 		String providerName = request.getParameter("providerName");
 		GoodsExample goodsExample = new GoodsExample();
+		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+				.createCriteria();
 		List<Goods> goodsList = new ArrayList<Goods>();
 		JSONObject data = new JSONObject();
 		Goods goods = new Goods();
 		if (goodsName != null && goodsName != "") {
-			goodsExample.createCriteria().andGoodsNameEqualTo(goodsName);
+			criteria.andGoodsNameEqualTo(goodsName);
 		}
-		if (providerName != null || providerName != "") {
-			goodsExample.createCriteria().andProviderNameEqualTo(providerName);
+		if (providerName != null && providerName != "") {
+			criteria.andProviderNameEqualTo(providerName);
 		}
+		criteria.andGoodsEndtimeIsNull();
 		goodsList = queryBus.queryGoodsByName(goodsExample);
 		goods = goodsList.get(0);
 		if (goods == null) {
@@ -131,7 +148,7 @@ public class ImportController extends BaseController {
 		importGoodsList = addGoodsImportList.selBySerNum(importSerialNumber);
 		import1 = queryImportList.selectByPrimaryKey(importSerialNumber);
 		List<TbProvider> provider = new ArrayList<TbProvider>();
-		List<Storehouse> storehouse = new ArrayList<Storehouse>();
+		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();
 		request.setAttribute("providerList", provider);

@@ -59,6 +59,20 @@ public class Constants {
 		public static final String CANSALE01 = "可售";
 		public static final String NOTSALE01 = "不可售";
 	}
+	// 销售表库存状态
+		public static class SalesStatus {
+			public static final String DOWNORDER = "DO";// 下单
+			public static final String OUTORDER = "OO";// 出单
+			public static final String OUTSTORE = "OS";// 出库
+			public static final String SQUARE = "S";// 结清
+			public static final String CREDIT = "C";// 赊账
 
+			public static final String DOWNORDER01 = "下单";
+			public static final String OUTORDER01 = "出单";
+			public static final String OUTSTORE01 = "出库";
+			public static final String SQUARE01 = "结清";
+			public static final String CREDIT01 = "赊账";
+
+		}
 
 }

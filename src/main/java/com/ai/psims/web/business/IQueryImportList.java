@@ -1,12 +1,12 @@
 package com.ai.psims.web.business;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ai.psims.web.model.Import;
+import com.ai.psims.web.model.ImportExample;
 
 public interface IQueryImportList {
-	public List<Import> queryImportByColum(Map<String, String> m);
+	public List<Import> queryImportByColum(ImportExample example);
 
 	public Import selectByPrimaryKey(String importSerialNumber);
 }

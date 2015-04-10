@@ -15,4 +15,8 @@ public interface IStoragecheckService {
 	public int deleteStoragecheck(Integer storageId);
 
 	public int updateStoragecheck(Storagecheck storagecheck);
+
+	public int updateStoragecheckByKey(Storagecheck storagecheck);
+
+	public int insertToLog(Storagecheck storagecheck);
 }

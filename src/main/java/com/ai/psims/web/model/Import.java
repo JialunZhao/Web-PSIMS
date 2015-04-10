@@ -21,13 +21,13 @@ public class Import {
 
     private String importRemark;
 
-    private Integer storehouseId;
-
-    private String storehouseName;
-
     private Integer providerId;
 
     private String providerName;
+
+    private String storehouseName;
+
+    private Integer storehouseId;
 
     public String getImportSerialNumber() {
         return importSerialNumber;
@@ -101,22 +101,6 @@ public class Import {
         this.importRemark = importRemark == null ? null : importRemark.trim();
     }
 
-    public Integer getStorehouseId() {
-        return storehouseId;
-    }
-
-    public void setStorehouseId(Integer storehouseId) {
-        this.storehouseId = storehouseId;
-    }
-
-    public String getStorehouseName() {
-        return storehouseName;
-    }
-
-    public void setStorehouseName(String storehouseName) {
-        this.storehouseName = storehouseName == null ? null : storehouseName.trim();
-    }
-
     public Integer getProviderId() {
         return providerId;
     }
@@ -131,5 +115,21 @@ public class Import {
 
     public void setProviderName(String providerName) {
         this.providerName = providerName == null ? null : providerName.trim();
+    }
+
+    public String getStorehouseName() {
+        return storehouseName;
+    }
+
+    public void setStorehouseName(String storehouseName) {
+        this.storehouseName = storehouseName == null ? null : storehouseName.trim();
+    }
+
+    public Integer getStorehouseId() {
+        return storehouseId;
+    }
+
+    public void setStorehouseId(Integer storehouseId) {
+        this.storehouseId = storehouseId;
     }
 }

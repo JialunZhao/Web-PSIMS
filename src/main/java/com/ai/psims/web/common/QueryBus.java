@@ -14,11 +14,13 @@ import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.Storehouse;
+import com.ai.psims.web.model.ImportExample;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
+import com.ai.psims.web.model.TbStorehouse;
+import com.ai.psims.web.model.TbStorehouseExample;
 import com.ai.psims.web.service.ICustomerService;
 import com.ai.psims.web.service.IEmployeeService;
 import com.ai.psims.web.service.IGoodsService;
@@ -48,8 +50,10 @@ public class QueryBus implements IQueryBus {
 		return pList;
 	}
 
-	public List<Storehouse> queryStorehouse() {
-		return storehouseService.queryStorehouse();
+	public List<TbStorehouse> queryStorehouse() {
+		TbStorehouseExample example = new TbStorehouseExample();
+		example.createCriteria().andEndtimeIsNull();
+		return storehouseService.queryStorehouse(example);
 	}
 
 	public List<TbCustomer> queryCustomer(TbCustomerExample customerExample) {
@@ -66,7 +70,9 @@ public class QueryBus implements IQueryBus {
 
 	public List<Import> queryImport() {
 		List<Import> importList = new ArrayList<Import>();
-		importList = importMapper.selectAll();
+		ImportExample example = new ImportExample();
+		example.createCriteria().andImportStatusNotEqualTo("00");
+		importList = importMapper.selectByExample(example);
 		for (Import import1 : importList) {
 			import1.setImportStatus(CreateIdUtil.getTranslation(import1
 					.getImportStatus()));
@@ -75,4 +81,5 @@ public class QueryBus implements IQueryBus {
 		}
 		return importList;
 	}
+
 }

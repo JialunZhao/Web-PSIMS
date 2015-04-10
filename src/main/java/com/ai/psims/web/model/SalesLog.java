@@ -33,6 +33,10 @@ public class SalesLog {
 
     private String salesRemark;
 
+    private Long salesTotalPrice;
+
+    private Long creditCount;
+
     public Integer getLogId() {
         return logId;
     }
@@ -151,5 +155,21 @@ public class SalesLog {
 
     public void setSalesRemark(String salesRemark) {
         this.salesRemark = salesRemark == null ? null : salesRemark.trim();
+    }
+
+    public Long getSalesTotalPrice() {
+        return salesTotalPrice;
+    }
+
+    public void setSalesTotalPrice(Long salesTotalPrice) {
+        this.salesTotalPrice = salesTotalPrice;
+    }
+
+    public Long getCreditCount() {
+        return creditCount;
+    }
+
+    public void setCreditCount(Long creditCount) {
+        this.creditCount = creditCount;
     }
 }
