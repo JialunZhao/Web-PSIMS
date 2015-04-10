@@ -15,12 +15,14 @@ import com.ai.psims.web.dao.TbGoodsMapper;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoods2customer;
+import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.model.TbGoodsLog;
-import com.ai.psims.web.service.IGoodsService;
+import com.ai.psims.web.service.IGoods2CustomerService;
 
 @Service
-public class GoodsServiceImpl implements IGoodsService {
+public class Goods2CustomerServiceImpl implements IGoods2CustomerService {
 	@Resource(name = "goodsMapper")
 	private GoodsMapper goodsMapper;
 
@@ -31,7 +33,7 @@ public class GoodsServiceImpl implements IGoodsService {
 	private TbGoodsLogMapper tbGoodsLogMapper;
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(GoodsServiceImpl.class);
+			.getLogger(Goods2CustomerServiceImpl.class);
 	
 	
 	public List<Goods> selectByExample(GoodsExample example) {
@@ -94,7 +96,6 @@ public class GoodsServiceImpl implements IGoodsService {
 		tbGoodsLog.setGoodsCode(tbGoodsbackup.get(0).getGoodsCode());
 		tbGoodsLog.setGoodsVersion(tbGoodsbackup.get(0).getGoodsVersion());
 		tbGoodsLog.setGoodsUnit(tbGoodsbackup.get(0).getGoodsUnit());
-		tbGoodsLog.setGoodsBarCode(tbGoodsbackup.get(0).getGoodsBarCode());
 		tbGoodsLog.setGoodsCurrentStock(tbGoodsbackup.get(0).getGoodsCurrentStock());
 		tbGoodsLog.setGoodsTotalStock(tbGoodsbackup.get(0).getGoodsTotalStock());
 		tbGoodsLog.setGoodsProductionDate(tbGoodsbackup.get(0).getGoodsProductionDate());
@@ -123,6 +124,13 @@ public class GoodsServiceImpl implements IGoodsService {
 		tbGoodsLog.setStoragePrewarning(tbGoodsbackup.get(0).getStoragePrewarning());
 		tbGoodsLog.setShelfLifePrewarning(tbGoodsbackup.get(0).getShelfLifePrewarning());
 		return tbGoodsLogMapper.insert(tbGoodsLog);
+	}
+
+	@Override
+	public List<TbGoods2customer> queryGoods2Customer(
+			TbGoods2customerExample goods2CustomerQuery) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

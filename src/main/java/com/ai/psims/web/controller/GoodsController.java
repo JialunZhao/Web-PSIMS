@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.psims.web.business.IGoodsBusiness;
 import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoods2customer;
+import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
 
 /**
- * 客户管理Controller
+ * 商品管理Controller
  */
 @Controller
 @RequestMapping("/goodsController")
@@ -34,7 +36,7 @@ public class GoodsController extends BaseController {
 	private IGoodsBusiness goodsBusiness;
 
 	/**
-	 * 客户管理页面跳转
+	 * 商品管理页面跳转
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String goodsRedirectGET(HttpServletRequest request,
@@ -43,12 +45,14 @@ public class GoodsController extends BaseController {
 	}
 
 	/**
-	 * 客户管理页面跳转
+	 * 商品管理页面跳转
 	 */
 	@RequestMapping(value = "/goods", method = RequestMethod.GET)
 	public String goodsRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome goods page!-------------");
+		logger.info("------------0.权限管理！-------------");
+
 		// 0 权限管理
 //		// 0.1  userid \
 //		TbGoodsExample tbGoodsExample = new TbGoodsExample();
@@ -56,13 +60,11 @@ public class GoodsController extends BaseController {
 //		criteria.NameLike(goods);
 //		retuen err;
 //		
-		
-		// 1.初始化
+		logger.info("------------1.初始化！-------------");
 		List<TbGoods> goodss;
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
-
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String query_goodsName = request.getParameter("query_goodsName") == "" ? null
 				: request.getParameter("query_goodsName");
 		String query_goodsType = request.getParameter("query_goodsType") == "" ? null
@@ -72,7 +74,7 @@ public class GoodsController extends BaseController {
 		String query_goodsShelfLife = request
 				.getParameter("query_goodsShelfLife") == "" ? null : request
 				.getParameter("query_goodsShelfLife");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (query_goodsName != null && query_goodsName.length() > 0) {
 			query_goodsName = "%" + query_goodsName + "%";
 			criteria.andGoodsNameLike(query_goodsName);
@@ -90,28 +92,30 @@ public class GoodsController extends BaseController {
 			criteria.andGoodsShelfLifeEqualTo(
 					Integer.parseInt(query_goodsShelfLife));
 		}
-
-		// 4.业务处理
+		logger.info("------------4.业务处理开始-------------");
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
-		criteria.andGoodsStatusEqualTo("01");
+		criteria.andGoodsStatusNotEqualTo("00");
 		goodss = goodsBusiness.goodsQuery(tbGoodsExample);
-		// 5.返回结果
+		logger.info("------------4.业务处理完成-------------");
+		logger.info("------------5.返回结果-------------");
 		request.setAttribute("goodss", goodss);
 
-		logger.info("------------Bye goods page!-------------");
+		logger.info("------------goods page finished!-------------");
 		return "goods";
 	}
 
+	
+	
 	/**
-	 * 客户管理新增客户信息
+	 * 商品管理新增商品信息
 	 */
 	@RequestMapping(value = "/addGoods", method = RequestMethod.POST)
 	public String tbGoods(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome goods add info!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbGoods goodsadd = new TbGoods();
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String goodsName = request.getParameter("goodsName") == "" ? null : request.getParameter("goodsName");
 		String goodsCode = request.getParameter("goodsCode") == null ? request.getParameter("goodsName") : request.getParameter("goodsCode");
 		String goodsVersion = request.getParameter("goodsVersion") == "" ? null : request.getParameter("goodsVersion");
@@ -146,8 +150,7 @@ public class GoodsController extends BaseController {
 		String shelfLifePrewarning = request.getParameter("shelfLifePrewarning") == "" ? null : request.getParameter("shelfLifePrewarning");
 
 		Date goodsCreatetime = new Date();
-
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		goodsadd.setGoodsName(goodsName);
 		goodsadd.setGoodsCode(goodsCode);
 		if (goodsVersion != null && goodsVersion.length() > 0) {
@@ -217,198 +220,277 @@ public class GoodsController extends BaseController {
 			goodsadd.setShelfLifePrewarning(Integer.parseInt(shelfLifePrewarning));
 		}
 		goodsadd.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		int res = goodsBusiness.goodsAdd(goodsadd);
 		toString();
 		logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye goods add info! -------------");
 		return "goods";
 	}
 
 	/**
-	 * 客户管理删除客户信息
+	 * 商品管理删除商品信息
 	 */
 	@RequestMapping(value = "/deleteGoods", method = RequestMethod.POST)
 	public String goodsDelete(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome deletegoods! -------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbGoods tbGoods = new TbGoods();
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (goodsId != null && goodsId.length() > 0) {
 			tbGoods.setGoodsId(Integer.parseInt(goodsId));
 		}
-		// 4.业务处理
-		// 逻辑删除 修改状态为 00-失效 （记录状态 00-失效 01-正常 99-异常）
+		logger.info("------------4.业务处理-------------");
+		// 逻辑删除 修改状态为 00-失效 （00-失效 01-正常 02-下架 99-异常）
 		tbGoods.setGoodsStatus("00");
 		int res = goodsBusiness.goodsModify(tbGoods);
 		toString();
 		logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye deletegoods! -------------");
+		return "goods";
+	}
+	
+	/**
+	 * 商品管理下架商品信息
+	 */
+	@RequestMapping(value = "/offShelvesGoods", method = RequestMethod.POST)
+	public String offShelvesGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info("------------Welcome offShelvesGoods! -------------");
+		logger.info("------------1.初始化-------------");
+		TbGoods tbGoods = new TbGoods();
+		logger.info("------------2.获取参数-------------");
+		String goodsId = request.getParameter("goodsId");
+		logger.info("------------3.数据校验-------------");
+		if (goodsId != null && goodsId.length() > 0) {
+			tbGoods.setGoodsId(Integer.parseInt(goodsId));
+		}
+		logger.info("------------4.业务处理-------------");
+		// 逻辑删除 修改状态为 00-失效 （00-失效 01-正常 02-下架 99-异常）
+		tbGoods.setGoodsStatus("02");
+		int res = goodsBusiness.goodsModify(tbGoods);
+		toString();
+		logger.info(String.valueOf(res));
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye offShelvesGoods! -------------");
 		return "goods";
 	}
 
 	/**
-	 * 客户管理修改客户信息
+	 * 商品管理上架商品信息
+	 */
+	@RequestMapping(value = "/onShelvesGoods", method = RequestMethod.POST)
+	public String onShelvesGoods(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info("------------Welcome offShelvesGoods! -------------");
+		logger.info("------------1.初始化-------------");
+		TbGoods tbGoods = new TbGoods();
+		logger.info("------------2.获取参数-------------");
+		String goodsId = request.getParameter("goodsId");
+		logger.info("------------3.数据校验-------------");
+		if (goodsId != null && goodsId.length() > 0) {
+			tbGoods.setGoodsId(Integer.parseInt(goodsId));
+		}
+		logger.info("------------4.业务处理-------------");
+		// 逻辑删除 修改状态为 01-正常 （00-失效 01-正常 02-下架 99-异常）
+		tbGoods.setGoodsStatus("01");
+		int res = goodsBusiness.goodsModify(tbGoods);
+		toString();
+		logger.info(String.valueOf(res));
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye offShelvesGoods! -------------");
+		return "goods";
+	}
+	
+	/**
+	 * 商品管理修改商品信息
 	 */
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String goodsModify(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome goods!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbGoods tbGoods = new TbGoods();
-
-				// 2.获取参数modify_goodsId
+		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("modify_goodsId") == "" ? null : request.getParameter("modify_goodsId");
 		String goodsName = request.getParameter("modify_goodsName") == "" ? null : request.getParameter("modify_goodsName");
-				String goodsCode = request.getParameter("modify_goodsCode") == null ? request.getParameter("modify_goodsName") : request.getParameter("modify_goodsCode");
-				String goodsVersion = request.getParameter("modify_goodsVersion") == "" ? null : request.getParameter("modify_goodsVersion");
-				String goodsUnit = request.getParameter("modify_goodsUnit") == "" ? null : request.getParameter("modify_goodsUnit");
-				String goodsBarCode = request.getParameter("modify_goodsBarCode") == "" ? null : request.getParameter("modify_goodsBarCode");
-				String goodsCurrentStock = request.getParameter("modify_goodsCurrentStock") == "" ? null : request.getParameter("modify_goodsCurrentStock");
-				String goodsTotalStock = request.getParameter("modify_goodsTotalStock") == "" ? null : request.getParameter("modify_goodsTotalStock");
+		String goodsCode = request.getParameter("modify_goodsCode") == null ? request.getParameter("modify_goodsName") : request.getParameter("modify_goodsCode");
+		String goodsVersion = request.getParameter("modify_goodsVersion") == "" ? null : request.getParameter("modify_goodsVersion");
+		String goodsUnit = request.getParameter("modify_goodsUnit") == "" ? null : request.getParameter("modify_goodsUnit");
+		String goodsBarCode = request.getParameter("modify_goodsBarCode") == "" ? null : request.getParameter("modify_goodsBarCode");
+		String goodsCurrentStock = request.getParameter("modify_goodsCurrentStock") == "" ? null : request.getParameter("modify_goodsCurrentStock");
+		String goodsTotalStock = request.getParameter("modify_goodsTotalStock") == "" ? null : request.getParameter("modify_goodsTotalStock");
 //				String goodsProductionDate = request.getParameter("modify_goodsProductionDate") == "" ? null : request.getParameter("modify_goodsProductionDate");
 //				String goodsExpirationDate = request.getParameter("modify_goodsExpirationDate") == "" ? null : request.getParameter("modify_goodsExpirationDate");
-				String goodsShelfLife = request.getParameter("modify_goodsShelfLife") == "" ? null : request.getParameter("modify_goodsShelfLife");
-				String goodsProfit = request.getParameter("modify_goodsProfit") == "" ? null : request.getParameter("modify_goodsProfit");
-				String goodsPrice = request.getParameter("modify_goodsPrice") == "" ? null : request.getParameter("modify_goodsPrice");
-				String goodsDiscountAmount = request.getParameter("modify_goodsDiscountAmount") == "" ? null : request.getParameter("modify_goodsDiscountAmount");
-				String goodsType = request.getParameter("modify_goodsType") == "" ? null : request.getParameter("modify_goodsType");
-				String goodsStatus = request.getParameter("modify_goodsStatus") == "" ? null : request.getParameter("modify_goodsStatus");
+		String goodsShelfLife = request.getParameter("modify_goodsShelfLife") == "" ? null : request.getParameter("modify_goodsShelfLife");
+		String goodsProfit = request.getParameter("modify_goodsProfit") == "" ? null : request.getParameter("modify_goodsProfit");
+		String goodsPrice = request.getParameter("modify_goodsPrice") == "" ? null : request.getParameter("modify_goodsPrice");
+		String goodsDiscountAmount = request.getParameter("modify_goodsDiscountAmount") == "" ? null : request.getParameter("modify_goodsDiscountAmount");
+		String goodsType = request.getParameter("modify_goodsType") == "" ? null : request.getParameter("modify_goodsType");
+		String goodsStatus = request.getParameter("modify_goodsStatus") == "" ? null : request.getParameter("modify_goodsStatus");
 //				String goodsCreatetime = request.getParameter("modify_goodsCreatetime") == "" ? null : request.getParameter("modify_goodsCreatetime");
 //				String goodsModifytime = request.getParameter("modify_goodsModifytime") == "" ? null : request.getParameter("modify_goodsModifytime");
 //				String goodsEndtime = request.getParameter("modify_goodsEndtime") == "" ? null : request.getParameter("modify_goodsEndtime");
-				String providerId = request.getParameter("modify_providerId") == "" ? null : request.getParameter("modify_providerId");
-				String providerName = request.getParameter("modify_providerName") == "" ? null : request.getParameter("modify_providerName");
-				String providerCode = request.getParameter("modify_providerCode") == "" ? null : request.getParameter("modify_providerCode");
-				String remark = request.getParameter("modify_remark") == "" ? null : request.getParameter("modify_remark");
-				String goodsDiscount = request.getParameter("modify_goodsDiscount") == "" ? null : request.getParameter("modify_goodsDiscount");
-				String quarterRebate = request.getParameter("modify_quarterRebate") == "" ? null : request.getParameter("modify_quarterRebate");
-				String annualRebate = request.getParameter("modify_annualRebate") == "" ? null : request.getParameter("modify_annualRebate");
-				String providerSubsidy = request.getParameter("modify_providerSubsidy") == "" ? null : request.getParameter("modify_providerSubsidy");
-				String providerPackageSubsidy = request.getParameter("modify_providerPackageSubsidy") == "" ? null : request.getParameter("modify_providerPackageSubsidy");
-				String customerSubsidy = request.getParameter("modify_customerSubsidy") == "" ? null : request.getParameter("modify_customerSubsidy");
-				String otherSubsidy = request.getParameter("modify_otherSubsidy") == "" ? null : request.getParameter("modify_otherSubsidy");
-				String goodsActualCost = request.getParameter("modify_goodsActualCost") == "" ? null : request.getParameter("modify_goodsActualCost");
-				String storagePrewarning = request.getParameter("modify_storagePrewarning") == "" ? null : request.getParameter("modify_storagePrewarning");
-				String shelfLifePrewarning = request.getParameter("modify_shelfLifePrewarning") == "" ? null : request.getParameter("modify_shelfLifePrewarning");
+		String providerId = request.getParameter("modify_providerId") == "" ? null : request.getParameter("modify_providerId");
+		String providerName = request.getParameter("modify_providerName") == "" ? null : request.getParameter("modify_providerName");
+		String providerCode = request.getParameter("modify_providerCode") == "" ? null : request.getParameter("modify_providerCode");
+		String remark = request.getParameter("modify_remark") == "" ? null : request.getParameter("modify_remark");
+		String goodsDiscount = request.getParameter("modify_goodsDiscount") == "" ? null : request.getParameter("modify_goodsDiscount");
+		String quarterRebate = request.getParameter("modify_quarterRebate") == "" ? null : request.getParameter("modify_quarterRebate");
+		String annualRebate = request.getParameter("modify_annualRebate") == "" ? null : request.getParameter("modify_annualRebate");
+		String providerSubsidy = request.getParameter("modify_providerSubsidy") == "" ? null : request.getParameter("modify_providerSubsidy");
+		String providerPackageSubsidy = request.getParameter("modify_providerPackageSubsidy") == "" ? null : request.getParameter("modify_providerPackageSubsidy");
+		String customerSubsidy = request.getParameter("modify_customerSubsidy") == "" ? null : request.getParameter("modify_customerSubsidy");
+		String otherSubsidy = request.getParameter("modify_otherSubsidy") == "" ? null : request.getParameter("modify_otherSubsidy");
+		String goodsActualCost = request.getParameter("modify_goodsActualCost") == "" ? null : request.getParameter("modify_goodsActualCost");
+		String storagePrewarning = request.getParameter("modify_storagePrewarning") == "" ? null : request.getParameter("modify_storagePrewarning");
+		String shelfLifePrewarning = request.getParameter("modify_shelfLifePrewarning") == "" ? null : request.getParameter("modify_shelfLifePrewarning");
 
-				Date goodsModifytime = new Date();
+		Date goodsModifytime = new Date();
 
 
-				// 3.数据校验
-				if (goodsId != null && goodsId.length() > 0) {
-					tbGoods.setGoodsId(Integer.parseInt(goodsId));
-				}
-				tbGoods.setGoodsName(goodsName);
-				tbGoods.setGoodsCode(goodsCode);
-				if (goodsVersion != null && goodsVersion.length() > 0) {
-					tbGoods.setGoodsVersion(Integer.parseInt(goodsVersion));
-				}
-				tbGoods.setGoodsUnit(goodsUnit);
-				tbGoods.setGoodsBarCode(goodsBarCode);
-				if (goodsCurrentStock != null && goodsCurrentStock.length() > 0) {
-					tbGoods.setGoodsCurrentStock(Integer.parseInt(goodsCurrentStock));
-				}
-				if (goodsTotalStock != null && goodsTotalStock.length() > 0) {
-					tbGoods.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
-				}
+		logger.info("------------3.数据校验-------------");
+		if (goodsId != null && goodsId.length() > 0) {
+			tbGoods.setGoodsId(Integer.parseInt(goodsId));
+		}
+		tbGoods.setGoodsName(goodsName);
+		tbGoods.setGoodsCode(goodsCode);
+		if (goodsVersion != null && goodsVersion.length() > 0) {
+			tbGoods.setGoodsVersion(Integer.parseInt(goodsVersion));
+		}
+		tbGoods.setGoodsUnit(goodsUnit);
+		tbGoods.setGoodsBarCode(goodsBarCode);
+		if (goodsCurrentStock != null && goodsCurrentStock.length() > 0) {
+			tbGoods.setGoodsCurrentStock(Integer.parseInt(goodsCurrentStock));
+		}
+		if (goodsTotalStock != null && goodsTotalStock.length() > 0) {
+			tbGoods.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
+		}
 //				tbGoods.setGoodsProductionDate(Date.parse(goodsProductionDate));
 //				tbGoods.setGoodsExpirationDate(Date.parse(goodsExpirationDate);
-				if (goodsShelfLife != null && goodsShelfLife.length() > 0) {
-					tbGoods.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
-				}
-				if (goodsProfit != null && goodsProfit.length() > 0) {
-					tbGoods.setGoodsProfit(Long.parseLong(goodsProfit));
-				}
-				if (goodsPrice != null && goodsPrice.length() > 0) {
-					tbGoods.setGoodsPrice(Long.parseLong(goodsPrice));
-				}
-				if (goodsDiscountAmount != null && goodsDiscountAmount.length() > 0) {
-					tbGoods.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
-				}
-				tbGoods.setGoodsType(goodsType);
-				tbGoods.setGoodsStatus(goodsStatus);
+		if (goodsShelfLife != null && goodsShelfLife.length() > 0) {
+			tbGoods.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
+		}
+		if (goodsProfit != null && goodsProfit.length() > 0) {
+			tbGoods.setGoodsProfit(Long.parseLong(goodsProfit));
+		}
+		if (goodsPrice != null && goodsPrice.length() > 0) {
+			tbGoods.setGoodsPrice(Long.parseLong(goodsPrice));
+		}
+		if (goodsDiscountAmount != null && goodsDiscountAmount.length() > 0) {
+			tbGoods.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
+		}
+		tbGoods.setGoodsType(goodsType);
+		tbGoods.setGoodsStatus(goodsStatus);
 //				tbGoods.setGoodsCreatetime(goodsCreatetime);
-				tbGoods.setGoodsModifytime(goodsModifytime);
+		tbGoods.setGoodsModifytime(goodsModifytime);
 //				tbGoods.setGoodsEndtime(goodsEndtime);
-				if (providerId != null && providerId.length() > 0) {
-					tbGoods.setProviderId(Integer.parseInt(providerId));
-				}
-				tbGoods.setProviderName(providerName);
-				tbGoods.setProviderCode(providerCode);
-				tbGoods.setRemark(remark);
-				if (goodsDiscount != null && goodsDiscount.length() > 0) {
-					tbGoods.setGoodsDiscount(Integer.parseInt(goodsDiscount));
-				}
-				if (quarterRebate != null && quarterRebate.length() > 0) {
-					tbGoods.setQuarterRebate(Long.parseLong(quarterRebate));
-				}
-				if (annualRebate != null && annualRebate.length() > 0) {
-					tbGoods.setAnnualRebate(Long.parseLong(annualRebate));
-				}
-				if (providerSubsidy != null && providerSubsidy.length() > 0) {
-					tbGoods.setProviderSubsidy(Long.parseLong(providerSubsidy));
-				}
-				if (providerPackageSubsidy != null && providerPackageSubsidy.length() > 0) {
-					tbGoods.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
-				}
-				if (customerSubsidy != null && customerSubsidy.length() > 0) {
-					tbGoods.setCustomerSubsidy(Long.parseLong(customerSubsidy));
-				}
-				if (otherSubsidy != null && otherSubsidy.length() > 0) {
-					tbGoods.setOtherSubsidy(Long.parseLong(otherSubsidy));
-				}
-				if (goodsActualCost != null && goodsActualCost.length() > 0) {
-					tbGoods.setGoodsActualCost(Long.parseLong(goodsActualCost));
-				}
-				if (storagePrewarning != null && storagePrewarning.length() > 0) {
-					tbGoods.setStoragePrewarning(Integer.parseInt(storagePrewarning));
-				}
-				if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
-					tbGoods.setShelfLifePrewarning(Integer.parseInt(shelfLifePrewarning));
-				}
-				tbGoods.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
-				// 4.业务处理
+		if (providerId != null && providerId.length() > 0) {
+			tbGoods.setProviderId(Integer.parseInt(providerId));
+		}
+		tbGoods.setProviderName(providerName);
+		tbGoods.setProviderCode(providerCode);
+		tbGoods.setRemark(remark);
+		if (goodsDiscount != null && goodsDiscount.length() > 0) {
+			tbGoods.setGoodsDiscount(Integer.parseInt(goodsDiscount));
+		}
+		if (quarterRebate != null && quarterRebate.length() > 0) {
+			tbGoods.setQuarterRebate(Long.parseLong(quarterRebate));
+		}
+		if (annualRebate != null && annualRebate.length() > 0) {
+			tbGoods.setAnnualRebate(Long.parseLong(annualRebate));
+		}
+		if (providerSubsidy != null && providerSubsidy.length() > 0) {
+			tbGoods.setProviderSubsidy(Long.parseLong(providerSubsidy));
+		}
+		if (providerPackageSubsidy != null && providerPackageSubsidy.length() > 0) {
+			tbGoods.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
+		}
+		if (customerSubsidy != null && customerSubsidy.length() > 0) {
+			tbGoods.setCustomerSubsidy(Long.parseLong(customerSubsidy));
+		}
+		if (otherSubsidy != null && otherSubsidy.length() > 0) {
+			tbGoods.setOtherSubsidy(Long.parseLong(otherSubsidy));
+		}
+		if (goodsActualCost != null && goodsActualCost.length() > 0) {
+			tbGoods.setGoodsActualCost(Long.parseLong(goodsActualCost));
+		}
+		if (storagePrewarning != null && storagePrewarning.length() > 0) {
+			tbGoods.setStoragePrewarning(Integer.parseInt(storagePrewarning));
+		}
+		if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
+			tbGoods.setShelfLifePrewarning(Integer.parseInt(shelfLifePrewarning));
+		}
+		tbGoods.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
+		logger.info("------------4.业务处理-------------");
 		int res = goodsBusiness.goodsModify(tbGoods);
 		toString();
 		logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye goods!-------------");
 		return "goods";
 	}
 
 	/**
-	 * 客户管理修改查询客户信息
+	 * 商品管理修改查询商品信息
 	 */
 	@RequestMapping(value = "/queryGoods", method = RequestMethod.POST)
 	public @ResponseBody List<TbGoods> goodsQuery(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome queryGoods!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		List<TbGoods> tbGoodss;
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
-
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (goodsId != null && goodsId.length() > 0) {
 			criteria.andGoodsIdEqualTo(Integer.parseInt(goodsId));
 		}
-		// 4.业务处理
-		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
-		criteria.andGoodsStatusEqualTo("01");
+		logger.info("------------4.业务处理-------------");
+		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
+		criteria.andGoodsStatusNotEqualTo("00");
 		tbGoodss = goodsBusiness.goodsQuery(tbGoodsExample);
 		request.setAttribute("tbGoodss", tbGoodss);
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryGoods!-------------");
 		return tbGoodss;
 	}
+	
+	/**
+	 * 商品管理-查询商品与客户信息
+	 */
+	@RequestMapping(value = "/queryGoods2Customer", method = RequestMethod.POST)
+	public @ResponseBody List<TbGoods2customer> queryGoods2Customer(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info("------------Welcome queryGoods!-------------");
+		logger.info("------------1.初始化-------------");
+		List<TbGoods2customer> tbGoods2customers;
+		TbGoods2customerExample tbGoods2customerExample = new TbGoods2customerExample();
+		TbGoods2customerExample.Criteria criteria = tbGoods2customerExample.createCriteria();
+		logger.info("------------2.获取参数-------------");
+		String goodsId = request.getParameter("goodsId");
+		logger.info("------------3.数据校验-------------");
+		if (goodsId != null && goodsId.length() > 0) {
+			criteria.andGoodsIdEqualTo(Integer.parseInt(goodsId));
+		}
+		logger.info("------------4.业务处理-------------");
+		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
+		criteria.andGoodsStatusNotEqualTo("00");
+		tbGoods2customers = goodsBusiness.goods2CustomerQuery(tbGoods2customerExample);
+		request.setAttribute("tbGoodss", tbGoods2customers);
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye queryGoods!-------------");
+		return tbGoods2customers;
+	}
+		
+	
 
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception e, HttpServletRequest request) {

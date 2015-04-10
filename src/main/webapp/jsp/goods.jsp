@@ -189,9 +189,16 @@
 									<td>${goodss.goodsShelfLife}</td>
 									<td>${goodss.storagePrewarning}</td>
 									<td>${goodss.shelfLifePrewarning}</td>
-									<td><a href="javascript:void(0);"
-										onClick="modifyCurrentGoods(this)">修改</a>/<a
-										href="javascript:void(0);" onClick="delCurrentGoods(this);">删除</a></td>
+									<c:if test="${goodss.goodsType==01}">
+										<td><a href="javascript:void(0);"
+											onClick="offShelvesCurrentGoods(this)">下架</a></td>
+									</c:if>
+									<c:if test="${goodss.goodsType==02}">
+										<td><a href="javascript:void(0);"
+											onClick="modifyCurrentGoods(this)">修改</a>/<a
+											href="javascript:void(0);" onClick="delCurrentGoods(this);">删除</a>/<a href="javascript:void(0);"
+											onClick="onShelvesCurrentGoods(this)">上架</a></td>
+									</c:if>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -278,11 +285,10 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">备注：</span> <input
-									type="text" class="form-control" id="remark"
-									name="remark" placeholder="备注：" value="">
+									type="text" class="form-control" id="remark" name="remark"
+									placeholder="备注：" value="">
 							</div>
 						</form>
-
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -368,8 +374,9 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">保质期预警值：</span> <input
-									type="text" class="form-control" id="modify_shelfLifePrewarning"
-									value="" name="modify_shelfLifePrewarning" placeholder="保质期预警值">
+									type="text" class="form-control"
+									id="modify_shelfLifePrewarning" value=""
+									name="modify_shelfLifePrewarning" placeholder="保质期预警值">
 								<span class="input-group-addon">（天）</span>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
@@ -390,7 +397,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" onClick="modifyCurrentGoodsInfo(this)">确认修改</button>
+					<button type="button" class="btn btn-primary"
+						onClick="modifyCurrentGoodsInfo(this)">确认修改</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -408,7 +416,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">销售折扣配置（百威金樽500ml）</h4>
+					<h4 class="modal-title" id="myModalLabel">销售折扣配置-</h4><h4 class="modal-title" id="g2cGoodsName"></h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
