@@ -3,7 +3,7 @@ package com.ai.psims.web.model;
 import java.util.Date;
 
 public class ImportbackGoods {
-    private String importbackGoodsId;
+    private Integer importbackGoodsId;
 
     private String importbackSerialNumber;
 
@@ -33,12 +33,12 @@ public class ImportbackGoods {
 
     private String importbackGoodsRemark;
 
-    public String getImportbackGoodsId() {
+    public Integer getImportbackGoodsId() {
         return importbackGoodsId;
     }
 
-    public void setImportbackGoodsId(String importbackGoodsId) {
-        this.importbackGoodsId = importbackGoodsId == null ? null : importbackGoodsId.trim();
+    public void setImportbackGoodsId(Integer importbackGoodsId) {
+        this.importbackGoodsId = importbackGoodsId;
     }
 
     public String getImportbackSerialNumber() {

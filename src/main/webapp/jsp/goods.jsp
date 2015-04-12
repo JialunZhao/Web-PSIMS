@@ -180,15 +180,16 @@
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
 									<td>${goodss.goodsId}</td>
-									<td>${goodss.goodsName}</td>
+									<td><a href="javascript:void(0);"
+											onClick="goods2customer(this)">${goodss.goodsName}</a></td>
 									<td>${goodss.goodsType}</td>
 									<td>${goodss.goodsUnit}</td>
 									<td>${goodss.goodsActualCost}</td>
 									<td>${goodss.goodsPrice}</td>
 									<td>${goodss.goodsProfit}</td>
 									<td>${goodss.goodsShelfLife}</td>
-									<td>${goodss.storagePrewarning}</td>
-									<td>${goodss.shelfLifePrewarning}</td>
+									<td>${goodss.storageWarning}</td>
+									<td>${goodss.shelfLifeWarning}</td>
 									<c:if test="${goodss.goodsType==01}">
 										<td><a href="javascript:void(0);"
 											onClick="offShelvesCurrentGoods(this)">下架</a></td>

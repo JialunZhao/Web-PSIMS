@@ -74,5 +74,13 @@ public class Constants {
 			public static final String CREDIT01 = "赊账";
 
 		}
+		// 退货类型
+		public static class BackType {
+			public static final String CHANGEGOODS = "CG";// 换货
+			public static final String BACKGOODS = "BG";// 退货
+			
+			public static final String CHANGEGOODS01 = "换货";
+			public static final String BACKGOODS01 = "退货"; 
+		}
 
 }

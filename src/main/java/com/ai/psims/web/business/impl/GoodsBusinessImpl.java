@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.business.IGoodsBusiness;
 import com.ai.psims.web.model.TbGoods;
-import com.ai.psims.web.model.TbGoods2customer;
-import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.service.IGoods2CustomerService;
 import com.ai.psims.web.service.IGoodsService;
@@ -56,12 +54,6 @@ public class GoodsBusinessImpl implements IGoodsBusiness {
 		goodsService.backupGoodsInfo(goodsModify);
 		logger.info("goodsModify");
 		return goodsService.modifyGoodsInfo(goodsModify);
-	}
-
-	@Override
-	public List<TbGoods2customer> goods2CustomerQuery(TbGoods2customerExample goods2CustomerQuery) {
-		logger.info("------------1.商品与客户关系查询-------------");
-		return goods2CustomerService.queryGoods2Customer(goods2CustomerQuery);
 	}
 
 }

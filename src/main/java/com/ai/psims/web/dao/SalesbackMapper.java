@@ -19,6 +19,8 @@ public interface SalesbackMapper {
     List<Salesback> selectByExample(SalesbackExample example);
 
     Salesback selectByPrimaryKey(String salesbackSerialNumber);
+    
+	String selectSalesSerialNumber(String salesbackSerialNumber);
 
     int updateByExampleSelective(@Param("record") Salesback record, @Param("example") SalesbackExample example);
 

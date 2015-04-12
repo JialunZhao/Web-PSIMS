@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.psims.web.dao.ImportbackGoodsMapper" >
   <resultMap id="BaseResultMap" type="com.ai.psims.web.model.ImportbackGoods" >
-    <id column="importback_goods_id" property="importbackGoodsId" jdbcType="VARCHAR" />
+    <id column="importback_goods_id" property="importbackGoodsId" jdbcType="INTEGER" />
     <result column="importback_serial_number" property="importbackSerialNumber" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
@@ -96,15 +96,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from tb_importback_goods
-    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+    where importback_goods_id = #{importbackGoodsId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_importback_goods
-    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+    where importback_goods_id = #{importbackGoodsId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.ai.psims.web.model.ImportbackGoodsExample" >
     delete from tb_importback_goods
@@ -121,7 +121,7 @@
       importback_goods_createtime, importback_goods_modifytime, 
       importback_goods_endtime, importback_goods_remark
       )
-    values (#{importbackGoodsId,jdbcType=VARCHAR}, #{importbackSerialNumber,jdbcType=VARCHAR}, 
+    values (#{importbackGoodsId,jdbcType=INTEGER}, #{importbackSerialNumber,jdbcType=VARCHAR}, 
       #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{importbackGoodsType,jdbcType=VARCHAR}, 
       #{importbackGoodsAmount,jdbcType=INTEGER}, #{importbackGoodsUnit,jdbcType=VARCHAR}, 
       #{importbackGoodsPrice,jdbcType=BIGINT}, #{importbackGoodsProduction,jdbcType=DATE}, 
@@ -181,7 +181,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="importbackGoodsId != null" >
-        #{importbackGoodsId,jdbcType=VARCHAR},
+        #{importbackGoodsId,jdbcType=INTEGER},
       </if>
       <if test="importbackSerialNumber != null" >
         #{importbackSerialNumber,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     update tb_importback_goods
     <set >
       <if test="record.importbackGoodsId != null" >
-        importback_goods_id = #{record.importbackGoodsId,jdbcType=VARCHAR},
+        importback_goods_id = #{record.importbackGoodsId,jdbcType=INTEGER},
       </if>
       <if test="record.importbackSerialNumber != null" >
         importback_serial_number = #{record.importbackSerialNumber,jdbcType=VARCHAR},
@@ -288,7 +288,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tb_importback_goods
-    set importback_goods_id = #{record.importbackGoodsId,jdbcType=VARCHAR},
+    set importback_goods_id = #{record.importbackGoodsId,jdbcType=INTEGER},
       importback_serial_number = #{record.importbackSerialNumber,jdbcType=VARCHAR},
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
@@ -353,7 +353,7 @@
         importback_goods_remark = #{importbackGoodsRemark,jdbcType=VARCHAR},
       </if>
     </set>
-    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+    where importback_goods_id = #{importbackGoodsId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.ImportbackGoods" >
     update tb_importback_goods
@@ -371,6 +371,6 @@
       importback_goods_modifytime = #{importbackGoodsModifytime,jdbcType=DATE},
       importback_goods_endtime = #{importbackGoodsEndtime,jdbcType=DATE},
       importback_goods_remark = #{importbackGoodsRemark,jdbcType=VARCHAR}
-    where importback_goods_id = #{importbackGoodsId,jdbcType=VARCHAR}
+    where importback_goods_id = #{importbackGoodsId,jdbcType=INTEGER}
   </update>
 </mapper>

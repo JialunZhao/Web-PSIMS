@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.psims.web.business.IGoods2CustomerBusiness;
 import com.ai.psims.web.business.IGoodsBusiness;
 import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbGoods2customer;
 import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
+import com.mysql.fabric.xmlrpc.base.Array;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
 
 /**
@@ -34,6 +37,9 @@ public class GoodsController extends BaseController {
 
 	@Resource(name = "goodsBusinessImpl")
 	private IGoodsBusiness goodsBusiness;
+
+	@Resource(name = "goods2CustomerBusinessImpl")
+	private IGoods2CustomerBusiness goods2CustomerBusiness;
 
 	/**
 	 * 商品管理页面跳转
@@ -214,10 +220,10 @@ public class GoodsController extends BaseController {
 			goodsadd.setGoodsActualCost(Long.parseLong(goodsActualCost));
 		}
 		if (storagePrewarning != null && storagePrewarning.length() > 0) {
-			goodsadd.setStoragePrewarning(Integer.parseInt(storagePrewarning));
+			goodsadd.setStorageWarning(Integer.parseInt(storagePrewarning));
 		}
 		if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
-			goodsadd.setShelfLifePrewarning(Integer.parseInt(shelfLifePrewarning));
+			goodsadd.setShelfLifeWarning(Integer.parseInt(shelfLifePrewarning));
 		}
 		goodsadd.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
 		logger.info("------------4.业务处理-------------");
@@ -421,10 +427,10 @@ public class GoodsController extends BaseController {
 			tbGoods.setGoodsActualCost(Long.parseLong(goodsActualCost));
 		}
 		if (storagePrewarning != null && storagePrewarning.length() > 0) {
-			tbGoods.setStoragePrewarning(Integer.parseInt(storagePrewarning));
+			tbGoods.setStorageWarning(Integer.parseInt(storagePrewarning));
 		}
 		if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
-			tbGoods.setShelfLifePrewarning(Integer.parseInt(shelfLifePrewarning));
+			tbGoods.setShelfLifeWarning(Integer.parseInt(shelfLifePrewarning));
 		}
 		tbGoods.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
 		logger.info("------------4.业务处理-------------");
@@ -444,7 +450,7 @@ public class GoodsController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome queryGoods!-------------");
 		logger.info("------------1.初始化-------------");
-		List<TbGoods> tbGoodss;
+		List<TbGoods> tbGoodss  = new ArrayList<TbGoods>();
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
 		logger.info("------------2.获取参数-------------");
@@ -460,6 +466,12 @@ public class GoodsController extends BaseController {
 		request.setAttribute("tbGoodss", tbGoodss);
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryGoods!-------------");
+		if(tbGoodss.isEmpty()){
+			TbGoods tbGoods = new TbGoods();
+			tbGoods.setGoodsId(0);
+			tbGoodss.add(tbGoods);
+			return tbGoodss;
+		}
 		return tbGoodss;
 	}
 	
@@ -471,7 +483,7 @@ public class GoodsController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome queryGoods!-------------");
 		logger.info("------------1.初始化-------------");
-		List<TbGoods2customer> tbGoods2customers;
+		List<TbGoods2customer> tbGoods2customers = new ArrayList<TbGoods2customer>();
 		TbGoods2customerExample tbGoods2customerExample = new TbGoods2customerExample();
 		TbGoods2customerExample.Criteria criteria = tbGoods2customerExample.createCriteria();
 		logger.info("------------2.获取参数-------------");
@@ -482,16 +494,21 @@ public class GoodsController extends BaseController {
 		}
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
-		criteria.andGoodsStatusNotEqualTo("00");
-		tbGoods2customers = goodsBusiness.goods2CustomerQuery(tbGoods2customerExample);
+//		criteria.andGoodsStatusNotEqualTo("00");
+		tbGoods2customers = goods2CustomerBusiness.goods2CustomerQuery(tbGoods2customerExample);
 		request.setAttribute("tbGoodss", tbGoods2customers);
 		logger.info("------------5.返回结果-------------");
+		if (tbGoods2customers == null || tbGoods2customers.isEmpty()) {
+			TbGoods2customer tbGoods2customer = new TbGoods2customer();
+			tbGoods2customer.setGoods2customerId(0);
+			tbGoods2customers.add(tbGoods2customer);
+			logger.info("------------Bye queryGoods!-------------");
+			return tbGoods2customers;
+		}	
 		logger.info("------------Bye queryGoods!-------------");
 		return tbGoods2customers;
 	}
-		
 	
-
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception e, HttpServletRequest request) {
 		request.setAttribute("exception", e);

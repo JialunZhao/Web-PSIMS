@@ -65,9 +65,9 @@ public class TbGoods {
 
     private Long goodsActualCost;
 
-    private Integer storagePrewarning;
+    private Integer storageWarning;
 
-    private Integer shelfLifePrewarning;
+    private Integer shelfLifeWarning;
 
     public Integer getGoodsId() {
         return goodsId;
@@ -317,19 +317,19 @@ public class TbGoods {
         this.goodsActualCost = goodsActualCost;
     }
 
-    public Integer getStoragePrewarning() {
-        return storagePrewarning;
+    public Integer getStorageWarning() {
+        return storageWarning;
     }
 
-    public void setStoragePrewarning(Integer storagePrewarning) {
-        this.storagePrewarning = storagePrewarning;
+    public void setStorageWarning(Integer storageWarning) {
+        this.storageWarning = storageWarning;
     }
 
-    public Integer getShelfLifePrewarning() {
-        return shelfLifePrewarning;
+    public Integer getShelfLifeWarning() {
+        return shelfLifeWarning;
     }
 
-    public void setShelfLifePrewarning(Integer shelfLifePrewarning) {
-        this.shelfLifePrewarning = shelfLifePrewarning;
+    public void setShelfLifeWarning(Integer shelfLifeWarning) {
+        this.shelfLifeWarning = shelfLifeWarning;
     }
 }

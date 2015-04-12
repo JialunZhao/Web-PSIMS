@@ -14,9 +14,6 @@ public interface IGoodsBusiness {
 
 	public int goodsModify(TbGoods goodsModify);
 
-	public List<TbGoods> goodsQuery(TbGoodsExample goodsQuery);
-	
-	public List<TbGoods2customer> goods2CustomerQuery(TbGoods2customerExample goods2CustomerQuery);
-	
+	public List<TbGoods> goodsQuery(TbGoodsExample goodsQuery);	
 	
 }

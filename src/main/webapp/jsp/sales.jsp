@@ -88,7 +88,9 @@
 				<ul class="nav nav-sidebar">
 					<li><a href="<%=path%>/importController/init.do">货品入库</a></li>
 					<li><a href="<%=path%>/salesController/init.do">销售出库</a></li>
-					<li><a href="<%=path%>/providerBackGoodsController/init.do">供应商退货</a></li>
+					<li><a
+						href="<%=path%>/backGoodsController/providerBackInit.do">供应商退货</a></li>
+					<li><a href="<%=path%>/backGoodsController/salesBackInit.do">客户退货</a></li>
 					<li><a href="#">有效期调整</a></li>
 					<li><a href="#">销毁出库</a></li>
 				</ul>
@@ -264,33 +266,7 @@
 									<option value="${employees.employeeId }">${employees.employeeName }</option>
 								</c:forEach>
 							</select>
-						</div>
-						<!-- <div class="input-group col-xs-10 col-md-offset-1">    
-              	<span class="input-group-addon" style="background-color: #1abc9c;">折扣方式：</span>
-                <select class="form-control" value="请选择折扣方式" tabindex="1" name="discountMed" id="discountMed">
-                  <option value="">请选择折扣方式</option>
-                  <option value="20">无折扣</option>
-                  <option value="21">奖金池</option>
-                </select>            
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付状态：</span>
-                <select class="form-control" value="请选择支付状态" tabindex="1" name="payStatus" id="payStatus" onchange="isPay(this.value)">
-                  <option value="">请选择支付状态</option>
-                  <option value="10">未付款</option>
-                  <option value="11">已付款</option>
-                </select>
-              </div>              
-              <div class="input-group col-xs-10 col-md-offset-1" id="isPay" style="display: none">               
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
-                <select class="form-control" value="请选择支付方式" tabindex="1" name="payMed" id="payMed">
-                  <option value="">请选择支付方式</option>
-                  <option value="00">现金</option>
-                  <option value="01">转账</option>
-                  <option value="02">支票</option>
-                  <option value="03">赊账</option>
-                </select>
-                <span class="input-group-addon" style="background-color: #1abc9c;">支付时间：</span>
-                <input type="text" class="form-control" placeholder="2015-03-03" value="2015-03-03" name="payTime" id="payTime">
-              </div>    -->
+						</div>						
 						<div class="input-group col-xs-1 col-md-offset-1">
 							<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
 						</div>

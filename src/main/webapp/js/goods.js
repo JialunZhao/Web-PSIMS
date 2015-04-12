@@ -140,19 +140,20 @@ function goods2customer(obj) {
 			'goodsId' : goodsId
 		},
 		success : function(data) {
-			console.dir(data);
-			$('#modify_goodsId').val(data[0].goodsId)
-			$('#modify_goodsName').val(data[0].goodsName)
-			$('#modify_goodsType').val(data[0].goodsType)
-			$('#modify_goodsUnit').val(data[0].goodsUnit)
-			$('#modify_goodsActualCost').val(data[0].goodsActualCost)
-			$('#modify_goodsPrice').val(data[0].goodsPrice)
-			$('#modify_goodsProfit').val(data[0].goodsProfit)
-			$('#modify_goodsShelfLife').val(data[0].goodsShelfLife)
-			$('#modify_shelfLifePrewarning').val(data[0].shelfLifePrewarning)
-			$('#modify_storagePrewarning').val(data[0].storagePrewarning)
-			$('#modify_remark').val(data[0].remark)
-			$('#modifygoods').modal('show');
+//			console.dir(data);
+			$('#goods2customer').modal('show');
+//
+//			$('#modify_goodsId').val(data[0].goodsId)
+//			$('#modify_goodsName').val(data[0].goodsName)
+//			$('#modify_goodsType').val(data[0].goodsType)
+//			$('#modify_goodsUnit').val(data[0].goodsUnit)
+//			$('#modify_goodsActualCost').val(data[0].goodsActualCost)
+//			$('#modify_goodsPrice').val(data[0].goodsPrice)
+//			$('#modify_goodsProfit').val(data[0].goodsProfit)
+//			$('#modify_goodsShelfLife').val(data[0].goodsShelfLife)
+//			$('#modify_shelfLifePrewarning').val(data[0].shelfLifePrewarning)
+//			$('#modify_storagePrewarning').val(data[0].storagePrewarning)
+//			$('#modify_remark').val(data[0].remark)
 		},
 	});
 };

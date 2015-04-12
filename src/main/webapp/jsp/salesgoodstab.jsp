@@ -13,7 +13,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=_base%>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="<%=_base%>/css/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
 
 <!-- Loading Flat UI -->
 <link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
@@ -22,62 +23,57 @@
 <script src="<%=_base%>/js/vendor/video.js"></script>
 <%-- <script src="<%=_base %>/js/flat-ui.min.js"></script> --%>
 <script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
 
 </head>
 <body>
 	<div class="col-sm-offset-1">
 		<div class="row placeholders" id="addgoodstb">
-			<div class="row">
-				<div class="table-responsive col-xs-16">
-					<table class="table table-striped" id="salesGoodsTab">
-						<thead>
-							<tr>
-								<th>商品名称</th>
-								<th>基本单位</th>
-								<th>生产日期</th>
-								<th>失效日期</th>
-								<th>库存数量</th>
-								<th>销售数量</th>
-								<th>销售价格</th>
-								<th>应付总金额</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${storagechecksList }" var="storagechecks"
-								varStatus="status">
-								<tr>
-									<td style="display: none">${storagechecks.storageId }</td>
-									<td>${storagechecks.goodsName }</td>
-									<td>${storagechecks.importGoodsUnit }</td>
-									<td><fmt:formatDate
-											value="${storagechecks.goodsProductionDate }"
-											pattern="yyyy-MM-dd" /></td>
-									<td><fmt:formatDate
-											value="${storagechecks.goodsExpirationDate }"
-											pattern="yyyy-MM-dd" /></td>
-									<td id="storeCount${status.index }">${storagechecks.storageRateCurrent }</td>
-									<td><input type="text" id="salesCount${status.index }"></td>
-									<td><input type="text" id="salesPrice${status.index }"></td>
-									<td><input type="text" id="goodsTotalPay${status.index }"
-										onfocus="getGoodsAllPay(${status.index })"></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="input-group col-xs-13 col-md-offset-3" id="addSalesBtn">
-					<button type="button" class="btn btn-primary" id="addgoodsokbtn"
-						onclick="sureAddSales()">确认添加</button>
-					<button type="button" class="btn btn-primary"
-						id="continAddgoodsokbtn" onclick="continueAdd()">继续添加</button>
-				</div>
-			</div>
-		</div>
+            <div class="row">
+              <div class="table-responsive col-xs-16">
+                <table class="table table-striped" id="salesGoodsTab">
+                  <thead>
+                    <tr>
+                      <th>商品名称</th>
+                      <th>基本单位</th>
+                      <th>生产日期</th>
+                      <th>失效日期</th>
+                      <th>库存数量</th>
+                      <th>销售数量</th>
+                      <th>销售价格</th>
+                      <th>应付总金额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  	<c:forEach items="${storagechecksList }" var="storagechecks" varStatus="status">
+                  		<tr>
+                  			<td style="display: none">${storagechecks.storageId }</td>
+                  			<td>${storagechecks.goodsName }</td>
+                  			<td>${storagechecks.importGoodsUnit }</td>
+                  			<td>
+                  				<fmt:formatDate value="${storagechecks.goodsProductionDate }" pattern="yyyy-MM-dd"/>
+                  			</td>
+                  			<td>
+                  				<fmt:formatDate value="${storagechecks.goodsExpirationDate }" pattern="yyyy-MM-dd"/>
+                  			</td>
+                  			<td id="storeCount${status.index }">${storagechecks.storageRateCurrent }</td>
+                  			<td><input type="text" id="salesCount${status.index }"></td>
+                  			<td><input type="text" id="salesPrice${status.index }"></td>
+                  			<td><input type="text" id="goodsTotalPay${status.index }" onfocus="getGoodsAllPay(${status.index })"></td>
+                  		</tr>
+                  	</c:forEach>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div class="input-group col-xs-13 col-md-offset-3" id="addSalesBtn">
+               	<button type="button" class="btn btn-primary" id="addgoodsokbtn" onclick="sureAddSales()">确认添加</button>
+                <button type="button" class="btn btn-primary" id="continAddgoodsokbtn" onclick="continueAdd()">继续添加</button>
+              </div>
+            </div>
+          </div>
 	</div>
-
+	
 	<script type="text/javascript">
 	var api = frameElement.api, W = api.opener;
 		function checkDataFomat(data){
@@ -156,6 +152,6 @@
 		}
 
 	</script>
-
+	
 </body>
 </html>
