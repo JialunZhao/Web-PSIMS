@@ -69,18 +69,21 @@
 
 	<div class="container-fluid">
 		<div class="row">
+
+
+
+
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="customer">客户管理<span
-							class="sr-only">(current)</span></a></li>
-					<li><a href="../providerController/provider">供应商</a></li>
-					<li><a href="./goods.html">商品管理</a></li>
-					<li><a href="./storehouse.html">仓库管理</a></li>
+					<li><a href="<%=path%>/customerController/customer">客户管理</a></li>
+					<li><a href="<%=path%>/providerController/provider">供应商</a></li>
+					<li class="active"><a href="<%=path%>/goodsController/goods">商品管理</a></li>
+					<li><a href="<%=path%>/storehouseController/storehouse">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="./import.html">货品入库</a></li>
-					<li><a href="./sales.html">销售出库</a></li>
-					<li><a href="#">退货管理</a></li>
+					<li><a href="<%=path%>/importController/init.do">货品入库</a></li>
+					<li><a href="<%=path%>/salesController/init.do">销售出库</a></li>
+					<li><a href="<%=path%>/providerBackGoodsController/init.do">供应商退货</a></li>
 					<li><a href="#">有效期调整</a></li>
 					<li><a href="#">销毁出库</a></li>
 				</ul>
@@ -94,6 +97,7 @@
 			</div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
 				<h3 class="page-header">商品管理</h3>
 
 				<div class="row placeholders col-sm-12">
@@ -161,27 +165,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="chk" style="display: none"><input
-									type="checkbox" aria-label="..."></td>
-								<td>1</td>
-								<td><a data-toggle="modal" data-target="#goods2customer"
-									href="#">百威金樽500ml</a></td>
-								<td>啤酒</td>
-								<td>箱(12瓶)</td>
-								<td>99</td>
-								<td>30%</td>
-								<td>110</td>
-								<td>180</td>
-								<td><a href="#">下架</a></td>
-							</tr>
 							<c:forEach var="goodss" items="${goodss}">
 								<tr>
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
 									<td>${goodss.goodsId}</td>
 									<td><a href="javascript:void(0);"
-											onClick="goods2customer(this)">${goodss.goodsName}</a></td>
+										onClick="goods2customer(this)">${goodss.goodsName}</a></td>
 									<td>${goodss.goodsType}</td>
 									<td>${goodss.goodsUnit}</td>
 									<td>${goodss.goodsActualCost}</td>
@@ -190,14 +180,15 @@
 									<td>${goodss.goodsShelfLife}</td>
 									<td>${goodss.storageWarning}</td>
 									<td>${goodss.shelfLifeWarning}</td>
-									<c:if test="${goodss.goodsType==01}">
+									<c:if test="${goodss.goodsStatus==01}">
 										<td><a href="javascript:void(0);"
 											onClick="offShelvesCurrentGoods(this)">下架</a></td>
 									</c:if>
-									<c:if test="${goodss.goodsType==02}">
+									<c:if test="${goodss.goodsStatus==02}">
 										<td><a href="javascript:void(0);"
 											onClick="modifyCurrentGoods(this)">修改</a>/<a
-											href="javascript:void(0);" onClick="delCurrentGoods(this);">删除</a>/<a href="javascript:void(0);"
+											href="javascript:void(0);" onClick="delCurrentGoods(this);">删除</a>/<a
+											href="javascript:void(0);"
 											onClick="onShelvesCurrentGoods(this)">上架</a></td>
 									</c:if>
 								</tr>
@@ -417,7 +408,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">销售折扣配置-</h4><h4 class="modal-title" id="g2cGoodsName"></h4>
+					<h4 class="modal-title" id="g2cGoodsName"></h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -426,18 +417,21 @@
 								<thead>
 									<tr>
 										<th>客户名称</th>
-										<th>进货价格</th>
+										<th>成本价格</th>
 										<th>标准销售价格</th>
 										<th>优惠销售价格</th>
+										<th>操作</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="tb">
 									<tr>
 										<td>聚点串吧(东直门店)</td>
 										<td>99</td>
 										<td>110</td>
 										<td><input class="control-group" type="text" value="105"
 											placeholder="商品优惠销售价格"></td>
+										<td><a>修改</a></td>
+
 									</tr>
 									<tr>
 										<td>聚点串吧(酒仙桥店)</td>
@@ -445,6 +439,7 @@
 										<td>110</td>
 										<td><input class="control-group" type="text" value="108"
 											placeholder="商品优惠销售价格"></td>
+										<td><a>修改</a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -454,7 +449,7 @@
 						<div class="row placeholders ">
 							<div class="col-sm-2">
 								<button type="button" class="btn btn-primary"
-									data-toggle="modal" data-target="#importgoods">新增折扣</button>
+									onClick="addgoods2customer(this)">新增折扣</button>
 							</div>
 						</div>
 					</div>
@@ -469,7 +464,10 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-
+	<input type="hidden" id="tmpGoodId">
+	<input type="hidden" id="tmpGoodsName">
+	<input type="hidden" id="tmpGoodsActualCost">
+	<input type="hidden" id="tmpGoodsPrice">
 
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<script src="<%=_base%>/js/vendor/jquery.min.js"></script>

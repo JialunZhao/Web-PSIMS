@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.psims.web.business.IGoods2CustomerBusiness;
 import com.ai.psims.web.business.IGoodsBusiness;
+import com.ai.psims.web.model.TbCustomer;
+import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbGoods2customer;
 import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
-import com.mysql.fabric.xmlrpc.base.Array;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
 
 /**
@@ -501,12 +502,45 @@ public class GoodsController extends BaseController {
 		if (tbGoods2customers == null || tbGoods2customers.isEmpty()) {
 			TbGoods2customer tbGoods2customer = new TbGoods2customer();
 			tbGoods2customer.setGoods2customerId(0);
+			tbGoods2customer.setCustomerName("Error");
+			tbGoods2customers = new ArrayList<TbGoods2customer>();
 			tbGoods2customers.add(tbGoods2customer);
 			logger.info("------------Bye queryGoods!-------------");
 			return tbGoods2customers;
 		}	
 		logger.info("------------Bye queryGoods!-------------");
 		return tbGoods2customers;
+	}
+	
+	
+	/**
+	 * 商品管理-添加商品与客户信息--1.查询客户信息
+	 */
+	@RequestMapping(value = "/addGoods2Customer", method = RequestMethod.POST)
+	public @ResponseBody List<TbCustomer> addGoods2Customer(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info("------------Welcome queryGoods!-------------");
+		logger.info("------------1.初始化-------------");
+		List<TbCustomer> tbCustomers = new ArrayList<TbCustomer>();
+		TbCustomerExample tbCustomerExample = new TbCustomerExample();
+		TbCustomerExample.Criteria criteria = tbCustomerExample.createCriteria();
+		logger.info("------------2.获取参数-------------");
+
+		logger.info("------------3.数据校验-------------");
+
+		logger.info("------------4.业务处理-------------");
+		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
+		criteria.andStatusNotEqualTo("00");
+		tbCustomers = goods2CustomerBusiness.customerListQuery(tbCustomerExample);
+		logger.info("------------5.返回结果-------------");
+		if (tbCustomers == null || tbCustomers.isEmpty()) {
+			tbCustomers = new ArrayList<TbCustomer>();
+			logger.info("------------Bye queryGoods!-------------");
+			return tbCustomers;
+		}	
+		request.setAttribute("tbCustomers", tbCustomers);
+		logger.info("------------Bye queryGoods!-------------");
+		return tbCustomers;
 	}
 	
 	@ExceptionHandler(Exception.class)

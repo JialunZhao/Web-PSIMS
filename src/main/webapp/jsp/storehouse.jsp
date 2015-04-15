@@ -22,16 +22,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="<%=_base %>/img/favicon.ico">
+<link rel="icon" href="<%=_base%>/img/favicon.ico">
 <title>北京市金瑞超达商贸有限公司-食品库存管理系统</title>
 
 <!-- Loading Bootstrap -->
-<link href="<%=_base %>/css/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
+<link href="<%=_base%>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 <!-- Loading Flat UI -->
-<link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
+<link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
+<link href="<%=_base%>/css/dashboard.css" rel="stylesheet">
 
 
 <link rel="shortcut icon" href="img/favicon.ico">
@@ -72,16 +71,15 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="customer">客户管理<span
-							class="sr-only">(current)</span></a></li>
-					<li><a href="../providerController/provider">供应商</a></li>
-					<li><a href="./goods.html">商品管理</a></li>
-					<li><a href="./storehouse.html">仓库管理</a></li>
+					<li><a href="<%=path %>/customerController/customer">客户管理</a></li>
+					<li><a href="<%=path %>/providerController/provider">供应商</a></li>
+					<li><a href="<%=path %>/goodsController/goods">商品管理</a></li>
+					<li class="active"><a href="<%=path %>/storehouseController/storehouse">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="./import.html">货品入库</a></li>
-					<li><a href="./sales.html">销售出库</a></li>
-					<li><a href="#">退货管理</a></li>
+					<li><a href="<%=path %>/importController/init.do">货品入库</a></li>
+					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
+					<li><a href="<%=path %>/providerBackGoodsController/init.do">供应商退货</a></li>
 					<li><a href="#">有效期调整</a></li>
 					<li><a href="#">销毁出库</a></li>
 				</ul>
@@ -100,14 +98,14 @@
 				<div class="row placeholders">
 					<form class="form-inline" action="storehouse" method="get">
 						<div class="form-group">
-							<label for="query_storehouseName">仓库名称：</label> <input type="text"
-								class="form-control" id="query_storehouseName"
+							<label for="query_storehouseName">仓库名称：</label> <input
+								type="text" class="form-control" id="query_storehouseName"
 								name="query_storehouseName" placeholder="仓库名称">
 						</div>
 						<div class="form-group">
 							<label for="query_type">仓库类型：</label> <select
-								class="form-control" id="query_type"
-								name="query_type" value="请选择仓库类型：" tabindex="1">
+								class="form-control" id="query_type" name="query_type"
+								tabindex="1">
 								<option value="0">请选择仓库类型：</option>
 								<option value="1">通用仓库</option>
 								<option value="2">专用仓库</option>
@@ -362,6 +360,7 @@
 									type="text" class="form-control" id="modify_remark"
 									name="modify_remark" placeholder="备注：">
 							</div>
+						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -377,11 +376,11 @@
 	<!-- /.modal -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-	<script src="<%=_base %>/js/vendor/jquery.min.js"></script>
+	<script src="<%=_base%>/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="<%=_base %>/js/vendor/video.js"></script>
-	<script src="<%=_base %>/js/flat-ui.min.js"></script>
-	<script src="<%=_base %>/js/storehouse.js"></script>
+	<script src="<%=_base%>/js/vendor/video.js"></script>
+	<script src="<%=_base%>/js/flat-ui.min.js"></script>
+	<script src="<%=_base%>/js/storehouse.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#delbtn").click(function() {

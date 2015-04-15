@@ -91,7 +91,8 @@
 			var salesCountIsNull=(salesCount==null||salesCount=="");
 			var salesPriceIsNull=(salesPrice==null||salesPrice=="");
 			if(!(salesCountIsNull||salesPriceIsNull)){
-				if (salesCount>storeCount) {
+				if (parseInt(salesCount) > parseInt(storeCount)) {
+					 $("#salesCount"+i).val("");
 					 alert("库存不足");
 					 return;
 				}
@@ -102,22 +103,53 @@
 		function sureAddSales(){
 			var i=0;
 			var j=0;
+			var k=0;
 			var salesCount=null;
 			var salesPrice=null;
 			var storageId=null;
+			var storeCount=null;
+			var falg=true;
+			
 			$('#salesGoodsTab tbody tr').find('td').each(function(){
-				salesCount=$("#salesCount"+i).val();
-				salesPrice=$("#salesPrice"+i).val();
 				if ($(this).index() == "0") {
-					storageId=$(this).text();
+					salesCount=$("#salesCount"+k).val();
+					salesPrice=$("#salesPrice"+k).val();
+					storeCount=$("#storeCount"+k).text();
 					if(!(salesCount==null||salesCount==""||salesPrice==null||salesPrice=="")){
-						W.addSalesGoods(storageId,salesCount,salesPrice);
-						j++;
+						if (parseInt(salesCount) > parseInt(storeCount)) {
+							alert("库存不足");
+							$("#salesCount"+k).val("");
+							falg=false;
+							j++;
+						}						
 					}
-					i++;
+					k++;
 		        }
 				
 			});
+			if(falg){
+				$('#salesGoodsTab tbody tr').find('td').each(function(){
+					if ($(this).index() == "0") {
+						salesCount=$("#salesCount"+i).val();
+						salesPrice=$("#salesPrice"+i).val();
+						storeCount=$("#storeCount"+i).text();
+						goodsTotalPay=$("#goodsTotalPay"+i).val();
+						storageId=$(this).text();
+						if(!(salesCount==null||salesCount==""||salesPrice==null||salesPrice=="")){
+							if(goodsTotalPay==null||goodsTotalPay==""){
+								$("#goodsTotalPay"+i).val(salesCount*salesPrice);
+							}
+							W.addSalesGoods(storageId,salesCount,salesPrice);
+							j++;
+						}
+						i++;
+			        }
+					
+				});
+			}else {
+				return;
+			}
+			alert(j);
 			if (j==0) {
 				alert("请选择销售数量或价格");
 			}else {
@@ -128,22 +160,53 @@
 		function continueAdd(){
 			var i=0;
 			var j=0;
+			var k=0;
 			var salesCount=null;
 			var salesPrice=null;
 			var storageId=null;
+			var storeCount=null;
+			var falg=true;
+			
 			$('#salesGoodsTab tbody tr').find('td').each(function(){
-				salesCount=$("#salesCount"+i).val();
-				salesPrice=$("#salesPrice"+i).val();
 				if ($(this).index() == "0") {
-					storageId=$(this).text();
+					salesCount=$("#salesCount"+k).val();
+					salesPrice=$("#salesPrice"+k).val();
+					storeCount=$("#storeCount"+k).text();
 					if(!(salesCount==null||salesCount==""||salesPrice==null||salesPrice=="")){
-						W.continueAddSalesGoods(storageId,salesCount,salesPrice);
-						j++;
+						if (parseInt(salesCount) > parseInt(storeCount)) {
+							alert("库存不足");
+							$("#salesCount"+k).val("");
+							falg=false;
+							j++;
+						}						
 					}
-					i++;
+					k++;
 		        }
 				
 			});
+			if(falg){
+				$('#salesGoodsTab tbody tr').find('td').each(function(){
+					salesCount=$("#salesCount"+i).val();
+					salesPrice=$("#salesPrice"+i).val();
+					storeCount=$("#storeCount"+i).text();
+					goodsTotalPay=$("#goodsTotalPay"+i).val();
+					if ($(this).index() == "0") {
+						storageId=$(this).text();
+						if(!(salesCount==null||salesCount==""||salesPrice==null||salesPrice=="")){
+							if(goodsTotalPay==null||goodsTotalPay==""){
+								$("#goodsTotalPay"+i).val(salesCount*salesPrice);
+							}
+							W.continueAddSalesGoods(storageId,salesCount,salesPrice);
+							j++;
+						}
+						i++;
+			        }
+					
+				});
+			}else {
+				return;
+			}
+			
 			if (j==0) {
 				alert("请选择销售数量或价格");
 			}else {

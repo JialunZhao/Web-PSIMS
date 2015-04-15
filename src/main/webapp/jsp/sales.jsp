@@ -428,8 +428,8 @@
     									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
     								}
 									$("#addgoods").show();
-							        $("#addgoodsbtn").hide();
-							        $("#salesgoodsform").hide();
+							        /* $("#addgoodsbtn").hide();
+							        $("#salesgoodsform").hide(); */
 								}
                             
                 });       

@@ -6,13 +6,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
-String path = request.getContextPath();
-String _base=path;
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String _base = path;
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 
-SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-String date=sdf.format(new Date());
-
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String date = sdf.format(new Date());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,13 +30,13 @@ String date=sdf.format(new Date());
 
 <!-- Loading Bootstrap -->
 
-<link href="<%=_base %>/css/bootstrap/bootstrap.min.css"
+<link href="<%=_base%>/css/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
 
 <!-- Loading Flat UI -->
-<link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
-<link href="<%=_base %>/css/index.css" rel="stylesheet">
+<link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
+<link href="<%=_base%>/css/dashboard.css" rel="stylesheet">
+<link href="<%=_base%>/css/index.css" rel="stylesheet">
 <script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
@@ -60,12 +61,12 @@ String date=sdf.format(new Date());
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<%=_base %>/index.html">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
+			<a class="navbar-brand" href="<%=_base%>/index.html">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<%=path %>/sitting.html">系统设置</a></li>
-				<li><a href="<%=path %>/user.html">员工权限</a></li>
+				<li><a href="<%=path%>/sitting.html">系统设置</a></li>
+				<li><a href="<%=path%>/user.html">员工权限</a></li>
 				<li><a href="#">帮助</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
@@ -79,21 +80,18 @@ String date=sdf.format(new Date());
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/customer.html">客户管理</a></li>
-					<li><a href="<%=path %>/provider.html">供应商</a></li>
-					<li><a href="<%=path %>/goods.html">商品管理</a></li>
-					<li><a href="<%=path %>/storehouse.html">仓库管理</a></li>
+					<li><a href="<%=path%>/customerController/customer">客户管理</a></li>
+					<li><a href="<%=path%>/providerController/provider">供应商</a></li>
+					<li><a href="<%=path%>/goodsController/goods">商品管理</a></li>
+					<li><a href="<%=path%>/storehouseController/storehouse">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/importController/init.do">货品入库</a></li>
-					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
-					<li><a href="<%=path %>/providerBackGoodsController/init.do">供应商退货</a></li>
-					<li><a href="#">有效期调整</a></li>
-					<li><a href="#">销毁出库</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/recoveryimport.html">回收物入库</a></li>
-					<li><a href="<%=path %>/recoveryexport.html">回收物出库</a></li>
+					<li class="active"><a
+						href="<%=path%>/importController/init.do">货品入库</a></li>
+					<li><a href="<%=path%>/salesController/init.do">销售出库</a></li>
+					<li><a
+						href="<%=path%>/backGoodsController/providerBackInit.do">供应商退货</a></li>
+					<li><a href="<%=path%>/backGoodsController/salesBackInit.do">客户退货</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="#">统计报表</a></li>
@@ -129,7 +127,7 @@ String date=sdf.format(new Date());
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail2">支付方式：</label> <select
-								class="form-control" value="请选择支付方式" tabindex="1"
+								class="form-control" tabindex="1"
 								name="quePayMed" id="quePayMed">
 								<option value="">请选择支付方式</option>
 								<option value="00">现金</option>
@@ -222,7 +220,7 @@ String date=sdf.format(new Date());
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">入库时间:</span> <input
 								type="text" class="form-control" placeholder="2015-03-03"
-								value="<%=date %>" name="importcreatetime" id="importcreatetime">
+								value="<%=date%>" name="importcreatetime" id="importcreatetime">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供货商名称:</span> <select
 								class="form-control" value="请选择供货商" tabindex="1"
@@ -399,11 +397,11 @@ String date=sdf.format(new Date());
 
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="<%=_base %>/js/vendor/video.js"></script>
-	<script src="<%=_base %>/js/flat-ui.min.js"></script>
+	<script src="<%=_base%>/js/vendor/video.js"></script>
+	<script src="<%=_base%>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
     	function isPay(payStatus){
-    		if (payStatus=="<%=Constants.PayStatus.YESPAY %>") {
+    		if (payStatus=="<%=Constants.PayStatus.YESPAY%>") {
 				$("#isPay").show();
 			}else {
 				$("#isPay").hide();
@@ -416,7 +414,7 @@ String date=sdf.format(new Date());
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax(  
                     {  
-                        url:'<%=_base %>/importController/queryGoodsDemo.do',  
+                        url:'<%=_base%>/importController/queryGoodsDemo.do',  
                         type:"post",  
                         async:true,  
                         data:{'goodsName':goodsName,
@@ -453,7 +451,7 @@ String date=sdf.format(new Date());
 			var importSerialNumber=$("#queImportSerialNumber").val();
 			$.ajax(  
                     {  
-                        url:'<%=_base %>/importController/queryImportList.do',  
+                        url:'<%=_base%>/importController/queryImportList.do',  
                         type:"post",  
                         async:true,
                         data:{'providerId':providerId,
@@ -505,7 +503,7 @@ String date=sdf.format(new Date());
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax({  
-                        url:'<%=_base %>/importController/queryGoods.do',  
+                        url:'<%=_base%>/importController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
@@ -526,7 +524,7 @@ String date=sdf.format(new Date());
     	}
     	
     	function updateImportData(importSerialNumber) {
-    		var url='<%=_base %>/importController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
+    		var url='<%=_base%>/importController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
     		$.dialog({
     			title:'修改入库单',
     			width:900,
@@ -539,7 +537,7 @@ String date=sdf.format(new Date());
     	
     	function deleteImportData(importSerialNumber){
     		$.ajax({  
-                url:'<%=_base %>/importController/deleteImportData.do',  
+                url:'<%=_base%>/importController/deleteImportData.do',  
                 type:"post",  
                 async:false,
                 modal : true,
@@ -702,7 +700,7 @@ String date=sdf.format(new Date());
     	  var importcreatetime=$("#importcreatetime").val();
     	  var payMed,payTime;
     	  var payStatus=$("#payStatus").val();    	  
-    	  if (payStatus==<%=Constants.PayStatus.NOPAY %>) {
+    	  if (payStatus==<%=Constants.PayStatus.NOPAY%>) {
     		  payMed="";
     		  payTime="";
 		  }else {
@@ -715,7 +713,7 @@ String date=sdf.format(new Date());
           });
     	  $.ajax(  
                   {  
-                      url:'<%=_base %>/importController/addImprotGoodsList.do',  
+                      url:'<%=_base%>/importController/addImprotGoodsList.do',  
                       type:"post",  
                       async:false,
                       traditional:true,

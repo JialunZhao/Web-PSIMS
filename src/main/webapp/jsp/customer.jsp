@@ -71,16 +71,15 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="customer">客户管理<span
-							class="sr-only">(current)</span></a></li>
-					<li><a href="../providerController/provider">供应商</a></li>
-					<li><a href="./goods.html">商品管理</a></li>
-					<li><a href="./storehouse.html">仓库管理</a></li>
+					<li class="active"><a href="<%=path %>/customerController/customer">客户管理</a></li>
+					<li><a href="<%=path %>/providerController/provider">供应商</a></li>
+					<li><a href="<%=path %>/goodsController/goods">商品管理</a></li>
+					<li><a href="<%=path %>/storehouseController/storehouse">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="./import.html">货品入库</a></li>
-					<li><a href="./sales.html">销售出库</a></li>
-					<li><a href="#">退货管理</a></li>
+					<li><a href="<%=path %>/importController/init.do">货品入库</a></li>
+					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
+					<li><a href="<%=path %>/providerBackGoodsController/init.do">供应商退货</a></li>
 					<li><a href="#">有效期调整</a></li>
 					<li><a href="#">销毁出库</a></li>
 				</ul>

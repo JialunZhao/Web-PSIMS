@@ -33,21 +33,76 @@
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">出库时间:</span>
 				<input type="text" class="form-control" placeholder=""
-					value="<fmt:formatDate value="${sales.salesDate }" pattern="yyyy-MM-dd"/>" readonly="readonly" style="font: bolder;">
+					value="<fmt:formatDate value="${sales.salesDate }" pattern="yyyy-MM-dd"/>">
 				<span class="input-group-addon" style="background-color: #1abc9c;">业务员名称:</span>
-				<input type="text" class="form-control" value="${sales.employeeName }" readonly="readonly">
+				<select class="form-control" value="${sales.employeeName }" tabindex="1" name="employeeName" id="employeeName">
+					<option value="${sales.employeeId }">${sales.employeeName }</option>
+				</select>
 			</div>
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
-				<input type="text" class="form-control" value="${sales.customerName }" readonly="readonly">
+				<select class="form-control" value="${sales.customerName }" tabindex="1" name="customerName" id="customerName">
+					<option value="${sales.customerId }">${sales.customerName }</option>
+				</select>
 				<span class="input-group-addon" style="background-color: #1abc9c;">仓库名称:</span>
-				<input type="text" class="form-control" value="${sales.storehouseName }" readonly="readonly">
+				<select class="form-control" value="${sales.storehouseName }" tabindex="1" name="storehouseName" id="storehouseName">
+					<option value="${sales.storehouseId }">${sales.storehouseName }</option>
+				</select>
+			</div>
+			<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">销售状态:</span>
+				<select class="form-control" value="请选择销售状态" tabindex="1"	name="salesStatus" id="salesStatus"	onchange="showPayMet(this.value)">
+					<c:if test="${sales.salesStatus eq 'DO' }">
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'C' }">
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'OO' }">
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'OS' }">
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+					</c:if>
+					<c:if test="${sales.salesStatus eq 'S' }">
+						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
+						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
+						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
+						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
+						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
+					</c:if>
+				</select>
 			</div>
 			<div class="input-group col-xs-10 col-md-offset-1" id="payM" style="display: none">
 				<span class="input-group-addon" style="background-color: #1abc9c;">支付方式：</span>
-				<input type="text" class="form-control" value="${sales.incomeType }" readonly="readonly">
+				<select class="form-control" value="请选择支付方式" tabindex="1" name="payMed" id="payMed">
+					<option value="<%=Constants.PayMed.CASH %>"><%=Constants.PayMed.CASH01 %></option>
+					<option value="<%=Constants.PayMed.CHEQUE %>"><%=Constants.PayMed.CHEQUE01 %></option>
+					<option value="<%=Constants.PayMed.TICK %>"><%=Constants.PayMed.TICK01 %></option>
+					<option value="<%=Constants.PayMed.TRANSFERS %>"><%=Constants.PayMed.TRANSFERS01 %></option>
+				</select>
 				<span class="input-group-addon" style="background-color: #1abc9c;">支付时间</span>
-				<input type="text" class="form-control" value="<fmt:formatDate value="${sales.incomeTime }" pattern="yyyy-MM-dd"/>" readonly="readonly">
+				<input type="text" class="form-control" value="2015-01-01" id="payTime">
+			</div>
+			<div class="input-group col-xs-10 col-md-offset-1" id="creditC" style="display: none">
+				<span class="input-group-addon" style="background-color: #1abc9c;">赊账金额：</span>
+				<input type="text" class="form-control" value="" id="creditCount">
 			</div>
 		</div>
 		<div class="row placeholders" id="addgoodstb">
@@ -59,6 +114,7 @@
                       <th>销售流水号</th>
                       <th>商品名称</th>
                       <th>商品单价</th>
+                      <th>原始库存量</th>
                       <th>进货数量</th>
                       <th>商品总价</th>
                     </tr>
@@ -70,6 +126,7 @@
                   			<td>${salesGoods.salesSerialNumber }</td>
                   			<td>${salesGoods.goodsName }</td>
                   			<td id="goodsPrice${status.index }">${salesGoods.salesGoodsPrice }</td>
+                  			<td id="goodsAmountRate${status.index }">${salesGoods.storageRateCurrent+salesGoods.salesGoodsAmount }</td>
                   			<td>
                   				<input type="text" id="goodsAmount${status.index }" value="${salesGoods.salesGoodsAmount }" onblur="getTotalPrict(${status.index })">
                   			</td>
@@ -89,12 +146,25 @@
 	
 	<script type="text/javascript">
 	var api = frameElement.api, W = api.opener;
-		showPayMet('${sales.incomeType }');
+		showPayMet('${sales.salesStatus }');
 		function suerUpdate(){
 			var salesSerialNumber="${sales.salesSerialNumber}";
 			var salesGoodsIdList="";
 			var goodsAmountList="";
+			var salesStatus=$("#salesStatus").val();
+			var payMed="";
+			var payTime="";
+			var creditCount="";
 			var i=0;
+			
+			if(salesStatus=='<%=Constants.SalesStatus.SQUARE%>'){
+				payMed=$("#payMed").val();
+				payTime=$("#payTime").val();
+			}
+			if (salesStatus=='<%=Constants.SalesStatus.CREDIT%>') {
+				creditCount=$("#creditCount").val();
+			}
+			
 			$('#addGoodsTab tbody tr').find('td').each(function(){
 				if ($(this).index() == "0") {
 					salesGoodsIdList=salesGoodsIdList+$(this).text()+",";
@@ -102,8 +172,13 @@
 					i++;
 		        }
 			});
-			 var url="<%=_base %>/salesController/updataImprotGoodsList.do?salesGoodsIdList="
-					+ salesGoodsIdList + "&salesSerialNumber="
+			
+			var url="<%=_base %>/salesController/updataImprotGoodsList.do?salesGoodsIdList="
+					+ salesGoodsIdList + "&salesStatus="
+					+ salesStatus + "&payMed="
+					+ payMed + "&creditCount="
+					+ creditCount + "&payTime="
+					+ payTime + "&salesSerialNumber="
 					+ salesSerialNumber + "&goodsAmountList="
 					+ goodsAmountList;
 			api.reload(this, url);
@@ -114,13 +189,23 @@
 		function getTotalPrict(index){
 			var goodsPrice=$("#goodsPrice"+index).text();
 			var goodsAmount=$("#goodsAmount"+index).val();
+			var goodsAmountRate=$("#goodsAmountRate"+index).text();
+			if(parseInt(goodsAmount)>parseInt(goodsAmountRate)){
+				alert("库存不足");
+				return;
+			}
 			$("#totalPrice"+index).text(goodsPrice*goodsAmount);
 		}
 		
-		function showPayMet(val){
-			if(val!=null&&val!=""){
+		function showPayMet(value){
+			if(value=='<%=Constants.SalesStatus.SQUARE%>'){
 				$("#payM").show();
+				$("#creditC").hide();
+			}else if (value=='<%=Constants.SalesStatus.CREDIT%>') {
+				$("#creditC").show();
+				$("#payM").hide();
 			}else {
+				$("#creditC").hide();
 				$("#payM").hide();
 			}
 		}
