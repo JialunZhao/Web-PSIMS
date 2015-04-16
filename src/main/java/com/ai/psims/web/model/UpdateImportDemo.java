@@ -10,7 +10,7 @@ public class UpdateImportDemo implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public List<ImportGoods> importGoodsList;
+	public List<TbImportGoods> importGoodsList;
 	public String providerId;
 	public String storehouseId;
 	public String paymentType;
@@ -20,7 +20,7 @@ public class UpdateImportDemo implements Serializable {
 	public String storehouseName;
 	public String providerName;
 
-	public UpdateImportDemo(List<ImportGoods> importGoodsList,
+	public UpdateImportDemo(List<TbImportGoods> importGoodsList,
 			String providerId, String storehouseId, String paymentType,
 			String importStatus, String payTime, String importSerialNumber,
 			String storehouseName, String providerName) {
@@ -34,6 +34,12 @@ public class UpdateImportDemo implements Serializable {
 		this.importSerialNumber = importSerialNumber;
 		this.storehouseName = storehouseName;
 		this.providerName = providerName;
+	}
+
+	public UpdateImportDemo(List<TbImportGoods> importGoodsLists,
+			String providerId2, String paymentType2, String importStatus2,
+			String payTime2, String importSerialNumber2, String providerName2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getStorehouseName() {
@@ -52,11 +58,11 @@ public class UpdateImportDemo implements Serializable {
 		this.providerName = providerName;
 	}
 
-	public List<ImportGoods> getImportGoodsList() {
+	public List<TbImportGoods> getImportGoodsList() {
 		return importGoodsList;
 	}
 
-	public void setImportGoodsList(List<ImportGoods> importGoodsList) {
+	public void setImportGoodsList(List<TbImportGoods> importGoodsList) {
 		this.importGoodsList = importGoodsList;
 	}
 

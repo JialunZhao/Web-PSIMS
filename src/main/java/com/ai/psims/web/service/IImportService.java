@@ -2,23 +2,23 @@ package com.ai.psims.web.service;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.ImportExample;
+import com.ai.psims.web.model.TbImport;
+import com.ai.psims.web.model.TbImportExample;
 
 public interface IImportService {
 	public String getImportSerialNumber(String importSerialNumber);
 
-	public int InsertImport(Import import1);
+	public int InsertImport(TbImport import1);
 
-	public List<Import> selectByExample(ImportExample example);
+	public List<TbImport> selectByExample(TbImportExample example);
 
-	public Import selectByPrimaryKey(String importSerialNumber);
+	public TbImport selectByPrimaryKey(String importSerialNumber);
 
-	public int updateImport(Import import1);
+	public int updateImport(TbImport import1);
 
-	public int updateByKey(Import import1);
+	public int updateByKey(TbImport import1);
 
 	public int deleteImport(String importSerialNumber);
 
-	public int insertToLog(Import import1);
+	public int insertToLog(TbImport import1);
 }

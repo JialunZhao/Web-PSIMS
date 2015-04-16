@@ -2,11 +2,11 @@ package com.ai.psims.web.business;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.ImportExample;
+import com.ai.psims.web.model.TbImport;
+import com.ai.psims.web.model.TbImportExample;
 
 public interface IQueryImportList {
-	public List<Import> queryImportByColum(ImportExample example);
+	public List<TbImport> queryImportByColum(TbImportExample example);
 
-	public Import selectByPrimaryKey(String importSerialNumber);
+	public TbImport selectByPrimaryKey(String importSerialNumber);
 }

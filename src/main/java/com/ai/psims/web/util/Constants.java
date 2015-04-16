@@ -13,53 +13,76 @@ public class Constants {
 	} 
 	
 	// 支付方式
-	public static class PayMed {
-		public static final String CASH = "00";// 现金
-		public static final String TRANSFERS = "01";// 转账
-		public static final String CHEQUE = "02";// 支票
-		public static final String TICK = "03";// 赊账
-		public static final String CASH01 = "现金";
-		public static final String TRANSFERS01 = "转账";
-		public static final String CHEQUE01 = "支票";
-		public static final String TICK01 = "赊账";
-	}
+		public static class PayMed {
+			public static final String CASH = "00";// 现金
+			public static final String TRANSFERS = "01";// 转账
+			public static final String CHEQUE = "02";// 支票
+			public static final String TICK = "03";// 赊账
+			public static final String CASH01 = "现金";
+			public static final String TRANSFERS01 = "转账";
+			public static final String CHEQUE01 = "支票";
+			public static final String TICK01 = "赊账";
+		}
 
-	// 支付状态
-	public static class PayStatus {
-		public static final String NOPAY = "10";// 未付款
-		public static final String YESPAY = "11";// 已付款
-		public static final String NOPAY01 = "未付款";
-		public static final String YESPAY01 = "已付款";
-	}
+		// 支付状态
+		public static class PayStatus {
+			public static final String NOPAY = "10";// 未付款
+			public static final String YESPAY = "11";// 已付款
+			public static final String NOPAY01 = "未付款";
+			public static final String YESPAY01 = "已付款";
+		}
 
-	// 折扣方式
-	public static class DiscountMed {
-		public static final String NODISCOUNT = "20";// 无折扣
-		public static final String AWARDFONT = "21";// 奖金池
-		public static final String NODISCOUNT01 = "无折扣";
-		public static final String AWARDFONT01 = "奖金池";
-	}
+		// 是否
+		public static class DiscountMed {
+			public static final String NO = "N";// 否
+			public static final String YES = "Y";// 是
+			public static final String NO01 = "否";
+			public static final String YES01 = "是";
+		}
 
-	// 入库存状态
-	public static class ImportStatus {
-		public static final String ORDERNOPAY = "30";// 下单未付款
-		public static final String ORDERYESPAY = "31";// 下单已付款
-		public static final String GOODSARRIVAL = "32";// 商品到货
-		public static final String GOODSIMPORT = "33";// 商品入库
-		public static final String ORDERNOPAY01 = "下单未付款";
-		public static final String ORDERYESPAY01 = "下单已付款";
-		public static final String GOODSARRIVAL01 = "商品到货";
-		public static final String GOODSIMPORT01 = "商品入库";
-	}
+		// 入库存状态
+		public static class ImportStatus {
+			public static final String ORDERNOPAY = "30";// 下单未付款
+			public static final String ORDERYESPAY = "31";// 下单已付款
+			public static final String GOODSLITARRIVAL = "35";// 商品部分到货
+			public static final String GOODSARRIVAL = "32";// 商品到货
+			public static final String GOODSIMPORT = "33";// 商品入库
+			public static final String ORDERNOPAY01 = "下单未付款";
+			public static final String ORDERYESPAY01 = "下单已付款";
+			public static final String GOODSARRIVAL01 = "商品到货";
+			public static final String GOODSIMPORT01 = "商品入库";
+			public static final String GOODSLITARRIVAL01 = "商品部分到货";
+		}
 
-	// 入库商品状态
-	public static class ImportGoodsStatus {
-		public static final String CANSALE = "Y";// 可售
-		public static final String NOTSALE = "N";// 不可售
-		public static final String CANSALE01 = "可售";
-		public static final String NOTSALE01 = "不可售";
-	}
-	// 销售表库存状态
+		// 入库商品状态
+		public static class ImportGoodsStatus {
+			public static final String CANSALE = "Y";// 可售
+			public static final String NOTSALE = "N";// 不可售
+			public static final String CANSALE01 = "可售";
+			public static final String NOTSALE01 = "不可售";
+		}
+
+		// 退货商品状态
+		public static class BackGoodsTpye {
+			public static final String BACKNOOUT = "BN";// 下单未出库
+			public static final String BACKYESOUT = "BY";// 下单已出库
+			public static final String BACKNOOUT01 = "下单已出库";
+			public static final String BACKYESOUT01 = "下单已出库";
+		}
+
+		// 退货状态
+		public static class ImportBackStatus {
+			public static final String ORDERNOPAY = "34";// 下单未退款
+			public static final String ORDERPAY = "35";// 下单已退款
+			public static final String GOODSOUT = "36";// 商品出库
+			public static final String GOODSINPUT = "37";// 商品入库
+			public static final String ORDERNOPAY01 = "下单未退款";
+			public static final String ORDERPAY01 = "下单已退款";
+			public static final String GOODSOUT01 = "商品出库";
+			public static final String GOODSINPUT01 = "商品入库";
+		}
+
+		// 销售表库存状态
 		public static class SalesStatus {
 			public static final String DOWNORDER = "DO";// 下单
 			public static final String OUTORDER = "OO";// 出单
@@ -74,13 +97,14 @@ public class Constants {
 			public static final String CREDIT01 = "赊账";
 
 		}
+
 		// 退货类型
 		public static class BackType {
 			public static final String CHANGEGOODS = "CG";// 换货
 			public static final String BACKGOODS = "BG";// 退货
-			
+
 			public static final String CHANGEGOODS01 = "换货";
-			public static final String BACKGOODS01 = "退货"; 
+			public static final String BACKGOODS01 = "退货";
 		}
 
 }

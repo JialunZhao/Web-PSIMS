@@ -18,13 +18,15 @@ import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddGoodsBean;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
-import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.ImportExample;
-import com.ai.psims.web.model.ImportExample.Criteria;
-import com.ai.psims.web.model.ImportGoods;
+import com.ai.psims.web.model.TbImport;
+import com.ai.psims.web.model.TbImportExample;
+import com.ai.psims.web.model.TbImportGoodsExample;
+import com.ai.psims.web.model.TbImportExample.Criteria;
+import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.UpdateImportDemo;
+import com.ai.psims.web.util.Constants;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -33,24 +35,45 @@ import com.alibaba.fastjson.JSONObject;
 public class ImportController extends BaseController {
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
-	
+
 	@Resource(name = "addGoodsImportListImpl")
 	private IAddGoodsImportList addGoodsImportList;
 	@Resource(name = "queryImportListImpl")
 	private IQueryImportList queryImportList;
 
-
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
 		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
-		List<Import> importList = new ArrayList<Import>();
-		importList = queryBus.queryImport();
+		TbImportExample example = new TbImportExample();
+		example.createCriteria().andImportStatusNotEqualTo("00");
+		List<TbImport> importList = new ArrayList<TbImport>();
+		importList = queryBus.queryImport(example);
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();
 		request.setAttribute("providerList", provider);
 		request.setAttribute("storehouseList", storehouse);
 		request.setAttribute("importList", importList);
+		return "importsales";
+
+	}
+
+	@RequestMapping("/importInit")
+	public String importInit(HttpServletRequest request) throws Exception {
+		List<TbImport> importList = new ArrayList<TbImport>();
+		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
+		storehouse = queryBus.queryStorehouse();
+		List<String> importStatusList = new ArrayList<String>();
+		importStatusList.add(Constants.ImportStatus.ORDERNOPAY);
+		importStatusList.add(Constants.ImportStatus.ORDERYESPAY);
+		importStatusList.add(Constants.ImportStatus.GOODSLITARRIVAL);
+		TbImportExample example = new TbImportExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andImportStatusNotEqualTo("00");
+		criteria.andImportStatusIn(importStatusList);
+		importList = queryBus.queryImport(example);
+		request.setAttribute("importList", importList);
+		request.setAttribute("storehouseList", storehouse);
 		return "import";
 
 	}
@@ -82,26 +105,47 @@ public class ImportController extends BaseController {
 	public void queryImportList(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String providerId = request.getParameter("providerId");
-		String storeId = request.getParameter("storeId");
 		String payMed = request.getParameter("payMed");
 		String importSerialNumber = request.getParameter("importSerialNumber");
-		ImportExample example = new ImportExample();
+		String importStatus = request.getParameter("importStatus");
+		TbImportExample example = new TbImportExample();
 		Criteria criteria = example.createCriteria();
 		JSONObject data = new JSONObject();
 		if (providerId != null && providerId != "") {
 			criteria.andProviderIdEqualTo(Integer.parseInt(providerId));
 		}
-		if (storeId != null && storeId != "") {
-			criteria.andStorehouseIdEqualTo(Integer.parseInt(storeId));
-		}
 		if (payMed != null && payMed != "") {
 			criteria.andPaymentTypeEqualTo(payMed);
+		}
+		if (importStatus != null && importStatus != "") {
+			criteria.andImportStatusEqualTo(importStatus);
 		}
 		if (importSerialNumber != null && importSerialNumber != "") {
 			criteria.andImportSerialNumberLike("%" + importSerialNumber + "%");
 		}
 		criteria.andImportStatusNotEqualTo("00");
-		List<Import> importList = new ArrayList<Import>();
+		List<TbImport> importList = new ArrayList<TbImport>();
+		importList = queryImportList.queryImportByColum(example);
+		if (importList == null) {
+			responseFailed(response, "....", data);
+		} else {
+			data.put("goods", JSON.toJSONString(importList));
+			responseSuccess(response, "*****", data);
+		}
+	}
+	
+	@RequestMapping("/queryImport")
+	public void queryImport(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String importSerialNumber = request.getParameter("importSerialNumber");
+		TbImportExample example = new TbImportExample();
+		Criteria criteria = example.createCriteria();
+		JSONObject data = new JSONObject();
+		if (importSerialNumber != null && importSerialNumber != "") {
+			criteria.andImportSerialNumberLike("%" + importSerialNumber + "%");
+		}
+		criteria.andImportStatusNotEqualTo("00");
+		List<TbImport> importList = new ArrayList<TbImport>();
 		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
 			responseFailed(response, "....", data);
@@ -143,8 +187,8 @@ public class ImportController extends BaseController {
 	public String updateImprotGoodsList(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String importSerialNumber = request.getParameter("importSerialNumber");
-		Import import1 = new Import();
-		List<ImportGoods> importGoodsList = new ArrayList<ImportGoods>();
+		TbImport import1 = new TbImport();
+		List<TbImportGoods> importGoodsList = new ArrayList<TbImportGoods>();
 		importGoodsList = addGoodsImportList.selBySerNum(importSerialNumber);
 		import1 = queryImportList.selectByPrimaryKey(importSerialNumber);
 		List<TbProvider> provider = new ArrayList<TbProvider>();
@@ -163,19 +207,34 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String goodList = request.getParameter("goodList");
 		String providerName = request.getParameter("providerName");
-		String storeName = request.getParameter("storeName");
-		String discountMed = request.getParameter("discountMed");
 		String payMed = request.getParameter("payMed");
 		String payStatus = request.getParameter("payStatus");
 		String importcreatetime = request.getParameter("importcreatetime");
 		String payTime = request.getParameter("payTime");
 		String providerId = request.getParameter("providerId");
-		String storeId = request.getParameter("storeId");
 
 		AddGoodsBean addGoodsBean = new AddGoodsBean(goodList, providerName,
-				storeName, discountMed, payMed, payStatus, importcreatetime,
-				payTime, providerId, storeId);
+				payMed, payStatus, importcreatetime, payTime, providerId);
 		String result = addGoodsImportList.addGoodsList(addGoodsBean);
+		JSONObject data = new JSONObject();
+		if (result == null) {
+			responseFailed(response, "....", data);
+		} else {
+			responseSuccess(response, "****", data);
+		}
+
+	}
+
+	@RequestMapping("/addImprotList")
+	public void addImprotList(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String goodList = request.getParameter("goodList");
+		String importSerialNumber = request.getParameter("importSerialNumber");
+		String storeName = request.getParameter("storeName");
+		String storeId = request.getParameter("storeId");
+
+		String result = addGoodsImportList.goodsImport(goodList,
+				importSerialNumber, storeName, storeId);
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "....", data);
@@ -199,40 +258,66 @@ public class ImportController extends BaseController {
 
 	}
 
+	@RequestMapping("/goodsImport")
+	public void goodsImport(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String importSerialNumber = request.getParameter("importSerialNumber");
+		List<String> goodsName = new ArrayList<String>();
+		goodsName = addGoodsImportList.getGoodsName(importSerialNumber);
+		JSONObject data = new JSONObject();
+		if (goodsName == null) {
+			responseFailed(response, "....", data);
+		} else {
+			data.put("goodsName", JSON.toJSONString(goodsName));
+			responseSuccess(response, "****", data);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	@RequestMapping("/showImportGoods")
+	public String showImportGoods(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String importSerialNumber = request.getParameter("importSerialNumber");
+		String goodName = request.getParameter("goodsName");
+		if (goodName != null) {
+			goodName = URLDecoder.decode(goodName);
+		}
+		List<TbImportGoods> importGoodsList = new ArrayList<TbImportGoods>();
+		TbImportGoodsExample example = new TbImportGoodsExample();
+		com.ai.psims.web.model.TbImportGoodsExample.Criteria criteria = example
+				.createCriteria();
+		criteria.andImportSerialNumberEqualTo(importSerialNumber);
+		criteria.andGoodsNameEqualTo(goodName);
+		importGoodsList = addGoodsImportList.queryImportGoods(example);
+		request.setAttribute("importGoods", importGoodsList.get(0));
+		return "goodsimport";
+	}
+
 	@SuppressWarnings("deprecation")
 	@RequestMapping("/updataImprotGoodsList")
 	public String updataImprotGoodsList(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String goodsAmountList = request.getParameter("goodsAmountList");
-		String goodsTotalPriceList = request
-				.getParameter("goodsTotalPriceList");
 		String importGoodsIdList = request.getParameter("importGoodsIdList");
 		String providerId = request.getParameter("providerId");
-		String storehouseId = request.getParameter("storehouseId");
 		String paymentType = request.getParameter("paymentType");
 		String importStatus = request.getParameter("importStatus");
 		String payTime = request.getParameter("payTime");
 		String importSerialNumber = request.getParameter("importSerialNumber");
-		String storehouseName = request.getParameter("storehouseName");
 		String providerName = request.getParameter("providerName");
-		storehouseName = URLDecoder.decode(storehouseName);
 		providerName = URLDecoder.decode(providerName);
 		String goodsAmounts[] = goodsAmountList.split(",");
-		String goodsTotalPrices[] = goodsTotalPriceList.split(",");
 		String importGoodsIds[] = importGoodsIdList.split(",");
-		List<ImportGoods> importGoodsLists = new ArrayList<ImportGoods>();
+		List<TbImportGoods> importGoodsLists = new ArrayList<TbImportGoods>();
 		for (int i = 0; i < importGoodsIds.length; i++) {
-			ImportGoods importGoods = new ImportGoods();
+			TbImportGoods importGoods = new TbImportGoods();
 			importGoods.setImportGoodsId(Integer.parseInt(importGoodsIds[i]));
-			importGoods.setImportGoodsTotalPrice(Long
-					.parseLong(goodsTotalPrices[i]));
 			importGoods.setImportGoodsAmount(Integer.parseInt(goodsAmounts[i]));
 			importGoodsLists.add(importGoods);
 		}
 		UpdateImportDemo updateImportDemo = new UpdateImportDemo(
-				importGoodsLists, providerId, storehouseId, paymentType,
-				importStatus, payTime, importSerialNumber, storehouseName,
-				providerName);
+				importGoodsLists, providerId, paymentType, importStatus,
+				payTime, importSerialNumber, providerName);
 		String result = addGoodsImportList.updateImportGoods(updateImportDemo);
 		request.setAttribute("result", result);
 		return "import";

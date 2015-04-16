@@ -7,40 +7,40 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.ImportLogMapper;
-import com.ai.psims.web.dao.ImportMapper;
-import com.ai.psims.web.model.Import;
-import com.ai.psims.web.model.ImportExample;
-import com.ai.psims.web.model.ImportLog;
+import com.ai.psims.web.dao.TbImportLogMapper;
+import com.ai.psims.web.dao.TbImportMapper;
+import com.ai.psims.web.model.TbImport;
+import com.ai.psims.web.model.TbImportExample;
+import com.ai.psims.web.model.TbImportLog;
 import com.ai.psims.web.service.IImportService;
 
 @Service
 public class ImportServiceImpl implements IImportService {
-	@Resource(name = "importMapper")
-	private ImportMapper importMapper;
-	@Resource(name = "importLogMapper")
-	private ImportLogMapper importLogMapper;
+	@Resource(name = "tbImportMapper")
+	private TbImportMapper importMapper;
+	@Resource(name = "tbImportLogMapper")
+	private TbImportLogMapper importLogMapper;
 
-	public int InsertImport(Import import1) {
+	public int InsertImport(TbImport import1) {
 		return importMapper.insert(import1);
 	}
 
-	public Import selectByPrimaryKey(String importSerialNumber) {
+	public TbImport selectByPrimaryKey(String importSerialNumber) {
 		return importMapper.selectByPrimaryKey(importSerialNumber);
 	}
 
-	public int updateImport(Import import1) {
+	public int updateImport(TbImport import1) {
 		insertToLog(import1);
 		return importMapper.updateByPrimaryKey(import1);
 	}
 
-	public int updateByKey(Import import1) {
+	public int updateByKey(TbImport import1) {
 		insertToLog(import1);
 		return importMapper.updateByPrimaryKeySelective(import1);
 	}
 
 	public int deleteImport(String importSerialNumber) {
-		Import import1 = new Import();
+		TbImport import1 = new TbImport();
 		import1 = importMapper.selectByPrimaryKey(importSerialNumber);
 		insertToLog(import1);
 		// 00-失效；01-有效
@@ -49,11 +49,11 @@ public class ImportServiceImpl implements IImportService {
 	}
 
 	@Override
-	public int insertToLog(Import import1) {
-		Import imports = new Import();
+	public int insertToLog(TbImport import1) {
+		TbImport imports = new TbImport();
 		imports = importMapper.selectByPrimaryKey(import1
 				.getImportSerialNumber());
-		ImportLog log = new ImportLog();
+		TbImportLog log = new TbImportLog();
 		log.setImportBatchNumber(imports.getImportBatchNumber());
 		log.setImportDatetime(imports.getImportDatetime());
 		log.setImportRemark(imports.getImportRemark());
@@ -66,14 +66,12 @@ public class ImportServiceImpl implements IImportService {
 		log.setPaymentType(imports.getPaymentType());
 		log.setProviderId(imports.getProviderId());
 		log.setProviderName(imports.getProviderName());
-		log.setStorehouseId(imports.getStorehouseId());
-		log.setStorehouseName(imports.getStorehouseName());
 
 		return importLogMapper.insertSelective(log);
 	}
 
 	@Override
-	public List<Import> selectByExample(ImportExample example) {
+	public List<TbImport> selectByExample(TbImportExample example) {
 		return importMapper.selectByExample(example);
 	}
 

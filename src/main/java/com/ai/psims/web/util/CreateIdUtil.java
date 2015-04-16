@@ -21,15 +21,6 @@ public class CreateIdUtil {
 
 	public static String getTranslation(String str) {
 		String result = null;
-		if (str.equals(Constants.CommonStatus.Invalid_Str)) {
-			result = Constants.CommonStatus.Invalid_Code;
-		}
-		if (str.equals(Constants.CommonStatus.Normal_Str)) {
-			result = Constants.CommonStatus.Normal_Code;
-		}
-		if (str.equals(Constants.CommonStatus.Exception_Str)) {
-			result = Constants.CommonStatus.Exception_Code;
-		}
 		if (str.equals(Constants.ImportStatus.GOODSARRIVAL)) {
 			result = Constants.ImportStatus.GOODSARRIVAL01;
 		}
@@ -41,6 +32,9 @@ public class CreateIdUtil {
 		}
 		if (str.equals(Constants.ImportStatus.ORDERYESPAY)) {
 			result = Constants.ImportStatus.ORDERYESPAY01;
+		}
+		if (str.equals(Constants.ImportStatus.GOODSLITARRIVAL)) {
+			result = Constants.ImportStatus.GOODSLITARRIVAL01;
 		}
 		if (str.equals(Constants.ImportGoodsStatus.CANSALE)) {
 			result = Constants.ImportGoodsStatus.CANSALE01;
@@ -54,11 +48,11 @@ public class CreateIdUtil {
 		if (str.equals(Constants.PayStatus.YESPAY)) {
 			result = Constants.PayStatus.YESPAY01;
 		}
-		if (str.equals(Constants.DiscountMed.AWARDFONT)) {
-			result = Constants.DiscountMed.AWARDFONT01;
+		if (str.equals(Constants.DiscountMed.NO)) {
+			result = Constants.DiscountMed.NO01;
 		}
-		if (str.equals(Constants.DiscountMed.NODISCOUNT)) {
-			result = Constants.DiscountMed.NODISCOUNT01;
+		if (str.equals(Constants.DiscountMed.YES)) {
+			result = Constants.DiscountMed.YES01;
 		}
 		if (str.equals(Constants.PayMed.CASH)) {
 			result = Constants.PayMed.CASH01;
@@ -71,6 +65,27 @@ public class CreateIdUtil {
 		}
 		if (str.equals(Constants.PayMed.TRANSFERS)) {
 			result = Constants.PayMed.TRANSFERS01;
+		}
+		if (str.equals(Constants.SalesStatus.CREDIT)) {
+			result = Constants.SalesStatus.CREDIT01;
+		}
+		if (str.equals(Constants.SalesStatus.DOWNORDER)) {
+			result = Constants.SalesStatus.DOWNORDER01;
+		}
+		if (str.equals(Constants.SalesStatus.OUTORDER)) {
+			result = Constants.SalesStatus.OUTORDER01;
+		}
+		if (str.equals(Constants.SalesStatus.OUTSTORE)) {
+			result = Constants.SalesStatus.OUTSTORE01;
+		}
+		if (str.equals(Constants.SalesStatus.SQUARE)) {
+			result = Constants.SalesStatus.SQUARE01;
+		}
+		if (str.equals(Constants.BackType.BACKGOODS)) {
+			result = Constants.BackType.BACKGOODS01;
+		}
+		if (str.equals(Constants.BackType.CHANGEGOODS)) {
+			result = Constants.BackType.CHANGEGOODS01;
 		}
 		return result;
 	}

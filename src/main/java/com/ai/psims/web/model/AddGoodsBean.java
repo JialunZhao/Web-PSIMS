@@ -35,6 +35,12 @@ public class AddGoodsBean implements Serializable{
 		this.setImportcreatetime(importcreatetime);
 	}
 
+	public AddGoodsBean(String goodList2, String providerName2, String payMed2,
+			String payStatus2, String importcreatetime2, String payTime2,
+			String providerId2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getProviderId() {
 		return providerId;
 	}
