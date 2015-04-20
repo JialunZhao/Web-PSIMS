@@ -1,30 +1,30 @@
 package com.ai.psims.web.dao;
 
-import com.ai.psims.web.model.Menu;
-import com.ai.psims.web.model.MenuExample;
+import com.ai.psims.web.model.TbMenu;
+import com.ai.psims.web.model.TbMenuExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface MenuMapper {
-    int countByExample(MenuExample example);
+    int countByExample(TbMenuExample example);
 
-    int deleteByExample(MenuExample example);
+    int deleteByExample(TbMenuExample example);
 
     int deleteByPrimaryKey(Integer menuId);
 
-    int insert(Menu record);
+    int insert(TbMenu record);
 
-    int insertSelective(Menu record);
+    int insertSelective(TbMenu record);
 
-    List<Menu> selectByExample(MenuExample example);
+    List<TbMenu> selectByExample(TbMenuExample example);
 
-    Menu selectByPrimaryKey(Integer menuId);
+    TbMenu selectByPrimaryKey(Integer menuId);
 
-    int updateByExampleSelective(@Param("record") Menu record, @Param("example") MenuExample example);
+    int updateByExampleSelective(@Param("record") TbMenu record, @Param("example") TbMenuExample example);
 
-    int updateByExample(@Param("record") Menu record, @Param("example") MenuExample example);
+    int updateByExample(@Param("record") TbMenu record, @Param("example") TbMenuExample example);
 
-    int updateByPrimaryKeySelective(Menu record);
+    int updateByPrimaryKeySelective(TbMenu record);
 
-    int updateByPrimaryKey(Menu record);
+    int updateByPrimaryKey(TbMenu record);
 }

@@ -24,8 +24,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	@Override
 	public List<Employee> getEmployee(String username, String password) {
 		EmployeeExample example = new EmployeeExample();
-		example.createCriteria().andEmployeeCodeLike(username);
-		example.createCriteria().andLoginPasswordLike(password);
+		example.createCriteria().andEmployeeCodeEqualTo(username).andLoginPasswordEqualTo(password);
+		return employeeMapper.selectByExample(example);
+	}
+	
+	@Override
+	public List<Employee> getEmployee(String username) {
+		EmployeeExample example = new EmployeeExample();
+		example.createCriteria().andEmployeeCodeEqualTo(username);
 		return employeeMapper.selectByExample(example);
 	}
 
@@ -62,5 +68,25 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	public Employee getEmployee(int id) {
 		return employeeMapper.selectByPrimaryKey(id);
 	}
+
+	@Override
+	public List<Employee> getEmployee(String employeeName, String sex,
+			String role, String contactTel) {
+		EmployeeExample example = new EmployeeExample();
+		if(employeeName!=null && employeeName.length()>0){
+			example.createCriteria().andEmployeeNameLike(employeeName);
+		}
+		if(sex!=null && sex.length()>0){
+			example.createCriteria().andSexLike(sex);
+		}
+		if(role!=null && role.length()>0){
+			example.createCriteria().andRoleLike(role);
+		}
+		if(contactTel!=null && contactTel.length()>0){
+			example.createCriteria().andContactTelLike(contactTel);
+		}
+		return employeeMapper.selectByExample(example);
+	}
+
 
 }

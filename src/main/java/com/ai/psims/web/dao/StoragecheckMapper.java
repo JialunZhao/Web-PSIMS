@@ -27,4 +27,12 @@ public interface StoragecheckMapper {
     int updateByPrimaryKeySelective(Storagecheck record);
 
     int updateByPrimaryKey(Storagecheck record);
+
+	List<Storagecheck> seekStore();
+
+	List<Storagecheck> seekBStore();
+
+	List<Storagecheck> seekCStore();
+
+	List<Storagecheck> seekDStore();
 }

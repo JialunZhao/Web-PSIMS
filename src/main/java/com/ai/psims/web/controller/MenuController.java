@@ -1,22 +1,17 @@
 package com.ai.psims.web.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import com.ai.psims.web.model.Employee;
-import com.ai.psims.web.model.Menu;
-import com.ai.psims.web.service.IEmployeeService;
+import com.ai.psims.web.model.TbMenu;
 import com.ai.psims.web.service.IMenuService;
-import com.ai.psims.web.util.MD5keyBean;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +30,36 @@ public class MenuController {
     private IMenuService menuServiceImpl;
 	
 
-    @RequestMapping(value = "/menu.do", method = RequestMethod.GET)
-    public String getMenu(ModelMap modelMap) {
-    	List<Menu> list = menuServiceImpl.getMenu();
-    	modelMap.put("menu", list);
-        return "all";
+    @RequestMapping(value = "/menu.do")
+    @ResponseBody
+    public Map<String,List<TbMenu>> getMenu(ModelMap modelMap,HttpSession session) {
+    	String privilege = (String)session.getAttribute("privilege");
+    	if(privilege==null||privilege.length()==0){
+    		return null;
+    	}else{
+    		List<TbMenu> list = menuServiceImpl.getMenu();
+    		List<TbMenu> menusTit = new ArrayList<TbMenu>();
+    		List<TbMenu> menusTree = new ArrayList<TbMenu>();
+    		String[] privs = privilege.split(",");
+    		for(TbMenu m : list){
+        		String priv = m.getPriv();
+        		for(String pri : privs){
+        			if(pri.equals(priv)){
+        				String menu = m.getMenuStatus();
+        				if(menu==null||!menu.equals("01")){
+        					menusTree.add(m);
+        					continue;
+        				}
+        				menusTit.add(m);
+        				continue;
+        			}
+        		}
+        	}
+    		Map<String,List<TbMenu>> map = new HashMap<String,List<TbMenu>>();
+    		map.put("title", menusTit);
+    		map.put("tree", menusTree);
+    		return map;
+    	}
     }
 
 

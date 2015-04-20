@@ -1,5 +1,6 @@
 package com.ai.psims.web.service.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -7,23 +8,19 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.StoragecheckLogMapper;
 import com.ai.psims.web.dao.StoragecheckMapper;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
-import com.ai.psims.web.model.StoragecheckLog;
 import com.ai.psims.web.service.IStoragecheckService;
 
 @Service
 public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Resource(name = "storagecheckMapper")
 	private StoragecheckMapper storagecheckMapper;
-	@Resource(name = "storagecheckLogMapper")
-	private StoragecheckLogMapper storagecheckLogMapper;
 
 	@Override
 	public int insert(Storagecheck storagecheck) {
-		return storagecheckMapper.insert(storagecheck);
+		return storagecheckMapper.insertSelective(storagecheck);
 	}
 
 	@Override
@@ -38,57 +35,76 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 
 	@Override
 	public int deleteStoragecheck(Integer storageId) {
-		Storagecheck storagecheck = new Storagecheck();
-		storagecheck = storagecheckMapper.selectByPrimaryKey(storageId);
-		insertToLog(storagecheck);
-		storagecheck.setEndtime(new Date());
-		return storagecheckMapper.updateByPrimaryKeySelective(storagecheck);
+		return storagecheckMapper.deleteByPrimaryKey(storageId);
 	}
 
 	@Override
 	public int updateStoragecheck(Storagecheck storagecheck) {
-		insertToLog(storagecheck);
-		return storagecheckMapper.updateByPrimaryKey(storagecheck);
-	}
-
-	@Override
-	public int updateStoragecheckByKey(Storagecheck storagecheck) {
-		insertToLog(storagecheck);
 		return storagecheckMapper.updateByPrimaryKeySelective(storagecheck);
 	}
 
 	@Override
-	public int insertToLog(Storagecheck storagecheck) {
-		Storagecheck stora = new Storagecheck();
-		stora = storagecheckMapper.selectByPrimaryKey(storagecheck
-				.getStorageId());
-		StoragecheckLog log = new StoragecheckLog();
+	public List<Storagecheck> seekExpiration() {
+		StoragecheckExample example = new StoragecheckExample();
+		Calendar calendar=Calendar.getInstance();
+		calendar.add( Calendar.DAY_OF_MONTH, +10); 
+		Date date = calendar.getTime();
+		example.createCriteria().andGoodsExpirationDateLessThanOrEqualTo(date);
+		return storagecheckMapper.selectByExample(example);
+	}
 
-		log.setCreatetime(stora.getCreatetime());
-		log.setEndtime(stora.getEndtime());
-		log.setGoodsBarCode(stora.getGoodsBarCode());
-		log.setGoodsExpirationDate(stora.getGoodsExpirationDate());
-		log.setGoodsId(stora.getGoodsId());
-		log.setGoodsName(stora.getGoodsName());
-		log.setGoodsPrice(stora.getGoodsPrice());
-		log.setGoodsProductionDate(stora.getGoodsProductionDate());
-		log.setGoodsShelfLife(stora.getGoodsShelfLife());
-		log.setGoodsStatus(stora.getGoodsStatus());
-		log.setImportGoodsUnit(stora.getImportGoodsUnit());
-		log.setImportSerialNumber(stora.getImportSerialNumber());
-		log.setLogDatetime(new Date());
-		log.setModifytime(stora.getModifytime());
-		log.setProviderId(stora.getProviderId());
-		log.setProviderName(stora.getProviderName());
-		log.setRemark(stora.getRemark());
-		log.setShelfLifeWarning(stora.getShelfLifeWarning());
-		log.setStorageId(stora.getStorageId());
-		log.setStorageRateCurrent(stora.getStorageRateCurrent());
-		log.setStorageRateTotal(stora.getStorageRateTotal());
-		log.setStorageType(stora.getStorageType());
-		log.setStorageWarning(stora.getStorageWarning());
+	@Override
+	public List<Storagecheck> seekBExpiration() {
+		StoragecheckExample example = new StoragecheckExample();
+		Calendar calendar=Calendar.getInstance();
+		calendar.add( Calendar.DAY_OF_MONTH, +10); 
+		Date date1 = calendar.getTime();
+		calendar.add( Calendar.DAY_OF_MONTH, +20); 
+		Date date2 = calendar.getTime();
+		example.createCriteria().andGoodsExpirationDateBetween(date1, date2);
+		return storagecheckMapper.selectByExample(example);
+	}
 
-		return storagecheckLogMapper.insertSelective(log);
+	@Override
+	public List<Storagecheck> seekCExpiration() {
+		StoragecheckExample example = new StoragecheckExample();
+		Calendar calendar=Calendar.getInstance();
+		calendar.add( Calendar.DAY_OF_MONTH, +30); 
+		Date date1 = calendar.getTime();
+		calendar.add( Calendar.DAY_OF_MONTH, +60); 
+		Date date2 = calendar.getTime();
+		example.createCriteria().andGoodsExpirationDateBetween(date1, date2);
+		return storagecheckMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Storagecheck> seekDExpiration() {
+		StoragecheckExample example = new StoragecheckExample();
+		Calendar calendar=Calendar.getInstance();
+		calendar.add( Calendar.DAY_OF_MONTH, +90); 
+		Date date = calendar.getTime();
+		example.createCriteria().andGoodsExpirationDateGreaterThan(date);
+		return storagecheckMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Storagecheck> seekStore() {
+		return storagecheckMapper.seekStore();
+	}
+
+	@Override
+	public List<Storagecheck> seekBStore() {
+		return storagecheckMapper.seekBStore();
+	}
+
+	@Override
+	public List<Storagecheck> seekCStore() {
+		return storagecheckMapper.seekCStore();
+	}
+
+	@Override
+	public List<Storagecheck> seekDStore() {
+		return storagecheckMapper.seekDStore();
 	}
 
 }

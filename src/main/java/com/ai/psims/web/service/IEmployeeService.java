@@ -10,6 +10,8 @@ public interface IEmployeeService {
 
 	public List<Employee> getEmployee(String username, String password);
 	
+	public List<Employee> getEmployee(String username);
+	
 	public Employee getEmployee(int id);
 
 	public List<Employee> getlAllEmployee();
@@ -21,4 +23,7 @@ public interface IEmployeeService {
 	public void add(Employee employee);
 
 	public void delete(Employee employee);
+
+	public List<Employee> getEmployee(String employeeName, String sex,
+			String role, String contactTel);
 }

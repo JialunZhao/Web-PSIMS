@@ -1,12 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,10 +12,6 @@
 <link rel="icon" href="${ctx}/img/favicon.ico">
 
 <title>供销存系统DEMO</title>
-<META HTTP-EQUIV="pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
-<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
-
 <!-- Loading Bootstrap -->
 <link href="${ctx}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
@@ -110,15 +100,15 @@
     <![endif]-->
 </head>
 <body>
-	<div class="container">
+	<div class="container" id="login">
 
 		<form class="form-signin">
 			<h2 class="form-signin-heading">用户登录</h2>
 			<label for="inputEmail" class="sr-only">用户名</label> <input
 				type="text" id="username" class="form-control" placeholder="用户名"
 				required autofocus> <label for="inputPassword"
-				class="sr-only">密码</label> <input type="password" id="password"
-				class="form-control" placeholder="密码" required>
+				class="sr-only"><input type="hidden">密码</label> <input type="password" id="password"
+				class="form-control" autocomplete="off" placeholder="密码" required>
 			<h5 id="errorcontent" class="btn"></h5>
 			<div class="checkbox">
 				<label> <input type="checkbox" value="remember-me">记住密码
@@ -127,16 +117,32 @@
 			<a class="btn btn-lg btn-primary btn-block" onclick="login()">登录</a>
 		</form>
 
-		</form>
-
 	</div>
 	<!-- /container -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<script src="${ctx}/js/vendor/jquery.min.js"></script>
+	<script type="text/javascript">
+// 		$(window).load(function(){
+// 			$("#password").attr("value","");
+// 			document.getElementById("password").value=""; 
+// 		})
+// 		$(document).ready(function(){
+// 			$("#password").attr("value","");
+// 			$("#password").attr("value","");
+// 			alert("dfdfd");
+// 		})
+		$(document).keydown(function(e){
+			if(e.keyCode == 13) {
+				login();
+// 				alert("您按下了回车键");
+// 				$('#login').submit();
+			}
+		});	
+	</script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="${ctx}/js/vendor/video.js"></script>
 	<script src="${ctx}/js/flat-ui.min.js"></script>
-
+	
 	</script>
 </body>
 </html>

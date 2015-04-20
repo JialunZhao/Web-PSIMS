@@ -36,10 +36,8 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪些表 -->
-		<table schema="psims" tableName="tb_import" />
-		<table schema="psims" tableName="tb_import_log" />
-		<table schema="psims" tableName="tb_import_goods" />
-		<table schema="psims" tableName="tb_import_goods_log" />
+		<table schema="psims" tableName="tb_system_parameter_log" />
+<!-- 		<table schema="psims" tableName="tb_menu" /> -->
 		<!-- <table tableName="about" domainObjectName="AboutDto" enableCountByExample="false" 
 			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
 			selectByExampleQueryId="false"></table> -->

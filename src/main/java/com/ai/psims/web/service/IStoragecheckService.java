@@ -16,7 +16,19 @@ public interface IStoragecheckService {
 
 	public int updateStoragecheck(Storagecheck storagecheck);
 
-	public int updateStoragecheckByKey(Storagecheck storagecheck);
+	public List<Storagecheck> seekExpiration();
 
-	public int insertToLog(Storagecheck storagecheck);
+	public List<Storagecheck> seekBExpiration();
+
+	public List<Storagecheck> seekCExpiration();
+
+	public List<Storagecheck> seekDExpiration();
+
+	public List<Storagecheck> seekStore();
+
+	public List<Storagecheck> seekBStore();
+
+	public List<Storagecheck> seekCStore();
+
+	public List<Storagecheck> seekDStore();
 }

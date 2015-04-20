@@ -2,10 +2,10 @@ package com.ai.psims.web.service;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Menu;
+import com.ai.psims.web.model.TbMenu;
 
 public interface IMenuService {
 
-	List<Menu> getMenu();
+	List<TbMenu> getMenu();
 	
 }

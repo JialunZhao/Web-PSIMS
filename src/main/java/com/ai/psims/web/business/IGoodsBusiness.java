@@ -3,8 +3,6 @@ package com.ai.psims.web.business;
 import java.util.List;
 
 import com.ai.psims.web.model.TbGoods;
-import com.ai.psims.web.model.TbGoods2customer;
-import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
 
 public interface IGoodsBusiness {

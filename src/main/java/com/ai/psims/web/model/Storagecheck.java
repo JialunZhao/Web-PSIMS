@@ -46,6 +46,11 @@ public class Storagecheck {
     private Integer storageWarning;
 
     private Integer shelfLifeWarning;
+    
+    private String overDate;
+    private Integer storageCurrentTotal;
+    
+    
 
     public Integer getStorageId() {
         return storageId;
@@ -222,4 +227,21 @@ public class Storagecheck {
     public void setShelfLifeWarning(Integer shelfLifeWarning) {
         this.shelfLifeWarning = shelfLifeWarning;
     }
+
+	public Integer getStorageCurrentTotal() {
+		return storageCurrentTotal;
+	}
+
+	public void setStorageCurrentTotal(Integer storageCurrentTotal) {
+		this.storageCurrentTotal = storageCurrentTotal;
+	}
+
+	public String getOverDate() {
+		return overDate;
+	}
+
+	public void setOverDate(String overDate) {
+		this.overDate = overDate;
+	}
+
 }

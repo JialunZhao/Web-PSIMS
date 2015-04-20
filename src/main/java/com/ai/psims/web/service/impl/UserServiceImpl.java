@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.dao.UserMapper;
-import com.ai.psims.web.model.Employee;
 import com.ai.psims.web.model.User;
 import com.ai.psims.web.model.UserExample;
 import com.ai.psims.web.service.IUserService;

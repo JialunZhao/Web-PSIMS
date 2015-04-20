@@ -6,21 +6,21 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.MenuMapper;
-import com.ai.psims.web.model.Menu;
-import com.ai.psims.web.model.MenuExample;
+import com.ai.psims.web.dao.TbMenuMapper;
+import com.ai.psims.web.model.TbMenu;
+import com.ai.psims.web.model.TbMenuExample;
 import com.ai.psims.web.service.IMenuService;
 
 @Service
 public class MenuServiceImpl implements IMenuService {
 	
 	@Resource
-	private MenuMapper menuMapper;
+	private TbMenuMapper tbMenuMapper;
 	
 	@Override
-	public List<Menu> getMenu() {
-		MenuExample example = new MenuExample();
-		return menuMapper.selectByExample(example);
+	public List<TbMenu> getMenu() {
+		TbMenuExample example = new TbMenuExample();
+		return tbMenuMapper.selectByExample(example);
 	}
 
 }
