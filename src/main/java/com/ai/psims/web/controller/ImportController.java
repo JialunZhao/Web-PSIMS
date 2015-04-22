@@ -20,9 +20,9 @@ import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportExample;
-import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbImportExample.Criteria;
 import com.ai.psims.web.model.TbImportGoods;
+import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.UpdateImportDemo;
@@ -94,10 +94,10 @@ public class ImportController extends BaseController {
 		criteria.andGoodsEndtimeIsNull();
 		goodsList = queryBus.queryGoodsByName(goodsExample);
 		if (goodsList == null && goodsList.size() == 0) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("list", JSON.toJSONString(goodsList));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -127,13 +127,13 @@ public class ImportController extends BaseController {
 		List<TbImport> importList = new ArrayList<TbImport>();
 		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(importList));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
-	
+
 	@RequestMapping("/queryImport")
 	public void queryImport(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -148,10 +148,10 @@ public class ImportController extends BaseController {
 		List<TbImport> importList = new ArrayList<TbImport>();
 		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(importList));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -176,10 +176,10 @@ public class ImportController extends BaseController {
 		goodsList = queryBus.queryGoodsByName(goodsExample);
 		goods = goodsList.get(0);
 		if (goods == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(goods));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -218,9 +218,9 @@ public class ImportController extends BaseController {
 		String result = addGoodsImportList.addGoodsList(addGoodsBean);
 		JSONObject data = new JSONObject();
 		if (result == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 
 	}
@@ -237,9 +237,9 @@ public class ImportController extends BaseController {
 				importSerialNumber, storeName, storeId);
 		JSONObject data = new JSONObject();
 		if (result == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 
 	}
@@ -251,9 +251,9 @@ public class ImportController extends BaseController {
 		String result = addGoodsImportList.deleteImportData(importSerialNumber);
 		JSONObject data = new JSONObject();
 		if (result == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 
 	}
@@ -266,10 +266,10 @@ public class ImportController extends BaseController {
 		goodsName = addGoodsImportList.getGoodsName(importSerialNumber);
 		JSONObject data = new JSONObject();
 		if (goodsName == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goodsName", JSON.toJSONString(goodsName));
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -322,6 +322,183 @@ public class ImportController extends BaseController {
 		request.setAttribute("result", result);
 		return "import";
 	}
+
+	// @RequestMapping("/importgoodsprint")
+	// public void importgoodsprint(HttpServletRequest request,
+	// HttpServletResponse response) throws Exception {
+	// String importSerialNumber = request.getParameter("importSerialNumber");
+	// List<TbImportGoods>
+	// importGoodsList=addGoodsImportList.selBySerNum(importSerialNumber);
+	// TbImport import1=queryImportList.selectByPrimaryKey(importSerialNumber);
+	//
+	// List<String> topList = new ArrayList<String>();
+	// topList.add("采购订单号");
+	// topList.add("采购日期");
+	// topList.add("订单状态");
+	// topList.add("产品代码");
+	// topList.add("产品名称");
+	// topList.add("数量");
+	// topList.add("正品单价(含税)");
+	// topList.add("折扣率");
+	// topList.add("正价销售总额(含税)");
+	// topList.add("折扣销售总额(含税)");
+	// topList.add("折扣销售总额(未税)");
+	// topList.add("箱皮压箱金额");
+	// topList.add("备注");
+	//
+	// response.reset();
+	// response.setContentType("application/msexcel");
+	// response.setHeader(
+	// "Content-disposition",
+	// "inline;filename=订单明细.xls");// 定义文件名
+	//
+	// HSSFWorkbook wb=new HSSFWorkbook();
+	//
+	// HSSFFont fontTitle = wb.createFont();// 设置标题单元格字体
+	// fontTitle.setFontName("黑体");
+	// fontTitle.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 字体粗细
+	// fontTitle.setFontHeightInPoints((short) 18);// 字体大小
+	//
+	// HSSFFont fontHead1 = wb.createFont();// 设置表头单元格字体大
+	// fontHead1.setFontName("黑体");
+	// fontHead1.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+	// fontHead1.setFontHeightInPoints((short) 12);
+	// HSSFFont fontHead2 = wb.createFont();// 设置表头单元格字体小
+	// fontHead2.setFontName("黑体");
+	// fontHead2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+	// fontHead2.setFontHeightInPoints((short) 11);
+	//
+	// HSSFFont fontCell = wb.createFont();// 主体内容字体
+	// fontCell.setFontName("宋体");
+	// fontCell.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+	// fontCell.setFontHeightInPoints((short) 12);
+	//
+	// HSSFCellStyle styleTitle = wb.createCellStyle();// 标题单元格样式
+	// styleTitle.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 对齐方式
+	// styleTitle.setFont(fontTitle);
+	//
+	// HSSFCellStyle style2 = wb.createCellStyle();// 表头前的统计时间显示样式
+	// style2.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+	// style2.setFont(fontCell);
+	//
+	// HSSFCellStyle styleHead1 = wb.createCellStyle();// 表头样式大
+	// styleHead1.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 对齐方式
+	// styleHead1.setBorderBottom(styleHead1.BORDER_THIN); // 设置边框
+	// styleHead1.setBorderLeft(styleHead1.BORDER_THIN);
+	// styleHead1.setBorderRight(styleHead1.BORDER_THIN);
+	// styleHead1.setBorderTop(styleHead1.BORDER_THIN);
+	// styleHead1.setFont(fontHead1);
+	//
+	// HSSFCellStyle styleHead2 = wb.createCellStyle();// 表头样式小
+	// styleHead2.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 对齐方式
+	// styleHead2.setBorderBottom(styleHead2.BORDER_THIN); // 设置边框
+	// styleHead2.setBorderLeft(styleHead2.BORDER_THIN);
+	// styleHead2.setBorderRight(styleHead2.BORDER_THIN);
+	// styleHead2.setBorderTop(styleHead2.BORDER_THIN);
+	// styleHead2.setFont(fontHead2);
+	//
+	// HSSFCellStyle styleCell = wb.createCellStyle();// 主体内容样式
+	// styleCell.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+	// styleCell.setBorderBottom(styleCell.BORDER_THIN); // 设置边框
+	// styleCell.setBorderLeft(styleCell.BORDER_THIN);
+	// styleCell.setBorderRight(styleCell.BORDER_THIN);
+	// styleCell.setBorderTop(styleCell.BORDER_THIN);
+	// styleCell.setFont(fontCell);
+	//
+	// try {
+	// HSSFRow row;
+	// HSSFCell cell;
+	//
+	// HSSFSheet sheet=wb.createSheet("打印订单"+1);
+	// sheet.setDefaultColumnWidth((short)25);
+	// //表头行
+	// row=sheet.createRow(0);
+	// for (int i = 0; i < topList.size(); i++) {
+	// String str=topList.get(i);
+	// cell=row.createCell((short)i);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleHead1);
+	// cell.setCellValue(str);
+	// }
+	// //主体内容
+	// for (int i = 0; i < importGoodsList.size(); i++) {
+	// TbImportGoods importGoods=importGoodsList.get(i);
+	// row=sheet.createRow(i+1);
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getImportSerialNumber());// 采购订单号
+	//
+	// cell=row.createCell((short) 1);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getImportGoodsCreatetime());// 采购日期
+	//
+	// cell=row.createCell((short) 2);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(import1.getImportStatus());// 订单状态
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getGoodsId());// 产品代码
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getGoodsName());// 产品名称
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getImportGoodsAmount());// 数量
+	// cell=row.createCell((short) 0);
+	//
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getImportGoodsPrice()/1000);// 正品单价(含税)
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getDiscountRate()/1000);// 折扣率
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getTotalPrice()/1000);// 正价销售总额(含税)
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getDiscountDutyTotalPrice()/1000);//
+	// 折扣销售总额(含税)
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getDiscountTotalPrice()/1000);// 折扣销售总额(未税)
+	// cell=row.createCell((short) 0);
+	//
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue(importGoods.getBoxBottleTotalPrice()/1000);// 箱皮压箱金额
+	//
+	// cell=row.createCell((short) 0);
+	// cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+	// cell.setCellStyle(styleCell);
+	// cell.setCellValue("");// 备注
+	// }
+	//
+	// } catch (Exception e) {
+	// // TODO: handle exception
+	// }
+	// wb.write(response.getOutputStream());
+	// response.getOutputStream().flush();
+	// response.getOutputStream().close();
+	// }
 
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception e, HttpServletRequest request) {

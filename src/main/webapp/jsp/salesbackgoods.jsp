@@ -84,13 +84,14 @@
 					<li><a href="<%=path%>/storehouse.html">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="<%=path%>/importController/init.do">货品入库</a></li>
-					<li><a href="<%=path%>/salesController/init.do">销售出库</a></li>
+					<li><a href="<%=path %>/importController/init.do">货品入库下单</a></li>
+					<li><a href="<%=path %>/importController/importInit.do">货品入库</a></li>
+					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
 					<li><a
 						href="<%=path%>/backGoodsController/providerBackInit.do">供应商退货</a></li>
 					<li><a href="<%=path%>/backGoodsController/salesBackInit.do">客户退货</a></li>
-					<li><a href="#">有效期调整</a></li>
-					<li><a href="#">销毁出库</a></li>
+					<!-- <li><a href="#">有效期调整</a></li>
+					<li><a href="#">销毁出库</a></li> -->
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="<%=path%>/recoveryimport.html">回收物入库</a></li>
@@ -190,8 +191,8 @@
 									<td>${salesBacks.salesbackReason}</td>
 									<td><a href="#" data-toggle="modal"
 										data-target="#importgoodsprint">打印</a>/<a href="#"
-										onclick="updateImportData()">修改</a>/<a href="#"
-										onclick="deleteImportData()">删除</a></td>
+										onclick="updateSalesbackData(${salesBacks.salesbackSerialNumber})">修改</a>/<a href="#"
+										onclick="deleteImportData(${salesBacks.salesbackSerialNumber})">删除</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -275,7 +276,7 @@
 						</div>
 
 						<div class="input-group col-xs-1">
-							<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button>
+							<button type="button" class="btn btn-primary" id="suerAdd">确认新增</button>
 						</div>
 					</div>
 				</div>
@@ -298,6 +299,27 @@
 	<script src="<%=_base%>/js/vendor/video.js"></script>
 	<script src="<%=_base%>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
+	
+	function deleteImportData(salesbackSerialNumber){
+		$.ajax({  
+            url:'<%=_base %>/backGoodsController/deleteImportData.do',  
+            type:"post",  
+            async:false,
+            modal : true,
+            showBusi : false,
+            data:{'salesbackSerialNumber':salesbackSerialNumber},
+            success:function(data){  
+            	if($.parseJSON(data).RES_RESULT=="SUCCESS"){
+          		  alert("成功删除入库单");
+          		  location.reload();
+          	  	}else{
+          		  alert("添加删除单失败");
+          	  	}
+			}
+                    
+        });       
+	}
+	
 	function selectGoods(salesSerialNumber){
 		var selOpt = $("#goodsName option");  
 		selOpt.remove();
@@ -311,18 +333,20 @@
                     data:{'salesSerialNumber':salesSerialNumber},
                     success:function(data){  
                     			var json = $.parseJSON(data);
-								var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
-								if(goodsName.length==0){
-									alert("该流水号下没有对应的商品信息");
-								}else {
-									for (var i = 0; i < goodsName.length; i++) {
-    									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
-    								}
-									$("#addgoods").show();
-							        $("#addgoodsbtn").hide();
-							        $("#importgoodsform").hide();
-									}
-								}                            
+                    			if(json.RES_RESULT=="SUCCESS"){
+                    				var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
+    									for (var i = 0; i < goodsName.length; i++) {
+        									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
+        								}
+    									$("#addgoods").show();
+    							        $("#addgoodsbtn").hide();
+    							        $("#importgoodsform").hide();
+    								
+    							}else{
+    								alert("该流水号下没有对应的商品信息");
+    							}      
+                    			}
+								                      
                 });       
 	}
 	
@@ -403,14 +427,23 @@
 		len++;    	
 	}
 	
+	 function deteleGoods(len){
+	  		$("#addGoodsTab tbody tr[id='"+len+"']").remove();
+	  		var _len = $("#addGoodsTab tbody tr").length;
+	  		if(_len==0){
+	  			$("#addgoodstb").hide();
+	  			$("#importgoodsform").show();
+	  			$("#addgoodsbtn").show();
+	  		}
+	  	}
+	
 	function showTable(goodName){    	
     	if (!checkIsNull(goodName)) {
     		var backType=$("#backType").val();
     		var salesSerialNumber=$("#salesSerialNumber").val();
-    		alert(backType);
     		var url='<%=_base%>/backGoodsController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&backType='+backType+'&salesSerialNumber='+salesSerialNumber;
     		$.dialog({
-    			title:'可销售商品',
+    			title:'可换货商品',
     			width:1200,
     			height:700,
     			max:false,
@@ -418,6 +451,18 @@
     			content:'url:'+url
     		});
 		}		
+	}
+	
+	function updateSalesbackData(salesbackSerialNumber) {
+    	var url='<%=_base%>/backGoodsController/updateSalesbackGoodsList.do?salesbackSerialNumber='+salesbackSerialNumber;
+		$.dialog({
+			title:'修改客户退货单',
+			width:900,
+			height:700,
+			max:false,
+			min:false,
+			content:'url:'+url
+		});
 	}
 	
 	function getLocalTime(nS) {
@@ -458,6 +503,25 @@
         $("#delcancle").hide();
         $(".chk").hide();
       });  
+      
+      $("#getBack").click(function(){
+    	  var salIsHidden=$("#importgoodsform").is(":hidden");
+    	  var addbtnIsHidden=$("#addgoodstb").is(":hidden");
+    	  var addGoodIsHidden=$("#addgoods").is(":hidden");
+    	  if (!salIsHidden) {
+    		  $("#importgoods").hide();
+		  }
+    	  if(!addbtnIsHidden){
+    		  $("#addgoods").show();
+    	      $("#addgoodstb").hide();
+    	  }
+		  if(!addGoodIsHidden){
+			  $("#addgoods").hide();
+		      $("#addgoodsbtn").show();
+		      $("#salesgoodsform").show();
+    	  }
+        }); 
+      
       $("#suerAdd").click(function(){
     	  var storageIdList="";
     	  var changeCountList="";
@@ -502,7 +566,6 @@
       $("#addgoodsbtn").click(function(){
     	  var salesSerialNumber=$("#salesSerialNumber").val();
     	  var backReson=$("#backReson").val();
-      		alert(salesSerialNumber);
         	if (checkIsNull(salesSerialNumber)) {
     			alert("请填写销售流水号");
     			return;

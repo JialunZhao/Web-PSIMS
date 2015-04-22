@@ -37,7 +37,7 @@ public class QueryBus implements IQueryBus {
 	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
 	@Resource(name = "tbImportMapper")
-	private TbImportMapper importMapper;
+	private TbImportMapper tbImportMapper;
 	@Resource(name = "customerServiceImpl")
 	private ICustomerService customerService;
 	@Resource(name = "employeeServiceImpl")
@@ -70,7 +70,7 @@ public class QueryBus implements IQueryBus {
 
 	public List<TbImport> queryImport(TbImportExample example) {
 		List<TbImport> importList = new ArrayList<TbImport>();
-		importList = importMapper.selectByExample(example);
+		importList = tbImportMapper.selectByExample(example);
 		for (TbImport import1 : importList) {
 			import1.setImportStatus(CreateIdUtil.getTranslation(import1
 					.getImportStatus()));

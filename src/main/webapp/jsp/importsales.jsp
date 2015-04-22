@@ -191,8 +191,7 @@ String date=sdf.format(new Date());
 									<td>${imports.importBatchNumber }</td>
 									<td>${imports.paymentType }</td>
 									<td>${imports.importStatus }</td>
-									<td><a href="#" data-toggle="modal"
-										data-target="#importgoodsprint">打印</a>/<a href="#"
+									<td><a href="#" onclick="importgoodsprint(${imports.importSerialNumber })">打印</a>/<a href="#"
 										onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
 										href="#"
 										onclick="deleteImportData(${imports.importSerialNumber })">删除</a></td>
@@ -412,6 +411,23 @@ String date=sdf.format(new Date());
 				$("#discountRates").hide();
 			}    		
     	}
+    	
+    	function importgoodsprint(importSerialNumber){
+    		$.ajax({  
+                url:'<%=_base %>/importController/importgoodsprint.do',  
+                type:"post",  
+                async:false,
+                modal : true,
+                showBusi : false,
+                data:{'importSerialNumber':importSerialNumber},
+                success:function(data){  
+                	
+				}
+                        
+            });     
+		}
+    	
+    	
     	function haveBox(haveBoxVal){
     		if (haveBoxVal=='<%=Constants.DiscountMed.YES %>') {
     			$("#haveBoxPrices").show();

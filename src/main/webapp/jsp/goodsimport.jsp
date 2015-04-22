@@ -161,10 +161,13 @@
 			if(checkIsNull(goodsProductionDate)){
 				alert("请填写生产日期");
 				return;
-			}
-			if(checkIsNull(goodsExpirationDate)){
-				alert("请填写失效日期");
-				return;
+			}else {
+				if (checkDataFomat(goodsProductionDate)) {
+					return;
+				}
+	  			var goodsShelfLife=$("#goodsShelfLife").val();
+	  			goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
+	  			$("#goodsExpirationDate").val(goodsExpirationDate);
 			}
 			W.addImportGoodsTab(goodsName,importCount,goodsProductionDate,goodsExpirationDate);
 			api.close();

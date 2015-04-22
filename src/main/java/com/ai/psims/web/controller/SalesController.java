@@ -87,11 +87,11 @@ public class SalesController extends BaseController {
 			goodsNameSet.add(storagecheck.getGoodsName());
 		}
 		if (storagechecksList == null && storagechecksList.size() == 0) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			// data.put("list", JSON.toJSONString(storagechecksList));
 			data.put("goodsNameSet", JSON.toJSONString(goodsNameSet));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -103,11 +103,11 @@ public class SalesController extends BaseController {
 		Storagecheck storagechecks = new Storagecheck();
 		storagechecks = salesBusiness.selectByKey(Integer.parseInt(storageId));
 		if (storagechecks == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			// data.put("list", JSON.toJSONString(storagechecksList));
 			data.put("storagechecks", JSON.toJSONString(storagechecks));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -142,10 +142,10 @@ public class SalesController extends BaseController {
 		criteria.andSalesStatusNotEqualTo("00");
 		salesList = salesBusiness.selectByExample(salesExample);
 		if (salesList == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("salesList", JSON.toJSONString(salesList));
-			responseSuccess(response, "*****", data);
+			responseSuccess(response, "SUCCESS*", data);
 		}
 	}
 
@@ -229,9 +229,9 @@ public class SalesController extends BaseController {
 		String result = salesBusiness.addSalesList(addGoodsBean);
 		JSONObject data = new JSONObject();
 		if (result == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 
 	}
@@ -243,9 +243,9 @@ public class SalesController extends BaseController {
 		String result = salesBusiness.deleteSalesData(salesSerialNumber);
 		JSONObject data = new JSONObject();
 		if (result == null) {
-			responseFailed(response, "....", data);
+			responseFailed(response, "ERROR", data);
 		} else {
-			responseSuccess(response, "****", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 
 	}

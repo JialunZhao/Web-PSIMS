@@ -95,13 +95,13 @@
 				goodsProductionDate=$("#goodsProductionDate"+i).text();
 				salesCount=$("#salesCount"+i).text();
 				storeCount=$("#storeCount"+i).text();
-				if (salesCount<changeSalesCount) {
+				if (parseInt(salesCount)<parseInt(changeSalesCount)) {
 					alert("换货数量大于销售数量");
 					$("#changeSalesCount"+i).val("");
 					j++;
 					return;
 				}
-				if (changeSalesCount>storeCount) {
+				if (parseInt(changeSalesCount)>parseInt(storeCount)) {
 					alert("库存不足");
 					$("#changeSalesCount"+i).val("");
 					j++;
@@ -141,13 +141,13 @@
 				goodsProductionDate=$("#goodsProductionDate"+i).text();
 				salesCount=$("#salesCount"+i).text();
 				storeCount=$("#storeCount"+i).text();
-				if (salesCount<changeSalesCount) {
+				if (parseInt(salesCount)<parseInt(changeSalesCount)) {
 					alert("换货数量大于销售数量");
 					$("#changeSalesCount"+i).val("");
 					j++;
 					return;
 				}
-				if (changeSalesCount>storeCount) {
+				if (parseInt(changeSalesCount)>parseInt(storeCount)) {
 					alert("库存不足");
 					$("#changeSalesCount"+i).val("");
 					j++;

@@ -17,47 +17,47 @@ import com.ai.psims.web.service.IImportGoodsService;
 @Service
 public class ImportGoodsServiceImpl implements IImportGoodsService {
 	@Resource(name = "tbImportGoodsMapper")
-	private TbImportGoodsMapper importGoodsMapper;
+	private TbImportGoodsMapper tbImportGoodsMapper;
 	@Resource(name = "tbImportGoodsLogMapper")
-	private TbImportGoodsLogMapper importGoodsLogMapper;
+	private TbImportGoodsLogMapper tbImportGoodsLogMapper;
 
 	public int updateImportGoods(TbImportGoods importGoods) {
 		insertToLog(importGoods);
-		return importGoodsMapper.updateByPrimaryKey(importGoods);
+		return tbImportGoodsMapper.updateByPrimaryKey(importGoods);
 	}
 
 	public int updateByKey(TbImportGoods importGoods) {
 		insertToLog(importGoods);
-		return importGoodsMapper.updateByPrimaryKeySelective(importGoods);
+		return tbImportGoodsMapper.updateByPrimaryKeySelective(importGoods);
 	}
 
 	public TbImportGoods selectByPrimaryKey(Integer importGoodsId) {
-		return importGoodsMapper.selectByPrimaryKey(importGoodsId);
+		return tbImportGoodsMapper.selectByPrimaryKey(importGoodsId);
 	}
 
 	public int deleteByPrimaryKey(Integer importGoodsId) {
 		TbImportGoods importGoods = new TbImportGoods();
-		importGoods = importGoodsMapper.selectByPrimaryKey(importGoodsId);
+		importGoods = tbImportGoodsMapper.selectByPrimaryKey(importGoodsId);
 		insertToLog(importGoods);
 		// 失效时间为当前时间
 		importGoods.setImportGoodsEndtime(new Date());
-		return importGoodsMapper.updateByPrimaryKeySelective(importGoods);
+		return tbImportGoodsMapper.updateByPrimaryKeySelective(importGoods);
 	}
 
 	@Override
 	public List<TbImportGoods> selectByExample(TbImportGoodsExample example) {
-		return importGoodsMapper.selectByExample(example);
+		return tbImportGoodsMapper.selectByExample(example);
 	}
 
 	@Override
 	public int insertImportGoods(TbImportGoods importGoods) {
-		return importGoodsMapper.insert(importGoods);
+		return tbImportGoodsMapper.insert(importGoods);
 	}
 
 	@Override
 	public int insertToLog(TbImportGoods importGoods) {
 		TbImportGoods importGood = new TbImportGoods();
-		importGood = importGoodsMapper.selectByPrimaryKey(importGoods
+		importGood = tbImportGoodsMapper.selectByPrimaryKey(importGoods
 				.getImportGoodsId());
 		TbImportGoodsLog log = new TbImportGoodsLog();
 
@@ -84,7 +84,7 @@ public class ImportGoodsServiceImpl implements IImportGoodsService {
 		log.setBoxBottlePrice(importGood.getBoxBottlePrice());
 		log.setResImportGoodsAmount(importGood.getResImportGoodsAmount());
 
-		return importGoodsLogMapper.insertSelective(log);
+		return tbImportGoodsLogMapper.insertSelective(log);
 	}
 
 }

@@ -17,41 +17,41 @@ import com.ai.psims.web.service.IImportService;
 @Service
 public class ImportServiceImpl implements IImportService {
 	@Resource(name = "tbImportMapper")
-	private TbImportMapper importMapper;
+	private TbImportMapper tbImportMapper;
 	@Resource(name = "tbImportLogMapper")
-	private TbImportLogMapper importLogMapper;
+	private TbImportLogMapper tbImportLogMapper;
 
 	public int InsertImport(TbImport import1) {
-		return importMapper.insert(import1);
+		return tbImportMapper.insert(import1);
 	}
 
 	public TbImport selectByPrimaryKey(String importSerialNumber) {
-		return importMapper.selectByPrimaryKey(importSerialNumber);
+		return tbImportMapper.selectByPrimaryKey(importSerialNumber);
 	}
 
 	public int updateImport(TbImport import1) {
 		insertToLog(import1);
-		return importMapper.updateByPrimaryKey(import1);
+		return tbImportMapper.updateByPrimaryKey(import1);
 	}
 
 	public int updateByKey(TbImport import1) {
 		insertToLog(import1);
-		return importMapper.updateByPrimaryKeySelective(import1);
+		return tbImportMapper.updateByPrimaryKeySelective(import1);
 	}
 
 	public int deleteImport(String importSerialNumber) {
 		TbImport import1 = new TbImport();
-		import1 = importMapper.selectByPrimaryKey(importSerialNumber);
+		import1 = tbImportMapper.selectByPrimaryKey(importSerialNumber);
 		insertToLog(import1);
 		// 00-失效；01-有效
 		import1.setImportStatus("00");
-		return importMapper.updateByPrimaryKeySelective(import1);
+		return tbImportMapper.updateByPrimaryKeySelective(import1);
 	}
 
 	@Override
 	public int insertToLog(TbImport import1) {
 		TbImport imports = new TbImport();
-		imports = importMapper.selectByPrimaryKey(import1
+		imports = tbImportMapper.selectByPrimaryKey(import1
 				.getImportSerialNumber());
 		TbImportLog log = new TbImportLog();
 		log.setImportBatchNumber(imports.getImportBatchNumber());
@@ -67,17 +67,17 @@ public class ImportServiceImpl implements IImportService {
 		log.setProviderId(imports.getProviderId());
 		log.setProviderName(imports.getProviderName());
 
-		return importLogMapper.insertSelective(log);
+		return tbImportLogMapper.insertSelective(log);
 	}
 
 	@Override
 	public List<TbImport> selectByExample(TbImportExample example) {
-		return importMapper.selectByExample(example);
+		return tbImportMapper.selectByExample(example);
 	}
 
 	@Override
 	public String getImportSerialNumber(String importSerialNumber) {
-		return importMapper.getImportSerialNumber(importSerialNumber);
+		return tbImportMapper.getImportSerialNumber(importSerialNumber);
 	}
 
 }

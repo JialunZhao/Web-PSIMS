@@ -39,7 +39,6 @@ public class UpdateImportDemo implements Serializable {
 	public UpdateImportDemo(List<TbImportGoods> importGoodsLists,
 			String providerId2, String paymentType2, String importStatus2,
 			String payTime2, String importSerialNumber2, String providerName2) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getStorehouseName() {

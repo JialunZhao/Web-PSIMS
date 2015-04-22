@@ -143,6 +143,7 @@ function goods2customer(obj) {
 		success : function(data) {
 			console.dir(data);
 			$('#g2cGoodsName').html(goodsName + "-销售价格配置");
+			$("#tb").empty();
 
 			$('#tmpGoodId').val(goodsId);
 			$('#tmpGoodsName').val(goodsName);
@@ -173,7 +174,7 @@ function addgoods2customer(obj) {
 					$("#tb")
 							.append(
 									'<tr><td>'
-											+ '<select  id="addGoods2Customer_select" name="addGoods2Customer_select"><option value="0">请选择客户：</option></select>'
+											+ '<select name="addGoods2Customer_select"><option value="0">请选择客户：</option></select>'
 											+ '</td><td>'
 											+ $('#tmpGoodsActualCost').val()
 											+ '</td><td>'
@@ -184,7 +185,7 @@ function addgoods2customer(obj) {
 											+ '<td><a>保存</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
-						$('#addGoods2Customer_select').append(
+						$("select:last").append(
 								'<option value="' + data[i].customerId + '">'
 										+ data[i].customerName + '</option>');
 					}

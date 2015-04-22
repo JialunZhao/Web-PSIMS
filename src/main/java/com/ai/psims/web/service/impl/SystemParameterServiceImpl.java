@@ -30,7 +30,6 @@ public class SystemParameterServiceImpl implements ISystemParameterService {
 
 	@Override
 	public TbSystemParameter getSysById(int paramId) {
-		// TODO Auto-generated method stub
 		return systemParameterMapper.selectByPrimaryKey(paramId);
 	}
 

@@ -86,13 +86,14 @@
 					<li><a href="<%=path%>/storehouse.html">仓库管理</a></li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="<%=path%>/importController/init.do">货品入库</a></li>
-					<li><a href="<%=path%>/salesController/init.do">销售出库</a></li>
+					<li><a href="<%=path %>/importController/init.do">货品入库下单</a></li>
+					<li><a href="<%=path %>/importController/importInit.do">货品入库</a></li>
+					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
 					<li><a
 						href="<%=path%>/backGoodsController/providerBackInit.do">供应商退货</a></li>
 					<li><a href="<%=path%>/backGoodsController/salesBackInit.do">客户退货</a></li>
-					<li><a href="#">有效期调整</a></li>
-					<li><a href="#">销毁出库</a></li>
+					<!-- <li><a href="#">有效期调整</a></li>
+					<li><a href="#">销毁出库</a></li> -->
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a href="<%=path%>/recoveryimport.html">回收物入库</a></li>
