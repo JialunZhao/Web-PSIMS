@@ -253,19 +253,19 @@
 					 var data = [
 					        {
 					            value: A,
-					            color:"#637b85"
+					            color:"#c62f29"
 					        },
 					        {
 					            value : B,
-					            color : "#2c9c69"
-					        },
-					        {
-					            value : C,
 					            color : "#dbba34"
 					        },
 					        {
+					            value : C,
+					            color : "#637b85"
+					        },
+					        {
 					            value : D,
-					            color : "#c62f29"
+					            color : "#2c9c69"
 					        }
 					      ]
 			
@@ -308,19 +308,19 @@
 				      var data2 = [
 				        {
 				            value: A1,
-				            color:"#637b85"
+				            color:"#c62f29"
 				        },
 				        {
 				            value : B1,
-				            color : "#2c9c69"
-				        },
-				        {
-				            value : C1,
 				            color : "#dbba34"
 				        },
 				        {
+				            value : C1,
+				            color : "#637b85"
+				        },
+				        {
 				            value : D1,
-				            color : "#c62f29"
+				            color : "#2c9c69"
 				        }
 				      ]
 

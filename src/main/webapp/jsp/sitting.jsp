@@ -13,6 +13,7 @@
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="p_aa">
+		<button type="button" class="btn btn-primary" onclick="add('p_aa')">新增基本单位</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -24,15 +25,16 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:set value="0" var="seq"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pKey == 'p_aa' }">
 							<tr>
+							<c:set value="${seq + 1}" var="seq"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
-								<td><c:out value="${s.paramId}" /></td>
+								<td><c:out value="${seq}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td><a href="#" data-toggle="modal"
-									onclick="add(${s.pKey})">新增</a>/
+								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
@@ -43,6 +45,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_bb">
+		<button type="button" class="btn btn-primary" onclick="add('p_bb')">新增回收类型</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -54,15 +57,16 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:set value="0" var="sqe1"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pKey == 'p_bb' }">
 							<tr>
+							<c:set value="${seq1 + 1}" var="seq1"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
-								<td><c:out value="${s.paramId}" /></td>
+								<td><c:out value="${seq1}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td><a href="#" data-toggle="modal"
-									onclick="add(${s.pKey})">新增</a>/
+								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
@@ -73,6 +77,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_cc">
+		<button type="button" class="btn btn-primary" onclick="add('p_cc')">新增支付方式</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -84,15 +89,16 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:set value="0" var="sqe2"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pKey == 'p_cc' }">
 							<tr>
+								<c:set value="${sqe2 + 1}" var="sqe2"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
-								<td><c:out value="${s.paramId}" /></td>
+								<td><c:out value="${sqe2}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td><a href="#" data-toggle="modal"
-									onclick="add(${s.pKey})">新增</a>/
+								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
@@ -103,6 +109,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_dd">
+		<button type="button" class="btn btn-primary" onclick="add('p_dd')">新增收款方式</button>
 		<table class="table table-striped">
 				<thead>
 					<tr>
@@ -114,15 +121,16 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:set value="0" var="sqe3"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pKey == 'p_dd' }">
 							<tr>
+								<c:set value="${sqe3 + 1}" var="sqe3"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
-								<td><c:out value="${s.paramId}" /></td>
+								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td><a href="#" data-toggle="modal"
-									onclick="add(${s.pKey})">新增</a>/
+								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
@@ -133,6 +141,38 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_ee">
+		<button type="button" class="btn btn-primary" onclick="add('p_ee')">新增奖金池</button>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="chk" style="display: none"><input type="checkbox"
+							aria-label="..."></th>
+						<th>编号</th>
+						<th>奖金池公司</th>
+						<th>奖金池额度</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:set value="0" var="sqe3"></c:set>
+					<c:forEach items="${sitting}" var="s" step="1">
+						<c:if test="${s.pKey == 'p_ee' }">
+							<tr>
+								<c:set value="${sqe3 + 1}" var="sqe3"></c:set>
+								<td class="chk" style="display: none"><input
+									type="checkbox" aria-label="..."></td>
+								<td><c:out value="${sqe3}" /></td>
+								<td><c:out value="${s.ppDesc}" /></td>
+								<td><c:out value="${s.ppValueint}" /></td>
+								<td>
+									<a href="#" data-toggle="modal"
+									onclick="chenge(${s.paramId})">修改</a>/ <a
+									href="${s.paramId}/delete.do">删除</a></td>
+							</tr>
+						</c:if>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 		
 	</div>
@@ -244,11 +284,14 @@
 		})
 	}
 	function add(pKey) {
-// 		alert("dfd");
-		var id = pKey;
-		$("#pKey").value=pKey;
-		$("#addrecoveryimport").modal(pKey);
-		alert(pKey);
+// 		alert(pKey);
+		if(pKey=="p_ee"){
+			
+			alert("dfdfd");
+		}
+		$("#addrecoveryimport").modal();
+		$("#pKey").attr("value",pKey);
+// 		alert("fdf");
 	}
 	function update(){
 		var obj = {

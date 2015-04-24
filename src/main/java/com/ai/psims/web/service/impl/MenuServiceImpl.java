@@ -20,6 +20,7 @@ public class MenuServiceImpl implements IMenuService {
 	@Override
 	public List<TbMenu> getMenu() {
 		TbMenuExample example = new TbMenuExample();
+		example.setOrderByClause("menu_id");
 		return tbMenuMapper.selectByExample(example);
 	}
 

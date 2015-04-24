@@ -17,7 +17,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="${ctx}/img/favicon.ico">
-<title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
+<title>北京市金瑞超达商贸有限公司-食品库存管理系统</title>
 <META HTTP-EQUIV="pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
 <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
@@ -51,7 +51,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#" onclick="main()">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
+				<a class="navbar-brand" href="#" onclick="main()">北京市金瑞超达商贸有限公司-食品库存管理系统</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul id='title' class="nav navbar-nav navbar-right">

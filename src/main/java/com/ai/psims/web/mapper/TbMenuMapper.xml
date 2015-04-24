@@ -86,7 +86,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null" >
-      order by ${orderByClause}
+      order by ${orderByClause} desc
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbMenuExample" >

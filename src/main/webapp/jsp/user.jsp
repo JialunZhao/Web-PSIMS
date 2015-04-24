@@ -102,8 +102,8 @@
 									<td>
 										<priv:privilege power="员工权限.增删改">
 										<a href="#" data-toggle="modal" onclick="chenge(${u.employeeId})">修改</a>/
-										</priv:privilege>
 										<a href="${u.employeeId}/delete.do">删除</a>
+										</priv:privilege>
 									</td>
 								</tr>
 
