@@ -16,4 +16,7 @@ public interface ICustomerService {
 	public int backupCustomerInfo(TbCustomer customerBackup);
 
 	public List<TbCustomer> queryCustomer(TbCustomerExample customerQuery);
+
+	public TbCustomer selectCustomerInfo(Integer customerId);
+
 }

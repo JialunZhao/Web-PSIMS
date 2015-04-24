@@ -40,10 +40,13 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	@Override
 	public Goods selectByKey(Integer goodsId) {
+		
 		return goodsMapper.selectByPrimaryKey(goodsId);
+		
 	}
 	
 	//////////////////////////////
+
 	
 	@Override
 	public int insertGoodsInfo(TbGoods goodsaddinfo) {
@@ -125,4 +128,9 @@ public class GoodsServiceImpl implements IGoodsService {
 		return tbGoodsLogMapper.insert(tbGoodsLog);
 	}
 	
+	@Override
+	public TbGoods selectGoodsInfo(Integer goodsId) {
+		logger.info("insertGoodsInfo");
+		return tbGoodsMapper.selectByPrimaryKey(goodsId);
+	}
 }

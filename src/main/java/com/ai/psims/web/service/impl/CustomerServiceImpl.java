@@ -114,4 +114,9 @@ public class CustomerServiceImpl implements ICustomerService {
 		return tbCustomerLogMapper.insert(tbCustomerLog);
 	}
 
+	@Override
+	public TbCustomer selectCustomerInfo(Integer customerId) {
+		return tbCustomerMapper.selectByPrimaryKey(customerId);
+	}
+
 }

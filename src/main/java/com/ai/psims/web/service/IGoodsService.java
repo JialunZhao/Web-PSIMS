@@ -23,4 +23,6 @@ public interface IGoodsService {
 	public int backupGoodsInfo(TbGoods goodsBackup);
 
 	public List<TbGoods> queryGoods(TbGoodsExample goodsQuery);
+
+	public TbGoods selectGoodsInfo(Integer goodsId);
 }

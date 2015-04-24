@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.TbImportGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbImportGoods" >
+    <id column="import_goods_id" property="importGoodsId" jdbcType="INTEGER" />
+    <result column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="import_goods_type" property="importGoodsType" jdbcType="VARCHAR" />
+    <result column="import_goods_amount" property="importGoodsAmount" jdbcType="INTEGER" />
+    <result column="import_goods_unit" property="importGoodsUnit" jdbcType="VARCHAR" />
+    <result column="import_goods_price" property="importGoodsPrice" jdbcType="BIGINT" />
+    <result column="import_discount_amount" property="importDiscountAmount" jdbcType="BIGINT" />
+    <result column="import_goods_createtime" property="importGoodsCreatetime" jdbcType="DATE" />
+    <result column="import_goods_modifytime" property="importGoodsModifytime" jdbcType="DATE" />
+    <result column="import_goods_endtime" property="importGoodsEndtime" jdbcType="DATE" />
+    <result column="import_goods_remark" property="importGoodsRemark" jdbcType="VARCHAR" />
+    <result column="is_discount" property="isDiscount" jdbcType="VARCHAR" />
+    <result column="is_box_bottle" property="isBoxBottle" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="BIGINT" />
+    <result column="discount_duty_total_price" property="discountDutyTotalPrice" jdbcType="BIGINT" />
+    <result column="discount_total_price" property="discountTotalPrice" jdbcType="BIGINT" />
+    <result column="discount_rate" property="discountRate" jdbcType="BIGINT" />
+    <result column="box_bottle_price" property="boxBottlePrice" jdbcType="BIGINT" />
+    <result column="box_bottle_total_price" property="boxBottleTotalPrice" jdbcType="BIGINT" />
+    <result column="res_import_goods_amount" property="resImportGoodsAmount" jdbcType="INTEGER" />
+    <result column="goods_shelf_life" property="goodsShelfLife" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    import_goods_id, import_serial_number, goods_id, goods_name, import_goods_type, import_goods_amount, 
+    import_goods_unit, import_goods_price, import_discount_amount, import_goods_createtime, 
+    import_goods_modifytime, import_goods_endtime, import_goods_remark, is_discount, 
+    is_box_bottle, total_price, discount_duty_total_price, discount_total_price, discount_rate, 
+    box_bottle_price, box_bottle_total_price, res_import_goods_amount, goods_shelf_life
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbImportGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_import_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_import_goods
+    where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_import_goods
+    where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbImportGoodsExample" >
+    delete from tb_import_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.TbImportGoods" >
+    insert into tb_import_goods (import_goods_id, import_serial_number, 
+      goods_id, goods_name, import_goods_type, 
+      import_goods_amount, import_goods_unit, import_goods_price, 
+      import_discount_amount, import_goods_createtime, 
+      import_goods_modifytime, import_goods_endtime, import_goods_remark, 
+      is_discount, is_box_bottle, total_price, 
+      discount_duty_total_price, discount_total_price, 
+      discount_rate, box_bottle_price, box_bottle_total_price, 
+      res_import_goods_amount, goods_shelf_life)
+    values (#{importGoodsId,jdbcType=INTEGER}, #{importSerialNumber,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{importGoodsType,jdbcType=VARCHAR}, 
+      #{importGoodsAmount,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}, #{importGoodsPrice,jdbcType=BIGINT}, 
+      #{importDiscountAmount,jdbcType=BIGINT}, #{importGoodsCreatetime,jdbcType=DATE}, 
+      #{importGoodsModifytime,jdbcType=DATE}, #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR}, 
+      #{isDiscount,jdbcType=VARCHAR}, #{isBoxBottle,jdbcType=VARCHAR}, #{totalPrice,jdbcType=BIGINT}, 
+      #{discountDutyTotalPrice,jdbcType=BIGINT}, #{discountTotalPrice,jdbcType=BIGINT}, 
+      #{discountRate,jdbcType=BIGINT}, #{boxBottlePrice,jdbcType=BIGINT}, #{boxBottleTotalPrice,jdbcType=BIGINT}, 
+      #{resImportGoodsAmount,jdbcType=INTEGER}, #{goodsShelfLife,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbImportGoods" >
+    insert into tb_import_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="importGoodsId != null" >
+        import_goods_id,
+      </if>
+      <if test="importSerialNumber != null" >
+        import_serial_number,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="importGoodsType != null" >
+        import_goods_type,
+      </if>
+      <if test="importGoodsAmount != null" >
+        import_goods_amount,
+      </if>
+      <if test="importGoodsUnit != null" >
+        import_goods_unit,
+      </if>
+      <if test="importGoodsPrice != null" >
+        import_goods_price,
+      </if>
+      <if test="importDiscountAmount != null" >
+        import_discount_amount,
+      </if>
+      <if test="importGoodsCreatetime != null" >
+        import_goods_createtime,
+      </if>
+      <if test="importGoodsModifytime != null" >
+        import_goods_modifytime,
+      </if>
+      <if test="importGoodsEndtime != null" >
+        import_goods_endtime,
+      </if>
+      <if test="importGoodsRemark != null" >
+        import_goods_remark,
+      </if>
+      <if test="isDiscount != null" >
+        is_discount,
+      </if>
+      <if test="isBoxBottle != null" >
+        is_box_bottle,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="discountDutyTotalPrice != null" >
+        discount_duty_total_price,
+      </if>
+      <if test="discountTotalPrice != null" >
+        discount_total_price,
+      </if>
+      <if test="discountRate != null" >
+        discount_rate,
+      </if>
+      <if test="boxBottlePrice != null" >
+        box_bottle_price,
+      </if>
+      <if test="boxBottleTotalPrice != null" >
+        box_bottle_total_price,
+      </if>
+      <if test="resImportGoodsAmount != null" >
+        res_import_goods_amount,
+      </if>
+      <if test="goodsShelfLife != null" >
+        goods_shelf_life,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="importGoodsId != null" >
+        #{importGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="importSerialNumber != null" >
+        #{importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsType != null" >
+        #{importGoodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsAmount != null" >
+        #{importGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="importGoodsUnit != null" >
+        #{importGoodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsPrice != null" >
+        #{importGoodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="importDiscountAmount != null" >
+        #{importDiscountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="importGoodsCreatetime != null" >
+        #{importGoodsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsModifytime != null" >
+        #{importGoodsModifytime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsEndtime != null" >
+        #{importGoodsEndtime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsRemark != null" >
+        #{importGoodsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDiscount != null" >
+        #{isDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="isBoxBottle != null" >
+        #{isBoxBottle,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountDutyTotalPrice != null" >
+        #{discountDutyTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountTotalPrice != null" >
+        #{discountTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountRate != null" >
+        #{discountRate,jdbcType=BIGINT},
+      </if>
+      <if test="boxBottlePrice != null" >
+        #{boxBottlePrice,jdbcType=BIGINT},
+      </if>
+      <if test="boxBottleTotalPrice != null" >
+        #{boxBottleTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="resImportGoodsAmount != null" >
+        #{resImportGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsShelfLife != null" >
+        #{goodsShelfLife,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.TbImportGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from tb_import_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_import_goods
+    <set >
+      <if test="record.importGoodsId != null" >
+        import_goods_id = #{record.importGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.importSerialNumber != null" >
+        import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importGoodsType != null" >
+        import_goods_type = #{record.importGoodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importGoodsAmount != null" >
+        import_goods_amount = #{record.importGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.importGoodsUnit != null" >
+        import_goods_unit = #{record.importGoodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.importGoodsPrice != null" >
+        import_goods_price = #{record.importGoodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.importDiscountAmount != null" >
+        import_discount_amount = #{record.importDiscountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.importGoodsCreatetime != null" >
+        import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="record.importGoodsModifytime != null" >
+        import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=DATE},
+      </if>
+      <if test="record.importGoodsEndtime != null" >
+        import_goods_endtime = #{record.importGoodsEndtime,jdbcType=DATE},
+      </if>
+      <if test="record.importGoodsRemark != null" >
+        import_goods_remark = #{record.importGoodsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDiscount != null" >
+        is_discount = #{record.isDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBoxBottle != null" >
+        is_box_bottle = #{record.isBoxBottle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountDutyTotalPrice != null" >
+        discount_duty_total_price = #{record.discountDutyTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountTotalPrice != null" >
+        discount_total_price = #{record.discountTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.discountRate != null" >
+        discount_rate = #{record.discountRate,jdbcType=BIGINT},
+      </if>
+      <if test="record.boxBottlePrice != null" >
+        box_bottle_price = #{record.boxBottlePrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.boxBottleTotalPrice != null" >
+        box_bottle_total_price = #{record.boxBottleTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.resImportGoodsAmount != null" >
+        res_import_goods_amount = #{record.resImportGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsShelfLife != null" >
+        goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_import_goods
+    set import_goods_id = #{record.importGoodsId,jdbcType=INTEGER},
+      import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      import_goods_type = #{record.importGoodsType,jdbcType=VARCHAR},
+      import_goods_amount = #{record.importGoodsAmount,jdbcType=INTEGER},
+      import_goods_unit = #{record.importGoodsUnit,jdbcType=VARCHAR},
+      import_goods_price = #{record.importGoodsPrice,jdbcType=BIGINT},
+      import_discount_amount = #{record.importDiscountAmount,jdbcType=BIGINT},
+      import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=DATE},
+      import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=DATE},
+      import_goods_endtime = #{record.importGoodsEndtime,jdbcType=DATE},
+      import_goods_remark = #{record.importGoodsRemark,jdbcType=VARCHAR},
+      is_discount = #{record.isDiscount,jdbcType=VARCHAR},
+      is_box_bottle = #{record.isBoxBottle,jdbcType=VARCHAR},
+      total_price = #{record.totalPrice,jdbcType=BIGINT},
+      discount_duty_total_price = #{record.discountDutyTotalPrice,jdbcType=BIGINT},
+      discount_total_price = #{record.discountTotalPrice,jdbcType=BIGINT},
+      discount_rate = #{record.discountRate,jdbcType=BIGINT},
+      box_bottle_price = #{record.boxBottlePrice,jdbcType=BIGINT},
+      box_bottle_total_price = #{record.boxBottleTotalPrice,jdbcType=BIGINT},
+      res_import_goods_amount = #{record.resImportGoodsAmount,jdbcType=INTEGER},
+      goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbImportGoods" >
+    update tb_import_goods
+    <set >
+      <if test="importSerialNumber != null" >
+        import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsType != null" >
+        import_goods_type = #{importGoodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsAmount != null" >
+        import_goods_amount = #{importGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="importGoodsUnit != null" >
+        import_goods_unit = #{importGoodsUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="importGoodsPrice != null" >
+        import_goods_price = #{importGoodsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="importDiscountAmount != null" >
+        import_discount_amount = #{importDiscountAmount,jdbcType=BIGINT},
+      </if>
+      <if test="importGoodsCreatetime != null" >
+        import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsModifytime != null" >
+        import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsEndtime != null" >
+        import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
+      </if>
+      <if test="importGoodsRemark != null" >
+        import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDiscount != null" >
+        is_discount = #{isDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="isBoxBottle != null" >
+        is_box_bottle = #{isBoxBottle,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountDutyTotalPrice != null" >
+        discount_duty_total_price = #{discountDutyTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountTotalPrice != null" >
+        discount_total_price = #{discountTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="discountRate != null" >
+        discount_rate = #{discountRate,jdbcType=BIGINT},
+      </if>
+      <if test="boxBottlePrice != null" >
+        box_bottle_price = #{boxBottlePrice,jdbcType=BIGINT},
+      </if>
+      <if test="boxBottleTotalPrice != null" >
+        box_bottle_total_price = #{boxBottleTotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="resImportGoodsAmount != null" >
+        res_import_goods_amount = #{resImportGoodsAmount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsShelfLife != null" >
+        goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER},
+      </if>
+    </set>
+    where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbImportGoods" >
+    update tb_import_goods
+    set import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      import_goods_type = #{importGoodsType,jdbcType=VARCHAR},
+      import_goods_amount = #{importGoodsAmount,jdbcType=INTEGER},
+      import_goods_unit = #{importGoodsUnit,jdbcType=VARCHAR},
+      import_goods_price = #{importGoodsPrice,jdbcType=BIGINT},
+      import_discount_amount = #{importDiscountAmount,jdbcType=BIGINT},
+      import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
+      import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
+      import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
+      import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
+      is_discount = #{isDiscount,jdbcType=VARCHAR},
+      is_box_bottle = #{isBoxBottle,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=BIGINT},
+      discount_duty_total_price = #{discountDutyTotalPrice,jdbcType=BIGINT},
+      discount_total_price = #{discountTotalPrice,jdbcType=BIGINT},
+      discount_rate = #{discountRate,jdbcType=BIGINT},
+      box_bottle_price = #{boxBottlePrice,jdbcType=BIGINT},
+      box_bottle_total_price = #{boxBottleTotalPrice,jdbcType=BIGINT},
+      res_import_goods_amount = #{resImportGoodsAmount,jdbcType=INTEGER},
+      goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER}
+    where import_goods_id = #{importGoodsId,jdbcType=INTEGER}
+  </update>
+</mapper>

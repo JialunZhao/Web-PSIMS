@@ -467,7 +467,7 @@ public class GoodsController extends BaseController {
 		}
 		return tbGoodss;
 	}
-	
+	/////////////////////////////////////
 	/**
 	 * 商品管理-查询商品与客户信息
 	 */
@@ -537,37 +537,46 @@ public class GoodsController extends BaseController {
 	
 	
 	/**
-	 * 商品管理-添加商品与客户信息--2.保存新增的商品与客户信息
+	 * 商品管理-添加商品与客户信息--2.保存新增或修改的商品与客户信息
 	 */
-	@RequestMapping(value = "/addGoods2CustomerSave", method = RequestMethod.POST)
-	public @ResponseBody List<TbCustomer> addGoods2CustomerSave(HttpServletRequest request,
+	@RequestMapping(value = "/Goods2CustomerSave", method = RequestMethod.POST)
+	public @ResponseBody int Goods2CustomerSave(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome queryGoods!-------------");
 		logger.info("------------1.初始化-------------");
-		List<TbCustomer> tbCustomers = new ArrayList<TbCustomer>();
-		TbCustomerExample tbCustomerExample = new TbCustomerExample();
-		TbCustomerExample.Criteria criteria = tbCustomerExample.createCriteria();
+		List<TbGoods2customer> tbGoods2CustomersInsert = new ArrayList<TbGoods2customer>();
+		List<TbGoods2customer> tbGoods2CustomersUpdate = new ArrayList<TbGoods2customer>();
+		int tbGoods2CustomersInsertnum = 0;
+		int tbGoods2CustomersUpdatenum = 0;
 		logger.info("------------2.获取参数-------------");
-		String[] goodsId = request.getParameterValues("modify_goodsId");
-		String[] goodsId2 = request.getParameterValues("modify_goodsId2");
-//		String goodsId = request.getParameter("modify_goodsId") == "" ? null : request.getParameter("modify_goodsId");
-
+		String goodsId = request.getParameter("goodsId") == "" ? null : request.getParameter("goodsId");
+		String[] goods2customerId = request.getParameterValues("goods2customerId");
+		String[] customerId = request.getParameterValues("customerId");
+		String[] goodsDiscountAmount = request.getParameterValues("goodsDiscountAmount");
+		String[] goodsProfit = request.getParameterValues("goodsProfit");
 		logger.info("------------3.数据校验-------------");
-
 		logger.info("------------4.业务处理-------------");
-		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
-		criteria.andStatusNotEqualTo("00");
-		tbCustomers = goods2CustomerBusiness.customerListQuery(tbCustomerExample);
+		for (int i = 0; i < goods2customerId.length; i++) {
+			TbGoods2customer tbGoods2customer = new TbGoods2customer();
+			tbGoods2customer.setGoodsId(Integer.parseInt(goodsId));
+			tbGoods2customer.setCustomerId(Integer.parseInt(customerId[i]));
+			tbGoods2customer.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount[i]));
+			tbGoods2customer.setGoodsProfit(Long.parseLong(goodsProfit[i]));
+			if (goods2customerId[i].isEmpty()) {
+				tbGoods2CustomersInsert.add(tbGoods2customer);
+			}
+			tbGoods2CustomersUpdate.add(tbGoods2customer);
+		}
+		tbGoods2CustomersInsertnum = goods2CustomerBusiness.insertGoods2CustomerInfo(tbGoods2CustomersInsert);
+		logger.info("------------新增了：+ "+tbGoods2CustomersInsertnum +"条记录-------------");
+		tbGoods2CustomersUpdatenum = goods2CustomerBusiness.updateGoods2CustomerInfo(tbGoods2CustomersInsert);
+		logger.info("------------更新了：+ "+tbGoods2CustomersUpdatenum +"条记录-------------");
+
 		logger.info("------------5.返回结果-------------");
-		if (tbCustomers == null || tbCustomers.isEmpty()) {
-			tbCustomers = new ArrayList<TbCustomer>();
-			logger.info("------------Bye queryGoods!-------------");
-			return tbCustomers;
-		}	
-		request.setAttribute("tbCustomers", tbCustomers);
-		logger.info("------------Bye queryGoods!-------------");
-		return tbCustomers;
+		return tbGoods2CustomersUpdatenum+tbGoods2CustomersInsertnum;
 	}
+	
+	
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception e, HttpServletRequest request) {
 		request.setAttribute("exception", e);

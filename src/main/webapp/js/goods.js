@@ -132,30 +132,50 @@ function goods2customer(obj) {
 	var goodsActualCost = $(obj).parent().parent().children("td").get(5).innerHTML;
 	var goodsPrice = $(obj).parent().parent().children("td").get(6).innerHTML;
 
-	$.ajax({
-		type : 'POST',
-		async : false,
-		url : 'queryGoods2Customer.do',
-		dataType : 'json',
-		data : {
-			'goodsId' : goodsId
-		},
-		success : function(data) {
-			console.dir(data);
-			$('#g2cGoodsName').html(goodsName + "-销售价格配置");
-			$("#tb").empty();
+	$
+			.ajax({
+				type : 'POST',
+				async : false,
+				url : 'queryGoods2Customer.do',
+				dataType : 'json',
+				data : {
+					'goodsId' : goodsId
+				},
+				success : function(data) {
+					console.dir(data);
+					$('#g2cGoodsName').html(goodsName + "-销售价格配置");
+					$("#tb").empty();
 
-			$('#tmpGoodId').val(goodsId);
-			$('#tmpGoodsName').val(goodsName);
-			$('#tmpGoodsActualCost').val(goodsActualCost);
-			$('#tmpGoodsPrice').val(goodsPrice);
-
-			$('#goods2customer').modal('show');
-		},
-	});
+					$('#tmpGoodId').val(goodsId);
+					$('#tmpGoodsName').val(goodsName);
+					$('#tmpGoodsActualCost').val(goodsActualCost);
+					$('#tmpGoodsPrice').val(goodsPrice);
+					if (data[0].customerName != "Error") {
+						for (var i = 0; i < data.length; i++) {
+							$("#tb")
+									.append(
+											'<tr><td>'
+													+ '<input type="hidden" id="goods2customerId" name="goods2customerId" value="'
+													+ data[i].goods2customerId
+													+ '">'
+													+ '<select name="customerId"><option value="0">请选择客户：</option></select>'
+													+ '</td><td>'
+													+ $('#tmpGoodsActualCost')
+															.val()
+													+ '</td><td>'
+													+ $('#tmpGoodsPrice').val()
+													+ '</td><td><input class="control-group" type="text" value="'
+													+ $('#tmpGoodsPrice').val()
+													+ '"placeholder="商品优惠销售价格"></td>'
+													+ '<td><a>删除</a></td></tr>');
+						}
+					}
+					$('#goods2customer').modal('show');
+				},
+			});
 };
 
-//新增商品和客户关系--查询客户信息
+// 新增商品和客户关系--查询客户信息
 function addgoods2customer(obj) {
 	// console.dir(obj);
 	var goodsId = $('#tmpGoodId').val();
@@ -174,6 +194,7 @@ function addgoods2customer(obj) {
 					$("#tb")
 							.append(
 									'<tr><td>'
+											+ '<input type="hidden" id="goods2customerId" name="goods2customerId">'
 											+ '<select name="addGoods2Customer_select"><option value="0">请选择客户：</option></select>'
 											+ '</td><td>'
 											+ $('#tmpGoodsActualCost').val()
@@ -182,7 +203,7 @@ function addgoods2customer(obj) {
 											+ '</td><td><input class="control-group" type="text" value="'
 											+ $('#tmpGoodsPrice').val()
 											+ '"placeholder="商品优惠销售价格"></td>'
-											+ '<td><a>保存</a></td></tr>');
+											+ '<td><a>删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
 						$("select:last").append(
@@ -193,3 +214,9 @@ function addgoods2customer(obj) {
 				},
 			});
 };
+
+// 新增商品和客户关系--查询客户信息
+function savegoods2customer(obj) {
+	// console.dir(obj);
+
+}
