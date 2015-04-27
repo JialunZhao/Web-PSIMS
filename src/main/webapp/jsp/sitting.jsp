@@ -166,7 +166,7 @@
 								<td><c:out value="${s.ppValueint}" /></td>
 								<td>
 									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
+									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
@@ -178,13 +178,7 @@
 	</div>
 
 </div>
-</div>
-</div>
 
-<!--
-
-//-->
-</script>
 
 <div class="modal fade" id="addrecoveryimport" tabindex="-1"
 	role="dialog" aria-labelledby="addrecoveryimport" aria-hidden="true">
@@ -204,6 +198,43 @@
 								style="background-color: #1abc9c;">参数名称:</span> <input id="ppDesc"
 								name="ppDesc" type="text" class="form-control"
 								placeholder="参数名称" value="">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="submit" class="btn btn-primary">确认新增</button>
+				</div>
+			</form>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="addrecoveryimport1" tabindex="-1"
+	role="dialog" aria-labelledby="addrecoveryimport" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">新增系统参数</h4>
+			</div>
+			<form id="formA" action="${ctx}/sys/add.do" method="post">
+				<div class="modal-body">
+					<div class="row">
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<input type="hidden" name="pKey" id="pKey1" >
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">奖金池公司:</span> <input id="ppDesc2"
+								name="ppDesc2" type="text" class="form-control"
+								placeholder="奖金池公司" value="">
+						</div>
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValueint2"
+								name="ppValueint" type="text" class="form-control"
+								placeholder="奖金池额度" value="">
 						</div>
 					</div>
 				</div>
@@ -252,6 +283,43 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+<div class="modal fade" id="modifyrecoveryimport1" tabindex="-1"
+	role="dialog" aria-labelledby="modifyrecoveryimport" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">修改系统参数</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池公司:</span>
+						<input id="ppDesc3" name="ppDesc3" type="text"
+							class="form-control" placeholder="奖金池公司"> <input
+							id="paramId3" name="paramId3" type="hidden" class="form-control"
+							placeholder="参数名称"> <input id="pKey3" name="pKey3"
+							type="hidden" class="form-control" placeholder="参数名称"> <input
+							id="pDesc3" name="pDesc3" type="hidden" class="form-control"
+							placeholder="参数名称">
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
+						<input id="ppValueint3" name="ppValueint3" type="text"
+							class="form-control" placeholder="奖金池额度"> 
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="submit" class="btn btn-primary" onclick="update('p_ee')">确认修改</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 
 
 
@@ -262,11 +330,31 @@
 <script src="${ctx}/js/vendor/video.js"></script>
 <script src="${ctx}/js/flat-ui.min.js"></script>
 <script type="text/javascript">
-	function chenge(paramId) {
+	function chenge(paramId,pKey) {
 		
 		var id = paramId;
 		$("#ppDesc").val(paramId);
-		alert(id);
+// 		alert(id);
+		var pKey = pKey;
+// 		alert(pKey);
+		if(pKey=="p_ee"){
+			$("#modifyrecoveryimport1").modal(id);
+			$.ajax({
+				url : '${ctx}/sys/'+id+'/toUpdate.do',
+				type : 'get',
+					success : function(messageInfor) {
+// 	 				alert(messageInfor.ppValueint);
+						
+						$("#ppDesc3").attr("value",messageInfor.ppDesc);
+						$("#paramId3").attr("value",messageInfor.paramId);
+						$("#pKey3").attr("value",messageInfor.pKey);
+						$("#pDesc3").attr("value",messageInfor.pDesc);
+						$("#ppValueint3").attr("value",messageInfor.ppValueint);
+						
+					}
+			})
+			return false;
+		}
 		
 		$("#modifyrecoveryimport").modal(id);
 		$.ajax({
@@ -286,19 +374,54 @@
 	function add(pKey) {
 // 		alert(pKey);
 		if(pKey=="p_ee"){
-			
-			alert("dfdfd");
+			$("#addrecoveryimport1").modal();
+			$("#pKey1").attr("value",pKey);
+// 			alert("dfdfd");
+			return false;
 		}
 		$("#addrecoveryimport").modal();
 		$("#pKey").attr("value",pKey);
 // 		alert("fdf");
 	}
-	function update(){
+	function update(pKey){
+// 		alert(pKey);
+		if(pKey=="p_ee"){
+			var obj = {
+					ppDesc : $("#ppDesc3").val(),
+					paramId : $("#paramId3").val(),
+					pKey : $("#pKey3").val(),
+					pDesc : $("#pDesc3").val(),
+					ppValueint : $("#ppValueint3").val()
+			};
+			$.ajax({
+				url : '${ctx}/sys/update.do',
+				type : 'post',
+				data : obj,
+				success : function(messageInfor) {
+					
+//						var messageInfor = eval("(" + messageRespon + ")");
+					if (messageInfor.status) {
+//							messageLabel.html("<div style='color:limegreen'>"
+//									+ messageInfor.message + "</div>");
+						document.location.href = "${ctx}/sys/show.do";
+					} else {
+						messageLabel.html("<div style='color:red'>"
+								+ messageInfor.message + "</div>");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+	                alert(XMLHttpRequest.status);
+	                alert(XMLHttpRequest.readyState);
+	                alert(textStatus);
+	            },
+			})
+			return false;
+		}
 		var obj = {
 				ppDesc : $("#ppDesc1").val(),
 				paramId : $("#paramId1").val(),
 				pKey : $("#pKey1").val(),
-				pDesc : $("#pDesc1").val()
+				pDesc : $("#pDesc1").val(),
 		};
 		$.ajax({
 			url : '${ctx}/sys/update.do',

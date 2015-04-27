@@ -66,11 +66,17 @@ public class SystemParameterController {
     	String pDesc = request.getParameter("pDesc");
     	int paramId = Integer.parseInt(request.getParameter("paramId"));
     	String pKey = request.getParameter("pKey");
+    	String ppValueint1 = request.getParameter("ppValueint");
+    	long ppValueint = 0;
+    	if(ppValueint1!=null && ppValueint1!=""){
+    		ppValueint = Long.parseLong(ppValueint1);
+    	}
     	TbSystemParameter systemParameter = new TbSystemParameter();
     	systemParameter.setPpDesc(ppDesc);
     	systemParameter.setpDesc(pDesc);
     	systemParameter.setParamId(paramId);
     	systemParameter.setpKey(pKey);
+    	systemParameter.setPpValueint(ppValueint);
         systemParameterServiceImpl.update(systemParameter);
         resultMap.put("status", Boolean.TRUE);
         return resultMap;
