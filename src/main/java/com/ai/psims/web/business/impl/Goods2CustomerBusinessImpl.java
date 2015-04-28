@@ -76,7 +76,8 @@ public class Goods2CustomerBusinessImpl implements IGoods2CustomerBusiness {
 			tbGoods2customers.get(i).setProviderPackageSubsidy(tbGoods.getProviderPackageSubsidy());
 			tbGoods2customers.get(i).setCustomerSubsidy(tbGoods.getCustomerSubsidy());
 			tbGoods2customers.get(i).setOtherSubsidy(tbGoods.getOtherSubsidy());
-			tbGoods2customers.get(i).setGoodsProfit(tbGoods.getGoodsProfit());
+			tbGoods2customers.get(i).setGoodsActualCost(tbGoods.getGoodsActualCost());
+//			tbGoods2customers.get(i).setGoodsProfit(tbGoods.getGoodsProfit());
 			tbGoods2customers.get(i).setRemark(tbGoods.getRemark());
 			tbGoods2customers.get(i).setGoodsStatus("01");
 			TbCustomer tbCustomer = new TbCustomer();
@@ -96,8 +97,22 @@ public class Goods2CustomerBusinessImpl implements IGoods2CustomerBusiness {
 		int num = 0;
 		for (int i = 0; i < tbGoods2customers.size(); i++) {
 			tbGoods2customers.get(i).setGoodsStatus("01");
+			goods2CustomerService.backupGoods2CustomerInfo(tbGoods2customers.get(i));
 			num = num + goods2CustomerService.updateGoods2CustomerInfo(tbGoods2customers.get(i));
 		}
+		logger.info("------------2.商品与客户关系新增更新业务完成-------------");
+
+		return num;
+	}
+	
+	@Override
+	public int deleteGoods2CustomerInfo(TbGoods2customer tbGoods2customer) {
+		logger.info("------------1.商品与客户关系新增更新业务-------------");
+		int num = 0;
+		tbGoods2customer.setGoodsStatus("00");
+		goods2CustomerService.backupGoods2CustomerInfo(tbGoods2customer);
+		num = num + goods2CustomerService.deleteGoods2CustomerInfo(tbGoods2customer);
+		
 		logger.info("------------2.商品与客户关系新增更新业务完成-------------");
 
 		return num;

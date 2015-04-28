@@ -45,7 +45,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService{
 	@Override
 	public List<TbPrivilege> selectByExample(TbPrivilege privilege) {
 		TbPrivilegeExample example = new TbPrivilegeExample();
-		 example.createCriteria().andUseridEqualTo(privilege.getUserid());
+		 example.createCriteria().andUserIdEqualTo(privilege.getUserId());
 		 return tbPrivilegeMapper.selectByExample(example);
 	}
 }

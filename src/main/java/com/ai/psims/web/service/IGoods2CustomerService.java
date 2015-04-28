@@ -13,5 +13,9 @@ public interface IGoods2CustomerService {
 	public int insertGoods2CustomerInfo(TbGoods2customer tbGoods2customer);
 
 	public int updateGoods2CustomerInfo(TbGoods2customer tbGoods2customer);
+	
+	public int backupGoods2CustomerInfo(TbGoods2customer tbGoods2customer);
+
+	public int deleteGoods2CustomerInfo(TbGoods2customer tbGoods2customer);
 
 }

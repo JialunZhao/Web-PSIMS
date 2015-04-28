@@ -57,7 +57,7 @@ public class EmployeeController {
 	@ResponseBody
 	public TbPrivilege check(@RequestParam("userId") Integer userId){
 		TbPrivilege privilege = new  TbPrivilege();
-		privilege.setUserid(userId);
+		privilege.setUserId(userId); 
 		List<TbPrivilege> emList = privilegeServiceImpl.selectByExample(privilege);
 		return emList==null||emList.size()==0?null:emList.get(0);
 	}
@@ -102,7 +102,7 @@ public class EmployeeController {
 	    	pri.setPrivilege(priv);
 			List<Employee> emList = employeeServiceImpl.getEmployee(employee.getEmployeeCode());
 			Employee em = emList.get(0);
-			pri.setUserid(em.getEmployeeId());
+			pri.setUserId(em.getEmployeeId());
 			privilegeServiceImpl.add(pri);
     	}
         return "redirect:/user/show.do";
@@ -200,7 +200,7 @@ public class EmployeeController {
              	}else{
              		TbPrivilege priv = new TbPrivilege();
              		priv.setPrivilege(privilege);
-             		priv.setUserid(employee.getEmployeeId());;
+             		priv.setUserId(employee.getEmployeeId());;
              		privilegeServiceImpl.add(priv);
              	}
              }else{

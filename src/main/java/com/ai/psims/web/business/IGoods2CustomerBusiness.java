@@ -17,6 +17,8 @@ public interface IGoods2CustomerBusiness {
 
 	int insertGoods2CustomerInfo(List<TbGoods2customer> tbGoods2customers);
 
-	int updateGoods2CustomerInfo(List<TbGoods2customer> tbGoods2customers); 
+	int updateGoods2CustomerInfo(List<TbGoods2customer> tbGoods2customers);
+
+	int deleteGoods2CustomerInfo(TbGoods2customer tbGoods2customer); 
 
 }

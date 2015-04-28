@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
  * controller基类
  */
 public class BaseController {
+
 	private Logger logger = Logger.getLogger(BaseController.class);
 	@Autowired
 	protected HttpServletRequest request;

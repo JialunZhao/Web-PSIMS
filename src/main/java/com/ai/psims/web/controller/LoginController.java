@@ -86,7 +86,7 @@ public class LoginController {
 		//如果没有登录的话就不会创建session时候mysession所对应的值就是一个NULL
 	    modelMap.addAttribute("mysession", employee);
 	    TbPrivilege privilege = new TbPrivilege();
-	    privilege.setUserid(employee.getEmployeeId());
+	    privilege.setUserId(employee.getEmployeeId());
 	    List<TbPrivilege> selectByExample = privilegeService.selectByExample(privilege);
 	    if(selectByExample!=null&&selectByExample.size()!=0){
 	    	modelMap.addAttribute("privilege",selectByExample.get(0).getPrivilege());

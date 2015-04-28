@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ai.psims.web.dao.TbPrivilegeMapper" >
-  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbPrivilege" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+<mapper namespace="com.ai.psims.web.dao.TbPrivilegeLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbPrivilegeLog" >
+    <id column="log_id" property="logId" jdbcType="INTEGER" />
+    <result column="log_datetime" property="logDatetime" jdbcType="TIMESTAMP" />
+    <result column="id" property="id" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="privilege" property="privilege" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
@@ -68,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, privilege, createtime, modifytime, endtime
+    log_id, log_datetime, id, user_id, privilege, createtime, modifytime, endtime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbPrivilegeExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbPrivilegeLogExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_privilege
+    from tb_privilege_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,30 +89,36 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from tb_privilege
-    where id = #{id,jdbcType=INTEGER}
+    from tb_privilege_log
+    where log_id = #{logId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_privilege
-    where id = #{id,jdbcType=INTEGER}
+    delete from tb_privilege_log
+    where log_id = #{logId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbPrivilegeExample" >
-    delete from tb_privilege
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbPrivilegeLogExample" >
+    delete from tb_privilege_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.psims.web.model.TbPrivilege" >
-    insert into tb_privilege (id, user_id, privilege, 
-      createtime, modifytime, endtime
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{privilege,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.ai.psims.web.model.TbPrivilegeLog" >
+    insert into tb_privilege_log (log_id, log_datetime, id, 
+      user_id, privilege, createtime, 
+      modifytime, endtime)
+    values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{id,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{privilege,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbPrivilege" >
-    insert into tb_privilege
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbPrivilegeLog" >
+    insert into tb_privilege_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="logDatetime != null" >
+        log_datetime,
+      </if>
       <if test="id != null" >
         id,
       </if>
@@ -131,6 +139,12 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=INTEGER},
+      </if>
+      <if test="logDatetime != null" >
+        #{logDatetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
@@ -151,15 +165,21 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.psims.web.model.TbPrivilegeExample" resultType="java.lang.Integer" >
-    select count(*) from tb_privilege
+  <select id="countByExample" parameterType="com.ai.psims.web.model.TbPrivilegeLogExample" resultType="java.lang.Integer" >
+    select count(*) from tb_privilege_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update tb_privilege
+    update tb_privilege_log
     <set >
+      <if test="record.logId != null" >
+        log_id = #{record.logId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logDatetime != null" >
+        log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
@@ -184,8 +204,10 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update tb_privilege
-    set id = #{record.id,jdbcType=INTEGER},
+    update tb_privilege_log
+    set log_id = #{record.logId,jdbcType=INTEGER},
+      log_datetime = #{record.logDatetime,jdbcType=TIMESTAMP},
+      id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       privilege = #{record.privilege,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -195,9 +217,15 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbPrivilege" >
-    update tb_privilege
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbPrivilegeLog" >
+    update tb_privilege_log
     <set >
+      <if test="logDatetime != null" >
+        log_datetime = #{logDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=INTEGER},
+      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
@@ -214,15 +242,17 @@
         endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbPrivilege" >
-    update tb_privilege
-    set user_id = #{userId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbPrivilegeLog" >
+    update tb_privilege_log
+    set log_datetime = #{logDatetime,jdbcType=TIMESTAMP},
+      id = #{id,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
       privilege = #{privilege,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       modifytime = #{modifytime,jdbcType=TIMESTAMP},
       endtime = #{endtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

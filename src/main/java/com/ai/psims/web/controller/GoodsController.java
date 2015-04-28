@@ -542,7 +542,7 @@ public class GoodsController extends BaseController {
 	@RequestMapping(value = "/Goods2CustomerSave", method = RequestMethod.POST)
 	public @ResponseBody int Goods2CustomerSave(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		logger.info("------------Welcome queryGoods!-------------");
+		logger.info("------------Welcome Goods2CustomerSave!-------------");
 		logger.info("------------1.初始化-------------");
 		List<TbGoods2customer> tbGoods2CustomersInsert = new ArrayList<TbGoods2customer>();
 		List<TbGoods2customer> tbGoods2CustomersUpdate = new ArrayList<TbGoods2customer>();
@@ -564,12 +564,14 @@ public class GoodsController extends BaseController {
 			tbGoods2customer.setGoodsProfit(Long.parseLong(goodsProfit[i]));
 			if (goods2customerId[i].isEmpty()) {
 				tbGoods2CustomersInsert.add(tbGoods2customer);
+			}else {
+				tbGoods2customer.setGoods2customerId(Integer.parseInt(goods2customerId[i]));
+				tbGoods2CustomersUpdate.add(tbGoods2customer);
 			}
-			tbGoods2CustomersUpdate.add(tbGoods2customer);
 		}
 		tbGoods2CustomersInsertnum = goods2CustomerBusiness.insertGoods2CustomerInfo(tbGoods2CustomersInsert);
 		logger.info("------------新增了：+ "+tbGoods2CustomersInsertnum +"条记录-------------");
-		tbGoods2CustomersUpdatenum = goods2CustomerBusiness.updateGoods2CustomerInfo(tbGoods2CustomersInsert);
+		tbGoods2CustomersUpdatenum = goods2CustomerBusiness.updateGoods2CustomerInfo(tbGoods2CustomersUpdate);
 		logger.info("------------更新了：+ "+tbGoods2CustomersUpdatenum +"条记录-------------");
 
 		logger.info("------------5.返回结果-------------");

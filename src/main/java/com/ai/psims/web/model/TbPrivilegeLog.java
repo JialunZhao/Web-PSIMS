@@ -2,7 +2,11 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class TbPrivilege {
+public class TbPrivilegeLog {
+    private Integer logId;
+
+    private Date logDatetime;
+
     private Integer id;
 
     private Integer userId;
@@ -14,6 +18,22 @@ public class TbPrivilege {
     private Date modifytime;
 
     private Date endtime;
+
+    public Integer getLogId() {
+        return logId;
+    }
+
+    public void setLogId(Integer logId) {
+        this.logId = logId;
+    }
+
+    public Date getLogDatetime() {
+        return logDatetime;
+    }
+
+    public void setLogDatetime(Date logDatetime) {
+        this.logDatetime = logDatetime;
+    }
 
     public Integer getId() {
         return id;

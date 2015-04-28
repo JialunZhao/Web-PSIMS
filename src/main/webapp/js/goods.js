@@ -131,6 +131,7 @@ function goods2customer(obj) {
 	var goodsName = $(obj).parent().parent().children("td").get(2).innerHTML;
 	var goodsActualCost = $(obj).parent().parent().children("td").get(5).innerHTML;
 	var goodsPrice = $(obj).parent().parent().children("td").get(6).innerHTML;
+	var goodsProfit = $(obj).parent().parent().children("td").get(7).innerHTML;
 
 	$
 			.ajax({
@@ -145,11 +146,14 @@ function goods2customer(obj) {
 					console.dir(data);
 					$('#g2cGoodsName').html(goodsName + "-销售价格配置");
 					$("#tb").empty();
+					$('#goodsId').val(goodsId);
 
 					$('#tmpGoodId').val(goodsId);
 					$('#tmpGoodsName').val(goodsName);
 					$('#tmpGoodsActualCost').val(goodsActualCost);
 					$('#tmpGoodsPrice').val(goodsPrice);
+					$('#tmpGoodsProfit').val(goodsProfit);
+
 					if (data[0].customerName != "Error") {
 						for (var i = 0; i < data.length; i++) {
 							$("#tb")
@@ -158,15 +162,21 @@ function goods2customer(obj) {
 													+ '<input type="hidden" id="goods2customerId" name="goods2customerId" value="'
 													+ data[i].goods2customerId
 													+ '">'
-													+ '<select name="customerId"><option value="0">请选择客户：</option></select>'
+													+ '<select name="customerId"><option selected value="'
+													+ data[i].customerId
+													+'">'
+													+ data[i].customerName
+													+ '</option></select>'
 													+ '</td><td>'
-													+ $('#tmpGoodsActualCost')
-															.val()
+													+ data[i].goodsActualCost
 													+ '</td><td>'
-													+ $('#tmpGoodsPrice').val()
-													+ '</td><td><input class="control-group" type="text" value="'
-													+ $('#tmpGoodsPrice').val()
+													+ data[i].goodsPrice
+													+ '</td><td><input class="control-group" name="goodsDiscountAmount" type="text" value="'
+													+ data[i].goodsDiscountAmount
 													+ '"placeholder="商品优惠销售价格"></td>'
+													+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
+													+ data[i].goodsProfit
+													+ '"placeholder="商品利润"></td>'
 													+ '<td><a>删除</a></td></tr>');
 						}
 					}
@@ -179,8 +189,7 @@ function goods2customer(obj) {
 function addgoods2customer(obj) {
 	// console.dir(obj);
 	var goodsId = $('#tmpGoodId').val();
-
-	var goodsId = $
+	$
 			.ajax({
 				type : 'POST',
 				async : false,
@@ -195,14 +204,17 @@ function addgoods2customer(obj) {
 							.append(
 									'<tr><td>'
 											+ '<input type="hidden" id="goods2customerId" name="goods2customerId">'
-											+ '<select name="addGoods2Customer_select"><option value="0">请选择客户：</option></select>'
+											+ '<select name="customerId"><option value="0">请选择客户：</option></select>'
 											+ '</td><td>'
 											+ $('#tmpGoodsActualCost').val()
 											+ '</td><td>'
 											+ $('#tmpGoodsPrice').val()
-											+ '</td><td><input class="control-group" type="text" value="'
+											+ '</td><td><input class="control-group" name="goodsDiscountAmount" type="text" value="'
 											+ $('#tmpGoodsPrice').val()
 											+ '"placeholder="商品优惠销售价格"></td>'
+											+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
+											+ $('#tmpGoodsProfit').val()
+											+ '"placeholder="商品利润"></td>'
 											+ '<td><a>删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
@@ -217,6 +229,14 @@ function addgoods2customer(obj) {
 
 // 新增商品和客户关系--查询客户信息
 function savegoods2customer(obj) {
-	// console.dir(obj);
-
+	console.dir($('#goods2CustomerForm'));
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'Goods2CustomerSave.do',
+		data : $('#goods2CustomerForm').serialize(),
+		success : function(data) {
+			$('#goods2customer').modal('hide');
+		},
+	});
 }

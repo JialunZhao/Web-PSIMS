@@ -412,7 +412,11 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
+					<form id="goods2CustomerForm">
+  					<input type="hidden" id="goodsId" name="goodsId">
+
 						<div class="table-responsive col-sm-12">
+						
 							<table class="table table-striped">
 								<thead>
 									<tr>
@@ -420,30 +424,15 @@
 										<th>成本价格</th>
 										<th>标准销售价格</th>
 										<th>优惠销售价格</th>
+										<th>利润</th>
 										<th>操作</th>
 									</tr>
 								</thead>
 								<tbody id="tb">
-									<tr>
-										<td>聚点串吧(东直门店)</td>
-										<td>99</td>
-										<td>110</td>
-										<td><input class="control-group" type="text" value="105"
-											placeholder="商品优惠销售价格"></td>
-										<td><a>修改</a></td>
-
-									</tr>
-									<tr>
-										<td>聚点串吧(酒仙桥店)</td>
-										<td>99</td>
-										<td>110</td>
-										<td><input class="control-group" type="text" value="108"
-											placeholder="商品优惠销售价格"></td>
-										<td><a>修改</a></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
+						</form>
 					</div>
 					<div class="row">
 						<div class="row placeholders ">
@@ -454,9 +443,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer"> 
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary">确认</button>
+					<button type="button" class="btn btn-primary" onClick="savegoods2customer(this)">保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -464,10 +453,11 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-	<input type="hidden" id="tmpGoodId">
+  	<input type="hidden" id="tmpGoodId">
 	<input type="hidden" id="tmpGoodsName">
 	<input type="hidden" id="tmpGoodsActualCost">
 	<input type="hidden" id="tmpGoodsPrice">
+	<input type="hidden" id="tmpGoodsProfit">
 
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<script src="<%=_base%>/js/vendor/jquery.min.js"></script>
