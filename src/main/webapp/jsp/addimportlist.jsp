@@ -1,48 +1,14 @@
-<%@page import="java.util.*"%>
+<%@page import="com.ai.psims.web.util.Constants"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
-String path = request.getContextPath();
-String _base=path;
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
 
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-    <title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
-
-    <!-- Loading Bootstrap -->
-       
-    <link href="<%=_base %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Loading Flat UI -->
-    <link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-    <link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
-    <link href="<%=_base %>/css/index.css" rel="stylesheet">
-
-	
-    <link rel="shortcut icon" href="img/favicon.ico">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-    <!--[if lt IE 9]>
-      <script src="./js/vendor/html5shiv.js"></script>
-      <script src="./js/vendor/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
+<%@ include file="all.jsp"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
     <!-- 模态框（Modal） -->
     <!-- 添加入库单模态框（Modal） -->
     <div class="modal fade" id="importgoods" tabindex="-1" role="dialog" 
@@ -193,18 +159,18 @@ String date=sdf.format(new Date());
 
     
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-    <script src="<%=_base %>/js/vendor/jquery.min.js"></script>
+    <script src="<%=path %>/js/vendor/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="<%=_base %>/js/vendor/video.js"></script>
-    <script src="<%=_base %>/js/flat-ui.min.js"></script>
-    <script src="<%=_base %>/js/lhgdialog.min.js"></script>
+    <script src="<%=path %>/js/vendor/video.js"></script>
+    <script src="<%=path %>/js/flat-ui.min.js"></script>
+    <script src="<%=path %>/js/lhgdialog.min.js"></script>
     <script type="text/javascript">
     	function showTable(){
     		var goodsName=$("#goodsName").val();
     		var providerName=$("#providerName").val();
     		$.ajax(  
                     {  
-                        url:'<%=_base %>/accountController/queryGoodsDemo.do',  
+                        url:'<%=path %>/accountController/queryGoodsDemo.do',  
                         type:"post",  
                         async:true,  
                         data:{'goodsName':goodsName,
@@ -239,7 +205,7 @@ String date=sdf.format(new Date());
     		var providerName=$("#providerName").val();
     		$.ajax(  
                     {  
-                        url:'<%=_base %>/accountController/queryGoods.do',  
+                        url:'<%=path %>/accountController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
@@ -346,7 +312,7 @@ String date=sdf.format(new Date());
           });
     	  $.ajax(  
                   {  
-                      url:'<%=_base %>/accountController/addImprotGoodsList.do',  
+                      url:'<%=path %>/accountController/addImprotGoodsList.do',  
                       type:"post",  
                       async:false,
                       traditional:true,
@@ -458,5 +424,3 @@ String date=sdf.format(new Date());
               		}
 
       </script>
-  </body>
-</html>

@@ -1,33 +1,14 @@
 <%@page import="com.ai.psims.web.util.Constants"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
-	String path = request.getContextPath();
-	String _base = path;
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+String date=sdf.format(new Date());
+
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="<%=_base%>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-
-<!-- Loading Flat UI -->
-<link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="<%=_base%>/css/dashboard.css" rel="stylesheet">
-<link href="<%=_base%>/css/index.css" rel="stylesheet">
-<script src="<%=_base%>/js/vendor/video.js"></script>
-<%-- <script src="<%=_base %>/js/flat-ui.min.js"></script> --%>
-<script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
-
-</head>
-<body>
+<%@ include file="all.jsp"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 	<div class="col-sm-offset-1">
 		<div class="row placeholders">
 			<div class="input-group col-xs-10 col-md-offset-1">
@@ -167,7 +148,7 @@
 			$("input[name=goodsAmount]").each(function(){
 				goodsAmountList=goodsAmountList+$(this).val()+",";
 			})
-			 var url="<%=_base%>/importController/updataImprotGoodsList.do?providerId="
+			 var url="<%=path%>/importController/updataImprotGoodsList.do?providerId="
 					+ providerId
 					+ "&providerName="
 					+ encodeURI(encodeURI(providerName))
@@ -220,6 +201,3 @@
 		  }
 		 
 	</script>
-
-</body>
-</html>
