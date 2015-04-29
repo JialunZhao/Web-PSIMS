@@ -1,107 +1,17 @@
 <%@page import="com.ai.psims.web.util.Constants"%>
-<%@page import="java.util.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
-String path = request.getContextPath();
-String _base=path;
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
 
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
-<title>北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</title>
-<%-- <jsp:include page="updataimportdata.jsp" flush="true"></jsp:include> --%>
-<%-- <jsp:include page="common.jsp" flush="true"></jsp:include> --%>
-
-<!-- Loading Bootstrap -->
-
-<link href="<%=_base %>/css/bootstrap/bootstrap.min.css"
-	rel="stylesheet">
-
-<!-- Loading Flat UI -->
-<link href="<%=_base %>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="<%=_base %>/css/dashboard.css" rel="stylesheet">
-<link href="<%=_base %>/css/index.css" rel="stylesheet">
-<script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
-
-
-<link rel="shortcut icon" href="img/favicon.ico">
-
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-<!--[if lt IE 9]>
-      <script src="./js/vendor/html5shiv.js"></script>
-      <script src="./js/vendor/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="<%=_base %>/index.html">北京市金瑞超达商贸有限公司-食品库存管理系统DEMO</a>
-		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<%=path %>/sitting.html">系统设置</a></li>
-				<li><a href="<%=path %>/user.html">员工权限</a></li>
-				<li><a href="#">帮助</a></li>
-			</ul>
-			<form class="navbar-form navbar-right">
-				<input type="text" class="form-control" placeholder="Search...">
-			</form>
-		</div>
-	</div>
-	</nav>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/customer.html">客户管理</a></li>
-					<li><a href="<%=path %>/provider.html">供应商</a></li>
-					<li><a href="<%=path %>/goods.html">商品管理</a></li>
-					<li><a href="<%=path %>/storehouse.html">仓库管理</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/importController/init.do">货品入库</a></li>
-					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
-					<li><a href="<%=path %>/providerBackGoodsController/init.do">供应商退货</a></li>
-					<li><a href="#">有效期调整</a></li>
-					<li><a href="#">销毁出库</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/recoveryimport.html">回收物入库</a></li>
-					<li><a href="<%=path %>/recoveryexport.html">回收物出库</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="#">统计报表</a></li>
-				</ul>
-			</div>
+<%@ include file="all.jsp"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h3 class="page-header">供货商货品退货</h3>
+				<h3 class="page-header">供货商退货</h3>
 
 				<div class="row placeholders">
 					<form class="form-inline">
@@ -380,8 +290,8 @@ String date=sdf.format(new Date());
 
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="<%=_base %>/js/vendor/video.js"></script>
-	<script src="<%=_base %>/js/flat-ui.min.js"></script>
+	<script src="<%=path %>/js/vendor/video.js"></script>
+	<script src="<%=path %>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
     	function isPay(payStatus){
     		if (payStatus=="<%=Constants.PayStatus.YESPAY %>") {
@@ -397,7 +307,7 @@ String date=sdf.format(new Date());
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax(  
                     {  
-                        url:'<%=_base %>/accountController/queryGoodsDemo.do',  
+                        url:'<%=path %>/accountController/queryGoodsDemo.do',  
                         type:"post",  
                         async:true,  
                         data:{'goodsName':goodsName,
@@ -434,7 +344,7 @@ String date=sdf.format(new Date());
 			var importSerialNumber=$("#queImportSerialNumber").val();
 			$.ajax(  
                     {  
-                        url:'<%=_base %>/accountController/queryImportList.do',  
+                        url:'<%=path %>/accountController/queryImportList.do',  
                         type:"post",  
                         async:true,
                         data:{'providerId':providerId,
@@ -486,7 +396,7 @@ String date=sdf.format(new Date());
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		var providerName=$("#providerName").find("option:selected").text();
     		$.ajax({  
-                        url:'<%=_base %>/accountController/queryGoods.do',  
+                        url:'<%=path %>/accountController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
@@ -507,7 +417,7 @@ String date=sdf.format(new Date());
     	}
     	
     	function updateImportData(importSerialNumber) {
-    		var url='<%=_base %>/accountController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
+    		var url='<%=path %>/accountController/updateImprotGoodsList.do?importSerialNumber='+importSerialNumber;
     		$.dialog({
     			title:'修改入库单',
     			width:900,
@@ -520,7 +430,7 @@ String date=sdf.format(new Date());
     	
     	function deleteImportData(importSerialNumber){
     		$.ajax({  
-                url:'<%=_base %>/accountController/deleteImportData.do',  
+                url:'<%=path %>/accountController/deleteImportData.do',  
                 type:"post",  
                 async:false,
                 modal : true,
@@ -696,7 +606,7 @@ String date=sdf.format(new Date());
           });
     	  $.ajax(  
                   {  
-                      url:'<%=_base %>/accountController/addImprotGoodsList.do',  
+                      url:'<%=path %>/accountController/addImprotGoodsList.do',  
                       type:"post",  
                       async:false,
                       traditional:true,
@@ -838,5 +748,3 @@ String date=sdf.format(new Date());
                     }
 
       </script>
-</body>
-</html>

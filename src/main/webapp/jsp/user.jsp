@@ -241,9 +241,14 @@
 										<td><input name='privilegeBut' value="仓库管理.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">商品入库</td>
-										<td><input name='privilegeMen' value="商品入库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="商品入库.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">货品入库下单</td>
+										<td><input name='privilegeMen' value="货品入库下单.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeBut' value="货品入库下单.增删改" type="checkbox" aria-label="..."></td>
+									</tr>
+									<tr>
+										<td class="text-left">货品入库</td>
+										<td><input name='privilegeMen' value="货品入库.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeBut' value="货品入库.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
 										<td class="text-left">销售出库</td>
@@ -251,29 +256,14 @@
 										<td><input name='privilegeBut' value="销售出库.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">退货管理</td>
-										<td><input name='privilegeMen' value="退货管理.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="退货管理.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">供应商退货</td>
+										<td><input name='privilegeMen' value="供应商退货.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeBut' value="供应商退货.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">有效期管理</td>
-										<td><input name='privilegeMen' value="有效期管理.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="有效期管理.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">销毁出库</td>
-										<td><input name='privilegeMen' value="销毁出库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="销毁出库.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">回收物入库</td>
-										<td><input name='privilegeMen' value="回收物入库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="回收物入库.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">回收物出库</td>
-										<td><input name='privilegeMen' value="回收物出库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeBut' value="回收物出库.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">客户退货</td>
+										<td><input name='privilegeMen' value="客户退货.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeBut' value="客户退货.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
 										<td class="text-left">统计报表</td>
@@ -407,9 +397,14 @@
 										<td><input name='privilegeButEdit' value="仓库管理.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">商品入库</td>
-										<td><input name='privilegeMenEdit' value="商品入库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="商品入库.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">货品入库下单</td>
+										<td><input name='privilegeMenEdit' value="货品入库下单.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeButEdit' value="货品入库下单.增删改" type="checkbox" aria-label="..."></td>
+									</tr>
+									<tr>
+										<td class="text-left">货品入库</td>
+										<td><input name='privilegeMenEdit' value="货品入库.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeButEdit' value="货品入库.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
 										<td class="text-left">销售出库</td>
@@ -417,29 +412,14 @@
 										<td><input name='privilegeButEdit' value="销售出库.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">退货管理</td>
-										<td><input name='privilegeMenEdit' value="退货管理.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="退货管理.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">供应商退货</td>
+										<td><input name='privilegeMenEdit' value="供应商退货.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeButEdit' value="供应商退货.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
-										<td class="text-left">有效期管理</td>
-										<td><input name='privilegeMenEdit' value="有效期管理.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="有效期管理.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">销毁出库</td>
-										<td><input name='privilegeMenEdit' value="销毁出库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="销毁出库.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">回收物入库</td>
-										<td><input name='privilegeMenEdit' value="回收物入库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="回收物入库.增删改" type="checkbox" aria-label="..."></td>
-									</tr>
-									<tr>
-										<td class="text-left">回收物出库</td>
-										<td><input name='privilegeMenEdit' value="回收物出库.显示菜单" type="checkbox" aria-label="..."></td>
-										<td><input name='privilegeButEdit' value="回收物出库.增删改" type="checkbox" aria-label="..."></td>
+										<td class="text-left">客户退货</td>
+										<td><input name='privilegeMenEdit' value="客户退货.显示菜单" type="checkbox" aria-label="..."></td>
+										<td><input name='privilegeButEdit' value="客户退货.增删改" type="checkbox" aria-label="..."></td>
 									</tr>
 									<tr>
 										<td class="text-left">统计报表</td>

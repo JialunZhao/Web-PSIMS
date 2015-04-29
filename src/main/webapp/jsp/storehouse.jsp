@@ -1,96 +1,14 @@
-<%@page import="java.util.*"%>
+<%@page import="com.ai.psims.web.util.Constants"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
-	String path = request.getContextPath();
-	String _base = path;
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+String date=sdf.format(new Date());
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String date = sdf.format(new Date());
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="<%=_base%>/img/favicon.ico">
-<title>北京市金瑞超达商贸有限公司-食品库存管理系统</title>
-
-<!-- Loading Bootstrap -->
-<link href="<%=_base%>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-
-<!-- Loading Flat UI -->
-<link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
-<link href="<%=_base%>/css/dashboard.css" rel="stylesheet">
-
-
-<link rel="shortcut icon" href="img/favicon.ico">
-
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-<!--[if lt IE 9]>
-      <script src="./js/vendor/html5shiv.js"></script>
-      <script src="./js/vendor/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="./index.html">北京市金瑞超达商贸有限公司-食品库存管理系统</a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="./sitting.html">系统设置</a></li>
-					<li><a href="./user.html">员工权限</a></li>
-					<li><a href="#">帮助</a></li>
-				</ul>
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search...">
-				</form>
-			</div>
-		</div>
-	</nav>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/customerController/customer">客户管理</a></li>
-					<li><a href="<%=path %>/providerController/provider">供应商</a></li>
-					<li><a href="<%=path %>/goodsController/goods">商品管理</a></li>
-					<li class="active"><a href="<%=path %>/storehouseController/storehouse">仓库管理</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="<%=path %>/importController/init.do">货品入库</a></li>
-					<li><a href="<%=path %>/salesController/init.do">销售出库</a></li>
-					<li><a href="<%=path %>/providerBackGoodsController/init.do">供应商退货</a></li>
-					<li><a href="#">有效期调整</a></li>
-					<li><a href="#">销毁出库</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="./recoveryimport.html">回收物入库</a></li>
-					<li><a href="./recoveryexport.html">回收物出库</a></li>
-				</ul>
-				<ul class="nav nav-sidebar">
-					<li><a href="#">统计报表</a></li>
-				</ul>
-			</div>
+<%@ include file="all.jsp"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h3 class="page-header">仓库管理</h3>
@@ -376,11 +294,11 @@
 	<!-- /.modal -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
-	<script src="<%=_base%>/js/vendor/jquery.min.js"></script>
+	<script src="<%=path%>/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="<%=_base%>/js/vendor/video.js"></script>
-	<script src="<%=_base%>/js/flat-ui.min.js"></script>
-	<script src="<%=_base%>/js/storehouse.js"></script>
+	<script src="<%=path%>/js/vendor/video.js"></script>
+	<script src="<%=path%>/js/flat-ui.min.js"></script>
+	<script src="<%=path%>/js/storehouse.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#delbtn").click(function() {
@@ -403,5 +321,3 @@
 			});
 		});
 	</script>
-</body>
-</html>
