@@ -1,27 +1,31 @@
 //新增客户 
 //1.提交数据
-$("#addcustomersubmit").click(function customeradd() {
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'addCustomer.do',
-		data : $('#addcustomerForm').serialize(),
-		// data : {
-		// 'customer_name' : customer_name,
-		// 'customer_type' : customer_type,
-		// 'contact_name' : contact_name,
-		// 'contact_tel' : contact_tel,
-		// 'contact_addr' : contact_addr,
-		// 'email' : email,
-		// 'area' : area,
-		// 'remark' : remark
-		// },
-		success : function(data) {
-			$('#addcustomer').modal('hide');
-			window.location.href = "customer";
-		},
-	});
-});
+$("#addcustomerForm").submit(function(e){
+	$('#addcustomer').modal('hide');
+  });
+//
+//$("#addcustomersubmit").click(function customeradd() {
+//	$.ajax({
+//		type : 'POST',
+//		async : true,
+//		url : 'addCustomer.do',
+//		data : $('#addcustomerForm').serialize(),
+//		// data : {
+//		// 'customer_name' : customer_name,
+//		// 'customer_type' : customer_type,
+//		// 'contact_name' : contact_name,
+//		// 'contact_tel' : contact_tel,
+//		// 'contact_addr' : contact_addr,
+//		// 'email' : email,
+//		// 'area' : area,
+//		// 'remark' : remark
+//		// },
+//		success : function(data) {
+//			$('#addcustomer').modal('hide');
+//			window.location.href = "customer";
+//		},
+//	});
+//});
 // 2.刷新列表
 
 // 删除客户信息

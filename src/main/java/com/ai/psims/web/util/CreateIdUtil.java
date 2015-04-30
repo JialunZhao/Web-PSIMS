@@ -87,6 +87,37 @@ public class CreateIdUtil {
 		if (str.equals(Constants.BackType.CHANGEGOODS)) {
 			result = Constants.BackType.CHANGEGOODS01;
 		}
+		// 客户类型
+		if (str.equals(Constants.CustomerType.CustomerType01Code)) {
+			result = Constants.CustomerType.CustomerType01Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType02Code)) {
+			result = Constants.CustomerType.CustomerType02Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType03Code)) {
+			result = Constants.CustomerType.CustomerType03Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType04Code)) {
+			result = Constants.CustomerType.CustomerType04Name;
+		}
+		return result;
+	}
+
+	public static String getCustomerType(String str) {
+		String result = null;
+		// 客户类型
+		if (str.equals(Constants.CustomerType.CustomerType01Code)) {
+			result = Constants.CustomerType.CustomerType01Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType02Code)) {
+			result = Constants.CustomerType.CustomerType02Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType03Code)) {
+			result = Constants.CustomerType.CustomerType03Name;
+		}
+		if (str.equals(Constants.CustomerType.CustomerType04Code)) {
+			result = Constants.CustomerType.CustomerType04Name;
+		}
 		return result;
 	}
 }

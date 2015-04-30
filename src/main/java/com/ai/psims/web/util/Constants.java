@@ -106,5 +106,18 @@ public class Constants {
 			public static final String CHANGEGOODS01 = "换货";
 			public static final String BACKGOODS01 = "退货";
 		}
+		
+		// 退货类型
+		public static class CustomerType {
+			public static final String CustomerType01Code = "1";// 连锁
+			public static final String CustomerType02Code = "2";// 商户
+			public static final String CustomerType03Code = "3";// 散户
+			public static final String CustomerType04Code = "4";// 其它
+			
+			public static final String CustomerType01Name = "连锁";//01
+			public static final String CustomerType02Name = "商户";//02
+			public static final String CustomerType03Name = "散户";//03
+			public static final String CustomerType04Name = "其它";//04
+		}
 
 }

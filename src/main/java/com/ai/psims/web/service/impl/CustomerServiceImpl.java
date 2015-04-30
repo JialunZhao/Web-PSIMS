@@ -38,9 +38,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public List<TbCustomer> queryCustomer(TbCustomerExample tbCustomerExample) {
 		logger.info("queryCustomer");
-		List<TbCustomer> customersList = null;
-		customersList = tbCustomerMapper.selectByExample(tbCustomerExample);
-		return customersList;
+		return tbCustomerMapper.selectByExample(tbCustomerExample);
 	}
 
 	@Override
