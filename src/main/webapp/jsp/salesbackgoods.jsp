@@ -59,8 +59,10 @@ String date=sdf.format(new Date());
 
 				<div class="row placeholders ">
 					<div class="col-sm-2">
+					<priv:privilege power="客户退货.增删改">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#importgoods">新增客户退货单</button>
+					</priv:privilege>
 						<!-- <button type="button" class="btn btn-primary" onclick="showAddDialog()">新增入库单</button> -->
 						<!--  <button type="button" id="delbtn" class="btn btn-primary">批量删除入库单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的入库单</button>
@@ -96,10 +98,12 @@ String date=sdf.format(new Date());
 									<td>${salesBacks.salesbackType}</td>
 									<td></td>
 									<td>${salesBacks.salesbackReason}</td>
+									<priv:privilege power="客户退货.增删改">
 									<td><a href="#" data-toggle="modal"
 										data-target="#importgoodsprint">打印</a>/<a href="#"
 										onclick="updateSalesbackData(${salesBacks.salesbackSerialNumber})">修改</a>/<a href="#"
 										onclick="deleteImportData(${salesBacks.salesbackSerialNumber})">删除</a></td>
+									</priv:privilege>
 								</tr>
 							</c:forEach>
 						</tbody>

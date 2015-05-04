@@ -62,12 +62,14 @@ String date=sdf.format(new Date());
 
 				<div class="row placeholders ">
 					<div class="col-sm-2">
+					<priv:privilege power="货品入库下单.增删改">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#importgoods">新增入库单</button>
 						<!-- <button type="button" class="btn btn-primary" onclick="showAddDialog()">新增入库单</button> -->
 						<!--  <button type="button" id="delbtn" class="btn btn-primary">批量删除入库单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的入库单</button>
             <button type="button" id="delcancle" class="btn btn-primary" style="display:none">取消</button> -->
+            		</priv:privilege>
 					</div>
 				</div>
 				<h4 class="sub-header">入库清单</h4>
@@ -98,10 +100,12 @@ String date=sdf.format(new Date());
 									<td>${imports.importBatchNumber }</td>
 									<td>${imports.paymentType }</td>
 									<td>${imports.importStatus }</td>
+									<priv:privilege power="货品入库下单.增删改">
 									<td><a href="#" onclick="importgoodsprint(${imports.importSerialNumber })">打印</a>/<a href="#"
 										onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
 										href="#"
 										onclick="deleteImportData(${imports.importSerialNumber })">删除</a></td>
+									</priv:privilege>
 								</tr>
 							</c:forEach>
 						</tbody>

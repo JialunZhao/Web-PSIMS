@@ -97,7 +97,15 @@
         <mvc:interceptor>
            <!--拦截查看所有用户登录操作-->
              <mvc:mapping path="/user/*.do"/>
-             <mvc:mapping path="/sys/*.do"/>  
+             <mvc:mapping path="/sys/*.do"/>
+             <mvc:mapping path="/customerController/*"/>  
+             <mvc:mapping path="/providerController/*"/>  
+             <mvc:mapping path="/goodsController/*"/>  
+             <mvc:mapping path="/storehouseController/*"/>  
+             <mvc:mapping path="/importController/*"/>  
+             <mvc:mapping path="/salesController/*"/>  
+             <mvc:mapping path="/backGoodsController/*"/>  
+             <mvc:mapping path="/excelController/*"/>   
              <bean class="com.ai.psims.web.common.LoginInteceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
