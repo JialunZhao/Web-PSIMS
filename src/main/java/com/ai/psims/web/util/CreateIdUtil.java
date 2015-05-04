@@ -120,4 +120,22 @@ public class CreateIdUtil {
 		}
 		return result;
 	}
+	
+	public static String getProviderType(String str) {
+		String result = null;
+		// 供应商类型
+		if (str.equals(Constants.ProviderType.ProviderType01Code)) {
+			result = Constants.ProviderType.ProviderType01Name;
+		}
+		if (str.equals(Constants.ProviderType.ProviderType02Code)) {
+			result = Constants.ProviderType.ProviderType02Name;
+		}
+		if (str.equals(Constants.ProviderType.ProviderType03Code)) {
+			result = Constants.ProviderType.ProviderType03Name;
+		}
+		if (str.equals(Constants.ProviderType.ProviderType04Code)) {
+			result = Constants.ProviderType.ProviderType04Name;
+		}
+		return result;
+	}
 }

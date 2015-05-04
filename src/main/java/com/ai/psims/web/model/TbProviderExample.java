@@ -875,52 +875,52 @@ public class TbProviderExample {
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolEqualTo(Long value) {
+        public Criteria andProviderPrizePoolEqualTo(Integer value) {
             addCriterion("provider_prize_pool =", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolNotEqualTo(Long value) {
+        public Criteria andProviderPrizePoolNotEqualTo(Integer value) {
             addCriterion("provider_prize_pool <>", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolGreaterThan(Long value) {
+        public Criteria andProviderPrizePoolGreaterThan(Integer value) {
             addCriterion("provider_prize_pool >", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolGreaterThanOrEqualTo(Long value) {
+        public Criteria andProviderPrizePoolGreaterThanOrEqualTo(Integer value) {
             addCriterion("provider_prize_pool >=", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolLessThan(Long value) {
+        public Criteria andProviderPrizePoolLessThan(Integer value) {
             addCriterion("provider_prize_pool <", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolLessThanOrEqualTo(Long value) {
+        public Criteria andProviderPrizePoolLessThanOrEqualTo(Integer value) {
             addCriterion("provider_prize_pool <=", value, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolIn(List<Long> values) {
+        public Criteria andProviderPrizePoolIn(List<Integer> values) {
             addCriterion("provider_prize_pool in", values, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolNotIn(List<Long> values) {
+        public Criteria andProviderPrizePoolNotIn(List<Integer> values) {
             addCriterion("provider_prize_pool not in", values, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolBetween(Long value1, Long value2) {
+        public Criteria andProviderPrizePoolBetween(Integer value1, Integer value2) {
             addCriterion("provider_prize_pool between", value1, value2, "providerPrizePool");
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolNotBetween(Long value1, Long value2) {
+        public Criteria andProviderPrizePoolNotBetween(Integer value1, Integer value2) {
             addCriterion("provider_prize_pool not between", value1, value2, "providerPrizePool");
             return (Criteria) this;
         }

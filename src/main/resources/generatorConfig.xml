@@ -14,7 +14,8 @@
 		</commentGenerator>
 		<!--数据库链接URL，用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://123.56.89.128/psims" userId="root" password="dFPmhtxqoN8i">
+			connectionURL="jdbc:mysql://123.56.89.128/psims" userId="root"
+			password="dFPmhtxqoN8i">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -36,9 +37,11 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪些表 -->
-		<table schema="psims" tableName="tb_privilege" />
-		<table schema="psims" tableName="tb_privilege_log" />
-<!-- 		<table schema="psims" tableName="tb_menu" /> -->
+		<table schema="psims" tableName="tb_provider" />
+		<table schema="psims" tableName="tb_provider_log"/>
+<!-- 		<table schema="psims" tableName="tb_privilege" /> -->
+<!-- 		<table schema="psims" tableName="tb_privilege_log" /> -->
+		<!-- <table schema="psims" tableName="tb_menu" /> -->
 		<!-- <table tableName="about" domainObjectName="AboutDto" enableCountByExample="false" 
 			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 
 			selectByExampleQueryId="false"></table> -->

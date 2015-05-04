@@ -1,5 +1,7 @@
 //新增客户 
-//1.提交数据
+//1.获取奖金池信息
+
+//2.提交数据
 $("#addprovidersubmit").click(function provideradd() {
 	$.ajax({
 		type : 'POST',
@@ -90,37 +92,3 @@ function modifyCurrentProviderInfo(obj) {
 	});
 }
 
-// 查询客户信息
-
-// function delCurrentRow(obj) {
-// alert(obj.innerHTML);
-// alert(obj.parent());
-// console.dir(obj);
-// $(obj).parent().remove();
-// obj.parents().css({
-// "color" : "red",
-// "border" : "2px solid red"
-// });
-// var id = obj.parent().parent().children("td").get(0).innerHTML;
-// alert("id=" + id);
-// alert(obj.parentNode);
-// alert(obj.children().eq(1).text());
-//
-// obj.closest('tr').remove();
-//
-// }
-
-// function delCurrentRow(obj){
-// if(confirm("确定删除当前议程?")){
-// if(document.all.batch_add_table.rows.length>2){
-// var clickedRow=obj;
-// while(clickedRow.tagName!="TR"){
-// clickedRow=clickedRow.parentNode;
-// }
-// clickedRow.parentNode.removeChild(clickedRow);
-// }else{
-// alert("此行不能进行删除！");
-// return;
-// }
-// }
-// }

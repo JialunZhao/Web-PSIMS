@@ -21,7 +21,7 @@ public class TbProviderLog {
 
     private String providerContactEmail;
 
-    private Long providerPrizePool;
+    private Integer providerPrizePool;
 
     private String providerContactAddress;
 
@@ -119,11 +119,11 @@ public class TbProviderLog {
         this.providerContactEmail = providerContactEmail == null ? null : providerContactEmail.trim();
     }
 
-    public Long getProviderPrizePool() {
+    public Integer getProviderPrizePool() {
         return providerPrizePool;
     }
 
-    public void setProviderPrizePool(Long providerPrizePool) {
+    public void setProviderPrizePool(Integer providerPrizePool) {
         this.providerPrizePool = providerPrizePool;
     }
 

@@ -47,10 +47,10 @@ public class StorehouseController extends BaseController {
 	public String storehouseRedirect(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info("------------Welcome storehouse page!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		List<TbStorehouse> storehouses;
 		TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String storehouse_name = request.getParameter("query_storehouseName") == "" ? null
 				: request.getParameter("query_storehouseName");
 		String storehouse_type = request.getParameter("query_Type") == "" ? null
@@ -59,7 +59,7 @@ public class StorehouseController extends BaseController {
 				: request.getParameter("query_contactName");
 		String contact_tel = request.getParameter("query_contactTel") == "" ? null
 				: request.getParameter("query_contactTel");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (storehouse_name != null && storehouse_name.length() > 0) {
 			storehouse_name = "%" + storehouse_name + "%";
 			tbStorehouseExample.createCriteria().andStorehouseNameLike(
@@ -80,11 +80,11 @@ public class StorehouseController extends BaseController {
 			tbStorehouseExample.createCriteria().andContactTelLike(contact_tel);
 		}
 
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		tbStorehouseExample.createCriteria().andStatusEqualTo("01");
 		storehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		request.setAttribute("storehouses", storehouses);
 
 		logger.info("------------Bye storehouse page!-------------");
@@ -98,9 +98,9 @@ public class StorehouseController extends BaseController {
 	public String tbStorehouse(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome storehouse add info!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbStorehouse storehouseadd = new TbStorehouse();
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String storehouseName = request.getParameter("storehouseName");
 		String storehouseCode = request.getParameter("storehouseCode") == null ? request
 				.getParameter("storehouseName") : request
@@ -118,7 +118,7 @@ public class StorehouseController extends BaseController {
 		String remark = request.getParameter("remark");
 		Date createtime = new Date();
 
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		storehouseadd.setStorehouseName(storehouseName);
 		storehouseadd.setStorehouseCode(storehouseCode);
 		storehouseadd.setContactName(contactName);
@@ -133,11 +133,11 @@ public class StorehouseController extends BaseController {
 
 		storehouseadd.setRemark(remark);
 
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		int res = storehouseBusiness.storehouseAdd(storehouseadd);
 		toString();
 		logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye storehouse add info! -------------");
 		return "storehouse";
 	}
@@ -149,15 +149,15 @@ public class StorehouseController extends BaseController {
 	public String storehouseDelete(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome deletestorehouse! -------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbStorehouse tbStorehouse = new TbStorehouse();
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String storehouseId = request.getParameter("storehouseId");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (storehouseId != null && storehouseId.length() > 0) {
 			tbStorehouse.setStorehouseId(Integer.parseInt(storehouseId));
 		}
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		// 逻辑删除 修改状态为 00-失效 （记录状态 00-失效 01-正常 99-异常）
 		tbStorehouse.setStatus("00");
 		int res = storehouseBusiness.storehouseModify(tbStorehouse);
@@ -168,7 +168,7 @@ public class StorehouseController extends BaseController {
 		// int res = storehouseBusiness.storehouseDelete(tbStorehouseExample);
 		// toString();
 		// logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye deletestorehouse! -------------");
 		return "storehouse";
 	}
@@ -180,10 +180,10 @@ public class StorehouseController extends BaseController {
 	public String storehouseModify(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info("------------Welcome storehouse!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		TbStorehouse tbStorehouse = new TbStorehouse();
 
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String storehouse_id = request.getParameter("modify_storehouseId");
 		String storehouse_name = request.getParameter("modify_storehouseName");
 		String storehouse_code = request.getParameter("modify_storehouse_code") == null ? request
@@ -202,7 +202,7 @@ public class StorehouseController extends BaseController {
 		String remark = request.getParameter("modify_remark");
 		Date modifytime = new Date();
 
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (storehouse_id != null && storehouse_id.length() > 0) {
 			tbStorehouse.setStorehouseId(Integer.parseInt(storehouse_id));
 		}
@@ -217,11 +217,11 @@ public class StorehouseController extends BaseController {
 		tbStorehouse.setModifytime(modifytime);
 		// tbStorehouse.setStatus("01");
 		tbStorehouse.setRemark(remark);
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		int res = storehouseBusiness.storehouseModify(tbStorehouse);
 		toString();
 		logger.info(String.valueOf(res));
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye storehouse!-------------");
 		return "storehouse";
 	}
@@ -234,17 +234,17 @@ public class StorehouseController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		logger.info("------------Welcome queryStorehouse!-------------");
-		// 1.初始化
+		logger.info("------------1.初始化-------------");
 		List<TbStorehouse> tbStorehouses;
 		TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
 		int storehouseid = 0;
-		// 2.获取参数
+		logger.info("------------2.获取参数-------------");
 		String storehouseId = request.getParameter("storehouseId");
 		String storehouseName = request.getParameter("storehouseName");
 		String type = request.getParameter("type");
 		String contactName = request.getParameter("contactName");
 		String contactTel = request.getParameter("contactTel");
-		// 3.数据校验
+		logger.info("------------3.数据校验-------------");
 		if (storehouseId != null && storehouseId.length() > 0) {
 			storehouseid = Integer.parseInt(storehouseId);
 			tbStorehouseExample.createCriteria().andStorehouseIdEqualTo(storehouseid);
@@ -265,12 +265,12 @@ public class StorehouseController extends BaseController {
 			tbStorehouseExample.createCriteria()
 					.andContactTelEqualTo(contactTel);
 		}
-		// 4.业务处理
+		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
   		tbStorehouseExample.createCriteria().andStatusNotEqualTo("00");
 		tbStorehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
 		request.setAttribute("tbStorehouses", tbStorehouses);
-		// 5.返回结果
+		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryStorehouse!-------------");
 		return tbStorehouses;
 	}

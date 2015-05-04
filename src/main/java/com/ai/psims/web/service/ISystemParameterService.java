@@ -3,6 +3,7 @@ package com.ai.psims.web.service;
 import java.util.List;
 
 import com.ai.psims.web.model.TbSystemParameter;
+import com.ai.psims.web.model.TbSystemParameterExample;
 
 public interface ISystemParameterService {
 
@@ -16,5 +17,9 @@ public interface ISystemParameterService {
 
 	void delete(TbSystemParameter sysParamete);
 
+	public List<TbSystemParameter> getSystemParameterPrizePool(
+			TbSystemParameterExample tbSystemParameterExample);
+
+	public TbSystemParameter getSystemParameterPrizePool(int paramId);
 
 }

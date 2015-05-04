@@ -10,12 +10,13 @@ import com.ai.psims.web.dao.TbSystemParameterMapper;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
 import com.ai.psims.web.service.ISystemParameterService;
+
 @Service
 public class SystemParameterServiceImpl implements ISystemParameterService {
-	
+
 	@Resource
 	private TbSystemParameterMapper systemParameterMapper;
-	
+
 	@Override
 	public List<TbSystemParameter> getlAllParameter() {
 		TbSystemParameterExample example = new TbSystemParameterExample();
@@ -36,14 +37,23 @@ public class SystemParameterServiceImpl implements ISystemParameterService {
 	@Override
 	public void update(TbSystemParameter systemParameter) {
 		systemParameterMapper.updateByPrimaryKeySelective(systemParameter);
-		
+
 	}
 
 	@Override
 	public void delete(TbSystemParameter sysParamete) {
 		systemParameterMapper.updateByPrimaryKeySelective(sysParamete);
-		
+
 	}
 
-	
+	//获取奖金池金额
+	@Override
+	public List<TbSystemParameter> getSystemParameterPrizePool(
+			TbSystemParameterExample tbSystemParameterExample) {
+		return systemParameterMapper.selectByExample(tbSystemParameterExample);
+	}
+	public TbSystemParameter getSystemParameterPrizePool(int paramId) {
+		return systemParameterMapper.selectByPrimaryKey(paramId);
+	}
+
 }

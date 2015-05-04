@@ -11,7 +11,7 @@
     <result column="provider_contact_tel" property="providerContactTel" jdbcType="VARCHAR" />
     <result column="provider_contact_fax" property="providerContactFax" jdbcType="VARCHAR" />
     <result column="provider_contact_email" property="providerContactEmail" jdbcType="VARCHAR" />
-    <result column="provider_prize_pool" property="providerPrizePool" jdbcType="BIGINT" />
+    <result column="provider_prize_pool" property="providerPrizePool" jdbcType="INTEGER" />
     <result column="provider_contact_address" property="providerContactAddress" jdbcType="VARCHAR" />
     <result column="provider_bank_name" property="providerBankName" jdbcType="VARCHAR" />
     <result column="provider_bank_account_name" property="providerBankAccountName" jdbcType="VARCHAR" />
@@ -133,7 +133,7 @@
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{providerId,jdbcType=INTEGER}, 
       #{providerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR}, #{providerContactName,jdbcType=VARCHAR}, 
       #{providerContactTel,jdbcType=VARCHAR}, #{providerContactFax,jdbcType=VARCHAR}, 
-      #{providerContactEmail,jdbcType=VARCHAR}, #{providerPrizePool,jdbcType=BIGINT}, 
+      #{providerContactEmail,jdbcType=VARCHAR}, #{providerPrizePool,jdbcType=INTEGER}, 
       #{providerContactAddress,jdbcType=VARCHAR}, #{providerBankName,jdbcType=VARCHAR}, 
       #{providerBankAccountName,jdbcType=VARCHAR}, #{providerBankAccountCode,jdbcType=VARCHAR}, 
       #{providerTaxid,jdbcType=VARCHAR}, #{providerArea,jdbcType=VARCHAR}, #{providerType,jdbcType=VARCHAR}, 
@@ -239,7 +239,7 @@
         #{providerContactEmail,jdbcType=VARCHAR},
       </if>
       <if test="providerPrizePool != null" >
-        #{providerPrizePool,jdbcType=BIGINT},
+        #{providerPrizePool,jdbcType=INTEGER},
       </if>
       <if test="providerContactAddress != null" >
         #{providerContactAddress,jdbcType=VARCHAR},
@@ -316,7 +316,7 @@
         provider_contact_email = #{record.providerContactEmail,jdbcType=VARCHAR},
       </if>
       <if test="record.providerPrizePool != null" >
-        provider_prize_pool = #{record.providerPrizePool,jdbcType=BIGINT},
+        provider_prize_pool = #{record.providerPrizePool,jdbcType=INTEGER},
       </if>
       <if test="record.providerContactAddress != null" >
         provider_contact_address = #{record.providerContactAddress,jdbcType=VARCHAR},
@@ -370,7 +370,7 @@
       provider_contact_tel = #{record.providerContactTel,jdbcType=VARCHAR},
       provider_contact_fax = #{record.providerContactFax,jdbcType=VARCHAR},
       provider_contact_email = #{record.providerContactEmail,jdbcType=VARCHAR},
-      provider_prize_pool = #{record.providerPrizePool,jdbcType=BIGINT},
+      provider_prize_pool = #{record.providerPrizePool,jdbcType=INTEGER},
       provider_contact_address = #{record.providerContactAddress,jdbcType=VARCHAR},
       provider_bank_name = #{record.providerBankName,jdbcType=VARCHAR},
       provider_bank_account_name = #{record.providerBankAccountName,jdbcType=VARCHAR},
@@ -415,7 +415,7 @@
         provider_contact_email = #{providerContactEmail,jdbcType=VARCHAR},
       </if>
       <if test="providerPrizePool != null" >
-        provider_prize_pool = #{providerPrizePool,jdbcType=BIGINT},
+        provider_prize_pool = #{providerPrizePool,jdbcType=INTEGER},
       </if>
       <if test="providerContactAddress != null" >
         provider_contact_address = #{providerContactAddress,jdbcType=VARCHAR},
@@ -466,7 +466,7 @@
       provider_contact_tel = #{providerContactTel,jdbcType=VARCHAR},
       provider_contact_fax = #{providerContactFax,jdbcType=VARCHAR},
       provider_contact_email = #{providerContactEmail,jdbcType=VARCHAR},
-      provider_prize_pool = #{providerPrizePool,jdbcType=BIGINT},
+      provider_prize_pool = #{providerPrizePool,jdbcType=INTEGER},
       provider_contact_address = #{providerContactAddress,jdbcType=VARCHAR},
       provider_bank_name = #{providerBankName,jdbcType=VARCHAR},
       provider_bank_account_name = #{providerBankAccountName,jdbcType=VARCHAR},
