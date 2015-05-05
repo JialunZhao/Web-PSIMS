@@ -53,8 +53,10 @@ String date=sdf.format(new Date());
 									<td>${imports.importBatchNumber }</td>
 									<td>${imports.paymentType }</td>
 									<td>${imports.importStatus }</td>
+									<priv:privilege power="货品入库.增删改">
 									<td><a href="#"
 										onclick="goodsImport(${imports.importSerialNumber })">入库</a></td>
+									</priv:privilege>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -47,9 +47,11 @@ String date=sdf.format(new Date());
 
 				<div class="row placeholders ">
 					<div class="col-sm-5">
+						<priv:privilege power="仓库管理.增删改">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#addStorehouse">新增仓库</button>
 						<button type="button" id="delbtn" class="btn btn-primary">批量删除仓库</button>
+						</priv:privilege>
 						<button type="button" id="delcommit" class="btn btn-primary"
 							style="display: none">确认删除仓库</button>
 						<button type="button" id="delcancle" class="btn btn-primary"
@@ -111,10 +113,13 @@ String date=sdf.format(new Date());
 									<td>${storehouses.contactTel}</td>
 									<td>${storehouses.status}</td>
 									<td>${storehouses.contactAddress}</td>
+									<priv:privilege power="仓库管理.增删改">
 									<td><a href="javascript:void(0);"
 										onClick="modifyCurrentStorehouse(this)">修改</a>/<a
 										href="javascript:void(0);"
 										onClick="delCurrentStorehouse(this);">删除</a></td>
+										
+									</priv:privilege>
 								</tr>
 							</c:forEach>
 						</tbody>

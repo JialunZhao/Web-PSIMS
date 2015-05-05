@@ -70,8 +70,10 @@ String date=sdf.format(new Date());
 
 				<div class="row placeholders ">
 					<div class="col-sm-2">
+					<priv:privilege power="销售出库.增删改">
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#salesgoods">新增销售单</button>
+					</priv:privilege>
 						<!-- <button type="button" id="delbtn" class="btn btn-primary">批量删除销售单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的销售单</button>
             <button type="button" id="delcancle" class="btn btn-primary" style="display:none">取消</button> -->
@@ -108,11 +110,13 @@ String date=sdf.format(new Date());
 									<td>${sales.storehouseName }</td>
 									<td>${sales.salesTotalPrice }</td>
 									<td>${sales.salesStatus }</td>
+									<priv:privilege power="销售出库.增删改">
 									<td><a href="#">打印</a>/<a href="#" data-toggle="modal"
 										data-target="#salesgoodsmodify"
 										onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a
 										href="#"
 										onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
+									</priv:privilege>
 								</tr>
 							</c:forEach>
 						</tbody>
