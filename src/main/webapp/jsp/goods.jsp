@@ -49,7 +49,6 @@ String date=sdf.format(new Date());
 				<div class="row placeholders ">
 					<div class="col-sm-5">
 					<priv:privilege power="商品管理.增删改">
-					<priv:privilege power="商品管理.增删改">
 						<button type="button" class="btn btn-primary" id="addGoods_btn">新增商品</button>
 						<button type="button" id="delbtn" class="btn btn-primary">批量删除商品</button>
 					</priv:privilege>
