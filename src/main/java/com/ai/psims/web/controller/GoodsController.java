@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.psims.web.business.IGoods2CustomerBusiness;
 import com.ai.psims.web.business.IGoodsBusiness;
+import com.ai.psims.web.business.IProviderBusiness;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbGoods;
@@ -25,6 +26,8 @@ import com.ai.psims.web.model.TbGoods2customer;
 import com.ai.psims.web.model.TbGoods2customerExample;
 import com.ai.psims.web.model.TbGoodsExample;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
+import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbProviderExample;
 
 /**
  * 商品管理Controller
@@ -41,7 +44,11 @@ public class GoodsController extends BaseController {
 
 	@Resource(name = "goods2CustomerBusinessImpl")
 	private IGoods2CustomerBusiness goods2CustomerBusiness;
+	
+	@Resource(name = "providerBusinessImpl")
+	private IProviderBusiness providerBusinessImpl;
 
+	
 	/**
 	 * 商品管理页面跳转
 	 */
@@ -105,6 +112,28 @@ public class GoodsController extends BaseController {
 
 	
 	
+	/**
+	 * 商品管理-新增商品信息-获取供应商信息
+	 */
+	@RequestMapping(value = "/getProviderAddGoods", method = RequestMethod.POST)
+	public @ResponseBody List<TbProvider> tbProviders(
+			HttpServletRequest request, HttpServletResponse response) {
+		logger.info("------------Welcome goods add info!-------------");
+		logger.info("------------1.初始化-------------");
+		List<TbProvider> tbProviders = new ArrayList<TbProvider>();
+		TbProviderExample tbProviderExample = new TbProviderExample();
+		TbProviderExample.Criteria criteria = tbProviderExample
+				.createCriteria();
+		logger.info("------------2.获取参数-------------");
+		logger.info("------------3.数据校验-------------");
+		// 查询状态为正常的记录 00-失效 01-正常 99-异常
+		criteria.andProviderStatusEqualTo("01");
+		logger.info("------------4.业务处理-------------");
+		tbProviders = providerBusinessImpl.providerQuery(tbProviderExample);
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye goods add info! -------------");
+		return tbProviders;
+	}
 	/**
 	 * 商品管理新增商品信息
 	 */
@@ -468,6 +497,10 @@ public class GoodsController extends BaseController {
 		return tbGoodss;
 	}
 	/////////////////////////////////////
+	/////////////////////////////////////
+	/////////////////////////////////////
+	/////////////////////////////////////
+	/////////////////////////////////////
 	/**
 	 * 商品管理-查询商品与客户信息
 	 */
@@ -499,7 +532,7 @@ public class GoodsController extends BaseController {
 			tbGoods2customers.add(tbGoods2customer);
 			logger.info("------------Bye queryGoods!-------------");
 			return tbGoods2customers;
-		}	
+		}
 		logger.info("------------Bye queryGoods!-------------");
 		return tbGoods2customers;
 	}
@@ -577,7 +610,34 @@ public class GoodsController extends BaseController {
 		logger.info("------------5.返回结果-------------");
 		return tbGoods2CustomersUpdatenum+tbGoods2CustomersInsertnum;
 	}
-	
+
+	/**
+	 * 商品管理-删除商品与客户信息--1.查询客户信息
+	 */
+	@RequestMapping(value = "/deleteGoods2Customer", method = RequestMethod.POST)
+	public @ResponseBody int deleteGoods2Customer(
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		logger.info("------------Welcome Goods2CustomerSave!-------------");
+		logger.info("------------1.初始化-------------");
+		TbGoods2customer tbGoods2customer = new TbGoods2customer();
+		int tbGoods2CustomerDeleteNum = 0; 
+		logger.info("------------2.获取参数-------------");
+		String goods2customerId = request.getParameter("goods2customerId") == "" ? null : request
+				.getParameter("goods2customerId");
+		logger.info("------------3.数据校验-------------");
+		
+		logger.info("------------4.业务处理-------------");
+		if (goods2customerId == null ||goods2customerId.isEmpty()) {
+		} else {
+			tbGoods2customer.setGoods2customerId(Integer.parseInt(goods2customerId));
+		}
+		tbGoods2CustomerDeleteNum= goods2CustomerBusiness.deleteGoods2CustomerInfo(tbGoods2customer);
+		logger.info("------------删除了：+ " + tbGoods2CustomerDeleteNum+ "条记录-------------");
+
+		logger.info("------------5.返回结果-------------");
+		return tbGoods2CustomerDeleteNum;
+	}
 	
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception e, HttpServletRequest request) {

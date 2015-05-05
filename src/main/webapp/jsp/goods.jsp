@@ -134,8 +134,7 @@
 
 				<div class="row placeholders ">
 					<div class="col-sm-5">
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#addGoods">新增商品</button>
+						<button type="button" class="btn btn-primary" id="addGoods_btn">新增商品</button>
 						<button type="button" id="delbtn" class="btn btn-primary">批量删除商品</button>
 						<button type="button" id="delcommit" class="btn btn-primary"
 							style="display: none">确认删除商品</button>
@@ -223,6 +222,12 @@
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品编码:</span> <input
+									type="text" class="form-control" name="goodsCode"
+									placeholder="商品编码">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
 									style="background-color: #1abc9c;">商品类型:</span> <select
 									class="form-control" tabindex="1" name="goodsType">
 									<option value="0">请选择商品类型：</option>
@@ -230,6 +235,14 @@
 									<option value="2">白酒</option>
 									<option value="3">饮料</option>
 									<option value="4">原料</option>
+								</select>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品供应商:</span> <select
+									class="form-control" tabindex="1" name=providerId
+									id="add_providers">
+									<option value="0">请选择商品供应商：</option>
 								</select>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
@@ -319,6 +332,12 @@
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品编码:</span> <input
+									type="text" class="form-control" id="modify_goodsCode" value=""
+									name="modify_goodsCode" placeholder="商品编码">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
 									style="background-color: #1abc9c;">商品类型:</span> <select
 									class="form-control" tabindex="1" id="modify_goodsType"
 									name="modify_goodsType">
@@ -327,6 +346,14 @@
 									<option value="2">白酒</option>
 									<option value="3">饮料</option>
 									<option value="4">原料</option>
+								</select>
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">商品供应商:</span> <select
+									class="form-control" tabindex="1" name="modify_providerId"
+									id="modify_providers">
+									<option value="0">请选择商品供应商：</option>
 								</select>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
@@ -412,26 +439,26 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-					<form id="goods2CustomerForm">
-  					<input type="hidden" id="goodsId" name="goodsId">
+						<form id="goods2CustomerForm">
+							<input type="hidden" id="goodsId" name="goodsId">
 
-						<div class="table-responsive col-sm-12">
-						
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>客户名称</th>
-										<th>成本价格</th>
-										<th>标准销售价格</th>
-										<th>优惠销售价格</th>
-										<th>利润</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody id="tb">
-								</tbody>
-							</table>
-						</div>
+							<div class="table-responsive col-sm-12">
+
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>客户名称</th>
+											<th>成本价格</th>
+											<th>标准销售价格</th>
+											<th>优惠销售价格</th>
+											<th>利润</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="tb">
+									</tbody>
+								</table>
+							</div>
 						</form>
 					</div>
 					<div class="row">
@@ -443,9 +470,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer"> 
+				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" onClick="savegoods2customer(this)">保存</button>
+					<button type="button" class="btn btn-primary"
+						onClick="savegoods2customer(this)">保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -453,7 +481,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
-  	<input type="hidden" id="tmpGoodId">
+	<input type="hidden" id="tmpGoodId">
 	<input type="hidden" id="tmpGoodsName">
 	<input type="hidden" id="tmpGoodsActualCost">
 	<input type="hidden" id="tmpGoodsPrice">

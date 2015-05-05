@@ -25,7 +25,7 @@ public class TbProvider {
 
     private String providerBankAccountCode;
 
-    private Integer providerPrizePool;
+    private Long providerPrizePool;
 
     private String providerTaxid;
 
@@ -131,11 +131,11 @@ public class TbProvider {
         this.providerBankAccountCode = providerBankAccountCode == null ? null : providerBankAccountCode.trim();
     }
 
-    public Integer getProviderPrizePool() {
+    public Long getProviderPrizePool() {
         return providerPrizePool;
     }
 
-    public void setProviderPrizePool(Integer providerPrizePool) {
+    public void setProviderPrizePool(Long providerPrizePool) {
         this.providerPrizePool = providerPrizePool;
     }
 

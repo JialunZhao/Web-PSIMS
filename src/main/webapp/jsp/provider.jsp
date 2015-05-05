@@ -47,8 +47,7 @@
 	<div class="row placeholders ">
 		<div class="col-sm-5">
 			<priv:privilege power="供应商.增删改">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#addprovider">新增供应商</button>
+				<button type="button" class="btn btn-primary" id="addprovider_btn">新增供应商</button>
 				<button type="button" id="delbtn" class="btn btn-primary">批量删除供应商</button>
 			</priv:privilege>
 			<button type="button" id="delcommit" class="btn btn-primary"
@@ -71,25 +70,13 @@
 					<th>供应商奖金池</th>
 					<th>联系人名称</th>
 					<th>联系人电话</th>
+					<th>供应商区域</th>
 					<th>供应商地址</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 
 			<tbody>
-				<tr>
-					<td class="chk" style="display: none"><input type="checkbox"
-						aria-label="..."></td>
-					<td>1</td>
-					<td>百威集团</td>
-					<td>连锁</td>
-					<td>老张</td>
-					<td>139012345678</td>
-					<td>朝阳</td>
-					<td>朝阳区朝阳路18号</td>
-					<td><a href="#" data-toggle="modal"
-						data-target="#modifyprovider">修改</a>/<a href="#">删除</a></td>
-				</tr>
 				<c:forEach var="providers" items="${providers}">
 					<tr>
 						<td class="chk" style="display: none"><input type="checkbox"
@@ -152,9 +139,10 @@
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商奖金池:</span> <select
 								class="form-control" name="provider_prizepool" tabindex="1"
-								id="add_provider_prizepool">
+								id="add_provider_prizepool" onchange="selectChange()">
 
-							</select><input type="text" class="form-control" id="add_provider_prizepool_prize"
+							</select><input type="text" class="form-control"
+								id="add_provider_prizepool_prize" readonly
 								placeholder="供应商奖金池金额"> <span class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -249,9 +237,12 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">供应商奖金池:</span> <input
-								type="text" class="form-control" id="modify_providerPrizePool"
-								name="modify_providerPrizePool" placeholder="供应商奖金池">
+								style="background-color: #1abc9c;">供应商奖金池:</span> <select
+								class="form-control" name="modify_providerPrizePool" tabindex="1"
+								id="modify_providerPrizePool" onchange="modifyselectChange()">
+							</select><input type="text" class="form-control"
+								id="modify_providerPrizePool_prize" readonly
+								placeholder="供应商奖金池金额"> <span class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"

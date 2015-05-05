@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,10 @@ import com.ai.psims.web.business.IProviderBusiness;
 import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
+import com.ai.psims.web.model.TbSystemParameter;
+import com.ai.psims.web.model.TbSystemParameterExample;
 import com.ai.psims.web.util.CreateIdUtil;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 ;
 
@@ -101,9 +105,10 @@ public class ProviderController extends BaseController {
 		}
 		logger.info("------------4.2.获取奖金池-------------");
 		for (TbProvider tbProvider : providers) {
-			systemParameterBussiness.getSystemParameterPrizePool(tbProvider
-					.getProviderPrizePool());
-
+			tbProvider.setProviderPrizePool(systemParameterBussiness
+					.getSystemParameterPrizePool(
+							tbProvider.getProviderPrizePool().intValue())
+					.getPpValueint());
 		}
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("providers", providers);
@@ -142,7 +147,7 @@ public class ProviderController extends BaseController {
 		logger.info("------------3.数据校验-------------");
 		provideradd.setProviderName(provider_name);
 		provideradd.setProviderCode(provider_code);
-		provideradd.setProviderPrizePool(Integer.parseInt(provider_prizepool));
+		provideradd.setProviderPrizePool(Long.parseLong(provider_prizepool));
 		provideradd.setProviderContactName(contact_name);
 		provideradd.setProviderContactTel(contact_tel);
 		provideradd.setProviderContactFax(contact_fax);
@@ -211,6 +216,8 @@ public class ProviderController extends BaseController {
 				.getParameter("modify_Provider_code") == null ? request
 				.getParameter("modify_providerName") : request
 				.getParameter("modify_Provider_code");
+		String provider_prizepool = request.getParameter("modify_providerPrizePool");
+
 		String modify_providerContactName = request
 				.getParameter("modify_providerContactName");
 		String modify_providerContactTel = request
@@ -223,10 +230,6 @@ public class ProviderController extends BaseController {
 				.getParameter("modify_providerArea");
 		String modify_providerType = request
 				.getParameter("modify_providerType");
-		// String createtime_str = request.getParameter("createtime");
-		// String modifytime_str = request.getParameter("modifytime");
-		// String endtime_str = request.getParameter("endtime");
-		// String status = request.getParameter("modify_status");
 		String modify_providerRemark = request
 				.getParameter("modify_providerRemark");
 		Date modifytime = new Date();
@@ -237,6 +240,7 @@ public class ProviderController extends BaseController {
 		}
 		tbProvider.setProviderName(modify_providerName);
 		tbProvider.setProviderCode(modify_Provider_code);
+		tbProvider.setProviderPrizePool(Long.parseLong(provider_prizepool));
 		tbProvider.setProviderContactName(modify_providerContactName);
 		tbProvider.setProviderContactTel(modify_providerContactTel);
 		tbProvider.setProviderContactAddress(modify_providerContactAddress);
@@ -266,42 +270,49 @@ public class ProviderController extends BaseController {
 		logger.info("------------1.初始化-------------");
 		List<TbProvider> tbProviders;
 		TbProviderExample tbProviderExample = new TbProviderExample();
-		int Providerid = 0;
+		TbProviderExample.Criteria criteria = tbProviderExample
+				.createCriteria();
 		logger.info("------------2.获取参数-------------");
-		String Provider_id = request.getParameter("Provider_id");
-		String Provider_name = request.getParameter("Provider_name");
-		String Provider_type = request.getParameter("Provider_type");
-		String contact_name = request.getParameter("contact_name");
-		String contact_tel = request.getParameter("contact_tel");
+		String provider_id = request.getParameter("provider_id");
 		logger.info("------------3.数据校验-------------");
-		if (Provider_id != null && Provider_id.length() > 0) {
-			Providerid = Integer.parseInt(Provider_id);
-			tbProviderExample.createCriteria().andProviderIdEqualTo(Providerid);
-		}
-		if (Provider_name != null && Provider_name.length() > 0) {
-			tbProviderExample.createCriteria().andProviderNameEqualTo(
-					contact_name);
-		}
-		if (Provider_type != null && Provider_type.length() > 0) {
-			tbProviderExample.createCriteria().andProviderTypeEqualTo(
-					Provider_type);
-		}
-		if (contact_name != null && contact_name.length() > 0) {
-			tbProviderExample.createCriteria().andProviderContactNameEqualTo(
-					contact_name);
-		}
-		if (contact_tel != null && contact_tel.length() > 0) {
-			tbProviderExample.createCriteria().andProviderContactTelEqualTo(
-					contact_tel);
+		if (provider_id != null && provider_id.length() > 0) {
+			criteria.andProviderIdEqualTo(Integer.parseInt(provider_id));
 		}
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
-		tbProviderExample.createCriteria().andProviderStatusEqualTo("01");
+		criteria.andProviderStatusEqualTo("01");
 		tbProviders = ProviderBusiness.providerQuery(tbProviderExample);
 		request.setAttribute("tbProviders", tbProviders);
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryProvider!-------------");
 		return tbProviders;
+	}
+
+	/**
+	 * 新增供应商查询奖金池信息
+	 */
+	@RequestMapping(value = "/getProviderPrizePool", method = RequestMethod.POST)
+	public @ResponseBody List<TbSystemParameter> getProviderPrizePool(
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		logger.info("------------Welcome queryProvider!-------------");
+		logger.info("------------1.初始化-------------");
+		List<TbSystemParameter> tbSystemParameters = new ArrayList<TbSystemParameter>();
+		TbSystemParameterExample tbSystemParameterExample = new TbSystemParameterExample();
+		TbSystemParameterExample.Criteria criteria = tbSystemParameterExample
+				.createCriteria();
+		logger.info("------------2.获取参数-------------");
+		logger.info("------------3.数据校验-------------");
+		logger.info("------------4.业务处理-------------");
+		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
+		criteria.andPStatusEqualTo("01");
+		criteria.andPKeyEqualTo("PrizePool");
+		tbSystemParameters = systemParameterBussiness
+				.getSystemParameterPrizePool(tbSystemParameterExample);
+		request.setAttribute("tbSystemParameters", tbSystemParameters);
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye queryProvider!-------------");
+		return tbSystemParameters;
 	}
 
 	@ExceptionHandler(Exception.class)

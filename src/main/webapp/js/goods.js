@@ -1,5 +1,27 @@
 //新增商品 
-//1.提交数据
+//1.获取供应商信息
+$("#addGoods_btn").click(
+		function Goodsadd() {
+			$.ajax({
+				type : 'POST',
+				async : true,
+				url : 'getProviderAddGoods.do',
+				success : function(data) {
+					console.dir(data);
+					$("#add_providers").empty();
+					$("#add_providers").append(
+							'<option value="0">请选择商品供应商：</option>');
+
+					for (var i = 0; i < data.length; i++) {
+						$("#add_providers").append(
+								'<option value="' + data[i].providerId + '">'
+										+ data[i].providerName + '</option>');
+					}
+					$('#addGoods').modal('show');
+				},
+			});
+		});
+// 2.提交新增商品数据
 $("#addGoodsSubmit").click(function Goodsadd() {
 	$.ajax({
 		type : 'POST',
@@ -85,6 +107,24 @@ function modifyCurrentGoods(obj) {
 	$.ajax({
 		type : 'POST',
 		async : false,
+		url : 'getProviderAddGoods.do',
+		success : function(data) {
+			 console.dir(data);
+			$("#modify_providers").empty();
+//			$("#modify_providers").append(
+//					'<option value="0">请选择商品供应商：</option>');
+
+			for (var i = 0; i < data.length; i++) {
+				$("#modify_providers").append(
+						'<option value="' + data[i].providerId + '">'
+								+ data[i].providerName + '</option>');
+			}
+		}
+	});
+	
+	$.ajax({
+		type : 'POST',
+		async : false,
 		url : 'queryGoods.do',
 		dataType : 'json',
 		data : {
@@ -94,7 +134,9 @@ function modifyCurrentGoods(obj) {
 			console.dir(data);
 			$('#modify_goodsId').val(data[0].goodsId)
 			$('#modify_goodsName').val(data[0].goodsName)
+			$('#modify_goodsCode').val(data[0].goodsCode)
 			$('#modify_goodsType').val(data[0].goodsType)
+			$('#modify_providers').val(data[0].providerId)
 			$('#modify_goodsUnit').val(data[0].goodsUnit)
 			$('#modify_goodsActualCost').val(data[0].goodsActualCost)
 			$('#modify_goodsPrice').val(data[0].goodsPrice)
@@ -103,6 +145,8 @@ function modifyCurrentGoods(obj) {
 			$('#modify_shelfLifePrewarning').val(data[0].shelfLifeWarning)
 			$('#modify_storagePrewarning').val(data[0].storageWarning)
 			$('#modify_remark').val(data[0].remark)
+			
+			
 			$('#modifygoods').modal('show');
 		},
 	});
@@ -164,7 +208,7 @@ function goods2customer(obj) {
 													+ '">'
 													+ '<select name="customerId"><option selected value="'
 													+ data[i].customerId
-													+'">'
+													+ '">'
 													+ data[i].customerName
 													+ '</option></select>'
 													+ '</td><td>'
@@ -177,7 +221,7 @@ function goods2customer(obj) {
 													+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
 													+ data[i].goodsProfit
 													+ '"placeholder="商品利润"></td>'
-													+ '<td><a>删除</a></td></tr>');
+													+ '<td><a onClick="deleteGoods2Customer(this)">删除</a></td></tr>');
 						}
 					}
 					$('#goods2customer').modal('show');
@@ -215,7 +259,7 @@ function addgoods2customer(obj) {
 											+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
 											+ $('#tmpGoodsProfit').val()
 											+ '"placeholder="商品利润"></td>'
-											+ '<td><a>删除</a></td></tr>');
+											+ '<td><a onClick="deleteGoods2Customer(this)" >删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
 						$("select:last").append(
@@ -240,3 +284,24 @@ function savegoods2customer(obj) {
 		},
 	});
 }
+
+//删除商品和客户关系
+function deleteGoods2Customer(obj) {
+	// 获取选中行的goods2customerId
+	var goods2customerId = $(obj).parent().parent().children("td").find("input").val();
+//	alert(goods2customerId);
+	$(obj).parent().parent().remove();
+//
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'deleteGoods2Customer.do',
+		data : {
+			'goods2customerId' : goods2customerId
+		},
+		success : function(data) {
+			$(obj).parent().parent().remove();
+		},
+	});
+}
+
