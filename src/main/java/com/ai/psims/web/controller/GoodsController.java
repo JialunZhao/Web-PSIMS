@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.psims.web.business.IGoods2CustomerBusiness;
 import com.ai.psims.web.business.IGoodsBusiness;
 import com.ai.psims.web.business.IProviderBusiness;
+import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbGoods;
@@ -28,6 +29,8 @@ import com.ai.psims.web.model.TbGoodsExample;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
+import com.ai.psims.web.model.TbSystemParameter;
+import com.ai.psims.web.model.TbSystemParameterExample;
 import com.ai.psims.web.util.CreateIdUtil;
 
 /**
@@ -48,6 +51,10 @@ public class GoodsController extends BaseController {
 	
 	@Resource(name = "providerBusinessImpl")
 	private IProviderBusiness providerBusinessImpl;
+	
+	@Resource(name = "systemParameterBussinessImpl")
+	private ISystemParameterBussiness systemParameterBussinessImpl;
+
 
 	
 	/**
@@ -111,6 +118,13 @@ public class GoodsController extends BaseController {
 						.getGoodsType(tbGoods.getGoodsType()));
 			}
 		}
+		logger.info("------------4.2.转译基本单位-------------");
+		for (TbGoods tbGoods : goodss) {
+			if (tbGoods.getGoodsUnit() == null) {
+			} else {
+				tbGoods.setGoodsUnit(systemParameterBussinessImpl.getSystemParameterPrizePool(Integer.parseInt(tbGoods.getGoodsUnit())).getPpDesc());
+			}
+		}
 		logger.info("------------4.业务处理完成-------------");
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("goodss", goodss);
@@ -119,10 +133,8 @@ public class GoodsController extends BaseController {
 		return "goods";
 	}
 
-	
-	
 	/**
-	 * 商品管理-新增商品信息-获取供应商信息
+	 * 商品管理-新增修改商品信息-获取供应商信息
 	 */
 	@RequestMapping(value = "/getProviderAddGoods", method = RequestMethod.POST)
 	public @ResponseBody List<TbProvider> tbProviders(
@@ -143,6 +155,33 @@ public class GoodsController extends BaseController {
 		logger.info("------------Bye goods add info! -------------");
 		return tbProviders;
 	}
+	/**
+	 * 商品管理-新增修改商品信息-获取基本单位信息
+	 */
+	@RequestMapping(value = "/getGoodsUnit", method = RequestMethod.POST)
+	public @ResponseBody List<TbSystemParameter> getGoodsUnit(
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		logger.info("------------Welcome getGoodsUnit!-------------");
+		logger.info("------------1.初始化-------------");
+		List<TbSystemParameter> tbSystemParameters = new ArrayList<TbSystemParameter>();
+		TbSystemParameterExample tbSystemParameterExample = new TbSystemParameterExample();
+		TbSystemParameterExample.Criteria criteria = tbSystemParameterExample
+				.createCriteria();
+		logger.info("------------2.获取参数-------------");
+		logger.info("------------3.数据校验-------------");
+		logger.info("------------4.业务处理-------------");
+		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
+		criteria.andPStatusEqualTo("01");
+		criteria.andPValueEqualTo("GoodsUnit");
+		tbSystemParameters = systemParameterBussinessImpl
+				.getSystemParameterPrizePool(tbSystemParameterExample);
+		request.setAttribute("tbSystemParameters", tbSystemParameters);
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------Bye getGoodsUnit!-------------");
+		return tbSystemParameters;
+	}
+	
 	/**
 	 * 商品管理新增商品信息
 	 */
@@ -505,6 +544,8 @@ public class GoodsController extends BaseController {
 		}
 		return tbGoodss;
 	}
+	
+	
 	/////////////////////////////////////
 	/////////////////////////////////////
 	/////////////////////////////////////

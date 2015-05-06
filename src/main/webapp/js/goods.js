@@ -1,7 +1,7 @@
 //新增商品 
-//1.获取供应商信息
+//1.获取供应商和基本单位信息
 $("#addGoods_btn").click(
-		function Goodsadd() {
+		function getProviderAndGoodsUnit() {
 			$.ajax({
 				type : 'POST',
 				async : true,
@@ -17,10 +17,30 @@ $("#addGoods_btn").click(
 								'<option value="' + data[i].providerId + '">'
 										+ data[i].providerName + '</option>');
 					}
-					$('#addGoods').modal('show');
 				},
 			});
+			// },
+			// function getGoodsUnit() {
+			$.ajax({
+				type : 'POST',
+				async : true,
+				url : 'getGoodsUnit.do',
+				success : function(data) {
+					console.dir(data);
+					$("#add_goodsUnit").empty();
+					$("#add_goodsUnit").append(
+							'<option value="0">请选择商品基本单位：</option>');
+
+					for (var i = 0; i < data.length; i++) {
+						$("#add_goodsUnit").append(
+								'<option value="' + data[i].paramId + '">'
+										+ data[i].ppDesc + '</option>');
+					}
+				},
+			});
+			$('#addGoods').modal('show');
 		});
+
 // 2.提交新增商品数据
 $("#addGoodsSubmit").click(function Goodsadd() {
 	$.ajax({
@@ -109,10 +129,10 @@ function modifyCurrentGoods(obj) {
 		async : false,
 		url : 'getProviderAddGoods.do',
 		success : function(data) {
-			 console.dir(data);
+			console.dir(data);
 			$("#modify_providers").empty();
-//			$("#modify_providers").append(
-//					'<option value="0">请选择商品供应商：</option>');
+			$("#modify_providers").append(
+					'<option value="0">请选择商品供应商：</option>');
 
 			for (var i = 0; i < data.length; i++) {
 				$("#modify_providers").append(
@@ -121,7 +141,24 @@ function modifyCurrentGoods(obj) {
 			}
 		}
 	});
-	
+	$
+			.ajax({
+				type : 'POST',
+				async : true,
+				url : 'getGoodsUnit.do',
+				success : function(data) {
+					console.dir(data);
+					$("#modify_goodsUnit").empty();
+					$("#modify_goodsUnit").append(
+							'<option value="0">请选择商品基本单位：</option>');
+
+					for (var i = 0; i < data.length; i++) {
+						$("#modify_goodsUnit").append(
+								'<option value="' + data[i].paramId + '">'
+										+ data[i].ppDesc + '</option>');
+					}
+				},
+			});
 	$.ajax({
 		type : 'POST',
 		async : false,
@@ -145,8 +182,7 @@ function modifyCurrentGoods(obj) {
 			$('#modify_shelfLifePrewarning').val(data[0].shelfLifeWarning)
 			$('#modify_storagePrewarning').val(data[0].storageWarning)
 			$('#modify_remark').val(data[0].remark)
-			
-			
+
 			$('#modifygoods').modal('show');
 		},
 	});
@@ -285,13 +321,14 @@ function savegoods2customer(obj) {
 	});
 }
 
-//删除商品和客户关系
+// 删除商品和客户关系
 function deleteGoods2Customer(obj) {
 	// 获取选中行的goods2customerId
-	var goods2customerId = $(obj).parent().parent().children("td").find("input").val();
-//	alert(goods2customerId);
+	var goods2customerId = $(obj).parent().parent().children("td")
+			.find("input").val();
+	// alert(goods2customerId);
 	$(obj).parent().parent().remove();
-//
+	//
 	$.ajax({
 		type : 'POST',
 		async : true,
@@ -304,4 +341,3 @@ function deleteGoods2Customer(obj) {
 		},
 	});
 }
-

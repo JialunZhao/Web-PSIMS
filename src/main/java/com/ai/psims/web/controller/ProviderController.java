@@ -23,7 +23,6 @@ import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
 import com.ai.psims.web.util.CreateIdUtil;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 ;
 
@@ -41,7 +40,7 @@ public class ProviderController extends BaseController {
 	private IProviderBusiness ProviderBusiness;
 
 	@Resource(name = "systemParameterBussinessImpl")
-	private ISystemParameterBussiness systemParameterBussiness;
+	private ISystemParameterBussiness systemParameterBussinessImpl;
 
 	/**
 	 * 供应商管理页面跳转
@@ -105,7 +104,7 @@ public class ProviderController extends BaseController {
 		}
 		logger.info("------------4.2.获取奖金池-------------");
 		for (TbProvider tbProvider : providers) {
-			tbProvider.setProviderPrizePool(systemParameterBussiness
+			tbProvider.setProviderPrizePool(systemParameterBussinessImpl
 					.getSystemParameterPrizePool(
 							tbProvider.getProviderPrizePool().intValue())
 					.getPpValueint());
@@ -306,8 +305,8 @@ public class ProviderController extends BaseController {
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
 		criteria.andPStatusEqualTo("01");
-		criteria.andPKeyEqualTo("PrizePool");
-		tbSystemParameters = systemParameterBussiness
+		criteria.andPValueEqualTo("PrizePool");
+		tbSystemParameters = systemParameterBussinessImpl
 				.getSystemParameterPrizePool(tbSystemParameterExample);
 		request.setAttribute("tbSystemParameters", tbSystemParameters);
 		logger.info("------------5.返回结果-------------");
