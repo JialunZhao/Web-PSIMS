@@ -28,6 +28,7 @@ import com.ai.psims.web.model.TbGoodsExample;
 //import com.ai.psims.web.model.TbGoodsExample.Criteria;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
+import com.ai.psims.web.util.CreateIdUtil;
 
 /**
  * 商品管理Controller
@@ -67,7 +68,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------Welcome goods page!-------------");
 		logger.info("------------0.权限管理！-------------");	
 		logger.info("------------1.初始化！-------------");
-		List<TbGoods> goodss;
+		List<TbGoods> goodss =new ArrayList<TbGoods>();
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
 		logger.info("------------2.获取参数-------------");
@@ -102,6 +103,14 @@ public class GoodsController extends BaseController {
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		criteria.andGoodsStatusNotEqualTo("00");
 		goodss = goodsBusiness.goodsQuery(tbGoodsExample);
+		logger.info("------------4.1.转译供应商类型-------------");
+		for (TbGoods tbGoods : goodss) {
+			if (tbGoods.getGoodsType() == null) {
+			} else {
+				tbGoods.setGoodsType(CreateIdUtil
+						.getGoodsType(tbGoods.getGoodsType()));
+			}
+		}
 		logger.info("------------4.业务处理完成-------------");
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("goodss", goodss);

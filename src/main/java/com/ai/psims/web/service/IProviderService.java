@@ -15,4 +15,6 @@ public interface IProviderService {
 	public int backupProviderInfo(TbProvider providerBackup);
 
 	public List<TbProvider> queryProvider(TbProviderExample providerQuery);
+	
+	public TbProvider selectProvider(Integer providerId);
 }

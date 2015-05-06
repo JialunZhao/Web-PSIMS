@@ -95,7 +95,7 @@ public class ProviderController extends BaseController {
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		criteria.andProviderStatusEqualTo("01");
 		providers = ProviderBusiness.providerQuery(tbProviderExample);
-		logger.info("------------4.1.转译用户类型-------------");
+		logger.info("------------4.1.转译供应商类型-------------");
 		for (TbProvider tbProvider : providers) {
 			if (tbProvider.getProviderType() == null) {
 			} else {

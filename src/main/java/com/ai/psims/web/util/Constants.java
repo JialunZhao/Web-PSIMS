@@ -132,5 +132,18 @@ public class Constants {
 			public static final String ProviderType03Name = "散户";//03
 			public static final String ProviderType04Name = "其它";//04
 		}
+		
+		// 商品类型
+		public static class GoodsType {
+			public static final String GoodsType01Code = "1";// 啤酒
+			public static final String GoodsType02Code = "2";// 白酒
+			public static final String GoodsType03Code = "3";// 饮料
+			public static final String GoodsType04Code = "4";// 原料
+			
+			public static final String GoodsType01Name = "啤酒";//01
+			public static final String GoodsType02Name = "白酒";//02
+			public static final String GoodsType03Name = "饮料";//03
+			public static final String GoodsType04Name = "原料";//04
+		}
 
 }

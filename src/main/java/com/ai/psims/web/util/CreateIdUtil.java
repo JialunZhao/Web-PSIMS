@@ -138,4 +138,22 @@ public class CreateIdUtil {
 		}
 		return result;
 	}
+	
+	public static String getGoodsType(String str) {
+		String result = null;
+		// 供应商类型
+		if (str.equals(Constants.GoodsType.GoodsType01Code)) {
+			result = Constants.GoodsType.GoodsType01Name;
+		}
+		if (str.equals(Constants.GoodsType.GoodsType02Code)) {
+			result = Constants.GoodsType.GoodsType02Name;
+		}
+		if (str.equals(Constants.GoodsType.GoodsType03Code)) {
+			result = Constants.GoodsType.GoodsType03Name;
+		}
+		if (str.equals(Constants.GoodsType.GoodsType04Code)) {
+			result = Constants.GoodsType.GoodsType04Name;
+		}
+		return result;
+	}
 }

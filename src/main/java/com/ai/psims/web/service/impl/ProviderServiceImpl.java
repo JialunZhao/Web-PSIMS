@@ -112,4 +112,9 @@ public class ProviderServiceImpl implements IProviderService {
 		return tbProviderLogMapper.insert(tbProviderLog);
 	}
 
+	@Override
+	public TbProvider selectProvider(Integer providerId) {
+		return tbProviderMapper.selectByPrimaryKey(providerId);
+	}
+
 }
