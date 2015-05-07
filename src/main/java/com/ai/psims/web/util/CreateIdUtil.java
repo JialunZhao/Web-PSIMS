@@ -156,4 +156,22 @@ public class CreateIdUtil {
 		}
 		return result;
 	}
+	
+	public static String getStorehouseType(String str) {
+		String result = null;
+		// 仓库类型
+		if (str.equals(Constants.StorehouseType.StorehouseType01Code)) {
+			result = Constants.StorehouseType.StorehouseType01Name;
+		}
+		if (str.equals(Constants.StorehouseType.StorehouseType02Code)) {
+			result = Constants.StorehouseType.StorehouseType02Name;
+		}
+		if (str.equals(Constants.StorehouseType.StorehouseType03Code)) {
+			result = Constants.StorehouseType.StorehouseType03Name;
+		}
+		if (str.equals(Constants.StorehouseType.StorehouseType04Code)) {
+			result = Constants.StorehouseType.StorehouseType04Name;
+		}
+		return result;
+	}
 }

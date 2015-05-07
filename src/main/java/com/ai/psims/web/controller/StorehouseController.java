@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ai.psims.web.business.IStorehouseBusiness;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.TbStorehouseExample;
+import com.ai.psims.web.util.CreateIdUtil;
 
 /**
  * 仓库管理Controller
@@ -50,10 +51,11 @@ public class StorehouseController extends BaseController {
 		logger.info("------------1.初始化-------------");
 		List<TbStorehouse> storehouses;
 		TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
+		TbStorehouseExample.Criteria criteria = tbStorehouseExample.createCriteria();
 		logger.info("------------2.获取参数-------------");
 		String storehouse_name = request.getParameter("query_storehouseName") == "" ? null
 				: request.getParameter("query_storehouseName");
-		String storehouse_type = request.getParameter("query_Type") == "" ? null
+		String storehouse_type = request.getParameter("query_storehouseType") == "" ? null
 				: request.getParameter("query_storehouseType");
 		String contact_name = request.getParameter("query_contactName") == "" ? null
 				: request.getParameter("query_contactName");
@@ -62,28 +64,36 @@ public class StorehouseController extends BaseController {
 		logger.info("------------3.数据校验-------------");
 		if (storehouse_name != null && storehouse_name.length() > 0) {
 			storehouse_name = "%" + storehouse_name + "%";
-			tbStorehouseExample.createCriteria().andStorehouseNameLike(
+			criteria.andStorehouseNameLike(
 					storehouse_name);
 		}
 		if (storehouse_type != null && storehouse_type.length() > 0) {
 			if (!storehouse_type.equals("0")) {
-				tbStorehouseExample.createCriteria().andTypeEqualTo(
+				criteria.andTypeEqualTo(
 						storehouse_type);
 			}
 		}
 		if (contact_name != null && contact_name.length() > 0) {
 			contact_name = "%" + contact_name + "%";
-			tbStorehouseExample.createCriteria().andContactNameLike(contact_name);
+			criteria.andContactNameLike(contact_name);
 		}
 		if (contact_tel != null && contact_tel.length() > 0) {
 			contact_tel = "%" + contact_tel + "%";
-			tbStorehouseExample.createCriteria().andContactTelLike(contact_tel);
+			criteria.andContactTelLike(contact_tel);
 		}
 
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
-		tbStorehouseExample.createCriteria().andStatusEqualTo("01");
+		criteria.andStatusEqualTo("01");
 		storehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
+		logger.info("------------4.1.转译供应商类型-------------");
+		for (TbStorehouse storehouse : storehouses) {
+			if (storehouse.getType() == null) {
+			} else {
+				storehouse.setType(CreateIdUtil
+						.getStorehouseType(storehouse.getType()));
+			}
+		}
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("storehouses", storehouses);
 
@@ -163,11 +173,6 @@ public class StorehouseController extends BaseController {
 		int res = storehouseBusiness.storehouseModify(tbStorehouse);
 		toString();
 		logger.info(String.valueOf(res));
-
-		// --弃用-- 改为逻辑删除
-		// int res = storehouseBusiness.storehouseDelete(tbStorehouseExample);
-		// toString();
-		// logger.info(String.valueOf(res));
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye deletestorehouse! -------------");
 		return "storehouse";
@@ -191,7 +196,7 @@ public class StorehouseController extends BaseController {
 				.getParameter("modify_storehouse_code");
 		String contact_name = request.getParameter("modify_contactName");
 		String contact_tel = request.getParameter("modify_contactTel");
-		String contact_addr = request.getParameter("modify_contactAddr");
+		String contact_addr = request.getParameter("modify_contactAddress");
 		String email = request.getParameter("modify_email");
 		String area = request.getParameter("modify_area");
 		String storehouse_type = request.getParameter("modify_storehouseType");
@@ -237,37 +242,18 @@ public class StorehouseController extends BaseController {
 		logger.info("------------1.初始化-------------");
 		List<TbStorehouse> tbStorehouses;
 		TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
+		TbStorehouseExample.Criteria criteria = tbStorehouseExample.createCriteria();
 		int storehouseid = 0;
 		logger.info("------------2.获取参数-------------");
 		String storehouseId = request.getParameter("storehouseId");
-		String storehouseName = request.getParameter("storehouseName");
-		String type = request.getParameter("type");
-		String contactName = request.getParameter("contactName");
-		String contactTel = request.getParameter("contactTel");
 		logger.info("------------3.数据校验-------------");
 		if (storehouseId != null && storehouseId.length() > 0) {
 			storehouseid = Integer.parseInt(storehouseId);
-			tbStorehouseExample.createCriteria().andStorehouseIdEqualTo(storehouseid);
-		}
-		if (storehouseName != null && storehouseName.length() > 0) {
-			tbStorehouseExample.createCriteria().andStorehouseNameEqualTo(
-					storehouseName);
-		}
-		if (type != null && type.length() > 0) {
-			tbStorehouseExample.createCriteria().andTypeEqualTo(
-					type);
-		}
-		if (contactName != null && contactName.length() > 0) {
-			tbStorehouseExample.createCriteria().andContactNameEqualTo(
-					contactName);
-		}
-		if (contactTel != null && contactTel.length() > 0) {
-			tbStorehouseExample.createCriteria()
-					.andContactTelEqualTo(contactTel);
+			criteria.andStorehouseIdEqualTo(storehouseid);
 		}
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
-  		tbStorehouseExample.createCriteria().andStatusNotEqualTo("00");
+		criteria.andStatusNotEqualTo("00");
 		tbStorehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
 		request.setAttribute("tbStorehouses", tbStorehouses);
 		logger.info("------------5.返回结果-------------");

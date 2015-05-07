@@ -22,7 +22,7 @@ String date=sdf.format(new Date());
 						</div>
 						<div class="form-group">
 							<label for="query_type">仓库类型：</label> <select
-								class="form-control" id="query_type" name="query_type"
+								class="form-control" id="query_type" name="query_storehouseType"
 								tabindex="1">
 								<option value="0">请选择仓库类型：</option>
 								<option value="1">通用仓库</option>
@@ -71,37 +71,11 @@ String date=sdf.format(new Date());
 								<th>类型</th>
 								<th>联系人名称</th>
 								<th>联系人电话</th>
-								<th>仓库状态</th>
 								<th>仓库地地址</th>
 								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="chk" style="display: none"><input
-									type="checkbox" aria-label="..."></td>
-								<td>1</td>
-								<td>一号仓库</td>
-								<td>通用仓库</td>
-								<td>老张</td>
-								<td>139012345678</td>
-								<td>可用</td>
-								<td>朝阳区朝阳路18号</td>
-								<td><a href="#" data-toggle="modal"
-									data-target="#modifycustomer">修改</a>/<a href="#">删除</a></td>
-							</tr>
-							<tr>
-								<td class="chk" style="display: none"><input
-									type="checkbox" aria-label="..."></td>
-								<td>2</td>
-								<td>高碑店仓库</td>
-								<td>专用仓库</td>
-								<td>老李</td>
-								<td>139012345679</td>
-								<td>清仓</td>
-								<td>朝阳区朝阳路182号</td>
-								<td><a href="#">修改</a>/<a href="#">删除</a></td>
-							</tr>
 							<c:forEach var="storehouses" items="${storehouses}">
 								<tr>
 									<td class="chk" style="display: none"><input
@@ -111,7 +85,6 @@ String date=sdf.format(new Date());
 									<td>${storehouses.type}</td>
 									<td>${storehouses.contactName}</td>
 									<td>${storehouses.contactTel}</td>
-									<td>${storehouses.status}</td>
 									<td>${storehouses.contactAddress}</td>
 									<priv:privilege power="仓库管理.增删改">
 									<td><a href="javascript:void(0);"
@@ -179,12 +152,6 @@ String date=sdf.format(new Date());
 									style="background-color: #1abc9c;">仓库地址:</span> <input
 									type="text" class="form-control" name="contactAddress"
 									placeholder="仓库地址">
-							</div>
-							<div class="input-group col-xs-6 col-md-offset-3">
-								<span class="input-group-addon"
-									style="background-color: #1abc9c;">仓库状态:</span> <input
-									type="text" class="form-control" name="status"
-									placeholder="仓库状态">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -264,12 +231,6 @@ String date=sdf.format(new Date());
 									style="background-color: #1abc9c;">仓库地址:</span> <input
 									type="text" class="form-control" id="modify_contactAddress"
 									name="modify_contactAddress" placeholder="仓库地址">
-							</div>
-							<div class="input-group col-xs-6 col-md-offset-3">
-								<span class="input-group-addon"
-									style="background-color: #1abc9c;">仓库状态:</span> <input
-									type="text" class="form-control" id="modify_status"
-									name="modify_status" placeholder="仓库状态">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"

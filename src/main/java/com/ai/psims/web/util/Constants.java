@@ -145,5 +145,18 @@ public class Constants {
 			public static final String GoodsType03Name = "饮料";//03
 			public static final String GoodsType04Name = "原料";//04
 		}
+		
+		// 商品类型
+		public static class StorehouseType {
+			public static final String StorehouseType01Code = "1";// 通用仓库
+			public static final String StorehouseType02Code = "2";// 专用仓库
+			public static final String StorehouseType03Code = "3";// 中转仓库
+			public static final String StorehouseType04Code = "4";// 其它
+			
+			public static final String StorehouseType01Name = "通用仓库";//01
+			public static final String StorehouseType02Name = "专用仓库";//02
+			public static final String StorehouseType03Name = "中转仓库";//03
+			public static final String StorehouseType04Name = "其它";//04
+		}
 
 }

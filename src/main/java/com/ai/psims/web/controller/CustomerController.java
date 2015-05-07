@@ -233,6 +233,7 @@ public class CustomerController extends BaseController {
 		logger.info("------------1.初始化-------------");
 		List<TbCustomer> tbCustomers;
 		TbCustomerExample tbCustomerExample = new TbCustomerExample();
+		TbCustomerExample.Criteria criteria = tbCustomerExample.createCriteria();
 		int customerid = 0;
 		logger.info("------------2.获取参数-------------");
 		String customer_id = request.getParameter("customer_id");
@@ -243,27 +244,27 @@ public class CustomerController extends BaseController {
 		logger.info("------------3.数据校验-------------");
 		if (customer_id != null && customer_id.length() > 0) {
 			customerid = Integer.parseInt(customer_id);
-			tbCustomerExample.createCriteria().andCustomerIdEqualTo(customerid);
+			criteria.andCustomerIdEqualTo(customerid);
 		}
 		if (customer_name != null && customer_name.length() > 0) {
-			tbCustomerExample.createCriteria().andCustomerNameEqualTo(
+			criteria.andCustomerNameEqualTo(
 					contact_name);
 		}
 		if (customer_type != null && customer_type.length() > 0) {
-			tbCustomerExample.createCriteria().andCustomerTypeEqualTo(
+			criteria.andCustomerTypeEqualTo(
 					customer_type);
 		}
 		if (contact_name != null && contact_name.length() > 0) {
-			tbCustomerExample.createCriteria().andContactNameEqualTo(
+			criteria.andContactNameEqualTo(
 					contact_name);
 		}
 		if (contact_tel != null && contact_tel.length() > 0) {
-			tbCustomerExample.createCriteria()
+			criteria
 					.andContactTelEqualTo(contact_tel);
 		}
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 99-异常）
-		tbCustomerExample.createCriteria().andStatusEqualTo("01");
+		criteria.andStatusEqualTo("01");
 		tbCustomers = customerBusiness.customerQuery(tbCustomerExample);
 		request.setAttribute("tbCustomers", tbCustomers);
 		logger.info("------------5.返回结果-------------");

@@ -67,6 +67,7 @@
 						aria-label="..."></th>
 					<th>编号</th>
 					<th>名称</th>
+					<th>编码</th>
 					<th>类型</th>
 					<th>基本单位</th>
 					<th>成本价格</th>
@@ -86,6 +87,7 @@
 						<td>${goodss.goodsId}</td>
 						<td><a href="javascript:void(0);"
 							onClick="goods2customer(this)">${goodss.goodsName}</a></td>
+						<td>${goodss.goodsCode}</td>
 						<td>${goodss.goodsType}</td>
 						<td>${goodss.goodsUnit}</td>
 						<td>${goodss.goodsActualCost}</td>
