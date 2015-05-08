@@ -37,10 +37,12 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪些表 -->
-		<table schema="psims" tableName="tb_provider" />
-		<table schema="psims" tableName="tb_provider_log"/>
-<!-- 		<table schema="psims" tableName="tb_privilege" /> -->
-<!-- 		<table schema="psims" tableName="tb_privilege_log" /> -->
+		<table schema="psims" tableName="tb_storagecheck" />
+		<table schema="psims" tableName="tb_storagecheck_log"/>
+		<!-- <table schema="psims" tableName="tb_provider" /> -->
+		<!-- <table schema="psims" tableName="tb_provider_log"/> -->
+		<!-- <table schema="psims" tableName="tb_privilege" /> -->
+		<!-- <table schema="psims" tableName="tb_privilege_log" /> -->
 		<!-- <table schema="psims" tableName="tb_menu" /> -->
 		<!-- <table tableName="about" domainObjectName="AboutDto" enableCountByExample="false" 
 			enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" 

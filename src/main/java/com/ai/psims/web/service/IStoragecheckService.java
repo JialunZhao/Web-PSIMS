@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 
 public interface IStoragecheckService {
 	public int insert(Storagecheck storagecheck);
@@ -31,4 +33,7 @@ public interface IStoragecheckService {
 	public List<Storagecheck> seekCStore();
 
 	public List<Storagecheck> seekDStore();
+	
+	public List<TbStoragecheck> selectTbStoragecheck(TbStoragecheckExample tbStoragecheckExample);
+
 }

@@ -32,7 +32,7 @@
 
 <link rel="shortcut icon" href="${ctx}/img/favicon.ico">
 <script type="text/javascript" src="${ctx}/js/vendor/jquery.min.js"></script>
-
+<script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 <!--[if lt IE 9]>
       <script src="./js/vendor/html5shiv.js"></script>

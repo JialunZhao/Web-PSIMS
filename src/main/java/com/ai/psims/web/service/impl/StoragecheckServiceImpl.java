@@ -6,15 +6,25 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.dao.StoragecheckMapper;
+import com.ai.psims.web.dao.TbStoragecheckMapper;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.service.IStoragecheckService;
 
 @Service
 public class StoragecheckServiceImpl implements IStoragecheckService {
+	private static final Logger logger = LoggerFactory
+			.getLogger(StoragecheckServiceImpl.class);
+	@Resource(name = "tbStoragecheckMapper")
+	private TbStoragecheckMapper tbStoragecheckMapper;
+	
 	@Resource(name = "storagecheckMapper")
 	private StoragecheckMapper storagecheckMapper;
 
@@ -46,8 +56,8 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
-		calendar.add( Calendar.DAY_OF_MONTH, +10); 
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, +10);
 		Date date = calendar.getTime();
 		example.createCriteria().andGoodsExpirationDateLessThanOrEqualTo(date);
 		return storagecheckMapper.selectByExample(example);
@@ -56,10 +66,10 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekBExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
-		calendar.add( Calendar.DAY_OF_MONTH, +10); 
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, +10);
 		Date date1 = calendar.getTime();
-		calendar.add( Calendar.DAY_OF_MONTH, +20); 
+		calendar.add(Calendar.DAY_OF_MONTH, +20);
 		Date date2 = calendar.getTime();
 		example.createCriteria().andGoodsExpirationDateBetween(date1, date2);
 		return storagecheckMapper.selectByExample(example);
@@ -68,10 +78,10 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekCExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
-		calendar.add( Calendar.DAY_OF_MONTH, +30); 
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, +30);
 		Date date1 = calendar.getTime();
-		calendar.add( Calendar.DAY_OF_MONTH, +60); 
+		calendar.add(Calendar.DAY_OF_MONTH, +60);
 		Date date2 = calendar.getTime();
 		example.createCriteria().andGoodsExpirationDateBetween(date1, date2);
 		return storagecheckMapper.selectByExample(example);
@@ -80,8 +90,8 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekDExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
-		calendar.add( Calendar.DAY_OF_MONTH, +90); 
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, +90);
 		Date date = calendar.getTime();
 		example.createCriteria().andGoodsExpirationDateGreaterThan(date);
 		return storagecheckMapper.selectByExample(example);
@@ -105,6 +115,13 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekDStore() {
 		return storagecheckMapper.seekDStore();
+	}
+
+	@Override
+	public List<TbStoragecheck> selectTbStoragecheck(
+			TbStoragecheckExample tbStoragecheckExample) {
+		logger.info("selectTbStoragecheck");
+		return tbStoragecheckMapper.selectByExample(tbStoragecheckExample);
 	}
 
 }
