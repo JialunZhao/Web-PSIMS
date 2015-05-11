@@ -17,10 +17,12 @@ import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbImportGoodsExample.Criteria;
 import com.ai.psims.web.model.Storagecheck;
+import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.IImportGoodsService;
 import com.ai.psims.web.service.IImportService;
+import com.ai.psims.web.service.IProviderService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
 
@@ -34,6 +36,8 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 	private IStoragecheckService storagecheckService;
 	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
+	@Resource(name = "providerServiceImpl")
+	private IProviderService providerService;
 
 	public String addGoodsList(AddGoodsBean goodsBean) {
 		java.util.Date date = new java.util.Date();
@@ -47,9 +51,10 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 					.parseLong(importSerialNumber) + 1L));
 		}
 		Long goodsAllPay = 0l;
+		Long prizePool = 0l;
 		String isDiscount, haveBox;
 		long goodsPrice, discountRate, haveBoxNamePrice;
-		int goodsCount;
+		int goodsCount;		
 		String[] goodsArray = goodsBean.getGoodList().split(",");
 		int n = (goodsArray.length) / 12;
 		for (int i = 0; i < n; i++) {
@@ -57,7 +62,7 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 			goodsCount = Integer.parseInt(goodsArray[5 + j]);
 			goodsPrice = (long) (Float.parseFloat(goodsArray[6 + j]) * 1000);
 			isDiscount = goodsArray[7 + j];
-			discountRate = (long) (Float.parseFloat(goodsArray[8 + j]) * 1000);
+			discountRate = (long) (Float.parseFloat(goodsArray[8 + j]) * 10);
 			haveBox = goodsArray[9 + j];
 			haveBoxNamePrice = (long) (Float.parseFloat(goodsArray[10 + j]) * 1000);
 			TbImportGoods goodsDemo = new TbImportGoods();
@@ -91,6 +96,8 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 			goodsAllPay = (long) (goodsAllPay + haveBoxNamePrice * goodsCount
 					+ goodsCount * goodsPrice - (goodsCount * goodsPrice
 					* discountRate * 1.0 / 1000) / 1.17);
+			prizePool+=(long)(((goodsCount * goodsPrice
+					* discountRate * 1.0 / 1000) / 1.17)*1000);
 			goodsDemo.setImportGoodsCreatetime(Date.valueOf(goodsBean
 					.getImportcreatetime()));
 			importGoodsService.insertImportGoods(goodsDemo);
@@ -110,6 +117,12 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 			import1.setPaymentType(goodsBean.getPayMed());
 			import1.setPaymentTime(Date.valueOf(goodsBean.getPayTime()));
 		}
+		if (prizePool!=0) {
+			TbProvider provider=new TbProvider();
+			provider=providerService.selectProvider(Integer.parseInt(goodsBean.getProviderId()));
+			provider.setProviderPrizePool(provider.getProviderPrizePool()-prizePool);
+			providerService.modifyProviderInfo(provider);
+		}		
 		importService.InsertImport(import1);
 		return "SUCCESS";
 	}
