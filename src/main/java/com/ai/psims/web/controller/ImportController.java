@@ -24,6 +24,7 @@ import com.ai.psims.web.model.TbImportExample.Criteria;
 import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.util.Constants;
@@ -97,7 +98,7 @@ public class ImportController extends BaseController {
 			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("list", JSON.toJSONString(goodsList));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -130,7 +131,7 @@ public class ImportController extends BaseController {
 			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(importList));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -151,7 +152,24 @@ public class ImportController extends BaseController {
 			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(importList));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
+		}
+	}
+	
+	
+	
+	@RequestMapping("/queryPrizePool")
+	public void queryPrizePool(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String providerId = request.getParameter("providerId");
+		JSONObject data = new JSONObject();
+		TbProvider provider=new TbProvider();
+		provider=queryBus.queryProviderById(Integer.parseInt(providerId));
+		if (provider == null) {
+			responseFailed(response, "ERROR", data);
+		} else {
+			data.put("prizePool", JSON.toJSONString(provider.getProviderPrizePool()));
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -179,7 +197,7 @@ public class ImportController extends BaseController {
 			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("goods", JSON.toJSONString(goods));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 

@@ -45,7 +45,7 @@ public class QueryBus implements IQueryBus {
 
 	public List<TbProvider> queryProvider() {
 		List<TbProvider> pList = new ArrayList<TbProvider>();
-		TbProviderExample tbProviderExample=new  TbProviderExample();
+		TbProviderExample tbProviderExample = new TbProviderExample();
 		pList = providerService.queryProvider(tbProviderExample);
 		return pList;
 	}
@@ -78,6 +78,13 @@ public class QueryBus implements IQueryBus {
 					.getPaymentType()));
 		}
 		return importList;
+	}
+
+	@Override
+	public TbProvider queryProviderById(Integer providerId) {
+		TbProvider provider = new TbProvider();
+		provider = providerService.selectProvider(providerId);
+		return provider;
 	}
 
 }
