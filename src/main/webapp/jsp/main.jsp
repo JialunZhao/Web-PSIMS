@@ -215,14 +215,14 @@
 				type : 'get',
 				success : function(messageRespon) {
 // 					alert(messageRespon.ten);
-					$("#ten").html("10天内过期产品共"+messageRespon.ten+"件");
-					$("#thirty").html("10~30天内过期产品共"+messageRespon.thirty+"件");
-					$("#sixty").html("30~90天内过期产品共"+messageRespon.sixty+"件");
-					$("#ninety").html("保质期大于90天的产品共"+messageRespon.ninety+"件");
-					$("#tens").html("存量小于10件共"+messageRespon.tens+"种");
-					$("#fifty").html("存量小于50件共"+messageRespon.fifty+"种");
-					$("#hundred").html("存量小于100件共"+messageRespon.hundred+"种");
-					$("#hundreds").html("存量大于100件共"+messageRespon.hundreds+"种");
+					$("#ten").html("已到达保质期预警阈值的产品共"+messageRespon.ten+"件");
+					$("#thirty").html("10天内到达保质期预警阈值产品共"+messageRespon.thirty+"件");
+					$("#sixty").html("10~90天内到达保质期预警阈值产品共"+messageRespon.sixty+"件");
+					$("#ninety").html("大于90天到达保质期预警阈值共"+messageRespon.ninety+"件");
+					$("#tens").html("已到达库存量预警阈值共"+messageRespon.tens+"种");
+					$("#fifty").html("库存量介于预警阈值100%-200%共"+messageRespon.fifty+"种");
+					$("#hundred").html("库存量介于预警阈值200%-300%共"+messageRespon.hundred+"种");
+					$("#hundreds").html("库存量大于预警阈值300%共"+messageRespon.hundreds+"种");
 					
 					A = messageRespon.ten;
 					B = messageRespon.thirty;

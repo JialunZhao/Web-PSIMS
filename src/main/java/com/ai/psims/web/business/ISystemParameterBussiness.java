@@ -12,4 +12,16 @@ public interface ISystemParameterBussiness {
 
 	TbSystemParameter getSystemParameterPrizePool(int paramId);
 
+	void add(TbSystemParameter sysParamete);
+
+	TbSystemParameter getSysById(int paramId);
+
+	void update(TbSystemParameter systemParameter);
+
+	void addRecord(TbSystemParameter systemParameter);
+
+	void delete(TbSystemParameter sysParamete);
+
+	List<TbSystemParameter> getlAllParameter();
+
 }

@@ -12,6 +12,7 @@ import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
 import com.ai.psims.web.service.ISystemParameterService;
+import com.ai.psims.web.service.ISystemParameterServiceLog;
 
 @Service
 public class SystemParameterBussinessImpl implements ISystemParameterBussiness {
@@ -21,6 +22,9 @@ public class SystemParameterBussinessImpl implements ISystemParameterBussiness {
 	
 	@Resource(name = "systemParameterServiceImpl")
 	private ISystemParameterService systemParameterService;
+	
+	@Resource(name = "systemParameterServiceLogImpl")
+	private ISystemParameterServiceLog systemParameterServiceLog;
 	
 	@Override
 	public List<TbSystemParameter> getSystemParameterPrizePool (TbSystemParameterExample tbSystemParameterExample) {
@@ -33,5 +37,31 @@ public class SystemParameterBussinessImpl implements ISystemParameterBussiness {
 		// 查询供应商奖金池信息业务
 		logger.info("getSystemParameterPrizePool");
 		return systemParameterService.getSystemParameterPrizePool(paramId);
+	}
+	@Override
+	public void add(TbSystemParameter sysParamete) {
+		systemParameterService.add(sysParamete);
+	}
+	@Override
+	public TbSystemParameter getSysById(int paramId) {
+		return systemParameterService.getSysById(paramId);
+	}
+	@Override
+	public void update(TbSystemParameter systemParameter) {
+		systemParameterService.update(systemParameter);
+		
+	}
+	@Override
+	public void addRecord(TbSystemParameter systemParameter) {
+		systemParameterServiceLog.addRecord(systemParameter);
+	}
+	@Override
+	public void delete(TbSystemParameter sysParamete) {
+		systemParameterService.delete(sysParamete);
+	}
+	@Override
+	public List<TbSystemParameter> getlAllParameter() {
+		// TODO Auto-generated method stub
+		return systemParameterService.getlAllParameter();
 	}
 }

@@ -6,14 +6,14 @@
 	<h3 class="page-header">系统设置管理</h3>
 	<ul id="myTab" class="nav nav-tabs">
 		<li class="active"><a href="#p_aa" data-toggle="tab">基本单位</a></li>
-		<li><a href="#p_bb" data-toggle="tab">回收类型</a></li>
+		<li><a href="#p_bb" data-toggle="tab">商品类型</a></li>
 		<li><a href="#p_cc" data-toggle="tab">支付方式</a></li>
 		<li><a href="#p_dd" data-toggle="tab">收款方式</a></li>
 		<li><a href="#p_ee" data-toggle="tab">奖金池</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="p_aa">
-		<button type="button" class="btn btn-primary" onclick="add('p_aa')">新增基本单位</button>
+		<button type="button" class="btn btn-primary" onclick="add('GoodsUnit')">新增基本单位</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -27,7 +27,7 @@
 				<tbody>
 					<c:set value="0" var="seq"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
-						<c:if test="${s.pKey == 'p_aa' }">
+						<c:if test="${s.pValue == 'GoodsUnit' }">
 							<tr>
 							<c:set value="${seq + 1}" var="seq"></c:set>
 								<td class="chk" style="display: none"><input
@@ -45,21 +45,21 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_bb">
-		<button type="button" class="btn btn-primary" onclick="add('p_bb')">新增回收类型</button>
+		<button type="button" class="btn btn-primary" onclick="add('GoodsType')">新增商品类型</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></th>
 						<th>编号</th>
-						<th>回收类型名称</th>
+						<th>商品类型名称</th>
 						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:set value="0" var="sqe1"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
-						<c:if test="${s.pKey == 'p_bb' }">
+						<c:if test="${s.pValue == 'GoodsType' }">
 							<tr>
 							<c:set value="${seq1 + 1}" var="seq1"></c:set>
 								<td class="chk" style="display: none"><input
@@ -77,7 +77,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_cc">
-		<button type="button" class="btn btn-primary" onclick="add('p_cc')">新增支付方式</button>
+		<button type="button" class="btn btn-primary" onclick="add('PaymentType')">新增支付方式</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -91,7 +91,7 @@
 				<tbody>
 					<c:set value="0" var="sqe2"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
-						<c:if test="${s.pKey == 'p_cc' }">
+						<c:if test="${s.pValue == 'PaymentType' }">
 							<tr>
 								<c:set value="${sqe2 + 1}" var="sqe2"></c:set>
 								<td class="chk" style="display: none"><input
@@ -109,7 +109,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_dd">
-		<button type="button" class="btn btn-primary" onclick="add('p_dd')">新增收款方式</button>
+		<button type="button" class="btn btn-primary" onclick="add('IncomeType')">新增收款方式</button>
 		<table class="table table-striped">
 				<thead>
 					<tr>
@@ -123,7 +123,7 @@
 				<tbody>
 					<c:set value="0" var="sqe3"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
-						<c:if test="${s.pKey == 'p_dd' }">
+						<c:if test="${s.pValue == 'IncomeType' }">
 							<tr>
 								<c:set value="${sqe3 + 1}" var="sqe3"></c:set>
 								<td class="chk" style="display: none"><input
@@ -141,7 +141,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_ee">
-		<button type="button" class="btn btn-primary" onclick="add('p_ee')">新增奖金池</button>
+		<button type="button" class="btn btn-primary" onclick="add('PrizePool')">新增奖金池</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -156,7 +156,7 @@
 				<tbody>
 					<c:set value="0" var="sqe3"></c:set>
 					<c:forEach items="${sitting}" var="s" step="1">
-						<c:if test="${s.pKey == 'p_ee' }">
+						<c:if test="${s.pValue == 'PrizePool' }">
 							<tr>
 								<c:set value="${sqe3 + 1}" var="sqe3"></c:set>
 								<td class="chk" style="display: none"><input
@@ -193,7 +193,8 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
-							<input type="hidden" name="pKey" id="pKey" >
+							<input type="hidden" name="pValue" id="pValue" >
+							<input type="hidden" name="pDesc" id="pDesc" >
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">参数名称:</span> <input id="ppDesc"
 								name="ppDesc" type="text" class="form-control"
@@ -203,7 +204,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="submit" class="btn btn-primary">确认新增</button>
+					<button type="submit" class="btn btn-primary" onclick="addv()">确认新增</button>
 				</div>
 			</form>
 		</div>
@@ -218,16 +219,17 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">新增系统参数</h4>
+				<h4 class="modal-title" id="myModalLabel2">新增系统参数</h4>
 			</div>
 			<form id="formA" action="${ctx}/sys/add.do" method="post">
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
-							<input type="hidden" name="pKey" id="pKey1" >
+							<input type="hidden" name="pValue" id="pValue1" >
+							<input type="hidden" name="pDesc" id="pDesc2" >
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">奖金池公司:</span> <input id="ppDesc2"
-								name="ppDesc2" type="text" class="form-control"
+								name="ppDesc" type="text" class="form-control"
 								placeholder="奖金池公司" value="">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -267,7 +269,7 @@
 						<input id="ppDesc1" name="ppDesc1" type="text"
 							class="form-control" placeholder="参数名称"> <input
 							id="paramId1" name="paramId1" type="hidden" class="form-control"
-							placeholder="参数名称"> <input id="pKey1" name="pKey1"
+							placeholder="参数名称"> <input id="pValue1" name="pValue1"
 							type="hidden" class="form-control" placeholder="参数名称"> <input
 							id="pDesc1" name="pDesc1" type="hidden" class="form-control"
 							placeholder="参数名称">
@@ -290,7 +292,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">修改系统参数</h4>
+				<h4 class="modal-title" id="myModalLabel1">修改系统参数</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -299,7 +301,7 @@
 						<input id="ppDesc3" name="ppDesc3" type="text"
 							class="form-control" placeholder="奖金池公司"> <input
 							id="paramId3" name="paramId3" type="hidden" class="form-control"
-							placeholder="参数名称"> <input id="pKey3" name="pKey3"
+							placeholder="参数名称"> <input id="pValue3" name="pValue3"
 							type="hidden" class="form-control" placeholder="参数名称"> <input
 							id="pDesc3" name="pDesc3" type="hidden" class="form-control"
 							placeholder="参数名称">
@@ -330,14 +332,14 @@
 <script src="${ctx}/js/vendor/video.js"></script>
 <script src="${ctx}/js/flat-ui.min.js"></script>
 <script type="text/javascript">
-	function chenge(paramId,pKey) {
+	function chenge(paramId,pValue) {
 		
 		var id = paramId;
 		$("#ppDesc").val(paramId);
 // 		alert(id);
-		var pKey = pKey;
-// 		alert(pKey);
-		if(pKey=="p_ee"){
+		var pValue = pValue;
+// 		alert(pValue);
+		if(pValue=="p_ee"){
 			$("#modifyrecoveryimport1").modal(id);
 			$.ajax({
 				url : '${ctx}/sys/'+id+'/toUpdate.do',
@@ -347,7 +349,7 @@
 						
 						$("#ppDesc3").attr("value",messageInfor.ppDesc);
 						$("#paramId3").attr("value",messageInfor.paramId);
-						$("#pKey3").attr("value",messageInfor.pKey);
+						$("#pValue3").attr("value",messageInfor.pValue);
 						$("#pDesc3").attr("value",messageInfor.pDesc);
 						$("#ppValueint3").attr("value",messageInfor.ppValueint);
 						
@@ -365,31 +367,65 @@
 					
 					$("#ppDesc1").attr("value",messageInfor.ppDesc);
 					$("#paramId1").attr("value",messageInfor.paramId);
-					$("#pKey1").attr("value",messageInfor.pKey);
+					$("#pValue1").attr("value",messageInfor.pValue);
 					$("#pDesc1").attr("value",messageInfor.pDesc);
 					
 				}
 		})
 	}
-	function add(pKey) {
-// 		alert(pKey);
-		if(pKey=="p_ee"){
+	function add(pValue) {
+// 		alert(pValue);
+		if(pValue=="PrizePool"){
 			$("#addrecoveryimport1").modal();
-			$("#pKey1").attr("value",pKey);
+			
+			$("#myModalLabel2").html("新增奖金池");
+			$("#pValue1").attr("value",pValue);
+			$("#pDesc2").attr("value","商品类型");
+// 			$("#pValue1").attr("value",pValue);
 // 			alert("dfdfd");
 			return false;
 		}
+		if(pValue=="GoodsUnit"){
+			$("#addrecoveryimport").modal();
+			$("#myModalLabel").html("新增基本单位");
+			$("#pValue").attr("value",pValue);
+			$("#pDesc").attr("value","基本单位");
+		}
+		if(pValue=="GoodsType"){
+			$("#addrecoveryimport").modal();
+			$("#myModalLabel").html("新增商品类型");
+			$("#pValue").attr("value",pValue);
+			$("#pDesc").attr("value","商品类型");
+		}
+		if(pValue=="PaymentType"){
+			$("#addrecoveryimport").modal();
+			$("#myModalLabel").html("新增支付方式");
+			$("#pValue").attr("value",pValue);
+			$("#pDesc").attr("value","支付方式");
+		}
+		if(pValue=="IncomeType"){
+			$("#addrecoveryimport").modal();
+			$("#myModalLabel").html("新增收款方式");
+			$("#pValue").attr("value",pValue);
+			$("#pDesc").attr("value","收款方式");
+		}
 		$("#addrecoveryimport").modal();
-		$("#pKey").attr("value",pKey);
+		$("#pValue").attr("value",pValue);
+		$("#pDesc").attr("value",value);
 // 		alert("fdf");
 	}
-	function update(pKey){
-// 		alert(pKey);
-		if(pKey=="p_ee"){
+	function addv(){
+		if($("#ppDesc").val()!=null || !$("#ppDesc").val().length()>0){
+			alert("请输入正确参数");
+		}
+	}
+	function update(pValue){
+// 		alert(pValue);
+		if(pValue=="p_ee"){
 			var obj = {
 					ppDesc : $("#ppDesc3").val(),
 					paramId : $("#paramId3").val(),
-					pKey : $("#pKey3").val(),
+					pValue : $("#pValue3").val(),
 					pDesc : $("#pDesc3").val(),
 					ppValueint : $("#ppValueint3").val()
 			};
@@ -420,7 +456,7 @@
 		var obj = {
 				ppDesc : $("#ppDesc1").val(),
 				paramId : $("#paramId1").val(),
-				pKey : $("#pKey1").val(),
+				pValue : $("#pValue1").val(),
 				pDesc : $("#pDesc1").val(),
 		};
 		$.ajax({

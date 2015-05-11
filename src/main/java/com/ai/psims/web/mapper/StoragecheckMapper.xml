@@ -106,19 +106,20 @@
   </select>
     <select id="seekStore" resultMap="BaseResultMap">
   	SELECT SUM(storage_rate_current) AS ratestorage , 
-  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &lt; 10;
+  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &lt; (SELECT DISTINCT tb2.storage_warning FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id);
   </select>
   <select id="seekBStore" resultMap="BaseResultMap">
   	SELECT SUM(storage_rate_current) AS ratestorage , 
-  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &lt; 50;
+  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage BETWEEN (SELECT DISTINCT tb2.storage_warning FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) AND (SELECT DISTINCT (tb2.storage_warning)*2 FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id)
+
   </select>
   <select id="seekCStore" resultMap="BaseResultMap">
   	SELECT SUM(storage_rate_current) AS ratestorage , 
-  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &lt; 100;
+  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage BETWEEN (SELECT DISTINCT tb2.storage_warning*2  FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) AND (SELECT DISTINCT (tb2.storage_warning)*3 FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id)
   </select>
   <select id="seekDStore" resultMap="BaseResultMap">
   	SELECT SUM(storage_rate_current) AS ratestorage , 
-  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &gt; 100;
+  	tb.* FROM tb_storagecheck  tb GROUP BY tb.goods_id HAVING ratestorage &gt; (SELECT DISTINCT tb2.storage_warning*3  FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id)
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

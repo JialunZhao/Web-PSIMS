@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbSystemParameter;
-import com.ai.psims.web.service.ISystemParameterService;
 
 
 /**
@@ -30,21 +31,28 @@ import com.ai.psims.web.service.ISystemParameterService;
 @RequestMapping("/sys")
 public class SystemParameterController {
 
-	@Resource(name="systemParameterServiceImpl")
-    private ISystemParameterService systemParameterServiceImpl;
+	
+	@Resource(name="systemParameterBussinessImpl")
+	private ISystemParameterBussiness systemParameterBussinessImpl;
+	
 	
 	//添加方法
     @RequestMapping(value = "/add.do", method = RequestMethod.POST)
     public String add(TbSystemParameter sysParamete) {
-    	sysParamete.setpStatus("01");
-    	systemParameterServiceImpl.add(sysParamete);
-        //System.out.println("========================="+user);
-        return "redirect:/sys/show.do";
+    	if(sysParamete.getPpDesc()!=null && sysParamete.getPpDesc().length()>0){
+	    	sysParamete.setpStatus("01");
+	    	sysParamete.setpKey("SYS");
+	    	sysParamete.setpCreatetime(new Date());
+	    	systemParameterBussinessImpl.add(sysParamete);
+	//    	systemParameterServiceImpl.add(sysParamete);
+	        //System.out.println("========================="+user);
+    	}
+    	return "redirect:/sys/show.do";
     }
 	//显示所有
     @RequestMapping(value = "/show.do", method = RequestMethod.GET)
     public String showParameter(ModelMap modelMap) {
-        List<TbSystemParameter> list = systemParameterServiceImpl.getlAllParameter();
+        List<TbSystemParameter> list = systemParameterBussinessImpl.getlAllParameter();
 //        List<TbSystemParameter> list1 = systemParameterServiceImpl.getParameter();
         modelMap.addAttribute("sitting", list);
 //        modelMap.addAttribute("parame", list1);
@@ -54,7 +62,8 @@ public class SystemParameterController {
     @RequestMapping(value = "/{paramId}/toUpdate.do", method = RequestMethod.GET)
     @ResponseBody
     public TbSystemParameter toUpdate(@PathVariable int paramId) {
-    	TbSystemParameter sysParamete = systemParameterServiceImpl.getSysById(paramId);
+    	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
+    	systemParameterBussinessImpl.addRecord(sysParamete);
         return sysParamete;
     }
   //修改方法
@@ -77,16 +86,17 @@ public class SystemParameterController {
     	systemParameter.setParamId(paramId);
     	systemParameter.setpKey(pKey);
     	systemParameter.setPpValueint(ppValueint);
-        systemParameterServiceImpl.update(systemParameter);
+    	systemParameterBussinessImpl.update(systemParameter);
         resultMap.put("status", Boolean.TRUE);
         return resultMap;
     }
     
     @RequestMapping(value = "/{id}/delete.do", method = RequestMethod.GET)
     public String deleteEmployee(@PathVariable int id) {
-    	TbSystemParameter sysParamete = systemParameterServiceImpl.getSysById(id);
+    	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(id);
     	sysParamete.setpStatus("00");
-    	systemParameterServiceImpl.delete(sysParamete);
+    	systemParameterBussinessImpl.delete(sysParamete);
+    	systemParameterBussinessImpl.addRecord(sysParamete);
         return "redirect:/sys/show.do";
     }
 }
