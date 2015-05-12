@@ -148,7 +148,7 @@
 						<th class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></th>
 						<th>编号</th>
-						<th>奖金池公司</th>
+<!-- 						<th>奖金池公司</th> -->
 						<th>奖金池额度</th>
 						<th>操作</th>
 					</tr>
@@ -162,12 +162,12 @@
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe3}" /></td>
-								<td><c:out value="${s.ppDesc}" /></td>
+<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
 								<td><c:out value="${s.ppValueint}" /></td>
 								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
-									href="${s.paramId}/delete.do">删除</a></td>
+									href="#" onclick="deleted(${s.paramId})">删除</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -227,10 +227,6 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<input type="hidden" name="pValue" id="pValue1" >
 							<input type="hidden" name="pDesc" id="pDesc2" >
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池公司:</span> <input id="ppDesc2"
-								name="ppDesc" type="text" class="form-control"
-								placeholder="奖金池公司" value="">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -297,9 +293,7 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="input-group col-xs-6 col-md-offset-3">
-						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池公司:</span>
-						<input id="ppDesc3" name="ppDesc3" type="text"
-							class="form-control" placeholder="奖金池公司"> <input
+						<input
 							id="paramId3" name="paramId3" type="hidden" class="form-control"
 							placeholder="参数名称"> <input id="pValue3" name="pValue3"
 							type="hidden" class="form-control" placeholder="参数名称"> <input
@@ -332,6 +326,31 @@
 <script src="${ctx}/js/vendor/video.js"></script>
 <script src="${ctx}/js/flat-ui.min.js"></script>
 <script type="text/javascript">
+	function deleted(paramId){
+		var id = paramId;
+		$.ajax({
+			url : '${ctx}/providerController/'+id+'/delQue.do',
+			type : 'get',
+				success : function(messageInfor) {
+// 	 				alert(messageInfor);
+					if(messageInfor!=null && messageInfor.length>0){
+						for(var i= 0; i< messageInfor.length;i++){
+							alert("已经有"+"'"+messageInfor[i].providerName+"'"+"关联当前奖金池");
+						}
+						alert("不能删除");
+						return;
+					}else{
+						document.location.href = "${ctx}/sys/"+id+"/delete.do";
+					}
+					
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+	                alert(XMLHttpRequest.status);
+	                alert(XMLHttpRequest.readyState);
+	                alert(textStatus);
+	            }
+		})
+	}
 	function chenge(paramId,pValue) {
 		
 		var id = paramId;
@@ -370,7 +389,8 @@
 					$("#pValue1").attr("value",messageInfor.pValue);
 					$("#pDesc1").attr("value",messageInfor.pDesc);
 					
-				}
+				},
+				
 		})
 	}
 	function add(pValue) {
