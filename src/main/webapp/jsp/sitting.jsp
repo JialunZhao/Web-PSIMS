@@ -165,8 +165,7 @@
 <%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
 								<td><c:out value="${s.ppValueint}" /></td>
 								<td>
-									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
+									<a href="#" data-toggle="modal" ="chenge(${s.paramId},'p_ee')">修改</a>/ <a
 									href="#" onclick="deleted(${s.paramId})">删除</a></td>
 							</tr>
 						</c:if>
