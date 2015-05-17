@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -312,6 +313,21 @@ public class ProviderController extends BaseController {
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryProvider!-------------");
 		return tbSystemParameters;
+	}
+	
+	/**
+	 * 查询奖金池信息
+	 */
+	@RequestMapping(value = "/{id}/delQue.do", method = RequestMethod.GET)
+	@ResponseBody
+    public List<TbProvider> delQue(@PathVariable int id) {
+		TbProviderExample tbProviderExample = new TbProviderExample();
+		TbProviderExample.Criteria criteria = tbProviderExample
+				.createCriteria();
+		long prizePool = id;
+		criteria.andProviderPrizePoolEqualTo(prizePool);
+		List<TbProvider> lists = ProviderBusiness.providerQuery(tbProviderExample);
+		return lists;
 	}
 
 	@ExceptionHandler(Exception.class)

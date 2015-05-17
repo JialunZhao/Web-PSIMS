@@ -57,7 +57,6 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
 		Date date = null;
 		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
@@ -65,8 +64,9 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 			for(Storagecheck storagecheck : storagechecks){
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if(shelfLifeWarning!=null){
-					calendar.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning);
-					date = calendar.getTime();
+					Calendar calendari = Calendar.getInstance();
+					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning);
+					date = calendari.getTime();
 					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
 					if(goodsExpirationDate.compareTo(date)<0){
 						newstoragecheck.add(storagecheck);
@@ -80,7 +80,6 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekBExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
 		Date date = null;
 		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
@@ -88,8 +87,9 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 			for(Storagecheck storagecheck : storagechecks){
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if(shelfLifeWarning!=null){
-					calendar.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+10);
-					date = calendar.getTime();
+					Calendar calendari = Calendar.getInstance();
+					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+10);
+					date = calendari.getTime();
 					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
 					if(goodsExpirationDate.compareTo(date)<0){
 						newstoragecheck.add(storagecheck);
@@ -104,18 +104,22 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekCExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
 		Date date = null;
+		Date date1 = null;
 		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
 		if(storagechecks.size()>0 && storagechecks!=null){
 			for(Storagecheck storagecheck : storagechecks){
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if(shelfLifeWarning!=null){
-					calendar.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
-					date = calendar.getTime();
+					Calendar calendari = Calendar.getInstance();
+					Calendar calendarj = Calendar.getInstance();
+					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
+					date = calendari.getTime();
+					calendarj.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+10);
+					date1 = calendarj.getTime();
 					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
-					if(goodsExpirationDate.compareTo(date)<=0){
+					if(goodsExpirationDate.compareTo(date)<=0 && goodsExpirationDate.compareTo(date1)>=0){
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -127,7 +131,6 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public List<Storagecheck> seekDExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
-		Calendar calendar=Calendar.getInstance();
 		Date date = null;
 		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
@@ -135,8 +138,9 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 			for(Storagecheck storagecheck : storagechecks){
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if(shelfLifeWarning!=null){
-					calendar.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
-					date = calendar.getTime();
+					Calendar calendari = Calendar.getInstance();
+					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
+					date = calendari.getTime();
 					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
 					if(goodsExpirationDate.compareTo(date)>0){
 						newstoragecheck.add(storagecheck);

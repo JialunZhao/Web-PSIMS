@@ -248,7 +248,10 @@ public class GoodsController extends BaseController {
 		if (goodsProfit != null && goodsProfit.length() > 0) {
 			goodsadd.setGoodsProfit(Long.parseLong(goodsProfit));
 		}
-		if (goodsPrice != null && goodsPrice.length() > 0) {
+//		金额改造。(null != s2 && s2.length() != 0)
+		if (null != goodsPrice  && goodsPrice.length() !=0) {
+//			1.将字符串乘以1000（1.0元 --》1000厘 ） 转化为数值类型 
+//			goodsPrice
 			goodsadd.setGoodsPrice(Long.parseLong(goodsPrice));
 		}
 		if (goodsDiscountAmount != null && goodsDiscountAmount.length() > 0) {
