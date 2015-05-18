@@ -35,6 +35,20 @@ public class TbCustomerLog {
 
     private String remark;
 
+    private String creditCount;
+
+    private String checkoutCode;
+
+    private String checkoutName;
+
+    private String checkoutWarning;
+
+    private Integer employeeId;
+
+    private String employeeName;
+
+    private String employeeCode;
+
     public Integer getLogId() {
         return logId;
     }
@@ -161,5 +175,61 @@ public class TbCustomerLog {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getCreditCount() {
+        return creditCount;
+    }
+
+    public void setCreditCount(String creditCount) {
+        this.creditCount = creditCount == null ? null : creditCount.trim();
+    }
+
+    public String getCheckoutCode() {
+        return checkoutCode;
+    }
+
+    public void setCheckoutCode(String checkoutCode) {
+        this.checkoutCode = checkoutCode == null ? null : checkoutCode.trim();
+    }
+
+    public String getCheckoutName() {
+        return checkoutName;
+    }
+
+    public void setCheckoutName(String checkoutName) {
+        this.checkoutName = checkoutName == null ? null : checkoutName.trim();
+    }
+
+    public String getCheckoutWarning() {
+        return checkoutWarning;
+    }
+
+    public void setCheckoutWarning(String checkoutWarning) {
+        this.checkoutWarning = checkoutWarning == null ? null : checkoutWarning.trim();
+    }
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName == null ? null : employeeName.trim();
+    }
+
+    public String getEmployeeCode() {
+        return employeeCode;
+    }
+
+    public void setEmployeeCode(String employeeCode) {
+        this.employeeCode = employeeCode == null ? null : employeeCode.trim();
     }
 }

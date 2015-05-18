@@ -104,7 +104,7 @@ String date=sdf.format(new Date());
 									<td><a href="#" onclick="importgoodsprint(${imports.importSerialNumber })">打印</a>/<a href="#"
 										onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
 										href="#"
-										onclick="deleteImportData(${imports.importSerialNumber })">删除</a></td>
+										onclick="deleteImportData(${imports.importSerialNumber },${imports.importStatus })">删除</a></td>
 									</priv:privilege>
 								</tr>
 							</c:forEach>
@@ -139,7 +139,7 @@ String date=sdf.format(new Date());
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供货商名称:</span> <select
 								class="form-control" value="请选择供货商" tabindex="1"
-								name="providerName" id="providerName">
+								name="providerName" id="providerName" onchange="queryPrizePool(this.value)">
 								<option value="">请选择供货商</option>
 								<c:forEach var="provider" items="${providerList}"
 									varStatus="status">
@@ -147,6 +147,12 @@ String date=sdf.format(new Date());
 								</c:forEach>
 							</select>
 						</div>
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">奖金池数量：</span><input
+								type="text" class="form-control" placeholder="0"
+								value="" name="prizePool" id="prizePool">
+						</div>	
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">支付状态：</span> <select
@@ -244,7 +250,8 @@ String date=sdf.format(new Date());
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">折扣率:</span> <input
 								type="text" id="discountRate" class="form-control"
-								placeholder="折扣率" value="">
+								placeholder="折扣率" value=""><span
+								class="input-group-addon">%</span>
 						</div>						
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -308,6 +315,16 @@ String date=sdf.format(new Date());
 	<script src="<%=path %>/js/vendor/video.js"></script>
 	<script src="<%=path %>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
+	
+	function grantToZero(str){
+		var count=parseFloat(str);
+		if (count>=0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
     	function isPay(payStatus){
     		if (payStatus=="<%=Constants.PayStatus.YESPAY %>") {
 				$("#isPay").show();
@@ -322,6 +339,29 @@ String date=sdf.format(new Date());
 				$("#discountRates").hide();
 			}    		
     	}
+    	
+    	
+    	function queryPrizePool(providerId) {
+    		var _len = $("#addGoodsTab tbody tr").length;
+    		if(_len>0){
+    			$("#addGoodsTab tbody tr").remove();
+    			$("#addgoodstb").hide();
+    		}
+    		$.ajax({  
+                url:'<%=path %>/importController/queryPrizePool.do',  
+                type:"post",  
+                async:false,
+                modal : true,
+                showBusi : false,
+                data:{'providerId':providerId},
+                success:function(data){  
+                	var json = $.parseJSON(data);
+					var prizePool=$.parseJSON(json.RES_DATA.prizePool);
+					$("#prizePool").val(prizePool);
+				}
+                        
+            });     
+		}
     	
     	function importgoodsprint(importSerialNumber){
     		$.ajax({  
@@ -408,7 +448,7 @@ String date=sdf.format(new Date());
 	    					                  	+'<td>'+isNull(goodsList[i].importBatchNumber)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].paymentType)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].importStatus)+'</td>'
-	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a></td></tr>' );
+	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a>/<a href="#" onclick="deleteImportData('+isNull(goodsList[i].importSerialNumber)+','+isNull(goodsList[i].importStatus)+')">删除</a></td></tr>' );
 	        								
     								}
                                 
@@ -472,24 +512,29 @@ String date=sdf.format(new Date());
     		});
 		}
     	
-    	function deleteImportData(importSerialNumber){
-    		$.ajax({  
-                url:'<%=path %>/importController/deleteImportData.do',  
-                type:"post",  
-                async:false,
-                modal : true,
-                showBusi : false,
-                data:{'importSerialNumber':importSerialNumber},
-                success:function(data){  
-                	if($.parseJSON(data).RES_RESULT=="SUCCESS"){
-              		  alert("成功删除入库单");
-              		  location.reload();
-              	  	}else{
-              		  alert("添加删除单失败");
-              	  	}
-				}
-                        
-            });       
+    	function deleteImportData(importSerialNumber,importStatus){
+    		if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01 %>') {
+				alert("商品部分到货，该订单不能删除。");
+			}else {
+				$.ajax({  
+	                url:'<%=path %>/importController/deleteImportData.do',  
+	                type:"post",  
+	                async:false,
+	                modal : true,
+	                showBusi : false,
+	                data:{'importSerialNumber':importSerialNumber},
+	                success:function(data){  
+	                	if($.parseJSON(data).RES_RESULT=="SUCCESS"){
+	              		  alert("成功删除入库单");
+	              		  location.reload();
+	              	  	}else{
+	              		  alert("添加删除单失败");
+	              	  	}
+					}
+	                        
+	            });      
+			}
+    		 
     	}
     </script>
 	<script type="text/javascript">
@@ -572,6 +617,7 @@ String date=sdf.format(new Date());
         var discountRate=$("#discountRate").val();
         var haveBoxPrice=$("#haveBoxPrice").val();
         var goodsShelfLife=$("#goodsShelfLife").val();
+        var prizePool=$("#prizePool").val();
         if (checkIsNull(goodsName)) {
 			alert("请选择入库商品名称");
 			return;
@@ -579,7 +625,13 @@ String date=sdf.format(new Date());
         if (checkIsNull(haveBox)) {
 			alert("请选择是否有箱瓶");
 			return;
-		}
+		}else if(haveBox=='<%=Constants.DiscountMed.YES %>'){
+			if (!grantToZero(haveBoxPrice)) {
+				$("#haveBoxPrice").val("");
+				alert("箱皮价格小于0，请重新填写！");
+				return;
+			}
+		} 
         if (checkIsNull(isDiscount)) {
 			alert("请选择是否有折扣");
 			return;
@@ -588,6 +640,20 @@ String date=sdf.format(new Date());
         	if (checkIsNull(discountRate)) {
     			alert("请填写折扣率");
     			return;
+    		} else {
+    			if (parseInt(discountRate)<0||parseInt(discountRate)>100) {
+    				$("#discountRate").val("");
+    				alert("折扣率应在0~100之间！");
+    				return;
+    			}else{
+					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117)*1000);
+					prizePool=parseInt(prizePool)*1000;
+					if (prize>prizePool) {
+						$("#discountRate").val("");
+						alert("奖金池金额不够，请从新选择折扣方式！");
+						return;
+					}
+				}
     		}
 		}else {
 			discountRate='0';
@@ -605,6 +671,12 @@ String date=sdf.format(new Date());
         if (checkIsNull(goodsCount)) {
 			alert("请选择入库商品数量");
 			return;
+		}else {
+			if (!grantToZero(goodsCount)) {
+				$("#goodsCount").val("");
+				alert("入库商品数量不能小于0");
+				return;
+			}
 		}
         $("#addGoodsTab tbody").append("<tr id="+len+">"
 					+"<td style='display:none'>"+goodsId+"</td>"
@@ -729,6 +801,7 @@ String date=sdf.format(new Date());
           var discountRate=$("#discountRate").val();
           var haveBoxPrice=$("#haveBoxPrice").val();
           var goodsShelfLife=$("#goodsShelfLife").val();
+          var prizePool=$("#prizePool").val();
           if (checkIsNull(goodsName)) {
   			alert("请选择入库商品名称");
   			return;
@@ -736,7 +809,13 @@ String date=sdf.format(new Date());
           if (checkIsNull(haveBox)) {
   			alert("请选择是否有箱瓶");
   			return;
-  		}
+  		}else if(haveBox=='<%=Constants.DiscountMed.YES %>'){
+  			if (!grantToZero(haveBoxPrice)) {
+  				$("#haveBoxPrice").val("");
+  				alert("箱皮价格小于0，请重新填写！");
+  				return;
+  			}
+  		} 
           if (checkIsNull(isDiscount)) {
   			alert("请选择是否有折扣");
   			return;
@@ -745,9 +824,23 @@ String date=sdf.format(new Date());
           	if (checkIsNull(discountRate)) {
       			alert("请填写折扣率");
       			return;
+      		} else {
+      			if (parseInt(discountRate)<0||parseInt(discountRate)>100) {
+      				$("#discountRate").val("");
+      				alert("折扣率应在0~100之间！");
+      				return;
+      			}else{
+					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117)*1000);
+					prizePool=parseInt(prizePool)*1000;
+					if (prize>prizePool) {
+						$("#discountRate").val("");
+						alert("奖金池金额不够，请从新选择折扣方式！");
+						return;
+					}
+				}
       		}
   		}else {
-  			discountRate="0";
+  			discountRate='0';
   			$("#discountRate").val("");
   		}
           if (haveBox=='<%=Constants.DiscountMed.YES %>') {
@@ -756,12 +849,18 @@ String date=sdf.format(new Date());
       			return;
       		}
   		}else {
-  			haveBoxPrice="0";
+  			haveBoxPrice='0';
   			$("#haveBoxPrice").val("");
   		}
           if (checkIsNull(goodsCount)) {
   			alert("请选择入库商品数量");
   			return;
+  		}else {
+  			if (!grantToZero(goodsCount)) {
+  				$("#goodsCount").val("");
+  				alert("入库商品数量不能小于0");
+  				return;
+  			}
   		}
           $("#addGoodsTab tbody").append("<tr id="+len+">"
   					+"<td style='display:none'>"+goodsId+"</td>"

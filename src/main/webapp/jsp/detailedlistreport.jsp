@@ -7,10 +7,10 @@
 <%@ include file="all2.jsp"%>
 </head>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<h3 class="page-header">库存报表</h3>
+	<h3 class="page-header">流水明细报表</h3>
 
 	<div class="row placeholders">
-		<form class="form-inline" action="storageCheckReport" method="get">
+		<form class="form-inline" action="detailedListReport" method="get">
 			<div class="form-group">
 				<label for="query_customerName">商品名称：</label> <input type="text"
 					class="form-control" id="goodsName"
@@ -33,9 +33,9 @@
 					name="goodsCode" placeholder="商品编号">
 			</div>
 			<div class="form-group">
-				<label for="query_contactTel">仓库名称：</label> <input type="text"
-					class="form-control" id="storehouseName" name="storehouseName"
-					placeholder="仓库名称：">
+				<label for="query_contactTel">客户名称：</label> <input type="text"
+					class="form-control" id="customerName" name="customerName"
+					placeholder="客户名称：">
 			</div>
 			<button type="submit" class="btn btn-primary">搜索</button>
 		</form>
@@ -57,15 +57,30 @@
 					<th class="chk" style="display: none"><input type="checkbox"
 						aria-label="..."></th>
 					<th>编号</th>
-					<th>商品名称</th>
-					<th>商品代码</th>
-					<th>商品类型</th>
-					<th>剩余库存</th>
-					<th>库存总量</th>
-					<th>单位</th>
-					<th>供应商</th>
-					<th>入库时间</th>
-					<th>商品失效日期</th>
+					<th>月</th>
+					<th>日</th>
+					<th>客户名称</th>
+					<th>分店</th>
+					<th>产品分类</th>
+					<th>产品名称</th>
+					<th>数量</th>
+					<th>单价</th>
+					<th>金额</th>
+					<th>进价</th>
+					<th>厂家投入</th>
+					<th>厂家退盖</th>
+					<th>单箱返利</th>
+					<th>加权平均返利</th>
+					<th>单箱季返</th>
+					<th>进货奖励</th>
+					<th>售点奖励</th>
+					<th>单箱年返</th>
+					<th>店方回瓶</th>
+					<th>店方回盖</th>
+					<th>单箱成本</th>
+					<th>单箱毛利</th>
+					<th>合计毛利</th>
+					<th>批号</th>
 					<th>备注</th>
 				</tr>
 			</thead>
@@ -106,7 +121,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#excel").click(function() {
-			window.location.href = "storageCheckReportExecl?goodsName=${goodsName}&goodsType=${goodsType}&goodsCode=${goodsCode}&storehouseName=${storehouseName}";
+			window.location.href = "detailedListReportExecl?goodsName=${goodsName}&goodsType=${goodsType}&goodsCode=${goodsCode}&customerName=${customerName}";
 		});
 	});
 </script>

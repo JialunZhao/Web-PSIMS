@@ -60,6 +60,7 @@ public class Goods2CustomerBusinessImpl implements IGoods2CustomerBusiness {
 			tbGoods2customers.get(i).setGoodsBarCode(tbGoods.getGoodsBarCode());
 			tbGoods2customers.get(i).setGoodsShelfLife(tbGoods.getGoodsShelfLife());
 			tbGoods2customers.get(i).setGoodsPrice(tbGoods.getGoodsPrice());
+//			tbGoods2customers.get(i).setGoodsPrice(tbGoods.getGoodsPrice());
 //			tbGoods2customers.get(i).setGoodsDiscount(tbGoods.getGoodsDiscount());
 //			tbGoods2customers.get(i).setGoodsDiscountAmount(tbGoods.getGoodsDiscountAmount());
 			tbGoods2customers.get(i).setGoodsType(tbGoods.getGoodsType());

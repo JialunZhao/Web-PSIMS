@@ -61,7 +61,13 @@ public class SystemParameterBussinessImpl implements ISystemParameterBussiness {
 	}
 	@Override
 	public List<TbSystemParameter> getlAllParameter() {
-		// TODO Auto-generated method stub
 		return systemParameterService.getlAllParameter();
+	}
+	@Override
+	public List<TbSystemParameter> selectByExample(
+			TbSystemParameterExample tbSystemParameterExample) {
+		//按条件查询参数列表
+		logger.info("selectByExample");
+		return systemParameterService.selectByExample(tbSystemParameterExample);
 	}
 }

@@ -7,6 +7,9 @@ import com.ai.psims.web.model.TbSystemParameterExample;
 
 public interface ISystemParameterBussiness {
 
+	List<TbSystemParameter> selectByExample(
+			TbSystemParameterExample tbSystemParameterExample);
+	
 	List<TbSystemParameter> getSystemParameterPrizePool(
 			TbSystemParameterExample tbSystemParameterExample);
 

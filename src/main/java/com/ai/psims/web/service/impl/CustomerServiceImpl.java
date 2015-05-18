@@ -43,36 +43,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public int deleteCustomerInfo(TbCustomer customerDelete) {
-//		logger.info("backDeleteCustomerInfo");
-//		// 1.备份数据
-//		// 1.1获取需备份数据内容。
-//		TbCustomerExample tbCustomerExample = new TbCustomerExample();
-//		tbCustomerExample.createCriteria().andCustomerIdEqualTo(
-//				customerDelete.getCustomerId());
-//		List<TbCustomer> tbCustomerbackup = tbCustomerMapper
-//				.selectByExample(tbCustomerExample);
-//		// 1.2备份到LOG表
-//		TbCustomerLog tbCustomerLog = new TbCustomerLog();
-//		tbCustomerLog.setArea(tbCustomerbackup.get(0).getArea());
-//		tbCustomerLog.setContactAddr(tbCustomerbackup.get(0).getContactAddr());
-//		tbCustomerLog.setContactName(tbCustomerbackup.get(0).getContactName());
-//		tbCustomerLog.setContactTel(tbCustomerbackup.get(0).getContactTel());
-//		tbCustomerLog.setCreatetime(tbCustomerbackup.get(0).getCreatetime());
-//		tbCustomerLog.setCustomerCode(tbCustomerbackup.get(0).getCustomerCode());
-//		tbCustomerLog.setCustomerId(tbCustomerbackup.get(0).getCustomerId());
-//		tbCustomerLog.setCustomerName(tbCustomerbackup.get(0).getCustomerName());
-//		tbCustomerLog.setCustomerType(tbCustomerbackup.get(0).getCustomerType());
-//		tbCustomerLog.setEmail(tbCustomerbackup.get(0).getEmail());
-//		tbCustomerLog.setEndtime(tbCustomerbackup.get(0).getEndtime());
-//		tbCustomerLog.setLogDatetime(new Date());
-//		tbCustomerLog.setEndtime(new Date());
-//		tbCustomerLog.setModifytime(tbCustomerbackup.get(0).getModifytime());
-//		tbCustomerLog.setRemark(tbCustomerbackup.get(0).getRemark());
-//		tbCustomerLog.setStatus(tbCustomerbackup.get(0).getStatus());
-//		tbCustomerLogMapper.insert(tbCustomerLog);
-		// 2.客户状态变更
+		// 1.客户状态变更
 		logger.info("deleteCustomerInfo");
 		customerDelete.setEndtime(new Date());
+		customerDelete.setStatus("00");
 		return tbCustomerMapper.updateByPrimaryKeySelective(customerDelete);
 	}
 
@@ -109,6 +83,47 @@ public class CustomerServiceImpl implements ICustomerService {
 		tbCustomerLog.setModifytime(tbCustomerbackup.get(0).getModifytime());
 		tbCustomerLog.setStatus(tbCustomerbackup.get(0).getStatus());
 		tbCustomerLog.setRemark(tbCustomerbackup.get(0).getRemark());
+		tbCustomerLog.setEmployeeId(tbCustomerbackup.get(0).getEmployeeId());
+		tbCustomerLog.setEmployeeCode(tbCustomerbackup.get(0).getEmployeeCode());
+		tbCustomerLog.setEmployeeName(tbCustomerbackup.get(0).getEmployeeName());
+		tbCustomerLog.setCheckoutCode(tbCustomerbackup.get(0).getCheckoutCode());
+		tbCustomerLog.setCheckoutName(tbCustomerbackup.get(0).getCheckoutName());
+		tbCustomerLog.setCheckoutWarning(tbCustomerbackup.get(0).getCheckoutWarning());
+		tbCustomerLog.setCreditCount(tbCustomerbackup.get(0).getCreditCount());
+		return tbCustomerLogMapper.insert(tbCustomerLog);
+	}
+	
+	@Override
+	public int backupCustomerInfoByPrimaryKey(Integer customerId) {
+		logger.info("backDeleteCustomerInfo");
+		// 1.备份数据
+		// 1.1获取需备份数据内容。
+		TbCustomer tbCustomer =new TbCustomer();
+		tbCustomer =tbCustomerMapper.selectByPrimaryKey(customerId);
+		// 1.2备份到LOG表
+		TbCustomerLog tbCustomerLog = new TbCustomerLog();
+		tbCustomerLog.setLogDatetime(new Date());
+		tbCustomerLog.setArea(tbCustomer.getArea());
+		tbCustomerLog.setCustomerId(tbCustomer.getCustomerId());
+		tbCustomerLog.setCustomerName(tbCustomer.getCustomerName());
+		tbCustomerLog.setCustomerCode(tbCustomer.getCustomerCode());
+		tbCustomerLog.setCustomerType(tbCustomer.getCustomerType());
+		tbCustomerLog.setContactAddr(tbCustomer.getContactAddr());
+		tbCustomerLog.setContactTel(tbCustomer.getContactTel());
+		tbCustomerLog.setContactName(tbCustomer.getContactName());
+		tbCustomerLog.setEmail(tbCustomer.getEmail());
+		tbCustomerLog.setCreatetime(tbCustomer.getCreatetime());
+		tbCustomerLog.setEndtime(tbCustomer.getEndtime());
+		tbCustomerLog.setModifytime(tbCustomer.getModifytime());
+		tbCustomerLog.setStatus(tbCustomer.getStatus());
+		tbCustomerLog.setRemark(tbCustomer.getRemark());
+		tbCustomerLog.setEmployeeId(tbCustomer.getEmployeeId());
+		tbCustomerLog.setEmployeeCode(tbCustomer.getEmployeeCode());
+		tbCustomerLog.setEmployeeName(tbCustomer.getEmployeeName());
+		tbCustomerLog.setCheckoutCode(tbCustomer.getCheckoutCode());
+		tbCustomerLog.setCheckoutName(tbCustomer.getCheckoutName());
+		tbCustomerLog.setCheckoutWarning(tbCustomer.getCheckoutWarning());
+		tbCustomerLog.setCreditCount(tbCustomer.getCreditCount());
 		return tbCustomerLogMapper.insert(tbCustomerLog);
 	}
 

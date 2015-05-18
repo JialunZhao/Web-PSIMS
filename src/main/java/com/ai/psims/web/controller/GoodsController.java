@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,8 +56,6 @@ public class GoodsController extends BaseController {
 	@Resource(name = "systemParameterBussinessImpl")
 	private ISystemParameterBussiness systemParameterBussinessImpl;
 
-
-	
 	/**
 	 * 商品管理页面跳转
 	 */
@@ -89,20 +88,20 @@ public class GoodsController extends BaseController {
 				.getParameter("query_goodsShelfLife") == "" ? null : request
 				.getParameter("query_goodsShelfLife");
 		logger.info("------------3.数据校验-------------");
-		if (query_goodsName != null && query_goodsName.length() > 0) {
+		if ( null != query_goodsName && query_goodsName.length() > 0) {
 			query_goodsName = "%" + query_goodsName + "%";
 			criteria.andGoodsNameLike(query_goodsName);
 		}
-		if (query_goodsType != null && query_goodsType.length() > 0) {
+		if (null != query_goodsType && query_goodsType.length() > 0) {
 			if (!query_goodsType.equals("0")) {
 				criteria.andGoodsTypeEqualTo(query_goodsType);
 			}
 		}
-		if (query_goodsPrice != null && query_goodsPrice.length() > 0) {
+		if (null != query_goodsPrice && query_goodsPrice.length() > 0) {
 			criteria.andGoodsPriceEqualTo(
 					Long.parseLong(query_goodsPrice));
 		}
-		if (query_goodsShelfLife != null && query_goodsShelfLife.length() > 0) {
+		if (null != query_goodsShelfLife && query_goodsShelfLife.length() > 0) {
 			criteria.andGoodsShelfLifeEqualTo(
 					Integer.parseInt(query_goodsShelfLife));
 		}
@@ -229,32 +228,34 @@ public class GoodsController extends BaseController {
 		logger.info("------------3.数据校验-------------");
 		goodsadd.setGoodsName(goodsName);
 		goodsadd.setGoodsCode(goodsCode);
-		if (goodsVersion != null && goodsVersion.length() > 0) {
+		if (null != goodsVersion && goodsVersion.length() > 0) {
 			goodsadd.setGoodsVersion(Integer.parseInt(goodsVersion));
 		}
 		goodsadd.setGoodsUnit(goodsUnit);
 		goodsadd.setGoodsBarCode(goodsBarCode);
-		if (goodsCurrentStock != null && goodsCurrentStock.length() > 0) {
+		if (null != goodsCurrentStock && goodsCurrentStock.length() > 0) {
 			goodsadd.setGoodsCurrentStock(Integer.parseInt(goodsCurrentStock));
 		}
-		if (goodsTotalStock != null && goodsTotalStock.length() > 0) {
+		if (null != goodsTotalStock && goodsTotalStock.length() > 0) {
 			goodsadd.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
 		}
 //		goodsadd.setGoodsProductionDate(Date.parse(goodsProductionDate));
 //		goodsadd.setGoodsExpirationDate(Date.parse(goodsExpirationDate);
-		if (goodsShelfLife != null && goodsShelfLife.length() > 0) {
+		if (null != goodsShelfLife && goodsShelfLife.length() > 0) {
 			goodsadd.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
 		}
-		if (goodsProfit != null && goodsProfit.length() > 0) {
+		if (null != goodsProfit && goodsProfit.length() > 0) {
 			goodsadd.setGoodsProfit(Long.parseLong(goodsProfit));
 		}
 //		金额改造。(null != s2 && s2.length() != 0)
-		if (null != goodsPrice  && goodsPrice.length() !=0) {
+		if (null != goodsPrice  && goodsPrice.length() > 0) {
 //			1.将字符串乘以1000（1.0元 --》1000厘 ） 转化为数值类型 
-//			goodsPrice
+//			BigDecimal mathGoodsPrice = new BigDecimal(goodsPrice);
+//			goodsadd.setGoodsPrice(mathGoodsPrice.toString());
 			goodsadd.setGoodsPrice(Long.parseLong(goodsPrice));
+			
 		}
-		if (goodsDiscountAmount != null && goodsDiscountAmount.length() > 0) {
+		if (null != goodsDiscountAmount && goodsDiscountAmount.length() > 0) {
 			goodsadd.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
 		}
 		goodsadd.setGoodsType(goodsType);
@@ -262,40 +263,40 @@ public class GoodsController extends BaseController {
 		goodsadd.setGoodsCreatetime(goodsCreatetime);
 //		goodsadd.setGoodsModifytime(goodsModifytime);
 //		goodsadd.setGoodsEndtime(goodsEndtime);
-		if (providerId != null && providerId.length() > 0) {
+		if (null != providerId && providerId.length() > 0) {
 			goodsadd.setProviderId(Integer.parseInt(providerId));
 		}
 		goodsadd.setProviderName(providerName);
 		goodsadd.setProviderCode(providerCode);
 		goodsadd.setRemark(remark);
-		if (goodsDiscount != null && goodsDiscount.length() > 0) {
+		if (null != goodsDiscount && goodsDiscount.length() > 0) {
 			goodsadd.setGoodsDiscount(Integer.parseInt(goodsDiscount));
 		}
-		if (quarterRebate != null && quarterRebate.length() > 0) {
+		if (null != quarterRebate && quarterRebate.length() > 0) {
 			goodsadd.setQuarterRebate(Long.parseLong(quarterRebate));
 		}
-		if (annualRebate != null && annualRebate.length() > 0) {
+		if (null != annualRebate && annualRebate.length() > 0) {
 			goodsadd.setAnnualRebate(Long.parseLong(annualRebate));
 		}
-		if (providerSubsidy != null && providerSubsidy.length() > 0) {
+		if (null != providerSubsidy && providerSubsidy.length() > 0) {
 			goodsadd.setProviderSubsidy(Long.parseLong(providerSubsidy));
 		}
-		if (providerPackageSubsidy != null && providerPackageSubsidy.length() > 0) {
+		if (null != providerPackageSubsidy && providerPackageSubsidy.length() > 0) {
 			goodsadd.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
 		}
-		if (customerSubsidy != null && customerSubsidy.length() > 0) {
+		if (null != customerSubsidy && customerSubsidy.length() > 0) {
 			goodsadd.setCustomerSubsidy(Long.parseLong(customerSubsidy));
 		}
-		if (otherSubsidy != null && otherSubsidy.length() > 0) {
+		if (null != otherSubsidy && otherSubsidy.length() > 0) {
 			goodsadd.setOtherSubsidy(Long.parseLong(otherSubsidy));
 		}
-		if (goodsActualCost != null && goodsActualCost.length() > 0) {
+		if (null != goodsActualCost && goodsActualCost.length() > 0) {
 			goodsadd.setGoodsActualCost(Long.parseLong(goodsActualCost));
 		}
-		if (storagePrewarning != null && storagePrewarning.length() > 0) {
+		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			goodsadd.setStorageWarning(Integer.parseInt(storagePrewarning));
 		}
-		if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
+		if (null != shelfLifePrewarning && shelfLifePrewarning.length() > 0) {
 			goodsadd.setShelfLifeWarning(Integer.parseInt(shelfLifePrewarning));
 		}
 		goodsadd.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
@@ -320,7 +321,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			tbGoods.setGoodsId(Integer.parseInt(goodsId));
 		}
 		logger.info("------------4.业务处理-------------");
@@ -346,7 +347,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			tbGoods.setGoodsId(Integer.parseInt(goodsId));
 		}
 		logger.info("------------4.业务处理-------------");
@@ -372,7 +373,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			tbGoods.setGoodsId(Integer.parseInt(goodsId));
 		}
 		logger.info("------------4.业务处理-------------");
@@ -434,34 +435,36 @@ public class GoodsController extends BaseController {
 
 
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			tbGoods.setGoodsId(Integer.parseInt(goodsId));
 		}
 		tbGoods.setGoodsName(goodsName);
 		tbGoods.setGoodsCode(goodsCode);
-		if (goodsVersion != null && goodsVersion.length() > 0) {
+		if (null != goodsVersion && goodsVersion.length() > 0) {
 			tbGoods.setGoodsVersion(Integer.parseInt(goodsVersion));
 		}
 		tbGoods.setGoodsUnit(goodsUnit);
 		tbGoods.setGoodsBarCode(goodsBarCode);
-		if (goodsCurrentStock != null && goodsCurrentStock.length() > 0) {
+		if (null != goodsCurrentStock && goodsCurrentStock.length() > 0) {
 			tbGoods.setGoodsCurrentStock(Integer.parseInt(goodsCurrentStock));
 		}
-		if (goodsTotalStock != null && goodsTotalStock.length() > 0) {
+		if (null != goodsTotalStock && goodsTotalStock.length() > 0) {
 			tbGoods.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
 		}
 //				tbGoods.setGoodsProductionDate(Date.parse(goodsProductionDate));
 //				tbGoods.setGoodsExpirationDate(Date.parse(goodsExpirationDate);
-		if (goodsShelfLife != null && goodsShelfLife.length() > 0) {
+		if (null != goodsShelfLife && goodsShelfLife.length() > 0) {
 			tbGoods.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
 		}
-		if (goodsProfit != null && goodsProfit.length() > 0) {
+		if (null != goodsProfit && goodsProfit.length() > 0) {
 			tbGoods.setGoodsProfit(Long.parseLong(goodsProfit));
 		}
-		if (goodsPrice != null && goodsPrice.length() > 0) {
+		if (null != goodsPrice && goodsPrice.length() > 0) {
+//			tbGoods.setGoodsPrice(goodsPrice);
 			tbGoods.setGoodsPrice(Long.parseLong(goodsPrice));
+
 		}
-		if (goodsDiscountAmount != null && goodsDiscountAmount.length() > 0) {
+		if (null != goodsDiscountAmount && goodsDiscountAmount.length() > 0) {
 			tbGoods.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
 		}
 		tbGoods.setGoodsType(goodsType);
@@ -469,40 +472,40 @@ public class GoodsController extends BaseController {
 //				tbGoods.setGoodsCreatetime(goodsCreatetime);
 		tbGoods.setGoodsModifytime(goodsModifytime);
 //				tbGoods.setGoodsEndtime(goodsEndtime);
-		if (providerId != null && providerId.length() > 0) {
+		if (null != providerId && providerId.length() > 0) {
 			tbGoods.setProviderId(Integer.parseInt(providerId));
 		}
 		tbGoods.setProviderName(providerName);
 		tbGoods.setProviderCode(providerCode);
 		tbGoods.setRemark(remark);
-		if (goodsDiscount != null && goodsDiscount.length() > 0) {
+		if (null != goodsDiscount && goodsDiscount.length() > 0) {
 			tbGoods.setGoodsDiscount(Integer.parseInt(goodsDiscount));
 		}
-		if (quarterRebate != null && quarterRebate.length() > 0) {
+		if (null != quarterRebate && quarterRebate.length() > 0) {
 			tbGoods.setQuarterRebate(Long.parseLong(quarterRebate));
 		}
-		if (annualRebate != null && annualRebate.length() > 0) {
+		if (null != annualRebate && annualRebate.length() > 0) {
 			tbGoods.setAnnualRebate(Long.parseLong(annualRebate));
 		}
-		if (providerSubsidy != null && providerSubsidy.length() > 0) {
+		if (null != providerSubsidy && providerSubsidy.length() > 0) {
 			tbGoods.setProviderSubsidy(Long.parseLong(providerSubsidy));
 		}
-		if (providerPackageSubsidy != null && providerPackageSubsidy.length() > 0) {
+		if (null != providerPackageSubsidy && providerPackageSubsidy.length() > 0) {
 			tbGoods.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
 		}
-		if (customerSubsidy != null && customerSubsidy.length() > 0) {
+		if (null != customerSubsidy && customerSubsidy.length() > 0) {
 			tbGoods.setCustomerSubsidy(Long.parseLong(customerSubsidy));
 		}
-		if (otherSubsidy != null && otherSubsidy.length() > 0) {
+		if (null != otherSubsidy && otherSubsidy.length() > 0) {
 			tbGoods.setOtherSubsidy(Long.parseLong(otherSubsidy));
 		}
-		if (goodsActualCost != null && goodsActualCost.length() > 0) {
+		if (null != goodsActualCost && goodsActualCost.length() > 0) {
 			tbGoods.setGoodsActualCost(Long.parseLong(goodsActualCost));
 		}
-		if (storagePrewarning != null && storagePrewarning.length() > 0) {
+		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			tbGoods.setStorageWarning(Integer.parseInt(storagePrewarning));
 		}
-		if (shelfLifePrewarning != null && shelfLifePrewarning.length() > 0) {
+		if (null != shelfLifePrewarning && shelfLifePrewarning.length() > 0) {
 			tbGoods.setShelfLifeWarning(Integer.parseInt(shelfLifePrewarning));
 		}
 		tbGoods.setGoodsStatus("01"); // 新增状态为正常的记录 00-失效 01-正常 99-异常
@@ -529,7 +532,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			criteria.andGoodsIdEqualTo(Integer.parseInt(goodsId));
 		}
 		logger.info("------------4.业务处理-------------");
@@ -568,7 +571,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId");
 		logger.info("------------3.数据校验-------------");
-		if (goodsId != null && goodsId.length() > 0) {
+		if (null != goodsId && goodsId.length() > 0) {
 			criteria.andGoodsIdEqualTo(Integer.parseInt(goodsId));
 		}
 		logger.info("------------4.业务处理-------------");

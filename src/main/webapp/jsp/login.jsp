@@ -21,7 +21,6 @@
 
 
 <link rel="shortcut icon" href="${ctx}/img/favicon.ico">
-<script type="text/javascript" src="${ctx}/js/jquery-1.8.3.js"></script>
 <script type="text/javascript">
 		function login() {
 			var messageLabel = $("#errorcontent");

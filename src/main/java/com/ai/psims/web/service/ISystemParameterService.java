@@ -22,4 +22,7 @@ public interface ISystemParameterService {
 
 	public TbSystemParameter getSystemParameterPrizePool(int paramId);
 
+	List<TbSystemParameter> selectByExample(
+			TbSystemParameterExample tbSystemParameterExample);
+
 }
