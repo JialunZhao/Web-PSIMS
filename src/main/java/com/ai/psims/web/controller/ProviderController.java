@@ -105,10 +105,12 @@ public class ProviderController extends BaseController {
 		}
 		logger.info("------------4.2.获取奖金池-------------");
 		for (TbProvider tbProvider : providers) {
+			if (null != tbProvider.getProviderPrizePool() && "".equals(tbProvider.getProviderPrizePool())) {
 			tbProvider.setProviderPrizePool(systemParameterBussinessImpl
 					.getSystemParameterPrizePool(
 							tbProvider.getProviderPrizePool().intValue())
 					.getPpValueint());
+			}
 		}
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("providers", providers);
@@ -216,7 +218,7 @@ public class ProviderController extends BaseController {
 				.getParameter("modify_Provider_code") == null ? request
 				.getParameter("modify_providerName") : request
 				.getParameter("modify_Provider_code");
-		String provider_prizepool = request.getParameter("modify_providerPrizePool");
+		String provider_prizepool = request.getParameter("modify_provider_prizepool");
 
 		String modify_providerContactName = request
 				.getParameter("modify_providerContactName");

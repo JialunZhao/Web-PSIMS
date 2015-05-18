@@ -10,29 +10,35 @@
     <result column="goods_bar_code" property="goodsBarCode" jdbcType="VARCHAR" />
     <result column="goods_current_stock" property="goodsCurrentStock" jdbcType="INTEGER" />
     <result column="goods_total_stock" property="goodsTotalStock" jdbcType="INTEGER" />
-    <result column="goods_production_date" property="goodsProductionDate" jdbcType="DATE" />
-    <result column="goods_expiration_date" property="goodsExpirationDate" jdbcType="DATE" />
+    <result column="goods_production_date" property="goodsProductionDate" jdbcType="TIMESTAMP" />
+    <result column="goods_expiration_date" property="goodsExpirationDate" jdbcType="TIMESTAMP" />
     <result column="goods_shelf_life" property="goodsShelfLife" jdbcType="INTEGER" />
-    <result column="goods_profit" property="goodsProfit" jdbcType="BIGINT" />
-    <result column="goods_price" property="goodsPrice" jdbcType="BIGINT" />
-    <result column="goods_discount_amount" property="goodsDiscountAmount" jdbcType="BIGINT" />
+    <result column="goods_actual_cost" property="goodsActualCost" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR" />
+    <result column="goods_profit" property="goodsProfit" jdbcType="VARCHAR" />
+    <result column="goods_discount_amount" property="goodsDiscountAmount" jdbcType="VARCHAR" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR" />
-    <result column="goods_createtime" property="goodsCreatetime" jdbcType="DATE" />
-    <result column="goods_modifytime" property="goodsModifytime" jdbcType="DATE" />
-    <result column="goods_endtime" property="goodsEndtime" jdbcType="DATE" />
+    <result column="goods_createtime" property="goodsCreatetime" jdbcType="TIMESTAMP" />
+    <result column="goods_modifytime" property="goodsModifytime" jdbcType="TIMESTAMP" />
+    <result column="goods_endtime" property="goodsEndtime" jdbcType="TIMESTAMP" />
     <result column="provider_id" property="providerId" jdbcType="INTEGER" />
     <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
     <result column="provider_code" property="providerCode" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="goods_discount" property="goodsDiscount" jdbcType="INTEGER" />
-    <result column="quarter_rebate" property="quarterRebate" jdbcType="BIGINT" />
-    <result column="annual_rebate" property="annualRebate" jdbcType="BIGINT" />
-    <result column="provider_subsidy" property="providerSubsidy" jdbcType="BIGINT" />
-    <result column="provider_package_subsidy" property="providerPackageSubsidy" jdbcType="BIGINT" />
-    <result column="customer_subsidy" property="customerSubsidy" jdbcType="BIGINT" />
-    <result column="other_subsidy" property="otherSubsidy" jdbcType="BIGINT" />
-    <result column="goods_actual_cost" property="goodsActualCost" jdbcType="BIGINT" />
+    <result column="goods_discount" property="goodsDiscount" jdbcType="VARCHAR" />
+    <result column="single_rebate" property="singleRebate" jdbcType="VARCHAR" />
+    <result column="quarter_rebate" property="quarterRebate" jdbcType="VARCHAR" />
+    <result column="annual_rebate" property="annualRebate" jdbcType="VARCHAR" />
+    <result column="purchase_rebate" property="purchaseRebate" jdbcType="VARCHAR" />
+    <result column="promotion_rebate" property="promotionRebate" jdbcType="VARCHAR" />
+    <result column="provider_subsidy" property="providerSubsidy" jdbcType="VARCHAR" />
+    <result column="customer_bottle_subsidy" property="customerBottleSubsidy" jdbcType="VARCHAR" />
+    <result column="customer_package_subsidy" property="customerPackageSubsidy" jdbcType="VARCHAR" />
+    <result column="provider_package_subsidy" property="providerPackageSubsidy" jdbcType="VARCHAR" />
+    <result column="customer_subsidy" property="customerSubsidy" jdbcType="VARCHAR" />
+    <result column="other_subsidy" property="otherSubsidy" jdbcType="VARCHAR" />
+    <result column="single_final_cost" property="singleFinalCost" jdbcType="VARCHAR" />
     <result column="storage_warning" property="storageWarning" jdbcType="INTEGER" />
     <result column="shelf_life_warning" property="shelfLifeWarning" jdbcType="INTEGER" />
   </resultMap>
@@ -97,10 +103,12 @@
   <sql id="Base_Column_List" >
     goods_id, goods_name, goods_code, goods_version, goods_unit, goods_bar_code, goods_current_stock, 
     goods_total_stock, goods_production_date, goods_expiration_date, goods_shelf_life, 
-    goods_profit, goods_price, goods_discount_amount, goods_type, goods_status, goods_createtime, 
-    goods_modifytime, goods_endtime, provider_id, provider_name, provider_code, remark, 
-    goods_discount, quarter_rebate, annual_rebate, provider_subsidy, provider_package_subsidy, 
-    customer_subsidy, other_subsidy, goods_actual_cost, storage_warning, shelf_life_warning
+    goods_actual_cost, goods_price, goods_profit, goods_discount_amount, goods_type, 
+    goods_status, goods_createtime, goods_modifytime, goods_endtime, provider_id, provider_name, 
+    provider_code, remark, goods_discount, single_rebate, quarter_rebate, annual_rebate, 
+    purchase_rebate, promotion_rebate, provider_subsidy, customer_bottle_subsidy, customer_package_subsidy, 
+    provider_package_subsidy, customer_subsidy, other_subsidy, single_final_cost, storage_warning, 
+    shelf_life_warning
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbGoodsExample" >
     select
@@ -136,27 +144,31 @@
     insert into tb_goods (goods_id, goods_name, goods_code, 
       goods_version, goods_unit, goods_bar_code, 
       goods_current_stock, goods_total_stock, goods_production_date, 
-      goods_expiration_date, goods_shelf_life, goods_profit, 
-      goods_price, goods_discount_amount, goods_type, 
-      goods_status, goods_createtime, goods_modifytime, 
-      goods_endtime, provider_id, provider_name, 
-      provider_code, remark, goods_discount, 
-      quarter_rebate, annual_rebate, provider_subsidy, 
-      provider_package_subsidy, customer_subsidy, 
-      other_subsidy, goods_actual_cost, storage_warning, 
-      shelf_life_warning)
+      goods_expiration_date, goods_shelf_life, 
+      goods_actual_cost, goods_price, goods_profit, 
+      goods_discount_amount, goods_type, goods_status, 
+      goods_createtime, goods_modifytime, goods_endtime, 
+      provider_id, provider_name, provider_code, 
+      remark, goods_discount, single_rebate, 
+      quarter_rebate, annual_rebate, purchase_rebate, 
+      promotion_rebate, provider_subsidy, customer_bottle_subsidy, 
+      customer_package_subsidy, provider_package_subsidy, 
+      customer_subsidy, other_subsidy, single_final_cost, 
+      storage_warning, shelf_life_warning)
     values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, 
       #{goodsVersion,jdbcType=INTEGER}, #{goodsUnit,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, 
-      #{goodsCurrentStock,jdbcType=INTEGER}, #{goodsTotalStock,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=DATE}, 
-      #{goodsExpirationDate,jdbcType=DATE}, #{goodsShelfLife,jdbcType=INTEGER}, #{goodsProfit,jdbcType=BIGINT}, 
-      #{goodsPrice,jdbcType=BIGINT}, #{goodsDiscountAmount,jdbcType=BIGINT}, #{goodsType,jdbcType=VARCHAR}, 
-      #{goodsStatus,jdbcType=VARCHAR}, #{goodsCreatetime,jdbcType=DATE}, #{goodsModifytime,jdbcType=DATE}, 
-      #{goodsEndtime,jdbcType=DATE}, #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, 
-      #{providerCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{goodsDiscount,jdbcType=INTEGER}, 
-      #{quarterRebate,jdbcType=BIGINT}, #{annualRebate,jdbcType=BIGINT}, #{providerSubsidy,jdbcType=BIGINT}, 
-      #{providerPackageSubsidy,jdbcType=BIGINT}, #{customerSubsidy,jdbcType=BIGINT}, 
-      #{otherSubsidy,jdbcType=BIGINT}, #{goodsActualCost,jdbcType=BIGINT}, #{storageWarning,jdbcType=INTEGER}, 
-      #{shelfLifeWarning,jdbcType=INTEGER})
+      #{goodsCurrentStock,jdbcType=INTEGER}, #{goodsTotalStock,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=TIMESTAMP}, 
+      #{goodsExpirationDate,jdbcType=TIMESTAMP}, #{goodsShelfLife,jdbcType=INTEGER}, 
+      #{goodsActualCost,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=VARCHAR}, #{goodsProfit,jdbcType=VARCHAR}, 
+      #{goodsDiscountAmount,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=VARCHAR}, 
+      #{goodsCreatetime,jdbcType=TIMESTAMP}, #{goodsModifytime,jdbcType=TIMESTAMP}, #{goodsEndtime,jdbcType=TIMESTAMP}, 
+      #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{goodsDiscount,jdbcType=VARCHAR}, #{singleRebate,jdbcType=VARCHAR}, 
+      #{quarterRebate,jdbcType=VARCHAR}, #{annualRebate,jdbcType=VARCHAR}, #{purchaseRebate,jdbcType=VARCHAR}, 
+      #{promotionRebate,jdbcType=VARCHAR}, #{providerSubsidy,jdbcType=VARCHAR}, #{customerBottleSubsidy,jdbcType=VARCHAR}, 
+      #{customerPackageSubsidy,jdbcType=VARCHAR}, #{providerPackageSubsidy,jdbcType=VARCHAR}, 
+      #{customerSubsidy,jdbcType=VARCHAR}, #{otherSubsidy,jdbcType=VARCHAR}, #{singleFinalCost,jdbcType=VARCHAR}, 
+      #{storageWarning,jdbcType=INTEGER}, #{shelfLifeWarning,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbGoods" >
     insert into tb_goods
@@ -194,11 +206,14 @@
       <if test="goodsShelfLife != null" >
         goods_shelf_life,
       </if>
-      <if test="goodsProfit != null" >
-        goods_profit,
+      <if test="goodsActualCost != null" >
+        goods_actual_cost,
       </if>
       <if test="goodsPrice != null" >
         goods_price,
+      </if>
+      <if test="goodsProfit != null" >
+        goods_profit,
       </if>
       <if test="goodsDiscountAmount != null" >
         goods_discount_amount,
@@ -233,14 +248,29 @@
       <if test="goodsDiscount != null" >
         goods_discount,
       </if>
+      <if test="singleRebate != null" >
+        single_rebate,
+      </if>
       <if test="quarterRebate != null" >
         quarter_rebate,
       </if>
       <if test="annualRebate != null" >
         annual_rebate,
       </if>
+      <if test="purchaseRebate != null" >
+        purchase_rebate,
+      </if>
+      <if test="promotionRebate != null" >
+        promotion_rebate,
+      </if>
       <if test="providerSubsidy != null" >
         provider_subsidy,
+      </if>
+      <if test="customerBottleSubsidy != null" >
+        customer_bottle_subsidy,
+      </if>
+      <if test="customerPackageSubsidy != null" >
+        customer_package_subsidy,
       </if>
       <if test="providerPackageSubsidy != null" >
         provider_package_subsidy,
@@ -251,8 +281,8 @@
       <if test="otherSubsidy != null" >
         other_subsidy,
       </if>
-      <if test="goodsActualCost != null" >
-        goods_actual_cost,
+      <if test="singleFinalCost != null" >
+        single_final_cost,
       </if>
       <if test="storageWarning != null" >
         storage_warning,
@@ -287,22 +317,25 @@
         #{goodsTotalStock,jdbcType=INTEGER},
       </if>
       <if test="goodsProductionDate != null" >
-        #{goodsProductionDate,jdbcType=DATE},
+        #{goodsProductionDate,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsExpirationDate != null" >
-        #{goodsExpirationDate,jdbcType=DATE},
+        #{goodsExpirationDate,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsShelfLife != null" >
         #{goodsShelfLife,jdbcType=INTEGER},
       </if>
-      <if test="goodsProfit != null" >
-        #{goodsProfit,jdbcType=BIGINT},
+      <if test="goodsActualCost != null" >
+        #{goodsActualCost,jdbcType=VARCHAR},
       </if>
       <if test="goodsPrice != null" >
-        #{goodsPrice,jdbcType=BIGINT},
+        #{goodsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsProfit != null" >
+        #{goodsProfit,jdbcType=VARCHAR},
       </if>
       <if test="goodsDiscountAmount != null" >
-        #{goodsDiscountAmount,jdbcType=BIGINT},
+        #{goodsDiscountAmount,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         #{goodsType,jdbcType=VARCHAR},
@@ -311,13 +344,13 @@
         #{goodsStatus,jdbcType=VARCHAR},
       </if>
       <if test="goodsCreatetime != null" >
-        #{goodsCreatetime,jdbcType=DATE},
+        #{goodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsModifytime != null" >
-        #{goodsModifytime,jdbcType=DATE},
+        #{goodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsEndtime != null" >
-        #{goodsEndtime,jdbcType=DATE},
+        #{goodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="providerId != null" >
         #{providerId,jdbcType=INTEGER},
@@ -332,28 +365,43 @@
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="goodsDiscount != null" >
-        #{goodsDiscount,jdbcType=INTEGER},
+        #{goodsDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="singleRebate != null" >
+        #{singleRebate,jdbcType=VARCHAR},
       </if>
       <if test="quarterRebate != null" >
-        #{quarterRebate,jdbcType=BIGINT},
+        #{quarterRebate,jdbcType=VARCHAR},
       </if>
       <if test="annualRebate != null" >
-        #{annualRebate,jdbcType=BIGINT},
+        #{annualRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseRebate != null" >
+        #{purchaseRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionRebate != null" >
+        #{promotionRebate,jdbcType=VARCHAR},
       </if>
       <if test="providerSubsidy != null" >
-        #{providerSubsidy,jdbcType=BIGINT},
+        #{providerSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBottleSubsidy != null" >
+        #{customerBottleSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPackageSubsidy != null" >
+        #{customerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="providerPackageSubsidy != null" >
-        #{providerPackageSubsidy,jdbcType=BIGINT},
+        #{providerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="customerSubsidy != null" >
-        #{customerSubsidy,jdbcType=BIGINT},
+        #{customerSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="otherSubsidy != null" >
-        #{otherSubsidy,jdbcType=BIGINT},
+        #{otherSubsidy,jdbcType=VARCHAR},
       </if>
-      <if test="goodsActualCost != null" >
-        #{goodsActualCost,jdbcType=BIGINT},
+      <if test="singleFinalCost != null" >
+        #{singleFinalCost,jdbcType=VARCHAR},
       </if>
       <if test="storageWarning != null" >
         #{storageWarning,jdbcType=INTEGER},
@@ -397,22 +445,25 @@
         goods_total_stock = #{record.goodsTotalStock,jdbcType=INTEGER},
       </if>
       <if test="record.goodsProductionDate != null" >
-        goods_production_date = #{record.goodsProductionDate,jdbcType=DATE},
+        goods_production_date = #{record.goodsProductionDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.goodsExpirationDate != null" >
-        goods_expiration_date = #{record.goodsExpirationDate,jdbcType=DATE},
+        goods_expiration_date = #{record.goodsExpirationDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.goodsShelfLife != null" >
         goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
       </if>
-      <if test="record.goodsProfit != null" >
-        goods_profit = #{record.goodsProfit,jdbcType=BIGINT},
+      <if test="record.goodsActualCost != null" >
+        goods_actual_cost = #{record.goodsActualCost,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsPrice != null" >
-        goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+        goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsProfit != null" >
+        goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsDiscountAmount != null" >
-        goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=BIGINT},
+        goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsType != null" >
         goods_type = #{record.goodsType,jdbcType=VARCHAR},
@@ -421,13 +472,13 @@
         goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsCreatetime != null" >
-        goods_createtime = #{record.goodsCreatetime,jdbcType=DATE},
+        goods_createtime = #{record.goodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.goodsModifytime != null" >
-        goods_modifytime = #{record.goodsModifytime,jdbcType=DATE},
+        goods_modifytime = #{record.goodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.goodsEndtime != null" >
-        goods_endtime = #{record.goodsEndtime,jdbcType=DATE},
+        goods_endtime = #{record.goodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.providerId != null" >
         provider_id = #{record.providerId,jdbcType=INTEGER},
@@ -442,28 +493,43 @@
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsDiscount != null" >
-        goods_discount = #{record.goodsDiscount,jdbcType=INTEGER},
+        goods_discount = #{record.goodsDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singleRebate != null" >
+        single_rebate = #{record.singleRebate,jdbcType=VARCHAR},
       </if>
       <if test="record.quarterRebate != null" >
-        quarter_rebate = #{record.quarterRebate,jdbcType=BIGINT},
+        quarter_rebate = #{record.quarterRebate,jdbcType=VARCHAR},
       </if>
       <if test="record.annualRebate != null" >
-        annual_rebate = #{record.annualRebate,jdbcType=BIGINT},
+        annual_rebate = #{record.annualRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseRebate != null" >
+        purchase_rebate = #{record.purchaseRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionRebate != null" >
+        promotion_rebate = #{record.promotionRebate,jdbcType=VARCHAR},
       </if>
       <if test="record.providerSubsidy != null" >
-        provider_subsidy = #{record.providerSubsidy,jdbcType=BIGINT},
+        provider_subsidy = #{record.providerSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerBottleSubsidy != null" >
+        customer_bottle_subsidy = #{record.customerBottleSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerPackageSubsidy != null" >
+        customer_package_subsidy = #{record.customerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="record.providerPackageSubsidy != null" >
-        provider_package_subsidy = #{record.providerPackageSubsidy,jdbcType=BIGINT},
+        provider_package_subsidy = #{record.providerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="record.customerSubsidy != null" >
-        customer_subsidy = #{record.customerSubsidy,jdbcType=BIGINT},
+        customer_subsidy = #{record.customerSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="record.otherSubsidy != null" >
-        other_subsidy = #{record.otherSubsidy,jdbcType=BIGINT},
+        other_subsidy = #{record.otherSubsidy,jdbcType=VARCHAR},
       </if>
-      <if test="record.goodsActualCost != null" >
-        goods_actual_cost = #{record.goodsActualCost,jdbcType=BIGINT},
+      <if test="record.singleFinalCost != null" >
+        single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR},
       </if>
       <if test="record.storageWarning != null" >
         storage_warning = #{record.storageWarning,jdbcType=INTEGER},
@@ -486,29 +552,35 @@
       goods_bar_code = #{record.goodsBarCode,jdbcType=VARCHAR},
       goods_current_stock = #{record.goodsCurrentStock,jdbcType=INTEGER},
       goods_total_stock = #{record.goodsTotalStock,jdbcType=INTEGER},
-      goods_production_date = #{record.goodsProductionDate,jdbcType=DATE},
-      goods_expiration_date = #{record.goodsExpirationDate,jdbcType=DATE},
+      goods_production_date = #{record.goodsProductionDate,jdbcType=TIMESTAMP},
+      goods_expiration_date = #{record.goodsExpirationDate,jdbcType=TIMESTAMP},
       goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
-      goods_profit = #{record.goodsProfit,jdbcType=BIGINT},
-      goods_price = #{record.goodsPrice,jdbcType=BIGINT},
-      goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=BIGINT},
+      goods_actual_cost = #{record.goodsActualCost,jdbcType=VARCHAR},
+      goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
+      goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
+      goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
       goods_type = #{record.goodsType,jdbcType=VARCHAR},
       goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
-      goods_createtime = #{record.goodsCreatetime,jdbcType=DATE},
-      goods_modifytime = #{record.goodsModifytime,jdbcType=DATE},
-      goods_endtime = #{record.goodsEndtime,jdbcType=DATE},
+      goods_createtime = #{record.goodsCreatetime,jdbcType=TIMESTAMP},
+      goods_modifytime = #{record.goodsModifytime,jdbcType=TIMESTAMP},
+      goods_endtime = #{record.goodsEndtime,jdbcType=TIMESTAMP},
       provider_id = #{record.providerId,jdbcType=INTEGER},
       provider_name = #{record.providerName,jdbcType=VARCHAR},
       provider_code = #{record.providerCode,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
-      goods_discount = #{record.goodsDiscount,jdbcType=INTEGER},
-      quarter_rebate = #{record.quarterRebate,jdbcType=BIGINT},
-      annual_rebate = #{record.annualRebate,jdbcType=BIGINT},
-      provider_subsidy = #{record.providerSubsidy,jdbcType=BIGINT},
-      provider_package_subsidy = #{record.providerPackageSubsidy,jdbcType=BIGINT},
-      customer_subsidy = #{record.customerSubsidy,jdbcType=BIGINT},
-      other_subsidy = #{record.otherSubsidy,jdbcType=BIGINT},
-      goods_actual_cost = #{record.goodsActualCost,jdbcType=BIGINT},
+      goods_discount = #{record.goodsDiscount,jdbcType=VARCHAR},
+      single_rebate = #{record.singleRebate,jdbcType=VARCHAR},
+      quarter_rebate = #{record.quarterRebate,jdbcType=VARCHAR},
+      annual_rebate = #{record.annualRebate,jdbcType=VARCHAR},
+      purchase_rebate = #{record.purchaseRebate,jdbcType=VARCHAR},
+      promotion_rebate = #{record.promotionRebate,jdbcType=VARCHAR},
+      provider_subsidy = #{record.providerSubsidy,jdbcType=VARCHAR},
+      customer_bottle_subsidy = #{record.customerBottleSubsidy,jdbcType=VARCHAR},
+      customer_package_subsidy = #{record.customerPackageSubsidy,jdbcType=VARCHAR},
+      provider_package_subsidy = #{record.providerPackageSubsidy,jdbcType=VARCHAR},
+      customer_subsidy = #{record.customerSubsidy,jdbcType=VARCHAR},
+      other_subsidy = #{record.otherSubsidy,jdbcType=VARCHAR},
+      single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR},
       storage_warning = #{record.storageWarning,jdbcType=INTEGER},
       shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER}
     <if test="_parameter != null" >
@@ -540,22 +612,25 @@
         goods_total_stock = #{goodsTotalStock,jdbcType=INTEGER},
       </if>
       <if test="goodsProductionDate != null" >
-        goods_production_date = #{goodsProductionDate,jdbcType=DATE},
+        goods_production_date = #{goodsProductionDate,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsExpirationDate != null" >
-        goods_expiration_date = #{goodsExpirationDate,jdbcType=DATE},
+        goods_expiration_date = #{goodsExpirationDate,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsShelfLife != null" >
         goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER},
       </if>
-      <if test="goodsProfit != null" >
-        goods_profit = #{goodsProfit,jdbcType=BIGINT},
+      <if test="goodsActualCost != null" >
+        goods_actual_cost = #{goodsActualCost,jdbcType=VARCHAR},
       </if>
       <if test="goodsPrice != null" >
-        goods_price = #{goodsPrice,jdbcType=BIGINT},
+        goods_price = #{goodsPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsProfit != null" >
+        goods_profit = #{goodsProfit,jdbcType=VARCHAR},
       </if>
       <if test="goodsDiscountAmount != null" >
-        goods_discount_amount = #{goodsDiscountAmount,jdbcType=BIGINT},
+        goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         goods_type = #{goodsType,jdbcType=VARCHAR},
@@ -564,13 +639,13 @@
         goods_status = #{goodsStatus,jdbcType=VARCHAR},
       </if>
       <if test="goodsCreatetime != null" >
-        goods_createtime = #{goodsCreatetime,jdbcType=DATE},
+        goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsModifytime != null" >
-        goods_modifytime = #{goodsModifytime,jdbcType=DATE},
+        goods_modifytime = #{goodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsEndtime != null" >
-        goods_endtime = #{goodsEndtime,jdbcType=DATE},
+        goods_endtime = #{goodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="providerId != null" >
         provider_id = #{providerId,jdbcType=INTEGER},
@@ -585,28 +660,43 @@
         remark = #{remark,jdbcType=VARCHAR},
       </if>
       <if test="goodsDiscount != null" >
-        goods_discount = #{goodsDiscount,jdbcType=INTEGER},
+        goods_discount = #{goodsDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="singleRebate != null" >
+        single_rebate = #{singleRebate,jdbcType=VARCHAR},
       </if>
       <if test="quarterRebate != null" >
-        quarter_rebate = #{quarterRebate,jdbcType=BIGINT},
+        quarter_rebate = #{quarterRebate,jdbcType=VARCHAR},
       </if>
       <if test="annualRebate != null" >
-        annual_rebate = #{annualRebate,jdbcType=BIGINT},
+        annual_rebate = #{annualRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseRebate != null" >
+        purchase_rebate = #{purchaseRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionRebate != null" >
+        promotion_rebate = #{promotionRebate,jdbcType=VARCHAR},
       </if>
       <if test="providerSubsidy != null" >
-        provider_subsidy = #{providerSubsidy,jdbcType=BIGINT},
+        provider_subsidy = #{providerSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="customerBottleSubsidy != null" >
+        customer_bottle_subsidy = #{customerBottleSubsidy,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPackageSubsidy != null" >
+        customer_package_subsidy = #{customerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="providerPackageSubsidy != null" >
-        provider_package_subsidy = #{providerPackageSubsidy,jdbcType=BIGINT},
+        provider_package_subsidy = #{providerPackageSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="customerSubsidy != null" >
-        customer_subsidy = #{customerSubsidy,jdbcType=BIGINT},
+        customer_subsidy = #{customerSubsidy,jdbcType=VARCHAR},
       </if>
       <if test="otherSubsidy != null" >
-        other_subsidy = #{otherSubsidy,jdbcType=BIGINT},
+        other_subsidy = #{otherSubsidy,jdbcType=VARCHAR},
       </if>
-      <if test="goodsActualCost != null" >
-        goods_actual_cost = #{goodsActualCost,jdbcType=BIGINT},
+      <if test="singleFinalCost != null" >
+        single_final_cost = #{singleFinalCost,jdbcType=VARCHAR},
       </if>
       <if test="storageWarning != null" >
         storage_warning = #{storageWarning,jdbcType=INTEGER},
@@ -626,29 +716,35 @@
       goods_bar_code = #{goodsBarCode,jdbcType=VARCHAR},
       goods_current_stock = #{goodsCurrentStock,jdbcType=INTEGER},
       goods_total_stock = #{goodsTotalStock,jdbcType=INTEGER},
-      goods_production_date = #{goodsProductionDate,jdbcType=DATE},
-      goods_expiration_date = #{goodsExpirationDate,jdbcType=DATE},
+      goods_production_date = #{goodsProductionDate,jdbcType=TIMESTAMP},
+      goods_expiration_date = #{goodsExpirationDate,jdbcType=TIMESTAMP},
       goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER},
-      goods_profit = #{goodsProfit,jdbcType=BIGINT},
-      goods_price = #{goodsPrice,jdbcType=BIGINT},
-      goods_discount_amount = #{goodsDiscountAmount,jdbcType=BIGINT},
+      goods_actual_cost = #{goodsActualCost,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=VARCHAR},
+      goods_profit = #{goodsProfit,jdbcType=VARCHAR},
+      goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_status = #{goodsStatus,jdbcType=VARCHAR},
-      goods_createtime = #{goodsCreatetime,jdbcType=DATE},
-      goods_modifytime = #{goodsModifytime,jdbcType=DATE},
-      goods_endtime = #{goodsEndtime,jdbcType=DATE},
+      goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
+      goods_modifytime = #{goodsModifytime,jdbcType=TIMESTAMP},
+      goods_endtime = #{goodsEndtime,jdbcType=TIMESTAMP},
       provider_id = #{providerId,jdbcType=INTEGER},
       provider_name = #{providerName,jdbcType=VARCHAR},
       provider_code = #{providerCode,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
-      goods_discount = #{goodsDiscount,jdbcType=INTEGER},
-      quarter_rebate = #{quarterRebate,jdbcType=BIGINT},
-      annual_rebate = #{annualRebate,jdbcType=BIGINT},
-      provider_subsidy = #{providerSubsidy,jdbcType=BIGINT},
-      provider_package_subsidy = #{providerPackageSubsidy,jdbcType=BIGINT},
-      customer_subsidy = #{customerSubsidy,jdbcType=BIGINT},
-      other_subsidy = #{otherSubsidy,jdbcType=BIGINT},
-      goods_actual_cost = #{goodsActualCost,jdbcType=BIGINT},
+      goods_discount = #{goodsDiscount,jdbcType=VARCHAR},
+      single_rebate = #{singleRebate,jdbcType=VARCHAR},
+      quarter_rebate = #{quarterRebate,jdbcType=VARCHAR},
+      annual_rebate = #{annualRebate,jdbcType=VARCHAR},
+      purchase_rebate = #{purchaseRebate,jdbcType=VARCHAR},
+      promotion_rebate = #{promotionRebate,jdbcType=VARCHAR},
+      provider_subsidy = #{providerSubsidy,jdbcType=VARCHAR},
+      customer_bottle_subsidy = #{customerBottleSubsidy,jdbcType=VARCHAR},
+      customer_package_subsidy = #{customerPackageSubsidy,jdbcType=VARCHAR},
+      provider_package_subsidy = #{providerPackageSubsidy,jdbcType=VARCHAR},
+      customer_subsidy = #{customerSubsidy,jdbcType=VARCHAR},
+      other_subsidy = #{otherSubsidy,jdbcType=VARCHAR},
+      single_final_cost = #{singleFinalCost,jdbcType=VARCHAR},
       storage_warning = #{storageWarning,jdbcType=INTEGER},
       shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER}
     where goods_id = #{goodsId,jdbcType=INTEGER}

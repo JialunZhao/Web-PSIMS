@@ -3,7 +3,7 @@ package com.ai.psims;
 import java.math.BigDecimal;
 
 public class String2Num {
-	String str = "4.015"; // 100010
+	String str = "4.015.1"; // 100010
 	String discount = "66"; // 60% 优惠
 
 	long price = 0;
@@ -89,6 +89,7 @@ public class String2Num {
 		Double double1 = Double.parseDouble("4.015");
 		Float float1 =Float.parseFloat("4.015");
 		System.out.println(40.15 * 1000);
+		System.out.println(10 / 3);
 		System.out.println(double1*1000);
 		System.out.println(float1*1000);
 		

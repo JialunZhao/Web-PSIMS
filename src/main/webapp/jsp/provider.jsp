@@ -141,8 +141,9 @@
 								class="form-control" name="provider_prizepool" tabindex="1"
 								id="add_provider_prizepool" onchange="selectChange()">
 
-							</select><input type="text" class="form-control" id="add_provider_prizepool_prize"
-								 readonly  placeholder="供应商奖金池金额"> <span class="input-group-addon">元</span>
+							</select><input type="text" class="form-control"
+								id="add_provider_prizepool_prize" readonly
+								placeholder="供应商奖金池金额"> <span class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -236,9 +237,13 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">供应商奖金池:</span> <input
-								type="text" class="form-control" id="modify_providerPrizePool"
-								name="modify_providerPrizePool" placeholder="供应商奖金池">
+								style="background-color: #1abc9c;">供应商奖金池:</span> <select
+								class="form-control" name="modify_provider_prizepool" tabindex="1"
+								id="modify_providerPrizePool" onchange="modifyselectChange()">
+
+							</select><input type="text" class="form-control"
+								id="modify_providerPrizePool_prize" readonly
+								placeholder="供应商奖金池金额"> <span class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"

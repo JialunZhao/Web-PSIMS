@@ -15,34 +15,34 @@ import com.ai.psims.web.service.ISystemParameterService;
 public class SystemParameterServiceImpl implements ISystemParameterService {
 
 	@Resource
-	private TbSystemParameterMapper systemParameterMapper;
+	private TbSystemParameterMapper tbSystemParameterMapper;
 
 	@Override
 	public List<TbSystemParameter> getlAllParameter() {
 		TbSystemParameterExample example = new TbSystemParameterExample();
 		example.createCriteria().andPStatusLike("01");
-		return systemParameterMapper.selectByExample(example);
+		return tbSystemParameterMapper.selectByExample(example);
 	}
 
 	@Override
 	public void add(TbSystemParameter sysParamete) {
-		systemParameterMapper.insertSelective(sysParamete);
+		tbSystemParameterMapper.insertSelective(sysParamete);
 	}
 
 	@Override
 	public TbSystemParameter getSysById(int paramId) {
-		return systemParameterMapper.selectByPrimaryKey(paramId);
+		return tbSystemParameterMapper.selectByPrimaryKey(paramId);
 	}
 
 	@Override
 	public void update(TbSystemParameter systemParameter) {
-		systemParameterMapper.updateByPrimaryKeySelective(systemParameter);
+		tbSystemParameterMapper.updateByPrimaryKeySelective(systemParameter);
 
 	}
 
 	@Override
 	public void delete(TbSystemParameter sysParamete) {
-		systemParameterMapper.updateByPrimaryKeySelective(sysParamete);
+		tbSystemParameterMapper.updateByPrimaryKeySelective(sysParamete);
 
 	}
 
@@ -50,10 +50,16 @@ public class SystemParameterServiceImpl implements ISystemParameterService {
 	@Override
 	public List<TbSystemParameter> getSystemParameterPrizePool(
 			TbSystemParameterExample tbSystemParameterExample) {
-		return systemParameterMapper.selectByExample(tbSystemParameterExample);
+		return tbSystemParameterMapper.selectByExample(tbSystemParameterExample);
 	}
 	public TbSystemParameter getSystemParameterPrizePool(int paramId) {
-		return systemParameterMapper.selectByPrimaryKey(paramId);
+		return tbSystemParameterMapper.selectByPrimaryKey(paramId);
 	}
 
+	@Override
+	public List<TbSystemParameter> selectByExample(
+			TbSystemParameterExample tbSystemParameterExample) {
+		return tbSystemParameterMapper.selectByExample(tbSystemParameterExample);
+	}
+	
 }

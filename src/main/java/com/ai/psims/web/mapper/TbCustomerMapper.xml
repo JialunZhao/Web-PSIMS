@@ -11,11 +11,18 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="customer_type" property="customerType" jdbcType="VARCHAR" />
-    <result column="createtime" property="createtime" jdbcType="DATE" />
-    <result column="modifytime" property="modifytime" jdbcType="DATE" />
-    <result column="endtime" property="endtime" jdbcType="DATE" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="credit_count" property="creditCount" jdbcType="VARCHAR" />
+    <result column="checkout_code" property="checkoutCode" jdbcType="VARCHAR" />
+    <result column="checkout_name" property="checkoutName" jdbcType="VARCHAR" />
+    <result column="checkout_warning" property="checkoutWarning" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="INTEGER" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="employee_code" property="employeeCode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,7 +84,8 @@
   </sql>
   <sql id="Base_Column_List" >
     customer_id, customer_name, customer_code, contact_name, contact_tel, contact_addr, 
-    email, area, customer_type, createtime, modifytime, endtime, status, remark
+    email, area, customer_type, createtime, modifytime, endtime, status, remark, credit_count, 
+    checkout_code, checkout_name, checkout_warning, employee_id, employee_name, employee_code
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbCustomerExample" >
     select
@@ -114,12 +122,18 @@
       contact_name, contact_tel, contact_addr, 
       email, area, customer_type, 
       createtime, modifytime, endtime, 
-      status, remark)
+      status, remark, credit_count, 
+      checkout_code, checkout_name, checkout_warning, 
+      employee_id, employee_name, employee_code
+      )
     values (#{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{customerCode,jdbcType=VARCHAR}, 
       #{contactName,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}, #{contactAddr,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=DATE}, #{modifytime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, 
-      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+      #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{creditCount,jdbcType=VARCHAR}, 
+      #{checkoutCode,jdbcType=VARCHAR}, #{checkoutName,jdbcType=VARCHAR}, #{checkoutWarning,jdbcType=VARCHAR}, 
+      #{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, #{employeeCode,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbCustomer" >
     insert into tb_customer
@@ -166,6 +180,27 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="creditCount != null" >
+        credit_count,
+      </if>
+      <if test="checkoutCode != null" >
+        checkout_code,
+      </if>
+      <if test="checkoutName != null" >
+        checkout_name,
+      </if>
+      <if test="checkoutWarning != null" >
+        checkout_warning,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="employeeName != null" >
+        employee_name,
+      </if>
+      <if test="employeeCode != null" >
+        employee_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="customerId != null" >
@@ -196,19 +231,40 @@
         #{customerType,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        #{createtime,jdbcType=DATE},
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifytime != null" >
-        #{modifytime,jdbcType=DATE},
+        #{modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        #{endtime,jdbcType=DATE},
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCount != null" >
+        #{creditCount,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutCode != null" >
+        #{checkoutCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutName != null" >
+        #{checkoutName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutWarning != null" >
+        #{checkoutWarning,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeCode != null" >
+        #{employeeCode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -249,19 +305,40 @@
         customer_type = #{record.customerType,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        createtime = #{record.createtime,jdbcType=DATE},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=DATE},
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.endtime != null" >
-        endtime = #{record.endtime,jdbcType=DATE},
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditCount != null" >
+        credit_count = #{record.creditCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkoutCode != null" >
+        checkout_code = #{record.checkoutCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkoutName != null" >
+        checkout_name = #{record.checkoutName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkoutWarning != null" >
+        checkout_warning = #{record.checkoutWarning,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeCode != null" >
+        employee_code = #{record.employeeCode,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -279,11 +356,18 @@
       email = #{record.email,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=VARCHAR},
       customer_type = #{record.customerType,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=DATE},
-      modifytime = #{record.modifytime,jdbcType=DATE},
-      endtime = #{record.endtime,jdbcType=DATE},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      credit_count = #{record.creditCount,jdbcType=VARCHAR},
+      checkout_code = #{record.checkoutCode,jdbcType=VARCHAR},
+      checkout_name = #{record.checkoutName,jdbcType=VARCHAR},
+      checkout_warning = #{record.checkoutWarning,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=INTEGER},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      employee_code = #{record.employeeCode,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -316,19 +400,40 @@
         customer_type = #{customerType,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        createtime = #{createtime,jdbcType=DATE},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifytime != null" >
-        modifytime = #{modifytime,jdbcType=DATE},
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        endtime = #{endtime,jdbcType=DATE},
+        endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creditCount != null" >
+        credit_count = #{creditCount,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutCode != null" >
+        checkout_code = #{checkoutCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutName != null" >
+        checkout_name = #{checkoutName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkoutWarning != null" >
+        checkout_warning = #{checkoutWarning,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeCode != null" >
+        employee_code = #{employeeCode,jdbcType=VARCHAR},
       </if>
     </set>
     where customer_id = #{customerId,jdbcType=INTEGER}
@@ -343,11 +448,18 @@
       email = #{email,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
       customer_type = #{customerType,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=DATE},
-      modifytime = #{modifytime,jdbcType=DATE},
-      endtime = #{endtime,jdbcType=DATE},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      credit_count = #{creditCount,jdbcType=VARCHAR},
+      checkout_code = #{checkoutCode,jdbcType=VARCHAR},
+      checkout_name = #{checkoutName,jdbcType=VARCHAR},
+      checkout_warning = #{checkoutWarning,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      employee_code = #{employeeCode,jdbcType=VARCHAR}
     where customer_id = #{customerId,jdbcType=INTEGER}
   </update>
 </mapper>

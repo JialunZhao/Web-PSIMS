@@ -15,7 +15,7 @@ String date=sdf.format(new Date());
 				<div class="row placeholders">
 					<form class="form-inline">
 						<div class="form-group">
-							<label for="exampleInputName2">客户名称：</label> <select
+							<label for="exampleInputEmail2">客户名称：</label> <select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="customerName" id="customerName">
 								<option value="">请选择客户名称</option>
@@ -305,7 +305,7 @@ String date=sdf.format(new Date());
     					                  	+'<td>'+isNull(salesList[i].customerName)+'</td>'
     					                  	+'<td>'+isNull(salesList[i].storehouseName)+'</td>'
     					                  	+'<td>'+isNull(salesList[i].salesTotalPrice)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].incomeType)+'</td>'
+    					                  	+'<td>'+isNull(salesList[i].salesStatus)+'</td>'
     					                  	+'<td><a href="#">打印</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>' );
         								
 								}

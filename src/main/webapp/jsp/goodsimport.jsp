@@ -7,7 +7,8 @@ SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
 
 %>
-<%@ include file="all.jsp"%>
+<%@ include file="all3.jsp"%>
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 	<div class="col-sm-offset-3">
 		<div class="row placeholders">

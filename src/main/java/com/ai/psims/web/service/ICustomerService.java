@@ -13,10 +13,12 @@ public interface ICustomerService {
 
 	public int modifyCustomerInfo(TbCustomer customerModify);
 	
-	public int backupCustomerInfo(TbCustomer customerBackup);
-
 	public List<TbCustomer> queryCustomer(TbCustomerExample customerQuery);
 
 	public TbCustomer selectCustomerInfo(Integer customerId);
+	
+	public int backupCustomerInfo(TbCustomer customerBackup);
+
+	public int backupCustomerInfoByPrimaryKey(Integer customerId);
 
 }

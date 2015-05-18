@@ -4,18 +4,29 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.dao.EmployeeMapper;
+import com.ai.psims.web.dao.TbEmployeeMapper;
 import com.ai.psims.web.model.Employee;
 import com.ai.psims.web.model.EmployeeExample;
+import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.service.IEmployeeService;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
 	@Resource(name = "employeeMapper")
 	private EmployeeMapper employeeMapper;
+	
+	@Resource(name = "tbEmployeeMapper")
+	private TbEmployeeMapper tbEmployeeMapper;
 
+	private static final Logger logger = LoggerFactory
+			.getLogger(EmployeeServiceImpl.class);
+	
 	@Override
 	public List<Employee> selectByExample(EmployeeExample example) {
 		return employeeMapper.selectByExample(example);
@@ -88,5 +99,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return employeeMapper.selectByExample(example);
 	}
 
+	@Override
+	public List<TbEmployee> selectByExample(TbEmployeeExample employeeExample) {
+		logger.info("tbEmployeeMapper.selectByExample(employeeExample);");
+		return tbEmployeeMapper.selectByExample(employeeExample);
+	}
+
+	@Override
+	public TbEmployee selectByPrimaryKey(Integer employeeId) {
+		logger.info("tbEmployeeMapper.selectByPrimaryKey(employeeId);");
+		return tbEmployeeMapper.selectByPrimaryKey(employeeId);
+	}
 
 }

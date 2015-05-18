@@ -19,8 +19,6 @@ $("#addGoods_btn").click(
 					}
 				},
 			});
-			// },
-			// function getGoodsUnit() {
 			$.ajax({
 				type : 'POST',
 				async : true,
@@ -42,17 +40,42 @@ $("#addGoods_btn").click(
 		});
 
 // 2.提交新增商品数据
-$("#addGoodsSubmit").click(function Goodsadd() {
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'addGoods.do',
-		data : $('#addGoodsForm').serialize(),
-		success : function(data) {
-			$('#addGoods').modal('hide');
-			window.location.href = "goods";
-		},
+function addGoodsCheckNull() {
+	var num = 0;
+	var str = "";
+	$(".add").each(function(n) {
+		if ($(this).val() == "") {
+			num++;
+			str += $(this).attr("placeholder") + "不能为空！\r\n";
+		}
 	});
+	$(".addselect").each(function(n) {
+		if ($(this).val() == "0") {
+			num++;
+			str += "请选择" + $(this).attr("placeholder") + "！\r\n";
+		}
+	});
+	if (num > 0) {
+		alert(str);
+		return false;
+	} else {
+		return true;
+	}
+}
+
+$("#addGoodsSubmit").click(function Goodsadd() {
+	if (addGoodsCheckNull()) {
+		$.ajax({
+			type : 'POST',
+			async : true,
+			url : 'addGoods.do',
+			data : $('#addGoodsForm').serialize(),
+			success : function(data) {
+				$('#addGoods').modal('hide');
+				window.location.href = "goods";
+			},
+		});
+	}
 });
 // 2.刷新列表
 
@@ -141,24 +164,23 @@ function modifyCurrentGoods(obj) {
 			}
 		}
 	});
-	$
-			.ajax({
-				type : 'POST',
-				async : true,
-				url : 'getGoodsUnit.do',
-				success : function(data) {
-					console.dir(data);
-					$("#modify_goodsUnit").empty();
-					$("#modify_goodsUnit").append(
-							'<option value="0">请选择商品基本单位：</option>');
+	$.ajax({
+		type : 'POST',
+		async : true,
+		url : 'getGoodsUnit.do',
+		success : function(data) {
+			console.dir(data);
+			$("#modify_goodsUnit").empty();
+			$("#modify_goodsUnit").append(
+					'<option value="0">请选择商品基本单位：</option>');
 
-					for (var i = 0; i < data.length; i++) {
-						$("#modify_goodsUnit").append(
-								'<option value="' + data[i].paramId + '">'
-										+ data[i].ppDesc + '</option>');
-					}
-				},
-			});
+			for (var i = 0; i < data.length; i++) {
+				$("#modify_goodsUnit").append(
+						'<option value="' + data[i].paramId + '">'
+								+ data[i].ppDesc + '</option>');
+			}
+		},
+	});
 	$.ajax({
 		type : 'POST',
 		async : false,
