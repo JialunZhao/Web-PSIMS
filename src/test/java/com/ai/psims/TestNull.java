@@ -10,7 +10,7 @@ package com.ai.psims;
 //if(str != null && str.length() != 0) { }
 //方法0用时：78ms---999999999
 //方法0.1用时：78ms---999999999
-//方法0.1.1用时：63ms---999999999
+//方法0.1.1用时：63ms---999999999   --------ok
 //方法0.2用时：94ms---999999999
 //方法0.3用时：93ms---999999999
 //方法1用时：78ms---999999999
@@ -54,7 +54,7 @@ public class TestNull {
 		System.out.println("方法0.1用时：" + (endTime - startTime) + "ms"+"---"+num);
 	}
 	
-	// 方法0.1 不为空
+	// 方法0.1.1 不为空
 	private void function011() {
 		// 存下起始时间
 		long startTime = System.currentTimeMillis();
