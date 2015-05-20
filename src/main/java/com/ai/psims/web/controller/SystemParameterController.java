@@ -43,6 +43,7 @@ public class SystemParameterController {
 	    	sysParamete.setpStatus("01");
 	    	sysParamete.setpKey("SYS");
 	    	sysParamete.setpCreatetime(new Date());
+	    	sysParamete.setPpValue(sysParamete.getPpDesc());
 	    	systemParameterBussinessImpl.add(sysParamete);
 	//    	systemParameterServiceImpl.add(sysParamete);
 	        //System.out.println("========================="+user);
