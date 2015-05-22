@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.dao.TbImportMapper;
-import com.ai.psims.web.model.Employee;
-import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.GoodsExample;
-import com.ai.psims.web.model.TbImport;
-import com.ai.psims.web.model.TbImportExample;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
+import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
+import com.ai.psims.web.model.TbImport;
+import com.ai.psims.web.model.TbImportExample;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbStorehouse;
@@ -60,7 +60,7 @@ public class QueryBus implements IQueryBus {
 		return customerService.queryCustomer(customerExample);
 	}
 
-	public List<Employee> queryEmployee(EmployeeExample employeeExample) {
+	public List<TbEmployee> queryEmployee(TbEmployeeExample employeeExample) {
 		return employeeService.selectByExample(employeeExample);
 	}
 

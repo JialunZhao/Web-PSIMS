@@ -69,8 +69,7 @@
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td>
 									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
-									href="${s.paramId}/delete.do">删除</a></td>
+									onclick="chenge(${s.paramId})">修改</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>

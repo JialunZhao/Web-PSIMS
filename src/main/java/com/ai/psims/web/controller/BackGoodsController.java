@@ -17,8 +17,6 @@ import com.ai.psims.web.business.IImportBackBusiness;
 import com.ai.psims.web.business.ISalesbackBusiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddSalesbackData;
-import com.ai.psims.web.model.Employee;
-import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Importback;
 import com.ai.psims.web.model.SalesBackGoodsData;
 import com.ai.psims.web.model.Salesback;
@@ -27,6 +25,8 @@ import com.ai.psims.web.model.SalesbackGoods;
 import com.ai.psims.web.model.SalesbackGoodsExample;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
+import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbStorehouse;
 import com.alibaba.fastjson.JSON;
@@ -59,13 +59,13 @@ public class BackGoodsController extends BaseController {
 	@RequestMapping("/salesBackInit")
 	public String salesBackInit(HttpServletRequest request) throws Exception {
 		List<TbCustomer> customersList = new ArrayList<TbCustomer>();
-		List<Employee> employeesList = new ArrayList<Employee>();
+		List<TbEmployee> employeesList = new ArrayList<TbEmployee>();
 		List<Salesback> salesbackList = new ArrayList<Salesback>();
 		SalesbackExample salesbackExample = new SalesbackExample();
 		salesbackExample.createCriteria().andSalesbackTypeNotEqualTo("00");
 		TbCustomerExample customerExample = new TbCustomerExample();
 		customerExample.createCriteria().andEndtimeIsNull();
-		EmployeeExample employeeExample = new EmployeeExample();
+		TbEmployeeExample employeeExample = new TbEmployeeExample();
 		employeeExample.createCriteria().andEndtimeIsNull();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		salesbackList = salesbackBusiness.selectSalesback();

@@ -47,10 +47,10 @@
 							data-target="#addrecoveryimport">新增员工</button>
 							</priv:privilege>
 							<priv:privilege power="员工权限.增删改">
-						<button type="button" id="delbtn" class="btn btn-primary">批量删除员工</button>
+						<button type="button" id="delbtn" class="btn btn-primary">员工信息导出</button>
 						</priv:privilege>
 						<button type="button" id="delcommit" class="btn btn-primary"
-							style="display: none">确认删除员工</button>
+							style="display: none">确认导出员工信息</button>
 						<button type="button" id="delcancle" class="btn btn-primary"
 							style="display: none">取消</button>
 					</div>
@@ -171,8 +171,8 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">员工身份证号码:</span> <input  id="employeeCode111"
-								name="employeeCode111" type="text" class="form-control" placeholder="员工身份证号码">
+								style="background-color: #1abc9c;">员工身份证号码:</span> <input  id="idcard"
+								name="idcard" type="text" class="form-control" placeholder="员工身份证号码">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -334,7 +334,7 @@
               </div>
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">员工身份证号码:</span>
-                <input id="employeeCode11" type="text" class="form-control" placeholder="员工身份证号码" value="">
+                <input id="idcard1" disabled="disabled" type="text" class="form-control" placeholder="员工身份证号码" value="">
               </div>
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">备注：</span>
@@ -515,6 +515,7 @@
 							$("#contactTel1").attr("value",messageInfor.contactTel);
 							$("#contactAddr1").attr("value",messageInfor.contactAddr);
 							$("#employeeCode1").attr("value",messageInfor.employeeCode);
+							$("#idcard1").attr("value",messageInfor.idcard);
 							$("#remark1").attr("value",messageInfor.remark);
 							$("#employeeCode1").attr("value",messageInfor.employeeCode);
 							$("#loginPassword1").attr("value",messageInfor.loginPassword);

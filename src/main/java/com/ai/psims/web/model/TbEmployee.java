@@ -17,6 +17,8 @@ public class TbEmployee {
 
     private String contactAddr;
 
+    private String idcard;
+
     private String role;
 
     private String status;
@@ -87,6 +89,14 @@ public class TbEmployee {
 
     public void setContactAddr(String contactAddr) {
         this.contactAddr = contactAddr == null ? null : contactAddr.trim();
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard == null ? null : idcard.trim();
     }
 
     public String getRole() {

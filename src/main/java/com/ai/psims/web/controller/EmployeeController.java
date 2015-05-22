@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ai.psims.web.model.Employee;
+import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbPrivilege;
 import com.ai.psims.web.service.IEmployeeService;
 import com.ai.psims.web.service.IPrivilegeService;
@@ -46,7 +46,7 @@ public class EmployeeController {
 	@RequestMapping(value="/check.do")
 	@ResponseBody
 	public Boolean check(@RequestParam("name") String name){
-		List<Employee> emList = employeeServiceImpl.getEmployee(name);
+		List<TbEmployee> emList = employeeServiceImpl.getEmployee(name);
 		if(emList==null||emList.size()==0){
 			return true;
 		}
@@ -65,7 +65,7 @@ public class EmployeeController {
 
     //添加方法
     @RequestMapping(value = "/add.do", method = RequestMethod.POST)
-    public String add(Employee employee,HttpServletRequest request) {
+    public String add(TbEmployee employee,HttpServletRequest request) {
     	String LoginPassword = employee.getLoginPassword();
         MD5keyBean md5keyBean = new MD5keyBean();
         LoginPassword = md5keyBean.getkeyBeanofStr(LoginPassword);
@@ -100,8 +100,8 @@ public class EmployeeController {
     	}
     	if(priv!=null&&priv.length()!=0){
 	    	pri.setPrivilege(priv);
-			List<Employee> emList = employeeServiceImpl.getEmployee(employee.getEmployeeCode());
-			Employee em = emList.get(0);
+			List<TbEmployee> emList = employeeServiceImpl.getEmployee(employee.getEmployeeCode());
+			TbEmployee em = emList.get(0);
 			pri.setUserId(em.getEmployeeId());
 			privilegeServiceImpl.add(pri);
     	}
@@ -110,7 +110,7 @@ public class EmployeeController {
     //显示所有用
     @RequestMapping(value = "/show.do", method = RequestMethod.GET)
     public String showEmployee(ModelMap modelMap) {
-        List<Employee> list = employeeServiceImpl.getlAllEmployee();
+        List<TbEmployee> list = employeeServiceImpl.getlAllEmployee();
         modelMap.addAttribute("user", list);
         return "user";
     }
@@ -122,18 +122,18 @@ public class EmployeeController {
         String role = request.getParameter("role1");
         String contactTel = request.getParameter("contactTel1");
         if(employeeName=="" && sex=="" && role=="" && contactTel==""){
-        	List<Employee> list1 = employeeServiceImpl.getlAllEmployee();
+        	List<TbEmployee> list1 = employeeServiceImpl.getlAllEmployee();
         	modelMap.addAttribute("user", list1);
         	return "user";
         }
-    	List<Employee> list = employeeServiceImpl.getEmployee(employeeName,sex,role,contactTel);
+    	List<TbEmployee> list = employeeServiceImpl.getEmployee(employeeName,sex,role,contactTel);
     	modelMap.addAttribute("user", list);
     	return "user";
     }
 
     @RequestMapping(value = "/{id}/delete.do", method = RequestMethod.GET)
     public String deleteEmployee(@PathVariable int id) {
-    	Employee employee = employeeServiceImpl.getEmployee(id);
+    	TbEmployee employee = employeeServiceImpl.getEmployee(id);
     	employee.setStatus("00");
     	employeeServiceImpl.delete(employee);
         return "redirect:/user/show.do";
@@ -142,8 +142,8 @@ public class EmployeeController {
     //服务器查询到数据把数据放到对象中，再通过键值来取
     @RequestMapping(value = "/{employeeId}/toUpdate.do", method = RequestMethod.GET)
     @ResponseBody
-    public Employee toUpdate(@PathVariable int employeeId) {
-    	Employee employee = employeeServiceImpl.getUserById(employeeId);
+    public TbEmployee toUpdate(@PathVariable int employeeId) {
+    	TbEmployee employee = employeeServiceImpl.getUserById(employeeId);
         return employee;
 
     }
@@ -162,7 +162,7 @@ public class EmployeeController {
         String remark = request.getParameter("remark");
         String employeeCode = request.getParameter("employeeCode");
         String loginPassword = request.getParameter("loginPassword");
-        Employee employee = new Employee();
+        TbEmployee employee = new TbEmployee();
         employee.setEmployeeName(employeeName);
         employee.setEmployeeId(employeeId);
         employee.setSex(sex);

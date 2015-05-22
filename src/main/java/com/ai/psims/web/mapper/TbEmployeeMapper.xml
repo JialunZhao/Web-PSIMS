@@ -9,6 +9,7 @@
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
     <result column="contact_addr" property="contactAddr" jdbcType="VARCHAR" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -78,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List" >
     employee_id, employee_name, employee_code, sex, birthday, contact_tel, contact_addr, 
-    role, status, remark, createtime, modifytime, endtime, islogin, login_password
+    idcard, role, status, remark, createtime, modifytime, endtime, islogin, login_password
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbEmployeeExample" >
     select
@@ -113,16 +114,16 @@
   <insert id="insert" parameterType="com.ai.psims.web.model.TbEmployee" >
     insert into tb_employee (employee_id, employee_name, employee_code, 
       sex, birthday, contact_tel, 
-      contact_addr, role, status, 
-      remark, createtime, modifytime, 
-      endtime, islogin, login_password
-      )
+      contact_addr, idcard, role, 
+      status, remark, createtime, 
+      modifytime, endtime, islogin, 
+      login_password)
     values (#{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, #{employeeCode,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{contactTel,jdbcType=VARCHAR}, 
-      #{contactAddr,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{islogin,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}
-      )
+      #{contactAddr,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{islogin,jdbcType=VARCHAR}, 
+      #{loginPassword,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbEmployee" >
     insert into tb_employee
@@ -147,6 +148,9 @@
       </if>
       <if test="contactAddr != null" >
         contact_addr,
+      </if>
+      <if test="idcard != null" >
+        idcard,
       </if>
       <if test="role != null" >
         role,
@@ -194,6 +198,9 @@
       </if>
       <if test="contactAddr != null" >
         #{contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
       </if>
       <if test="role != null" >
         #{role,jdbcType=VARCHAR},
@@ -251,6 +258,9 @@
       <if test="record.contactAddr != null" >
         contact_addr = #{record.contactAddr,jdbcType=VARCHAR},
       </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
       <if test="record.role != null" >
         role = #{record.role,jdbcType=VARCHAR},
       </if>
@@ -289,6 +299,7 @@
       birthday = #{record.birthday,jdbcType=TIMESTAMP},
       contact_tel = #{record.contactTel,jdbcType=VARCHAR},
       contact_addr = #{record.contactAddr,jdbcType=VARCHAR},
+      idcard = #{record.idcard,jdbcType=VARCHAR},
       role = #{record.role,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
@@ -321,6 +332,9 @@
       </if>
       <if test="contactAddr != null" >
         contact_addr = #{contactAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
       </if>
       <if test="role != null" >
         role = #{role,jdbcType=VARCHAR},
@@ -357,6 +371,7 @@
       birthday = #{birthday,jdbcType=TIMESTAMP},
       contact_tel = #{contactTel,jdbcType=VARCHAR},
       contact_addr = #{contactAddr,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
