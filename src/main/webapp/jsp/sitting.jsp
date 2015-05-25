@@ -10,6 +10,7 @@
 		<li><a href="#p_cc" data-toggle="tab">支付方式</a></li>
 		<li><a href="#p_dd" data-toggle="tab">收款方式</a></li>
 		<li><a href="#p_ee" data-toggle="tab">奖金池</a></li>
+		<li><a href="#p_ff" data-toggle="tab">结账方式</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="p_aa">
@@ -68,8 +69,7 @@
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td>
 									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
-									href="${s.paramId}/delete.do">删除</a></td>
+									onclick="chenge(${s.paramId})">修改</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -165,8 +165,42 @@
 <%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
 								<td><c:out value="${s.ppValueint}" /></td>
 								<td>
-									<a href="#" data-toggle="modal" ="chenge(${s.paramId},'p_ee')">修改</a>/ <a
-									href="#" onclick="deleted(${s.paramId})">删除</a></td>
+									<a href="#" data-toggle="modal"
+									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
+									href="${s.paramId}/delete.do">删除</a></td>
+							</tr>
+						</c:if>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="p_ff">
+		<button type="button" class="btn btn-primary" onclick="add('CheckoutType')">新增结账方式</button>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="chk" style="display: none"><input type="checkbox"
+							aria-label="..."></th>
+						<th>编号</th>
+						<th>结账方式</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:set value="0" var="sqe3"></c:set>
+					<c:forEach items="${sitting}" var="s" step="1">
+						<c:if test="${s.pValue == 'CheckoutType' }">
+							<tr>
+								<c:set value="${sqe3 + 1}" var="sqe3"></c:set>
+								<td class="chk" style="display: none"><input
+									type="checkbox" aria-label="..."></td>
+								<td><c:out value="${sqe3}" /></td>
+<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
+								<td><c:out value="${s.ppDesc}" /></td>
+								<td>
+									<a href="#" data-toggle="modal"
+									onclick="chenge(${s.paramId})">修改</a>/ <a
+									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -428,13 +462,19 @@
 			$("#pValue").attr("value",pValue);
 			$("#pDesc").attr("value","收款方式");
 		}
+		if(pValue=="CheckoutType"){
+			$("#addrecoveryimport").modal();
+			$("#myModalLabel").html("新增结账方式");
+			$("#pValue").attr("value",pValue);
+			$("#pDesc").attr("value","结账方式");
+		}
 		$("#addrecoveryimport").modal();
 		$("#pValue").attr("value",pValue);
 		$("#pDesc").attr("value",value);
 // 		alert("fdf");
 	}
 	function addv(){
-		if($("#ppDesc").val()!=null || !$("#ppDesc").val().length()>0){
+		if($("#ppDesc").val()==null){
 			alert("请输入正确参数");
 		}
 	}

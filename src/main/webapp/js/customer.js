@@ -12,7 +12,7 @@ function addcustomercheckNull() {
 			str += $(this).attr("placeholder") + "不能为空！\r\n";
 		}
 	});
-	$(". ").each(function(n) {
+	$(".addselect").each(function(n) {
 		if ($(this).val() == "0") {
 			num++;
 			str += "请选择" + $(this).attr("placeholder") + "！\r\n";

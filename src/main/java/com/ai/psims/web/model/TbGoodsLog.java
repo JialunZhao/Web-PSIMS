@@ -15,7 +15,7 @@ public class TbGoodsLog {
 
     private Integer goodsVersion;
 
-    private String goodsUnit;
+	private String goodsUnit;
 
     private String goodsBarCode;
 

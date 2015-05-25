@@ -37,15 +37,15 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪些表 -->
-		
-		<table schema="psims" tableName="tb_goods2customer" />
-		<table schema="psims" tableName="tb_goods2customer_log" />
+
+		<!-- <table schema="psims" tableName="tb_goods2customer" /> -->
+		<!-- <table schema="psims" tableName="tb_goods2customer_log" /> -->
 		<!-- <table schema="psims" tableName="tb_goods" /> -->
 		<!-- <table schema="psims" tableName="tb_goods_log" /> -->
 		<!-- <table schema="psims" tableName="tb_customer" /> -->
 		<!-- <table schema="psims" tableName="tb_customer_log" /> -->
-		<!-- <table schema="psims" tableName="tb_employee" /> -->
-		<!-- <table schema="psims" tableName="tb_employee_log" /> -->
+		<table schema="psims" tableName="tb_employee" />
+		<table schema="psims" tableName="tb_employee_log" />
 		<!-- <table schema="psims" tableName="tb_storagecheck" /> -->
 		<!-- <table schema="psims" tableName="tb_storagecheck_log"/> -->
 		<!-- <table schema="psims" tableName="tb_provider" /> -->

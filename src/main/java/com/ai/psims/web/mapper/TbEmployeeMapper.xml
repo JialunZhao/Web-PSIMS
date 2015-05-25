@@ -7,6 +7,7 @@
     <result column="employee_code" property="employeeCode" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
     <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
     <result column="contact_addr" property="contactAddr" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="VARCHAR" />
@@ -77,7 +78,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    employee_id, employee_name, employee_code, sex, birthday, contact_tel, contact_addr, 
+    employee_id, employee_name, employee_code, sex, birthday, idcard, contact_tel, contact_addr, 
     role, status, remark, createtime, modifytime, endtime, islogin, login_password
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbEmployeeExample" >
@@ -112,17 +113,17 @@
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.TbEmployee" >
     insert into tb_employee (employee_id, employee_name, employee_code, 
-      sex, birthday, contact_tel, 
-      contact_addr, role, status, 
-      remark, createtime, modifytime, 
-      endtime, islogin, login_password
-      )
+      sex, birthday, idcard, 
+      contact_tel, contact_addr, role, 
+      status, remark, createtime, 
+      modifytime, endtime, islogin, 
+      login_password)
     values (#{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, #{employeeCode,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{contactTel,jdbcType=VARCHAR}, 
-      #{contactAddr,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{islogin,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}
-      )
+      #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{idcard,jdbcType=VARCHAR}, 
+      #{contactTel,jdbcType=VARCHAR}, #{contactAddr,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{islogin,jdbcType=VARCHAR}, 
+      #{loginPassword,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbEmployee" >
     insert into tb_employee
@@ -141,6 +142,9 @@
       </if>
       <if test="birthday != null" >
         birthday,
+      </if>
+      <if test="idcard != null" >
+        idcard,
       </if>
       <if test="contactTel != null" >
         contact_tel,
@@ -188,6 +192,9 @@
       </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
       </if>
       <if test="contactTel != null" >
         #{contactTel,jdbcType=VARCHAR},
@@ -245,6 +252,9 @@
       <if test="record.birthday != null" >
         birthday = #{record.birthday,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
       <if test="record.contactTel != null" >
         contact_tel = #{record.contactTel,jdbcType=VARCHAR},
       </if>
@@ -287,6 +297,7 @@
       employee_code = #{record.employeeCode,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      idcard = #{record.idcard,jdbcType=VARCHAR},
       contact_tel = #{record.contactTel,jdbcType=VARCHAR},
       contact_addr = #{record.contactAddr,jdbcType=VARCHAR},
       role = #{record.role,jdbcType=VARCHAR},
@@ -315,6 +326,9 @@
       </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
       </if>
       <if test="contactTel != null" >
         contact_tel = #{contactTel,jdbcType=VARCHAR},
@@ -355,6 +369,7 @@
       employee_code = #{employeeCode,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=TIMESTAMP},
+      idcard = #{idcard,jdbcType=VARCHAR},
       contact_tel = #{contactTel,jdbcType=VARCHAR},
       contact_addr = #{contactAddr,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},
