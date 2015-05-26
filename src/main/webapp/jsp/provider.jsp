@@ -48,12 +48,8 @@
 		<div class="col-sm-5">
 			<priv:privilege power="供应商.增删改">
 				<button type="button" class="btn btn-primary" id="addprovider_btn">新增供应商</button>
-				<button type="button" id="delbtn" class="btn btn-primary">批量删除供应商</button>
+				<button type="button" id="excel" class="btn btn-primary">供应商清单Excel导出</button>
 			</priv:privilege>
-			<button type="button" id="delcommit" class="btn btn-primary"
-				style="display: none">确认删除供应商</button>
-			<button type="button" id="delcancle" class="btn btn-primary"
-				style="display: none">取消</button>
 		</div>
 	</div>
 
@@ -87,8 +83,8 @@
 						<td>${providers.providerPrizePool}</td>
 						<td>${providers.providerContactName}</td>
 						<td>${providers.providerContactTel}</td>
-						<td>${providers.providerArea}</td>
 						<td>${providers.providerContactAddress}</td>
+						<td>${providers.providerArea}</td>
 						<priv:privilege power="供应商.增删改">
 							<td><a href="javascript:void(0);"
 								onClick="modifyCurrentProvider(this)">修改</a>/<a
@@ -121,13 +117,19 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商名称:</span> <input
-								type="text" class="form-control" name="provider_name"
+								type="text" class="form-control add" name="provider_name"
 								placeholder="供应商名称">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
+								style="background-color: #1abc9c;">供应商代码:</span> <input
+								type="text" class="form-control" name="provider_code"
+								placeholder="供应商代码">
+						</div>
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商类型:</span> <select
-								class="form-control" name="provider_type" tabindex="1">
+								class="form-control addselect" name="provider_type" tabindex="1" placeholder="供应商代码">
 								<option value="0">请选择供应商类型：</option>
 								<option value="1">连锁</option>
 								<option value="2">商户</option>
@@ -148,13 +150,13 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">联系人名称:</span> <input
-								type="text" class="form-control" name="contact_name"
+								type="text" class="form-control add" name="contact_name"
 								placeholder="联系人名称">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">联系人电话:</span> <input
-								type="text" class="form-control" name="contact_tel"
+								type="text" class="form-control add" name="contact_tel"
 								placeholder="联系人电话">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -166,7 +168,7 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商地址:</span> <input
-								type="text" class="form-control" name="contact_addr"
+								type="text" class="form-control  add" name="contact_addr"
 								placeholder="供应商地址">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -225,9 +227,15 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
+								style="background-color: #1abc9c;">供应商名称:</span> <input
+								type="text" id="modify_providerCode" name="modify_providerCode"
+								class="form-control" placeholder="供应商代码">
+						</div>
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商类型:</span> <select
 								class="form-control" tabindex="1" id="modify_providerType"
-								name="modify_providerType">
+								name="modify_providerType" placeholder="供应商类型">
 								<option value="0">请选择供应商类型：</option>
 								<option value="1">连锁</option>
 								<option value="2">商户</option>
@@ -238,8 +246,9 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">供应商奖金池:</span> <select
-								class="form-control" name="modify_provider_prizepool" tabindex="1"
-								id="modify_providerPrizePool" onchange="modifyselectChange()">
+								class="form-control" name="modify_provider_prizepool"
+								tabindex="1" id="modify_providerPrizePool"
+								onchange="modifyselectChange()">
 
 							</select><input type="text" class="form-control"
 								id="modify_providerPrizePool_prize" readonly
@@ -256,6 +265,12 @@
 								style="background-color: #1abc9c;">联系人电话:</span> <input
 								type="text" class="form-control" id="modify_providerContactTel"
 								name="modify_providerContactTel" placeholder="联系人电话">
+						</div>
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">联系人传真:</span> <input
+								type="text" class="form-control" id="modify_providerContactFax"
+								name="modify_providerContactFax" placeholder="联系人传真">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -304,24 +319,31 @@
 <script src="<%=path%>/js/flat-ui.min.js"></script>
 <script src="<%=path%>/js/provider.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#delbtn").click(function() {
-			$("#delbtn").hide();
-			$("#delcommit").show();
-			$("#delcancle").show();
-			$(".chk").show();
-		});
-		$("#delcommit").click(function() {
-			$("#delbtn").show();
-			$("#delcommit").hide();
-			$("#delcancle").hide();
-			$(".chk").hide();
-		});
-		$("#delcancle").click(function() {
-			$("#delbtn").show();
-			$("#delcommit").hide();
-			$("#delcancle").hide();
-			$(".chk").hide();
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+						$("#delbtn").click(function() {
+							$("#delbtn").hide();
+							$("#delcommit").show();
+							$("#delcancle").show();
+							$(".chk").show();
+						});
+						$("#delcommit").click(function() {
+							$("#delbtn").show();
+							$("#delcommit").hide();
+							$("#delcancle").hide();
+							$(".chk").hide();
+						});
+						$("#delcancle").click(function() {
+							$("#delbtn").show();
+							$("#delcommit").hide();
+							$("#delcancle").hide();
+							$(".chk").hide();
+						});
+						$("#excel")
+								.click(
+										function() {
+											window.location.href = "providerReportExecl?query_providerName=${provider_name}&query_providerType=${provider_type}&query_contactName=${contact_name}&query_contactTel=${contact_tel}";
+										});
+					});
 </script>

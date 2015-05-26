@@ -29,10 +29,7 @@ public interface IEmployeeService {
 	public List<TbEmployee> getEmployee(String employeeName, String sex,
 			String role, String contactTel);
 	
-
-	public List<TbEmployee> selectByExample1(TbEmployeeExample employeeExample);
-
-	TbEmployee selectByPrimaryKey(Integer employeeId);
+	public  TbEmployee selectByPrimaryKey(Integer employeeId);
 
 	
 }

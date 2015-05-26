@@ -17,20 +17,12 @@ import com.ai.psims.web.service.IEmployeeService;
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
 	
-	@Resource(name = "employeeMapper")
-	private EmployeeMapper employeeMapper;
-
-	
 	@Resource(name = "tbEmployeeMapper")
 	private TbEmployeeMapper tbEmployeeMapper;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(EmployeeServiceImpl.class);
 	
-	@Override
-	public List<TbEmployee> selectByExample(TbEmployeeExample example) {
-		return tbEmployeeMapper.selectByExample(example);
-	}
 
 	@Override
 	public List<TbEmployee> getEmployee(String username, String password) {

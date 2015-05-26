@@ -48,7 +48,7 @@
 				<priv:privilege power="客户管理.增删改">
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#addcustomer">新增客户</button>
-					<button type="button" id="excel" class="btn btn-primary">导出Excel客户清单</button>
+					<button type="button" id="excel" class="btn btn-primary">客户清单Excel导出</button>
 				</priv:privilege>
 			</div>
 		</div>

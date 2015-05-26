@@ -705,66 +705,6 @@ public class TbProviderLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andProviderPrizePoolIsNull() {
-            addCriterion("provider_prize_pool is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolIsNotNull() {
-            addCriterion("provider_prize_pool is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolEqualTo(Long value) {
-            addCriterion("provider_prize_pool =", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolNotEqualTo(Long value) {
-            addCriterion("provider_prize_pool <>", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolGreaterThan(Long value) {
-            addCriterion("provider_prize_pool >", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolGreaterThanOrEqualTo(Long value) {
-            addCriterion("provider_prize_pool >=", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolLessThan(Long value) {
-            addCriterion("provider_prize_pool <", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolLessThanOrEqualTo(Long value) {
-            addCriterion("provider_prize_pool <=", value, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolIn(List<Long> values) {
-            addCriterion("provider_prize_pool in", values, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolNotIn(List<Long> values) {
-            addCriterion("provider_prize_pool not in", values, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolBetween(Long value1, Long value2) {
-            addCriterion("provider_prize_pool between", value1, value2, "providerPrizePool");
-            return (Criteria) this;
-        }
-
-        public Criteria andProviderPrizePoolNotBetween(Long value1, Long value2) {
-            addCriterion("provider_prize_pool not between", value1, value2, "providerPrizePool");
-            return (Criteria) this;
-        }
-
         public Criteria andProviderContactAddressIsNull() {
             addCriterion("provider_contact_address is null");
             return (Criteria) this;
@@ -1042,6 +982,76 @@ public class TbProviderLogExample {
 
         public Criteria andProviderBankAccountCodeNotBetween(String value1, String value2) {
             addCriterion("provider_bank_account_code not between", value1, value2, "providerBankAccountCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolIsNull() {
+            addCriterion("provider_prize_pool is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolIsNotNull() {
+            addCriterion("provider_prize_pool is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolEqualTo(String value) {
+            addCriterion("provider_prize_pool =", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolNotEqualTo(String value) {
+            addCriterion("provider_prize_pool <>", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolGreaterThan(String value) {
+            addCriterion("provider_prize_pool >", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolGreaterThanOrEqualTo(String value) {
+            addCriterion("provider_prize_pool >=", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolLessThan(String value) {
+            addCriterion("provider_prize_pool <", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolLessThanOrEqualTo(String value) {
+            addCriterion("provider_prize_pool <=", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolLike(String value) {
+            addCriterion("provider_prize_pool like", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolNotLike(String value) {
+            addCriterion("provider_prize_pool not like", value, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolIn(List<String> values) {
+            addCriterion("provider_prize_pool in", values, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolNotIn(List<String> values) {
+            addCriterion("provider_prize_pool not in", values, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolBetween(String value1, String value2) {
+            addCriterion("provider_prize_pool between", value1, value2, "providerPrizePool");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderPrizePoolNotBetween(String value1, String value2) {
+            addCriterion("provider_prize_pool not between", value1, value2, "providerPrizePool");
             return (Criteria) this;
         }
 

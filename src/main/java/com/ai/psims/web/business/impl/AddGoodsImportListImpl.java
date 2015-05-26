@@ -120,7 +120,7 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 		if (prizePool!=0) {
 			TbProvider provider=new TbProvider();
 			provider=providerService.selectProvider(Integer.parseInt(goodsBean.getProviderId()));
-			provider.setProviderPrizePool(provider.getProviderPrizePool()-prizePool);
+			provider.setProviderPrizePool(Integer.parseInt(provider.getProviderPrizePool())-prizePool+"");
 			providerService.modifyProviderInfo(provider);
 		}		
 		importService.InsertImport(import1);
