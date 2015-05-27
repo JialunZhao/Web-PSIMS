@@ -96,7 +96,7 @@ function modifyCurrentProvider(obj) {
 			console.dir(data);
 			$("#modify_providerPrizePool").empty();
 			$("#modify_providerPrizePool").append(
-			'<option prizePool="" value="">请选择供应商</option>');
+					'<option prizePool="" value="">请选择供应商</option>');
 			for (var i = 0; i < data.length; i++) {
 				$("#modify_providerPrizePool").append(
 						'<option prizePool="' + data[i].ppValueint
@@ -149,14 +149,33 @@ function modifyselectChange() {
 function modifyCurrentProviderInfo(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
-	$.ajax({
-		type : 'POST',
-		async : false,
-		url : 'modify.do',
-		data : $('#modify_providerForm').serialize(),
-		success : function(data) {
-			$('#modifyprovider').modal('hide');
-			window.location.href = "provider";
-		},
+	var num = 0;
+	var str = "";
+	$(".modify").each(function(n) {
+		if ($(this).val() == "") {
+			num++;
+			str += $(this).attr("placeholder") + "不能为空！\r\n";
+		}
 	});
+	$(".modifyselect").each(function(n) {
+		if ($(this).val() == "0") {
+			num++;
+			str += "请选择" + $(this).attr("placeholder") + "！\r\n";
+		}
+	});
+	if (num > 0) {
+		alert(str);
+		return false;
+	} else {
+		$.ajax({
+			type : 'POST',
+			async : false,
+			url : 'modify.do',
+			data : $('#modify_providerForm').serialize(),
+			success : function(data) {
+				$('#modifyprovider').modal('hide');
+				window.location.href = "provider";
+			},
+		});
+	}
 }

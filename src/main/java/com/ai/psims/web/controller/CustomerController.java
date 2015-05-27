@@ -303,7 +303,7 @@ public class CustomerController extends BaseController {
 
 	@RequestMapping(value = "/customerReportExecl")
 	public View customerReportExecl(Model model, HttpServletRequest request) {
-		logger.info("------------Welcome storagecheckReportExecl page!-------------");
+		logger.info("------------Welcome customerReportExecl page!-------------");
 		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
 		View Excelview = new AbstractExcelView() {
 			@Override

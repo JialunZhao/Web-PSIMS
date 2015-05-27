@@ -27,7 +27,7 @@ import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 
 /**
- * 客户管理Controller
+ * 库存报表Controller
  */
 @Controller
 @RequestMapping("/storageCheckReportController")
@@ -40,7 +40,7 @@ public class StorageCheckReportController extends BaseController {
 	private IStorageCheckBusiness storageCheckBusinessImpl;
 
 	/**
-	 * 客户管理页面跳转
+	 * 库存报表页面跳转
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String storageCheckRedirectGET(HttpServletRequest request,
@@ -49,7 +49,7 @@ public class StorageCheckReportController extends BaseController {
 	}
 
 	/**
-	 * 客户管理页面跳转
+	 * 库存报表页面跳转
 	 */
 	@RequestMapping(value = "/storageCheckReport", method = RequestMethod.GET)
 	public String storageCheckReport(HttpServletRequest request,

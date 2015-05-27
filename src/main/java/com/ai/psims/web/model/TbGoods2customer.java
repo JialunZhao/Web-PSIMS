@@ -39,7 +39,7 @@ public class TbGoods2customer {
 
     private String goodsProfit;
 
-    private String goodsDiscountAmount;
+    private String goodsPrizePoolRatio;
 
     private String goodsType;
 
@@ -233,12 +233,12 @@ public class TbGoods2customer {
         this.goodsProfit = goodsProfit == null ? null : goodsProfit.trim();
     }
 
-    public String getGoodsDiscountAmount() {
-        return goodsDiscountAmount;
+    public String getGoodsPrizePoolRatio() {
+        return goodsPrizePoolRatio;
     }
 
-    public void setGoodsDiscountAmount(String goodsDiscountAmount) {
-        this.goodsDiscountAmount = goodsDiscountAmount == null ? null : goodsDiscountAmount.trim();
+    public void setGoodsPrizePoolRatio(String goodsPrizePoolRatio) {
+        this.goodsPrizePoolRatio = goodsPrizePoolRatio == null ? null : goodsPrizePoolRatio.trim();
     }
 
     public String getGoodsType() {

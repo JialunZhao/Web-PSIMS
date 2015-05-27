@@ -20,7 +20,7 @@
     <result column="goods_actual_cost" property="goodsActualCost" jdbcType="VARCHAR" />
     <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR" />
     <result column="goods_profit" property="goodsProfit" jdbcType="VARCHAR" />
-    <result column="goods_discount_amount" property="goodsDiscountAmount" jdbcType="VARCHAR" />
+    <result column="goods_prize_pool_ratio" property="goodsPrizePoolRatio" jdbcType="VARCHAR" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR" />
     <result column="goods_createtime" property="goodsCreatetime" jdbcType="TIMESTAMP" />
@@ -108,7 +108,7 @@
     goods2customer_id, goods_id, goods_name, goods_code, customer_id, customer_name, 
     customer_code, goods_version, goods_unit, goods_bar_code, goods_current_stock, goods_total_stock, 
     goods_production_date, goods_expiration_date, goods_shelf_life, goods_actual_cost, 
-    goods_price, goods_profit, goods_discount_amount, goods_type, goods_status, goods_createtime, 
+    goods_price, goods_profit, goods_prize_pool_ratio, goods_type, goods_status, goods_createtime, 
     goods_modifytime, goods_endtime, provider_id, provider_name, provider_code, remark, 
     goods_discount, single_rebate, quarter_rebate, annual_rebate, purchase_rebate, promotion_rebate, 
     provider_subsidy, customer_bottle_subsidy, customer_package_subsidy, provider_package_subsidy, 
@@ -151,7 +151,7 @@
       goods_bar_code, goods_current_stock, goods_total_stock, 
       goods_production_date, goods_expiration_date, 
       goods_shelf_life, goods_actual_cost, goods_price, 
-      goods_profit, goods_discount_amount, goods_type, 
+      goods_profit, goods_prize_pool_ratio, goods_type, 
       goods_status, goods_createtime, goods_modifytime, 
       goods_endtime, provider_id, provider_name, 
       provider_code, remark, goods_discount, 
@@ -167,7 +167,7 @@
       #{goodsBarCode,jdbcType=VARCHAR}, #{goodsCurrentStock,jdbcType=INTEGER}, #{goodsTotalStock,jdbcType=INTEGER}, 
       #{goodsProductionDate,jdbcType=TIMESTAMP}, #{goodsExpirationDate,jdbcType=TIMESTAMP}, 
       #{goodsShelfLife,jdbcType=INTEGER}, #{goodsActualCost,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=VARCHAR}, 
-      #{goodsProfit,jdbcType=VARCHAR}, #{goodsDiscountAmount,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
+      #{goodsProfit,jdbcType=VARCHAR}, #{goodsPrizePoolRatio,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
       #{goodsStatus,jdbcType=VARCHAR}, #{goodsCreatetime,jdbcType=TIMESTAMP}, #{goodsModifytime,jdbcType=TIMESTAMP}, 
       #{goodsEndtime,jdbcType=TIMESTAMP}, #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, 
       #{providerCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{goodsDiscount,jdbcType=VARCHAR}, 
@@ -235,8 +235,8 @@
       <if test="goodsProfit != null" >
         goods_profit,
       </if>
-      <if test="goodsDiscountAmount != null" >
-        goods_discount_amount,
+      <if test="goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio,
       </if>
       <if test="goodsType != null" >
         goods_type,
@@ -366,8 +366,8 @@
       <if test="goodsProfit != null" >
         #{goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="goodsDiscountAmount != null" >
-        #{goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="goodsPrizePoolRatio != null" >
+        #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         #{goodsType,jdbcType=VARCHAR},
@@ -506,8 +506,8 @@
       <if test="record.goodsProfit != null" >
         goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="record.goodsDiscountAmount != null" >
-        goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="record.goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio = #{record.goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsType != null" >
         goods_type = #{record.goodsType,jdbcType=VARCHAR},
@@ -606,7 +606,7 @@
       goods_actual_cost = #{record.goodsActualCost,jdbcType=VARCHAR},
       goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
       goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
-      goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
+      goods_prize_pool_ratio = #{record.goodsPrizePoolRatio,jdbcType=VARCHAR},
       goods_type = #{record.goodsType,jdbcType=VARCHAR},
       goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
       goods_createtime = #{record.goodsCreatetime,jdbcType=TIMESTAMP},
@@ -689,8 +689,8 @@
       <if test="goodsProfit != null" >
         goods_profit = #{goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="goodsDiscountAmount != null" >
-        goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio = #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         goods_type = #{goodsType,jdbcType=VARCHAR},
@@ -786,7 +786,7 @@
       goods_actual_cost = #{goodsActualCost,jdbcType=VARCHAR},
       goods_price = #{goodsPrice,jdbcType=VARCHAR},
       goods_profit = #{goodsProfit,jdbcType=VARCHAR},
-      goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
+      goods_prize_pool_ratio = #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_status = #{goodsStatus,jdbcType=VARCHAR},
       goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},

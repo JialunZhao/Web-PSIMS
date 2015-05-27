@@ -1135,73 +1135,73 @@ public class TbGoodsLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountIsNull() {
-            addCriterion("goods_discount_amount is null");
+        public Criteria andGoodsPrizePoolRatioIsNull() {
+            addCriterion("goods_prize_pool_ratio is null");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountIsNotNull() {
-            addCriterion("goods_discount_amount is not null");
+        public Criteria andGoodsPrizePoolRatioIsNotNull() {
+            addCriterion("goods_prize_pool_ratio is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountEqualTo(String value) {
-            addCriterion("goods_discount_amount =", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioEqualTo(String value) {
+            addCriterion("goods_prize_pool_ratio =", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountNotEqualTo(String value) {
-            addCriterion("goods_discount_amount <>", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioNotEqualTo(String value) {
+            addCriterion("goods_prize_pool_ratio <>", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountGreaterThan(String value) {
-            addCriterion("goods_discount_amount >", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioGreaterThan(String value) {
+            addCriterion("goods_prize_pool_ratio >", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountGreaterThanOrEqualTo(String value) {
-            addCriterion("goods_discount_amount >=", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_prize_pool_ratio >=", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountLessThan(String value) {
-            addCriterion("goods_discount_amount <", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioLessThan(String value) {
+            addCriterion("goods_prize_pool_ratio <", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountLessThanOrEqualTo(String value) {
-            addCriterion("goods_discount_amount <=", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioLessThanOrEqualTo(String value) {
+            addCriterion("goods_prize_pool_ratio <=", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountLike(String value) {
-            addCriterion("goods_discount_amount like", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioLike(String value) {
+            addCriterion("goods_prize_pool_ratio like", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountNotLike(String value) {
-            addCriterion("goods_discount_amount not like", value, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioNotLike(String value) {
+            addCriterion("goods_prize_pool_ratio not like", value, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountIn(List<String> values) {
-            addCriterion("goods_discount_amount in", values, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioIn(List<String> values) {
+            addCriterion("goods_prize_pool_ratio in", values, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountNotIn(List<String> values) {
-            addCriterion("goods_discount_amount not in", values, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioNotIn(List<String> values) {
+            addCriterion("goods_prize_pool_ratio not in", values, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountBetween(String value1, String value2) {
-            addCriterion("goods_discount_amount between", value1, value2, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioBetween(String value1, String value2) {
+            addCriterion("goods_prize_pool_ratio between", value1, value2, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsDiscountAmountNotBetween(String value1, String value2) {
-            addCriterion("goods_discount_amount not between", value1, value2, "goodsDiscountAmount");
+        public Criteria andGoodsPrizePoolRatioNotBetween(String value1, String value2) {
+            addCriterion("goods_prize_pool_ratio not between", value1, value2, "goodsPrizePoolRatio");
             return (Criteria) this;
         }
 
@@ -2635,6 +2635,76 @@ public class TbGoodsLogExample {
             return (Criteria) this;
         }
 
+        public Criteria andSingleFinalCostIsNull() {
+            addCriterion("single_final_cost is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostIsNotNull() {
+            addCriterion("single_final_cost is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostEqualTo(String value) {
+            addCriterion("single_final_cost =", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostNotEqualTo(String value) {
+            addCriterion("single_final_cost <>", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostGreaterThan(String value) {
+            addCriterion("single_final_cost >", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostGreaterThanOrEqualTo(String value) {
+            addCriterion("single_final_cost >=", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostLessThan(String value) {
+            addCriterion("single_final_cost <", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostLessThanOrEqualTo(String value) {
+            addCriterion("single_final_cost <=", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostLike(String value) {
+            addCriterion("single_final_cost like", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostNotLike(String value) {
+            addCriterion("single_final_cost not like", value, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostIn(List<String> values) {
+            addCriterion("single_final_cost in", values, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostNotIn(List<String> values) {
+            addCriterion("single_final_cost not in", values, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostBetween(String value1, String value2) {
+            addCriterion("single_final_cost between", value1, value2, "singleFinalCost");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleFinalCostNotBetween(String value1, String value2) {
+            addCriterion("single_final_cost not between", value1, value2, "singleFinalCost");
+            return (Criteria) this;
+        }
+
         public Criteria andStorageWarningIsNull() {
             addCriterion("storage_warning is null");
             return (Criteria) this;
@@ -2752,76 +2822,6 @@ public class TbGoodsLogExample {
 
         public Criteria andShelfLifeWarningNotBetween(Integer value1, Integer value2) {
             addCriterion("shelf_life_warning not between", value1, value2, "shelfLifeWarning");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostIsNull() {
-            addCriterion("single_final_cost is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostIsNotNull() {
-            addCriterion("single_final_cost is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostEqualTo(String value) {
-            addCriterion("single_final_cost =", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostNotEqualTo(String value) {
-            addCriterion("single_final_cost <>", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostGreaterThan(String value) {
-            addCriterion("single_final_cost >", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostGreaterThanOrEqualTo(String value) {
-            addCriterion("single_final_cost >=", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostLessThan(String value) {
-            addCriterion("single_final_cost <", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostLessThanOrEqualTo(String value) {
-            addCriterion("single_final_cost <=", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostLike(String value) {
-            addCriterion("single_final_cost like", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostNotLike(String value) {
-            addCriterion("single_final_cost not like", value, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostIn(List<String> values) {
-            addCriterion("single_final_cost in", values, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostNotIn(List<String> values) {
-            addCriterion("single_final_cost not in", values, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostBetween(String value1, String value2) {
-            addCriterion("single_final_cost between", value1, value2, "singleFinalCost");
-            return (Criteria) this;
-        }
-
-        public Criteria andSingleFinalCostNotBetween(String value1, String value2) {
-            addCriterion("single_final_cost not between", value1, value2, "singleFinalCost");
             return (Criteria) this;
         }
     }

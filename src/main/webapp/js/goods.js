@@ -199,7 +199,7 @@ function modifyCurrentGoods(obj) {
 			$('#modify_goodsUnit').val(data[0].goodsUnit)
 			$('#modify_goodsActualCost').val(data[0].goodsActualCost)
 			$('#modify_goodsPrice').val(data[0].goodsPrice)
-			$('#modify_goodsProfit').val(data[0].goodsProfit)
+			$('#modify_goodsPrizePoolRatio').val(data[0].goodsPrizePoolRatio)
 			$('#modify_goodsShelfLife').val(data[0].goodsShelfLife)
 			$('#modify_shelfLifePrewarning').val(data[0].shelfLifeWarning)
 			$('#modify_storagePrewarning').val(data[0].storageWarning)
@@ -231,9 +231,10 @@ function goods2customer(obj) {
 	// console.dir(obj);
 	var goodsId = $(obj).parent().parent().children("td").get(1).innerHTML;
 	var goodsName = $(obj).parent().parent().children("td").get(2).innerHTML;
-	var goodsActualCost = $(obj).parent().parent().children("td").get(5).innerHTML;
-	var goodsPrice = $(obj).parent().parent().children("td").get(6).innerHTML;
-	var goodsProfit = $(obj).parent().parent().children("td").get(7).innerHTML;
+	var goodsUnit = $(obj).parent().parent().children("td").get(5).innerHTML;
+	var goodsActualCost = $(obj).parent().parent().children("td").get(6).innerHTML;
+	var goodsPrice = $(obj).parent().parent().children("td").get(7).innerHTML;
+	var goodsPrizePoolRatio = $(obj).parent().parent().children("td").get(8).innerHTML;
 
 	$
 			.ajax({
@@ -252,9 +253,10 @@ function goods2customer(obj) {
 
 					$('#tmpGoodId').val(goodsId);
 					$('#tmpGoodsName').val(goodsName);
+					$('#tmpGoodsUnit').val(goodsUnit);
 					$('#tmpGoodsActualCost').val(goodsActualCost);
 					$('#tmpGoodsPrice').val(goodsPrice);
-					$('#tmpGoodsProfit').val(goodsProfit);
+					$('#tmpGoodsPrizePoolRatio').val(goodsPrizePoolRatio);
 
 					if (data[0].customerName != "Error") {
 						for (var i = 0; i < data.length; i++) {
@@ -264,21 +266,19 @@ function goods2customer(obj) {
 													+ '<input type="hidden" id="goods2customerId" name="goods2customerId" value="'
 													+ data[i].goods2customerId
 													+ '">'
-													+ '<select name="customerId"><option selected value="'
+													+ '<select class="saveg2cselect"  name="customerId" placeholder="客户名称"><option selected value="'
 													+ data[i].customerId
 													+ '">'
 													+ data[i].customerName
 													+ '</option></select>'
 													+ '</td><td>'
 													+ data[i].goodsActualCost
-													+ '</td><td>'
+													+ '</td><td><input class="control-group saveg2c" name="goodsPrice" type="text" value="'
 													+ data[i].goodsPrice
-													+ '</td><td><input class="control-group" name="goodsDiscountAmount" type="text" value="'
-													+ data[i].goodsDiscountAmount
-													+ '"placeholder="商品优惠销售价格"></td>'
-													+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
-													+ data[i].goodsProfit
-													+ '"placeholder="商品利润"></td>'
+													+ '"placeholder="销售价格"></td>'
+													+ '</td><td><input class="control-group saveg2c" name="goodsPrizePoolRatio" type="text" value="'
+													+ data[i].goodsPrizePoolRatio
+													+ '"placeholder="奖金池折扣">%</td>'
 													+ '<td><a onClick="deleteGoods2Customer(this)">删除</a></td></tr>');
 						}
 					}
@@ -306,17 +306,16 @@ function addgoods2customer(obj) {
 							.append(
 									'<tr><td>'
 											+ '<input type="hidden" id="goods2customerId" name="goods2customerId">'
-											+ '<select name="customerId"><option value="0">请选择客户：</option></select>'
+											+ '<select class="saveg2cselect" name="customerId"  placeholder="客户名称"><option value="0">请选择客户：</option></select>'
 											+ '</td><td>'
 											+ $('#tmpGoodsActualCost').val()
-											+ '</td><td>'
+											+ '</td><td><input class="control-group saveg2c" name="goodsPrice" type="text" value="'
 											+ $('#tmpGoodsPrice').val()
-											+ '</td><td><input class="control-group" name="goodsDiscountAmount" type="text" value="'
-											+ $('#tmpGoodsPrice').val()
-											+ '"placeholder="商品优惠销售价格"></td>'
-											+ '</td><td><input class="control-group" name="goodsProfit" type="text" value="'
-											+ $('#tmpGoodsProfit').val()
-											+ '"placeholder="商品利润"></td>'
+											+ '"placeholder="销售价格"></td>'
+											+ '</td><td><input class="control-group saveg2c" name="goodsPrizePoolRatio" type="text" value="'
+											+ $('#tmpGoodsPrizePoolRatio')
+													.val()
+											+ '"placeholder="奖金池折扣">%</td>'
 											+ '<td><a onClick="deleteGoods2Customer(this)" >删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
@@ -332,15 +331,34 @@ function addgoods2customer(obj) {
 // 新增商品和客户关系--查询客户信息
 function savegoods2customer(obj) {
 	console.dir($('#goods2CustomerForm'));
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'Goods2CustomerSave.do',
-		data : $('#goods2CustomerForm').serialize(),
-		success : function(data) {
-			$('#goods2customer').modal('hide');
-		},
+	var num = 0;
+	var str = "";
+	$(".saveg2c").each(function(n) {
+		if ($(this).val() == "") {
+			num++;
+			str += $(this).attr("placeholder") + "不能为空！\r\n";
+		}
 	});
+	$(".saveg2cselect").each(function(n) {
+		if ($(this).val() == "0") {
+			num++;
+			str += "请选择" + $(this).attr("placeholder") + "！\r\n";
+		}
+	});
+	if (num > 0) {
+		alert(str);
+		return false;
+	} else {
+		$.ajax({
+			type : 'POST',
+			async : true,
+			url : 'Goods2CustomerSave.do',
+			data : $('#goods2CustomerForm').serialize(),
+			success : function(data) {
+				$('#goods2customer').modal('hide');
+			},
+		});
+	}
 }
 
 // 删除商品和客户关系
