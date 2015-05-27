@@ -254,12 +254,13 @@
 					aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="myModalLabel2">新增系统参数</h4>
 			</div>
-			<form id="formA" action="${ctx}/sys/add.do" method="post">
+			<form id="formB" action="${ctx}/sys/add.do" method="post">
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<input type="hidden" name="pValue" id="pValue1" >
 							<input type="hidden" name="pDesc" id="pDesc2" >
+							<input type="hidden" name="ppDesc" id="ppDesc2" >
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -433,10 +434,10 @@
 			
 			$("#myModalLabel2").html("新增奖金池");
 			$("#pValue1").attr("value",pValue);
-			$("#pDesc2").attr("value","商品类型");
-// 			$("#pValue1").attr("value",pValue);
+			$("#pDesc2").attr("value","奖金池");
+			$("#ppDesc2").attr("value","百威奖金池");
 // 			alert("dfdfd");
-			return false;
+// 			return false;
 		}
 		if(pValue=="GoodsUnit"){
 			$("#addrecoveryimport").modal();
@@ -468,9 +469,9 @@
 			$("#pValue").attr("value",pValue);
 			$("#pDesc").attr("value","结账方式");
 		}
-		$("#addrecoveryimport").modal();
-		$("#pValue").attr("value",pValue);
-		$("#pDesc").attr("value",value);
+// 		$("#addrecoveryimport").modal();
+// 		$("#pValue").attr("value",pValue);
+// 		$("#pDesc").attr("value",value);
 // 		alert("fdf");
 	}
 	function addv(){

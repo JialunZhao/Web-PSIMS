@@ -239,6 +239,14 @@ String date=sdf.format(new Date());
 	<script src="<%=path%>/js/vendor/video.js"></script>
 	<script src="<%=path%>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
+	$("#addCustomerName").onchange(function(e) {
+		// $('#addcustomer').modal('hide');
+		var employeeId = "${customers.employeeId}";
+		alert(employeeId);
+		$('#addEmployeeName').val(employeeId);
+		
+	});
+	
     var len=$("#addGoodsTab tbody tr").length;
     function isPay(payStatus){
 		if (payStatus=="<%=Constants.PayStatus.YESPAY%>") {

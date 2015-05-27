@@ -2,7 +2,6 @@ package com.ai.psims.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TbStorehouseExample {
@@ -104,32 +103,6 @@ public class TbStorehouseExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andStorehouseIdIsNull() {
@@ -903,52 +876,52 @@ public class TbStorehouseExample {
         }
 
         public Criteria andCreatetimeEqualTo(Date value) {
-            addCriterionForJDBCDate("createtime =", value, "createtime");
+            addCriterion("createtime =", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("createtime <>", value, "createtime");
+            addCriterion("createtime <>", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("createtime >", value, "createtime");
+            addCriterion("createtime >", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createtime >=", value, "createtime");
+            addCriterion("createtime >=", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeLessThan(Date value) {
-            addCriterionForJDBCDate("createtime <", value, "createtime");
+            addCriterion("createtime <", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("createtime <=", value, "createtime");
+            addCriterion("createtime <=", value, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeIn(List<Date> values) {
-            addCriterionForJDBCDate("createtime in", values, "createtime");
+            addCriterion("createtime in", values, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("createtime not in", values, "createtime");
+            addCriterion("createtime not in", values, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createtime between", value1, value2, "createtime");
+            addCriterion("createtime between", value1, value2, "createtime");
             return (Criteria) this;
         }
 
         public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("createtime not between", value1, value2, "createtime");
+            addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
 
@@ -963,52 +936,52 @@ public class TbStorehouseExample {
         }
 
         public Criteria andModifytimeEqualTo(Date value) {
-            addCriterionForJDBCDate("modifytime =", value, "modifytime");
+            addCriterion("modifytime =", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("modifytime <>", value, "modifytime");
+            addCriterion("modifytime <>", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("modifytime >", value, "modifytime");
+            addCriterion("modifytime >", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("modifytime >=", value, "modifytime");
+            addCriterion("modifytime >=", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeLessThan(Date value) {
-            addCriterionForJDBCDate("modifytime <", value, "modifytime");
+            addCriterion("modifytime <", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("modifytime <=", value, "modifytime");
+            addCriterion("modifytime <=", value, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeIn(List<Date> values) {
-            addCriterionForJDBCDate("modifytime in", values, "modifytime");
+            addCriterion("modifytime in", values, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("modifytime not in", values, "modifytime");
+            addCriterion("modifytime not in", values, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("modifytime between", value1, value2, "modifytime");
+            addCriterion("modifytime between", value1, value2, "modifytime");
             return (Criteria) this;
         }
 
         public Criteria andModifytimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("modifytime not between", value1, value2, "modifytime");
+            addCriterion("modifytime not between", value1, value2, "modifytime");
             return (Criteria) this;
         }
 
@@ -1023,52 +996,52 @@ public class TbStorehouseExample {
         }
 
         public Criteria andEndtimeEqualTo(Date value) {
-            addCriterionForJDBCDate("endtime =", value, "endtime");
+            addCriterion("endtime =", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("endtime <>", value, "endtime");
+            addCriterion("endtime <>", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("endtime >", value, "endtime");
+            addCriterion("endtime >", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("endtime >=", value, "endtime");
+            addCriterion("endtime >=", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeLessThan(Date value) {
-            addCriterionForJDBCDate("endtime <", value, "endtime");
+            addCriterion("endtime <", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("endtime <=", value, "endtime");
+            addCriterion("endtime <=", value, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeIn(List<Date> values) {
-            addCriterionForJDBCDate("endtime in", values, "endtime");
+            addCriterion("endtime in", values, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("endtime not in", values, "endtime");
+            addCriterion("endtime not in", values, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("endtime between", value1, value2, "endtime");
+            addCriterion("endtime between", value1, value2, "endtime");
             return (Criteria) this;
         }
 
         public Criteria andEndtimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("endtime not between", value1, value2, "endtime");
+            addCriterion("endtime not between", value1, value2, "endtime");
             return (Criteria) this;
         }
 

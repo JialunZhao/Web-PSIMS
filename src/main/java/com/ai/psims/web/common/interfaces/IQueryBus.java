@@ -2,12 +2,12 @@ package com.ai.psims.web.common.interfaces;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Goods;
-import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbEmployeeExample;
+import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportExample;
 import com.ai.psims.web.model.TbProvider;
@@ -20,7 +20,7 @@ public interface IQueryBus {
 
 	public List<TbStorehouse> queryStorehouse();
 
-	public List<Goods> queryGoodsByName(GoodsExample example);
+	public List<TbGoods> queryGoodsByName(TbGoodsExample example);
 
 	public List<TbEmployee> queryEmployee(TbEmployeeExample employeeExample);
 

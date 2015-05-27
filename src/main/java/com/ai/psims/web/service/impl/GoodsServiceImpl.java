@@ -105,7 +105,7 @@ public class GoodsServiceImpl implements IGoodsService {
 		tbGoodsLog.setGoodsShelfLife(tbGoodsbackup.get(0).getGoodsShelfLife());
 		tbGoodsLog.setGoodsProfit(tbGoodsbackup.get(0).getGoodsProfit());
 		tbGoodsLog.setGoodsPrice(tbGoodsbackup.get(0).getGoodsPrice());
-		tbGoodsLog.setGoodsDiscountAmount(tbGoodsbackup.get(0).getGoodsDiscountAmount());
+		tbGoodsLog.setGoodsPrizePoolRatio(tbGoodsbackup.get(0).getGoodsPrizePoolRatio());
 		tbGoodsLog.setGoodsType(tbGoodsbackup.get(0).getGoodsType());
 		tbGoodsLog.setGoodsStatus(tbGoodsbackup.get(0).getGoodsStatus());
 		tbGoodsLog.setGoodsCreatetime(tbGoodsbackup.get(0).getGoodsCreatetime());

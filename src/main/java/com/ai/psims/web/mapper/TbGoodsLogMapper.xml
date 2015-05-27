@@ -18,7 +18,7 @@
     <result column="goods_actual_cost" property="goodsActualCost" jdbcType="VARCHAR" />
     <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR" />
     <result column="goods_profit" property="goodsProfit" jdbcType="VARCHAR" />
-    <result column="goods_discount_amount" property="goodsDiscountAmount" jdbcType="VARCHAR" />
+    <result column="goods_prize_pool_ratio" property="goodsPrizePoolRatio" jdbcType="VARCHAR" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR" />
     <result column="goods_createtime" property="goodsCreatetime" jdbcType="TIMESTAMP" />
@@ -40,9 +40,9 @@
     <result column="provider_package_subsidy" property="providerPackageSubsidy" jdbcType="VARCHAR" />
     <result column="customer_subsidy" property="customerSubsidy" jdbcType="VARCHAR" />
     <result column="other_subsidy" property="otherSubsidy" jdbcType="VARCHAR" />
+    <result column="single_final_cost" property="singleFinalCost" jdbcType="VARCHAR" />
     <result column="storage_warning" property="storageWarning" jdbcType="INTEGER" />
     <result column="shelf_life_warning" property="shelfLifeWarning" jdbcType="INTEGER" />
-    <result column="single_final_cost" property="singleFinalCost" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -105,12 +105,12 @@
   <sql id="Base_Column_List" >
     log_id, log_datetime, goods_id, goods_name, goods_code, goods_version, goods_unit, 
     goods_bar_code, goods_current_stock, goods_total_stock, goods_production_date, goods_expiration_date, 
-    goods_shelf_life, goods_actual_cost, goods_price, goods_profit, goods_discount_amount, 
+    goods_shelf_life, goods_actual_cost, goods_price, goods_profit, goods_prize_pool_ratio, 
     goods_type, goods_status, goods_createtime, goods_modifytime, goods_endtime, provider_id, 
     provider_name, provider_code, remark, goods_discount, single_rebate, quarter_rebate, 
     annual_rebate, purchase_rebate, promotion_rebate, provider_subsidy, customer_bottle_subsidy, 
     customer_package_subsidy, provider_package_subsidy, customer_subsidy, other_subsidy, 
-    storage_warning, shelf_life_warning, single_final_cost
+    single_final_cost, storage_warning, shelf_life_warning
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbGoodsLogExample" >
     select
@@ -149,30 +149,30 @@
       goods_total_stock, goods_production_date, 
       goods_expiration_date, goods_shelf_life, 
       goods_actual_cost, goods_price, goods_profit, 
-      goods_discount_amount, goods_type, goods_status, 
+      goods_prize_pool_ratio, goods_type, goods_status, 
       goods_createtime, goods_modifytime, goods_endtime, 
       provider_id, provider_name, provider_code, 
       remark, goods_discount, single_rebate, 
       quarter_rebate, annual_rebate, purchase_rebate, 
       promotion_rebate, provider_subsidy, customer_bottle_subsidy, 
       customer_package_subsidy, provider_package_subsidy, 
-      customer_subsidy, other_subsidy, storage_warning, 
-      shelf_life_warning, single_final_cost)
+      customer_subsidy, other_subsidy, single_final_cost, 
+      storage_warning, shelf_life_warning)
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{goodsId,jdbcType=INTEGER}, 
       #{goodsName,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, #{goodsVersion,jdbcType=INTEGER}, 
       #{goodsUnit,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, #{goodsCurrentStock,jdbcType=INTEGER}, 
       #{goodsTotalStock,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=TIMESTAMP}, 
       #{goodsExpirationDate,jdbcType=TIMESTAMP}, #{goodsShelfLife,jdbcType=INTEGER}, 
       #{goodsActualCost,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=VARCHAR}, #{goodsProfit,jdbcType=VARCHAR}, 
-      #{goodsDiscountAmount,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=VARCHAR}, 
+      #{goodsPrizePoolRatio,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=VARCHAR}, 
       #{goodsCreatetime,jdbcType=TIMESTAMP}, #{goodsModifytime,jdbcType=TIMESTAMP}, #{goodsEndtime,jdbcType=TIMESTAMP}, 
       #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{goodsDiscount,jdbcType=VARCHAR}, #{singleRebate,jdbcType=VARCHAR}, 
       #{quarterRebate,jdbcType=VARCHAR}, #{annualRebate,jdbcType=VARCHAR}, #{purchaseRebate,jdbcType=VARCHAR}, 
       #{promotionRebate,jdbcType=VARCHAR}, #{providerSubsidy,jdbcType=VARCHAR}, #{customerBottleSubsidy,jdbcType=VARCHAR}, 
       #{customerPackageSubsidy,jdbcType=VARCHAR}, #{providerPackageSubsidy,jdbcType=VARCHAR}, 
-      #{customerSubsidy,jdbcType=VARCHAR}, #{otherSubsidy,jdbcType=VARCHAR}, #{storageWarning,jdbcType=INTEGER}, 
-      #{shelfLifeWarning,jdbcType=INTEGER}, #{singleFinalCost,jdbcType=VARCHAR})
+      #{customerSubsidy,jdbcType=VARCHAR}, #{otherSubsidy,jdbcType=VARCHAR}, #{singleFinalCost,jdbcType=VARCHAR}, 
+      #{storageWarning,jdbcType=INTEGER}, #{shelfLifeWarning,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbGoodsLog" >
     insert into tb_goods_log
@@ -225,8 +225,8 @@
       <if test="goodsProfit != null" >
         goods_profit,
       </if>
-      <if test="goodsDiscountAmount != null" >
-        goods_discount_amount,
+      <if test="goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio,
       </if>
       <if test="goodsType != null" >
         goods_type,
@@ -291,14 +291,14 @@
       <if test="otherSubsidy != null" >
         other_subsidy,
       </if>
+      <if test="singleFinalCost != null" >
+        single_final_cost,
+      </if>
       <if test="storageWarning != null" >
         storage_warning,
       </if>
       <if test="shelfLifeWarning != null" >
         shelf_life_warning,
-      </if>
-      <if test="singleFinalCost != null" >
-        single_final_cost,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -350,8 +350,8 @@
       <if test="goodsProfit != null" >
         #{goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="goodsDiscountAmount != null" >
-        #{goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="goodsPrizePoolRatio != null" >
+        #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         #{goodsType,jdbcType=VARCHAR},
@@ -416,14 +416,14 @@
       <if test="otherSubsidy != null" >
         #{otherSubsidy,jdbcType=VARCHAR},
       </if>
+      <if test="singleFinalCost != null" >
+        #{singleFinalCost,jdbcType=VARCHAR},
+      </if>
       <if test="storageWarning != null" >
         #{storageWarning,jdbcType=INTEGER},
       </if>
       <if test="shelfLifeWarning != null" >
         #{shelfLifeWarning,jdbcType=INTEGER},
-      </if>
-      <if test="singleFinalCost != null" >
-        #{singleFinalCost,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -484,8 +484,8 @@
       <if test="record.goodsProfit != null" >
         goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="record.goodsDiscountAmount != null" >
-        goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="record.goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio = #{record.goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsType != null" >
         goods_type = #{record.goodsType,jdbcType=VARCHAR},
@@ -550,14 +550,14 @@
       <if test="record.otherSubsidy != null" >
         other_subsidy = #{record.otherSubsidy,jdbcType=VARCHAR},
       </if>
+      <if test="record.singleFinalCost != null" >
+        single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR},
+      </if>
       <if test="record.storageWarning != null" >
         storage_warning = #{record.storageWarning,jdbcType=INTEGER},
       </if>
       <if test="record.shelfLifeWarning != null" >
         shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER},
-      </if>
-      <if test="record.singleFinalCost != null" >
-        single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -582,7 +582,7 @@
       goods_actual_cost = #{record.goodsActualCost,jdbcType=VARCHAR},
       goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
       goods_profit = #{record.goodsProfit,jdbcType=VARCHAR},
-      goods_discount_amount = #{record.goodsDiscountAmount,jdbcType=VARCHAR},
+      goods_prize_pool_ratio = #{record.goodsPrizePoolRatio,jdbcType=VARCHAR},
       goods_type = #{record.goodsType,jdbcType=VARCHAR},
       goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
       goods_createtime = #{record.goodsCreatetime,jdbcType=TIMESTAMP},
@@ -604,9 +604,9 @@
       provider_package_subsidy = #{record.providerPackageSubsidy,jdbcType=VARCHAR},
       customer_subsidy = #{record.customerSubsidy,jdbcType=VARCHAR},
       other_subsidy = #{record.otherSubsidy,jdbcType=VARCHAR},
+      single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR},
       storage_warning = #{record.storageWarning,jdbcType=INTEGER},
-      shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER},
-      single_final_cost = #{record.singleFinalCost,jdbcType=VARCHAR}
+      shelf_life_warning = #{record.shelfLifeWarning,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -659,8 +659,8 @@
       <if test="goodsProfit != null" >
         goods_profit = #{goodsProfit,jdbcType=VARCHAR},
       </if>
-      <if test="goodsDiscountAmount != null" >
-        goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
+      <if test="goodsPrizePoolRatio != null" >
+        goods_prize_pool_ratio = #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       </if>
       <if test="goodsType != null" >
         goods_type = #{goodsType,jdbcType=VARCHAR},
@@ -725,14 +725,14 @@
       <if test="otherSubsidy != null" >
         other_subsidy = #{otherSubsidy,jdbcType=VARCHAR},
       </if>
+      <if test="singleFinalCost != null" >
+        single_final_cost = #{singleFinalCost,jdbcType=VARCHAR},
+      </if>
       <if test="storageWarning != null" >
         storage_warning = #{storageWarning,jdbcType=INTEGER},
       </if>
       <if test="shelfLifeWarning != null" >
         shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER},
-      </if>
-      <if test="singleFinalCost != null" >
-        single_final_cost = #{singleFinalCost,jdbcType=VARCHAR},
       </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
@@ -754,7 +754,7 @@
       goods_actual_cost = #{goodsActualCost,jdbcType=VARCHAR},
       goods_price = #{goodsPrice,jdbcType=VARCHAR},
       goods_profit = #{goodsProfit,jdbcType=VARCHAR},
-      goods_discount_amount = #{goodsDiscountAmount,jdbcType=VARCHAR},
+      goods_prize_pool_ratio = #{goodsPrizePoolRatio,jdbcType=VARCHAR},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       goods_status = #{goodsStatus,jdbcType=VARCHAR},
       goods_createtime = #{goodsCreatetime,jdbcType=TIMESTAMP},
@@ -776,9 +776,9 @@
       provider_package_subsidy = #{providerPackageSubsidy,jdbcType=VARCHAR},
       customer_subsidy = #{customerSubsidy,jdbcType=VARCHAR},
       other_subsidy = #{otherSubsidy,jdbcType=VARCHAR},
+      single_final_cost = #{singleFinalCost,jdbcType=VARCHAR},
       storage_warning = #{storageWarning,jdbcType=INTEGER},
-      shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER},
-      single_final_cost = #{singleFinalCost,jdbcType=VARCHAR}
+      shelf_life_warning = #{shelfLifeWarning,jdbcType=INTEGER}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

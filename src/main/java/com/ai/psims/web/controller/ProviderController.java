@@ -229,9 +229,9 @@ public class ProviderController extends BaseController {
 		String modify_providerName = request
 				.getParameter("modify_providerName");
 		String modify_Provider_code = request
-				.getParameter("modify_Provider_code") == null ? request
+				.getParameter("modify_providerCode") == null ? request
 				.getParameter("modify_providerName") : request
-				.getParameter("modify_Provider_code");
+				.getParameter("modify_providerCode");
 		String provider_prizepool = request.getParameter("modify_provider_prizepool");
 
 		String modify_providerContactName = request
@@ -349,7 +349,7 @@ public class ProviderController extends BaseController {
 
 	@RequestMapping(value = "/providerReportExecl")
 	public View providerReportExecl(Model model, HttpServletRequest request) {
-		logger.info("------------Welcome storagecheckReportExecl page!-------------");
+		logger.info("------------Welcome providerReportExecl page!-------------");
 		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
 		View Excelview = new AbstractExcelView() {
 			@Override
@@ -450,6 +450,8 @@ public class ProviderController extends BaseController {
 					row.createCell(idx++).setCellValue(tbProvider.getProviderName());
 					row.createCell(idx++).setCellValue(tbProvider.getProviderCode());
 					row.createCell(idx++).setCellValue(tbProvider.getProviderType());
+					if (null != tbProvider.getProviderPrizePool() && !"".equals(tbProvider.getProviderPrizePool()))
+					{
 					row.createCell(idx++).setCellValue(systemParameterBussinessImpl
 							.getSystemParameterPrizePool(
 									Integer.parseInt(tbProvider.getProviderPrizePool()))
@@ -458,6 +460,10 @@ public class ProviderController extends BaseController {
 							.getSystemParameterPrizePool(
 									Integer.parseInt(tbProvider.getProviderPrizePool()))
 							.getPpValueint());
+					}else {
+						row.createCell(idx++).setCellValue("未关联奖金池");
+						row.createCell(idx++).setCellValue("未关联奖金池");
+					}
 					row.createCell(idx++).setCellValue(tbProvider.getProviderContactName());
 					row.createCell(idx++).setCellValue(tbProvider.getProviderContactTel());
 					row.createCell(idx++).setCellValue(tbProvider.getProviderContactFax());
@@ -478,7 +484,7 @@ public class ProviderController extends BaseController {
 		};
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------回传 View 对象，返回生成的 Excel 档-------------");
-		logger.info("------------Bye storagecheckReportExecl page!-------------");
+		logger.info("------------Bye providerReportExecl page!-------------");
 		return Excelview;
 	}
 	

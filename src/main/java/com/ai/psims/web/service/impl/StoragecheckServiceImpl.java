@@ -33,6 +33,9 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	public int insert(Storagecheck storagecheck) {
 		return storagecheckMapper.insertSelective(storagecheck);
 	}
+	public int insert(TbStoragecheck storagecheck) {
+		return tbStoragecheckMapper.insertSelective(storagecheck);
+	}
 
 	@Override
 	public List<Storagecheck> selectByExample(StoragecheckExample example) {

@@ -16,8 +16,8 @@ import com.ai.psims.web.business.IAddGoodsImportList;
 import com.ai.psims.web.business.IQueryImportList;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddGoodsBean;
-import com.ai.psims.web.model.Goods;
-import com.ai.psims.web.model.GoodsExample;
+import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportExample;
 import com.ai.psims.web.model.TbImportExample.Criteria;
@@ -82,17 +82,17 @@ public class ImportController extends BaseController {
 	@RequestMapping("/queryGoods")
 	public void queryGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String providerName = request.getParameter("providerName");
-		GoodsExample goodsExample = new GoodsExample();
+		String providerId = request.getParameter("providerId");
+		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		JSONObject data = new JSONObject();
-		List<Goods> goodsList = new ArrayList<Goods>();
-		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+		List<TbGoods> goodsList = new ArrayList<TbGoods>();
+		TbGoodsExample.Criteria criteria = tbGoodsExample
 				.createCriteria();
-		if (providerName != null && providerName != "") {
-			criteria.andProviderNameEqualTo(providerName);
+		if (providerId != null && providerId != "") {
+			criteria.andProviderIdEqualTo(Integer.parseInt(providerId));
 		}
 		criteria.andGoodsEndtimeIsNull();
-		goodsList = queryBus.queryGoodsByName(goodsExample);
+		goodsList = queryBus.queryGoodsByName(tbGoodsExample);
 		if (goodsList == null && goodsList.size() == 0) {
 			responseFailed(response, "ERROR", data);
 		} else {
@@ -177,12 +177,12 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String goodsName = request.getParameter("goodsName");
 		String providerName = request.getParameter("providerName");
-		GoodsExample goodsExample = new GoodsExample();
-		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+		TbGoodsExample tbGoodsExample = new TbGoodsExample();
+		TbGoodsExample.Criteria criteria = tbGoodsExample
 				.createCriteria();
-		List<Goods> goodsList = new ArrayList<Goods>();
+		List<TbGoods> goodsList = new ArrayList<TbGoods>();
 		JSONObject data = new JSONObject();
-		Goods goods = new Goods();
+		TbGoods goods = new TbGoods();
 		if (goodsName != null && goodsName != "") {
 			criteria.andGoodsNameEqualTo(goodsName);
 		}
@@ -190,7 +190,7 @@ public class ImportController extends BaseController {
 			criteria.andProviderNameEqualTo(providerName);
 		}
 		criteria.andGoodsEndtimeIsNull();
-		goodsList = queryBus.queryGoodsByName(goodsExample);
+		goodsList = queryBus.queryGoodsByName(tbGoodsExample);
 		goods = goodsList.get(0);
 		if (goods == null) {
 			responseFailed(response, "ERROR", data);

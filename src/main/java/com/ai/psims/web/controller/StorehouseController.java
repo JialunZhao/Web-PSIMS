@@ -1,19 +1,27 @@
 package com.ai.psims.web.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.business.IStorehouseBusiness;
 import com.ai.psims.web.model.TbStorehouse;
@@ -86,7 +94,7 @@ public class StorehouseController extends BaseController {
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		criteria.andStatusEqualTo("01");
 		storehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
-		logger.info("------------4.1.转译供应商类型-------------");
+		logger.info("------------4.1.转译仓库类型-------------");
 		for (TbStorehouse storehouse : storehouses) {
 			if (storehouse.getType() == null) {
 			} else {
@@ -96,6 +104,10 @@ public class StorehouseController extends BaseController {
 		}
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("storehouses", storehouses);
+		request.setAttribute("storehouse_name", storehouse_name);
+		request.setAttribute("storehouse_type", storehouse_type);
+		request.setAttribute("contact_name", contact_name);
+		request.setAttribute("contact_tel", contact_tel);
 
 		logger.info("------------Bye storehouse page!-------------");
 		return "storehouse";
@@ -259,6 +271,128 @@ public class StorehouseController extends BaseController {
 		logger.info("------------5.返回结果-------------");
 		logger.info("------------Bye queryStorehouse!-------------");
 		return tbStorehouses;
+	}
+	
+	
+
+	@RequestMapping(value = "/storehouseReportExecl")
+	public View storehouseReportExecl(Model model, HttpServletRequest request) {
+		logger.info("------------Welcome storehouseReportExecl page!-------------");
+		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
+		View Excelview = new AbstractExcelView() {
+			@Override
+			public void buildExcelDocument(@SuppressWarnings("rawtypes") Map map, HSSFWorkbook workbook,
+					HttpServletRequest request, HttpServletResponse response)
+					throws Exception {
+				logger.info("------------1.初始化-------------");
+				List<TbStorehouse> storehouses;
+				TbStorehouseExample tbStorehouseExample = new TbStorehouseExample();
+				TbStorehouseExample.Criteria criteria = tbStorehouseExample.createCriteria();
+				logger.info("------------2.获取参数-------------");
+				String storehouse_name = request.getParameter("query_storehouseName") == "" ? null
+						: request.getParameter("query_storehouseName");
+				String storehouse_type = request.getParameter("query_storehouseType") == "" ? null
+						: request.getParameter("query_storehouseType");
+				String contact_name = request.getParameter("query_contactName") == "" ? null
+						: request.getParameter("query_contactName");
+				String contact_tel = request.getParameter("query_contactTel") == "" ? null
+						: request.getParameter("query_contactTel");
+				logger.info("------------3.数据校验-------------");
+				if (storehouse_name != null && storehouse_name.length() > 0) {
+					storehouse_name = "%" + storehouse_name + "%";
+					criteria.andStorehouseNameLike(
+							storehouse_name);
+				}
+				if (storehouse_type != null && storehouse_type.length() > 0) {
+					if (!storehouse_type.equals("0")) {
+						criteria.andTypeEqualTo(
+								storehouse_type);
+					}
+				}
+				if (contact_name != null && contact_name.length() > 0) {
+					contact_name = "%" + contact_name + "%";
+					criteria.andContactNameLike(contact_name);
+				}
+				if (contact_tel != null && contact_tel.length() > 0) {
+					contact_tel = "%" + contact_tel + "%";
+					criteria.andContactTelLike(contact_tel);
+				}
+
+				logger.info("------------4.业务处理-------------");
+				// 只查询状态为正常的记录 00-失效 01-正常 99-异常
+				criteria.andStatusEqualTo("01");
+				storehouses = storehouseBusiness.storehouseQuery(tbStorehouseExample);
+				logger.info("------------4.1.转译仓库类型-------------");
+				for (TbStorehouse storehouse : storehouses) {
+					if (storehouse.getType() == null) {
+					} else {
+						storehouse.setType(CreateIdUtil
+								.getStorehouseType(storehouse.getType()));
+					}
+				}
+				logger.info("------------5.返回结果-------------");
+
+				logger.info("------------建立 Excel -Sheet-------------");
+				HSSFSheet sheet = workbook.createSheet("客户清单");
+				logger.info("------------设置行列的默认宽度和高度-------------");
+				int idx = 0;
+				sheet.setColumnWidth(idx++, 32 * 80);// 对A列设置宽度为180像素
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				
+				int rowNum = 0;
+				idx = 0;
+				logger.info("------------建立标题-------------");
+				HSSFRow header = sheet.createRow(rowNum++);
+				header.createCell(idx++).setCellValue("编号");
+				header.createCell(idx++).setCellValue("仓库名称");
+				header.createCell(idx++).setCellValue("仓库代码");
+				header.createCell(idx++).setCellValue("仓库类型");
+				header.createCell(idx++).setCellValue("联系人名称");
+				header.createCell(idx++).setCellValue("联系人电话");
+				header.createCell(idx++).setCellValue("仓库地址");
+				header.createCell(idx++).setCellValue("仓库添加时间");
+				header.createCell(idx++).setCellValue("仓库修改时间");
+				header.createCell(idx++).setCellValue("备注");
+				logger.info("------------输出内容-------------");
+				HSSFRow row;
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+				for (TbStorehouse tbStorehouse : storehouses) {
+					idx = 0;
+					row = sheet.createRow(rowNum++);
+					row.createCell(idx++).setCellValue(tbStorehouse.getStorehouseId());
+					row.createCell(idx++).setCellValue(tbStorehouse.getStorehouseName());
+					row.createCell(idx++).setCellValue(tbStorehouse.getStorehouseCode());
+					row.createCell(idx++).setCellValue(tbStorehouse.getType());
+					row.createCell(idx++).setCellValue(tbStorehouse.getContactName());
+					row.createCell(idx++).setCellValue(tbStorehouse.getContactTel());
+					row.createCell(idx++).setCellValue(tbStorehouse.getContactAddress());
+
+					row.createCell(idx++).setCellValue(sdf.format(tbStorehouse.getCreatetime()));
+					if (null !=tbStorehouse.getModifytime()) {						
+						row.createCell(idx++).setCellValue(sdf.format(tbStorehouse.getModifytime()));
+					}else {
+						row.createCell(idx++).setCellValue("无");
+					}
+					row.createCell(idx++).setCellValue(tbStorehouse.getRemark());
+//					row.createCell(idx++).setCellValue(tbStorehouse.get);
+//					row.createCell(idx++).setCellValue(tbStorehouse.get);
+				}
+			}
+		};
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------回传 View 对象，返回生成的 Excel 档-------------");
+		logger.info("------------Bye storehouseReportExecl page!-------------");
+		return Excelview;
 	}
 
 	@ExceptionHandler(Exception.class)

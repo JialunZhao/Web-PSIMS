@@ -255,9 +255,9 @@ String date=sdf.format(new Date());
 						</div>						
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">入库数量：</span><input
+								style="background-color: #1abc9c;">进货数量：</span><input
 								type="text" id="goodsCount" class="form-control"
-								placeholder="入库数量"> 
+								placeholder="进货数量"> 
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-3">
 							<button type="button" class="btn btn-primary" id="addgoodsokbtn">确认添加</button>
@@ -277,7 +277,7 @@ String date=sdf.format(new Date());
 										<th>商品名称</th>
 										<th>基本单位</th>
 										<th>保质期</th>
-										<th>入库数量</th>
+										<th>进货数量</th>
 										<th>进货价格</th>
 										<th>是否打折</th>
 										<th>折扣率</th>
@@ -479,13 +479,14 @@ String date=sdf.format(new Date());
     		selOpt.remove();
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		var providerName=$("#providerName").find("option:selected").text();
+    		var providerId=$("#providerName").val();
     		$.ajax({  
                         url:'<%=path %>/importController/queryGoods.do',  
                         type:"post",  
                         async:false,
                         modal : true,
                         showBusi : false,
-                        data:{'providerName':providerName},
+                        data:{'providerId':providerId},
                         success:function(data){  
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.list);
@@ -669,12 +670,12 @@ String date=sdf.format(new Date());
 			$("#haveBoxPrice").val("");
 		}
         if (checkIsNull(goodsCount)) {
-			alert("请选择入库商品数量");
+			alert("请选择进货商品数量");
 			return;
 		}else {
 			if (!grantToZero(goodsCount)) {
 				$("#goodsCount").val("");
-				alert("入库商品数量不能小于0");
+				alert("进货商品数量不能小于0");
 				return;
 			}
 		}
@@ -803,7 +804,7 @@ String date=sdf.format(new Date());
           var goodsShelfLife=$("#goodsShelfLife").val();
           var prizePool=$("#prizePool").val();
           if (checkIsNull(goodsName)) {
-  			alert("请选择入库商品名称");
+  			alert("请选择进货商品名称");
   			return;
   		}
           if (checkIsNull(haveBox)) {
@@ -853,12 +854,12 @@ String date=sdf.format(new Date());
   			$("#haveBoxPrice").val("");
   		}
           if (checkIsNull(goodsCount)) {
-  			alert("请选择入库商品数量");
+  			alert("请选择进货商品数量");
   			return;
   		}else {
   			if (!grantToZero(goodsCount)) {
   				$("#goodsCount").val("");
-  				alert("入库商品数量不能小于0");
+  				alert("进货商品数量不能小于0");
   				return;
   			}
   		}

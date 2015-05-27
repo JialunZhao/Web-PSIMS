@@ -14,8 +14,8 @@
 		</commentGenerator>
 		<!--数据库链接URL，用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://123.56.89.128/psims" userId="root"
-			password="dFPmhtxqoN8i">
+			connectionURL="jdbc:mysql://123.56.89.128/psims" userId="psims"
+			password="psims">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -38,18 +38,22 @@
 		</javaClientGenerator>
 		<!-- 要生成哪些表 -->
 
-		<!-- <table schema="psims" tableName="tb_goods2customer" /> -->
-		<!-- <table schema="psims" tableName="tb_goods2customer_log" /> -->
-		<!-- <table schema="psims" tableName="tb_goods" /> -->
-		<!-- <table schema="psims" tableName="tb_goods_log" /> -->
+		<table schema="psims" tableName="tb_import_goods" />
+		<table schema="psims" tableName="tb_import_goods_log" />
+		<!-- <table schema="psims" tableName="tb_storehouse" /> -->
+		<!-- <table schema="psims" tableName="tb_storehouse_log" /> -->
+<!-- 		<table schema="psims" tableName="tb_goods2customer" /> -->
+<!-- 		<table schema="psims" tableName="tb_goods2customer_log" /> -->
+<!-- 		<table schema="psims" tableName="tb_goods" /> -->
+<!-- 		<table schema="psims" tableName="tb_goods_log" /> -->
 		<!-- <table schema="psims" tableName="tb_customer" /> -->
 		<!-- <table schema="psims" tableName="tb_customer_log" /> -->
 		<!-- <table schema="psims" tableName="tb_employee" /> -->
 		<!-- <table schema="psims" tableName="tb_employee_log" /> -->
-		<!-- <table schema="psims" tableName="tb_storagecheck" /> -->
-		<!-- <table schema="psims" tableName="tb_storagecheck_log"/> -->
-		<table schema="psims" tableName="tb_provider" />
-		<table schema="psims" tableName="tb_provider_log" />
+<!-- 		<table schema="psims" tableName="tb_storagecheck" /> -->
+<!-- 		<table schema="psims" tableName="tb_storagecheck_log"/> -->
+		<!-- <table schema="psims" tableName="tb_provider" /> -->
+		<!-- <table schema="psims" tableName="tb_provider_log" /> -->
 		<!-- <table schema="psims" tableName="tb_privilege" /> -->
 		<!-- <table schema="psims" tableName="tb_privilege_log" /> -->
 		<!-- <table schema="psims" tableName="tb_menu" /> -->

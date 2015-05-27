@@ -9,6 +9,8 @@ import com.ai.psims.web.model.TbStoragecheckExample;
 
 public interface IStoragecheckService {
 	public int insert(Storagecheck storagecheck);
+	
+	public int insert(TbStoragecheck storagecheck) ;
 
 	public List<Storagecheck> selectByExample(StoragecheckExample example);
 

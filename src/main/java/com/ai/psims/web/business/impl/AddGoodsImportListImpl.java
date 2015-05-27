@@ -12,12 +12,14 @@ import org.springframework.stereotype.Service;
 import com.ai.psims.web.business.IAddGoodsImportList;
 import com.ai.psims.web.model.AddGoodsBean;
 import com.ai.psims.web.model.Goods;
+import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbImportGoodsExample.Criteria;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.IImportGoodsService;
@@ -266,27 +268,28 @@ public class AddGoodsImportListImpl implements IAddGoodsImportList {
 			TbImportGoods importGoods = importGoodsService.selectByExample(
 					example).get(0);
 			importCount = Integer.parseInt(goodsArray[1 + j]);
-			Storagecheck storagecheck = new Storagecheck();
-			Goods goods = goodsService.selectByKey(importGoods.getGoodsId());
+			TbStoragecheck storagecheck = new TbStoragecheck();
+			TbGoods tbGoods = goodsService.selectGoodsInfo(importGoods.getGoodsId());
 			storagecheck.setGoodsId(importGoods.getGoodsId());
 			storagecheck.setGoodsName(importGoods.getGoodsName());
-			storagecheck.setProviderId(goods.getProviderId());
-			storagecheck.setProviderName(goods.getProviderName());
+			storagecheck.setGoodsCode(importGoods.getGoodsCode());
+			storagecheck.setProviderId(tbGoods.getProviderId());
+			storagecheck.setProviderName(tbGoods.getProviderName());
 			storagecheck.setStorageRateTotal(importCount);
 			storagecheck.setStorageRateCurrent(importCount);
 			storagecheck
 					.setGoodsProductionDate(Date.valueOf(goodsArray[2 + j]));
 			storagecheck
 					.setGoodsExpirationDate(Date.valueOf(goodsArray[3 + j]));
-			storagecheck.setGoodsShelfLife(goods.getGoodsShelfLife());
-			storagecheck.setGoodsPrice(goods.getGoodsPrice());
+			storagecheck.setGoodsShelfLife(tbGoods.getGoodsShelfLife());
+			storagecheck.setGoodsPrice(tbGoods.getGoodsPrice());
 			storagecheck.setGoodsStatus(Constants.ImportGoodsStatus.CANSALE);
 			storagecheck.setImportSerialNumber(importGoods
 					.getImportSerialNumber());
 			storagecheck.setCreatetime(new java.util.Date());
-			storagecheck.setImportGoodsUnit(goods.getGoodsUnit());
-			storagecheck.setStorageWarning(goods.getStorageWarning());
-			storagecheck.setShelfLifeWarning(goods.getShelfLifeWarning());
+			storagecheck.setImportGoodsUnit(tbGoods.getGoodsUnit());
+			storagecheck.setStorageWarning(tbGoods.getStorageWarning());
+			storagecheck.setShelfLifeWarning(tbGoods.getShelfLifeWarning());
 			storagecheckService.insert(storagecheck);
 
 			importGoods.setResImportGoodsAmount(importGoods

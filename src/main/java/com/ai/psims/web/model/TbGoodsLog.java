@@ -15,7 +15,7 @@ public class TbGoodsLog {
 
     private Integer goodsVersion;
 
-	private String goodsUnit;
+    private String goodsUnit;
 
     private String goodsBarCode;
 
@@ -35,7 +35,7 @@ public class TbGoodsLog {
 
     private String goodsProfit;
 
-    private String goodsDiscountAmount;
+    private String goodsPrizePoolRatio;
 
     private String goodsType;
 
@@ -79,11 +79,11 @@ public class TbGoodsLog {
 
     private String otherSubsidy;
 
+    private String singleFinalCost;
+
     private Integer storageWarning;
 
     private Integer shelfLifeWarning;
-
-    private String singleFinalCost;
 
     public Integer getLogId() {
         return logId;
@@ -213,12 +213,12 @@ public class TbGoodsLog {
         this.goodsProfit = goodsProfit == null ? null : goodsProfit.trim();
     }
 
-    public String getGoodsDiscountAmount() {
-        return goodsDiscountAmount;
+    public String getGoodsPrizePoolRatio() {
+        return goodsPrizePoolRatio;
     }
 
-    public void setGoodsDiscountAmount(String goodsDiscountAmount) {
-        this.goodsDiscountAmount = goodsDiscountAmount == null ? null : goodsDiscountAmount.trim();
+    public void setGoodsPrizePoolRatio(String goodsPrizePoolRatio) {
+        this.goodsPrizePoolRatio = goodsPrizePoolRatio == null ? null : goodsPrizePoolRatio.trim();
     }
 
     public String getGoodsType() {
@@ -389,6 +389,14 @@ public class TbGoodsLog {
         this.otherSubsidy = otherSubsidy == null ? null : otherSubsidy.trim();
     }
 
+    public String getSingleFinalCost() {
+        return singleFinalCost;
+    }
+
+    public void setSingleFinalCost(String singleFinalCost) {
+        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
+    }
+
     public Integer getStorageWarning() {
         return storageWarning;
     }
@@ -403,13 +411,5 @@ public class TbGoodsLog {
 
     public void setShelfLifeWarning(Integer shelfLifeWarning) {
         this.shelfLifeWarning = shelfLifeWarning;
-    }
-
-    public String getSingleFinalCost() {
-        return singleFinalCost;
-    }
-
-    public void setSingleFinalCost(String singleFinalCost) {
-        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
     }
 }

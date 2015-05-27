@@ -18,7 +18,7 @@
     <result column="goods_production_date" property="goodsProductionDate" jdbcType="TIMESTAMP" />
     <result column="goods_expiration_date" property="goodsExpirationDate" jdbcType="TIMESTAMP" />
     <result column="goods_shelf_life" property="goodsShelfLife" jdbcType="INTEGER" />
-    <result column="goods_price" property="goodsPrice" jdbcType="BIGINT" />
+    <result column="goods_price" property="goodsPrice" jdbcType="VARCHAR" />
     <result column="goods_status" property="goodsStatus" jdbcType="VARCHAR" />
     <result column="goods_type" property="goodsType" jdbcType="VARCHAR" />
     <result column="storage_type" property="storageType" jdbcType="VARCHAR" />
@@ -144,7 +144,7 @@
       #{storehouseCode,jdbcType=VARCHAR}, #{goodsBarCode,jdbcType=VARCHAR}, #{storageRateCurrent,jdbcType=INTEGER}, 
       #{storageRateTotal,jdbcType=INTEGER}, #{goodsProductionDate,jdbcType=TIMESTAMP}, 
       #{goodsExpirationDate,jdbcType=TIMESTAMP}, #{goodsShelfLife,jdbcType=INTEGER}, 
-      #{goodsPrice,jdbcType=BIGINT}, #{goodsStatus,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=VARCHAR}, #{goodsStatus,jdbcType=VARCHAR}, #{goodsType,jdbcType=VARCHAR}, 
       #{storageType,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
       #{endtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{importSerialNumber,jdbcType=VARCHAR}, 
       #{importGoodsUnit,jdbcType=VARCHAR}, #{storageWarning,jdbcType=INTEGER}, #{shelfLifeWarning,jdbcType=INTEGER}
@@ -288,7 +288,7 @@
         #{goodsShelfLife,jdbcType=INTEGER},
       </if>
       <if test="goodsPrice != null" >
-        #{goodsPrice,jdbcType=BIGINT},
+        #{goodsPrice,jdbcType=VARCHAR},
       </if>
       <if test="goodsStatus != null" >
         #{goodsStatus,jdbcType=VARCHAR},
@@ -383,7 +383,7 @@
         goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
       </if>
       <if test="record.goodsPrice != null" >
-        goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+        goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
       </if>
       <if test="record.goodsStatus != null" >
         goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
@@ -441,7 +441,7 @@
       goods_production_date = #{record.goodsProductionDate,jdbcType=TIMESTAMP},
       goods_expiration_date = #{record.goodsExpirationDate,jdbcType=TIMESTAMP},
       goods_shelf_life = #{record.goodsShelfLife,jdbcType=INTEGER},
-      goods_price = #{record.goodsPrice,jdbcType=BIGINT},
+      goods_price = #{record.goodsPrice,jdbcType=VARCHAR},
       goods_status = #{record.goodsStatus,jdbcType=VARCHAR},
       goods_type = #{record.goodsType,jdbcType=VARCHAR},
       storage_type = #{record.storageType,jdbcType=VARCHAR},
@@ -506,7 +506,7 @@
         goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER},
       </if>
       <if test="goodsPrice != null" >
-        goods_price = #{goodsPrice,jdbcType=BIGINT},
+        goods_price = #{goodsPrice,jdbcType=VARCHAR},
       </if>
       <if test="goodsStatus != null" >
         goods_status = #{goodsStatus,jdbcType=VARCHAR},
@@ -561,7 +561,7 @@
       goods_production_date = #{goodsProductionDate,jdbcType=TIMESTAMP},
       goods_expiration_date = #{goodsExpirationDate,jdbcType=TIMESTAMP},
       goods_shelf_life = #{goodsShelfLife,jdbcType=INTEGER},
-      goods_price = #{goodsPrice,jdbcType=BIGINT},
+      goods_price = #{goodsPrice,jdbcType=VARCHAR},
       goods_status = #{goodsStatus,jdbcType=VARCHAR},
       goods_type = #{goodsType,jdbcType=VARCHAR},
       storage_type = #{storageType,jdbcType=VARCHAR},
