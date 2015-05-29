@@ -148,8 +148,11 @@
 						<th class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></th>
 						<th>编号</th>
-<!-- 						<th>奖金池公司</th> -->
+						<th>奖金池名称</th>
 						<th>奖金池额度</th>
+						<th>手动增加奖金池</th>
+						<th>手动降低奖金池</th>
+						<th>奖金池历史</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -162,8 +165,12 @@
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe3}" /></td>
-<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
+								<td><c:out value="${s.ppDesc}" /></td>
 								<td><c:out value="${s.ppValueint}" /></td>
+								<td><input type="text" class="form-control" placeholder="+" value="+"></td>
+								<td><input type="text" class="form-control" placeholder="-" value="-"></td>
+								<td><a href="#" data-toggle="modal"
+									onclick="detail(${s.paramId},'p_ee')">详情</a></td>
 								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
@@ -261,6 +268,11 @@
 							<input type="hidden" name="pValue" id="pValue1" >
 							<input type="hidden" name="pDesc" id="pDesc2" >
 							<input type="hidden" name="ppDesc" id="ppDesc2" >
+						</div>
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">奖金池名称:</span> <input id="ppDesc2"
+								name="ppDesc" type="text" class="form-control" placeholder="奖金池名称">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
