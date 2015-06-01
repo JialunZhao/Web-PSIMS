@@ -150,8 +150,8 @@
 						<th>编号</th>
 						<th>奖金池名称</th>
 						<th>奖金池额度</th>
-						<th>手动增加奖金池</th>
-						<th>手动降低奖金池</th>
+<!-- 						<th>手动增加奖金池</th> -->
+<!-- 						<th>手动降低奖金池</th> -->
 						<th>奖金池历史</th>
 						<th>操作</th>
 					</tr>
@@ -167,10 +167,10 @@
 								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><c:out value="${s.ppValueint}" /></td>
-								<td><input type="text" class="form-control" placeholder="+" value="+"></td>
-								<td><input type="text" class="form-control" placeholder="-" value="-"></td>
+<!-- 								<td><input type="text" class="form-control" placeholder="+" value="+"></td> -->
+<!-- 								<td><input type="text" class="form-control" placeholder="-" value="-"></td> -->
 								<td><a href="#" data-toggle="modal"
-									onclick="detail(${s.paramId},'p_ee')">详情</a></td>
+									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a></td>
 								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
@@ -181,6 +181,41 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="modal fade" id="goods-10" tabindex="-1" role="dialog"
+	aria-labelledby="addgoods" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">奖金池历史列表</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="table-responsive" id="tbA">
+						<table class="table table-striped" id="tableGood">
+							<tr>
+								<th>编号</th>
+								<th>奖金池名称</th>
+								<th>日期</th>
+								<th>原始奖金</th>
+								<th>增加</th>
+								<th>减少</th>
+								<th>最终余额</th>
+							</tr>
+							<tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 		<div class="tab-pane fade" id="p_ff">
 		<button type="button" class="btn btn-primary" onclick="add('CheckoutType')">新增结账方式</button>
 			<table class="table table-striped">
@@ -267,7 +302,7 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<input type="hidden" name="pValue" id="pValue1" >
 							<input type="hidden" name="pDesc" id="pDesc2" >
-							<input type="hidden" name="ppDesc" id="ppDesc2" >
+<!-- 							<input type="hidden" name="ppDesc" id="ppDesc2" > -->
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -320,7 +355,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="submit" class="btn btn-primary" onclick="update()">确认修改</button>
+				<button type="button" class="btn btn-primary" onclick="update()">确认修改</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -347,6 +382,11 @@
 							placeholder="参数名称">
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池名称:</span>
+						<input id="ppDesc3" name="ppDesc3" type="text"
+							class="form-control" placeholder="奖金池名称"> 
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
 						<input id="ppValueint3" name="ppValueint3" type="text"
 							class="form-control" placeholder="奖金池额度"> 
@@ -355,7 +395,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="submit" class="btn btn-primary" onclick="update('p_ee')">确认修改</button>
+				<button type="button" class="btn btn-primary" onclick="update('p_ee')">确认修改</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -397,6 +437,31 @@
 	            }
 		})
 	}
+	function detail(paramId){
+		var id = paramId;
+		$("#tableGood tr:gt(0)").remove();
+		$.ajax({
+			url: '${ctx}/sys/'+id+'/showPrizePool.do',
+			type: 'get',
+			success: function(messageRespon){
+				alert(messageRespon.length);
+				var length=messageRespon.length;
+				for (var i = 0; i <length; i++) {
+					var tr = $("<tr></tr>");
+					var j=i+1;
+					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
+							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
+							"<td>"+ messageRespon[i].ppValueint +"</td>"+ "<td>"+ messageRespon[i].ppValueint +
+							"</td>" + "<td>"+ messageRespon[i].ppValueint +
+							"</td>" + "<td>"+ messageRespon[i].ppValueint +
+							"</td>")
+					tr.append(td);
+					$("#tableGood").append(tr);
+				}
+			}
+		})
+	}
+	
 	function chenge(paramId,pValue) {
 		
 		var id = paramId;
@@ -412,10 +477,11 @@
 					success : function(messageInfor) {
 // 	 				alert(messageInfor.ppValueint);
 						
-						$("#ppDesc3").attr("value",messageInfor.ppDesc);
+// 						$("#ppDesc3").attr("value",messageInfor.ppDesc);
 						$("#paramId3").attr("value",messageInfor.paramId);
 						$("#pValue3").attr("value",messageInfor.pValue);
 						$("#pDesc3").attr("value",messageInfor.pDesc);
+						$("#ppDesc3").attr("value",messageInfor.ppDesc);
 						$("#ppValueint3").attr("value",messageInfor.ppValueint);
 						
 					}
@@ -447,7 +513,7 @@
 			$("#myModalLabel2").html("新增奖金池");
 			$("#pValue1").attr("value",pValue);
 			$("#pDesc2").attr("value","奖金池");
-			$("#ppDesc2").attr("value","百威奖金池");
+// 			$("#ppDesc2").attr("value","百威奖金池");
 // 			alert("dfdfd");
 // 			return false;
 		}

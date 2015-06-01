@@ -1,6 +1,7 @@
 package com.ai.psims.web.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ai.psims.web.dao.TbSystemParameterLogMapper;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterLog;
+import com.ai.psims.web.model.TbSystemParameterLogExample;
 import com.ai.psims.web.service.ISystemParameterServiceLog;
 
 @Service
@@ -28,8 +30,25 @@ public class SystemParameterServiceLogImpl implements ISystemParameterServiceLog
 		systemParameterLog.setpValue(systemParameter.getpValue());
 		systemParameterLog.setPpDesc(systemParameter.getPpValue());
 		systemParameterLog.setPpValue(systemParameter.getPpValue());
+		systemParameterLog.setPpValueint(systemParameter.getPpValueint());
 		systemParameterLogMapper.insert(systemParameterLog);
 	}
+
+	@Override
+	public List<TbSystemParameterLog> getSysByLogId(int paramId) {
+		TbSystemParameterLogExample example = new TbSystemParameterLogExample();
+		example.createCriteria().andParamIdEqualTo(paramId);
+		return systemParameterLogMapper.selectByExample(example);
+	}
+
+	@Override
+	public void updateByPid(TbSystemParameter systemParameter) {
+		TbSystemParameterLog log = new TbSystemParameterLog();
+		log.setpValue(systemParameter.getPpValueint().toString());
+		systemParameterLogMapper.updateByPrimaryKey(log);
+	}
+
+	
 
 
 }

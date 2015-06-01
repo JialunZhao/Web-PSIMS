@@ -1,5 +1,8 @@
 package com.ai.psims.web.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbSystemParameter;
+import com.ai.psims.web.model.TbSystemParameterLog;
 
 
 /**
@@ -59,12 +63,29 @@ public class SystemParameterController {
 //        modelMap.addAttribute("parame", list1);
         return "sitting";
     }
+    //奖金池历史查询
+    @RequestMapping(value = "/{paramId}/showPrizePool.do", method = RequestMethod.GET)
+    @ResponseBody
+    public List<TbSystemParameterLog> showPrizePool(@PathVariable int paramId) throws ParseException {
+    	List<TbSystemParameterLog> list = new ArrayList<TbSystemParameterLog>();
+    	List<TbSystemParameterLog> sysParamete = systemParameterBussinessImpl.getSysByLogId(paramId);
+    	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+    	if(sysParamete.size()>0){
+    		for(TbSystemParameterLog log : sysParamete){
+    			Date logDatetime = log.getLogDatetime();
+    			String format = df.format(logDatetime);
+    			log.setPpKey(format);
+    			list.add(log);
+    		}
+    	}
+    	return list;
+    }
     
     @RequestMapping(value = "/{paramId}/toUpdate.do", method = RequestMethod.GET)
     @ResponseBody
     public TbSystemParameter toUpdate(@PathVariable int paramId) {
     	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
-    	systemParameterBussinessImpl.addRecord(sysParamete);
+//    	systemParameterBussinessImpl.addRecord(sysParamete);
         return sysParamete;
     }
   //修改方法
@@ -88,6 +109,10 @@ public class SystemParameterController {
     	systemParameter.setpKey(pKey);
     	systemParameter.setPpValueint(ppValueint);
     	systemParameterBussinessImpl.update(systemParameter);
+    	if(systemParameter.getPpValueint()!=null){
+    		TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
+    		systemParameterBussinessImpl.addRecord(sysParamete);
+    	}
         resultMap.put("status", Boolean.TRUE);
         return resultMap;
     }
