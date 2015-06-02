@@ -21,8 +21,6 @@ public class TbProviderLog {
 
     private String providerContactEmail;
 
-    private Long providerPrizePool;
-
     private String providerContactAddress;
 
     private String providerBankName;
@@ -30,6 +28,8 @@ public class TbProviderLog {
     private String providerBankAccountName;
 
     private String providerBankAccountCode;
+
+    private String providerPrizePool;
 
     private String providerTaxid;
 
@@ -119,14 +119,6 @@ public class TbProviderLog {
         this.providerContactEmail = providerContactEmail == null ? null : providerContactEmail.trim();
     }
 
-    public Long getProviderPrizePool() {
-        return providerPrizePool;
-    }
-
-    public void setProviderPrizePool(Long providerPrizePool) {
-        this.providerPrizePool = providerPrizePool;
-    }
-
     public String getProviderContactAddress() {
         return providerContactAddress;
     }
@@ -157,6 +149,14 @@ public class TbProviderLog {
 
     public void setProviderBankAccountCode(String providerBankAccountCode) {
         this.providerBankAccountCode = providerBankAccountCode == null ? null : providerBankAccountCode.trim();
+    }
+
+    public String getProviderPrizePool() {
+        return providerPrizePool;
+    }
+
+    public void setProviderPrizePool(String providerPrizePool) {
+        this.providerPrizePool = providerPrizePool == null ? null : providerPrizePool.trim();
     }
 
     public String getProviderTaxid() {

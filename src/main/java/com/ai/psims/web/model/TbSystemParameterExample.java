@@ -585,66 +585,6 @@ public class TbSystemParameterExample {
             return (Criteria) this;
         }
 
-        public Criteria andPpValueintIsNull() {
-            addCriterion("pp_valueINT is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintIsNotNull() {
-            addCriterion("pp_valueINT is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintEqualTo(Long value) {
-            addCriterion("pp_valueINT =", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintNotEqualTo(Long value) {
-            addCriterion("pp_valueINT <>", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintGreaterThan(Long value) {
-            addCriterion("pp_valueINT >", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintGreaterThanOrEqualTo(Long value) {
-            addCriterion("pp_valueINT >=", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintLessThan(Long value) {
-            addCriterion("pp_valueINT <", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintLessThanOrEqualTo(Long value) {
-            addCriterion("pp_valueINT <=", value, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintIn(List<Long> values) {
-            addCriterion("pp_valueINT in", values, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintNotIn(List<Long> values) {
-            addCriterion("pp_valueINT not in", values, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintBetween(Long value1, Long value2) {
-            addCriterion("pp_valueINT between", value1, value2, "ppValueint");
-            return (Criteria) this;
-        }
-
-        public Criteria andPpValueintNotBetween(Long value1, Long value2) {
-            addCriterion("pp_valueINT not between", value1, value2, "ppValueint");
-            return (Criteria) this;
-        }
-
         public Criteria andPRemarkIsNull() {
             addCriterion("p_remark is null");
             return (Criteria) this;

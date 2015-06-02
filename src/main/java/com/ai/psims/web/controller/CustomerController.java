@@ -159,6 +159,7 @@ public class CustomerController extends BaseController {
 		String contact_name = request.getParameter("contact_name");
 		String contact_tel = request.getParameter("contact_tel");
 		String contact_addr = request.getParameter("contact_addr");
+		String area = request.getParameter("area");
 		String email = request.getParameter("email");
 		String employeeId = request.getParameter("employeeId");
 		String customer_type = request.getParameter("customer_type");
@@ -172,6 +173,7 @@ public class CustomerController extends BaseController {
 		customeradd.setContactName(contact_name);
 		customeradd.setContactTel(contact_tel);
 		customeradd.setContactAddr(contact_addr);
+		customeradd.setArea(area);
 		customeradd.setEmail(email);
 		customeradd.setCheckoutCode(checkout_code);
 		customeradd.setCheckoutWarning(checkoutWarning);
@@ -235,6 +237,7 @@ public class CustomerController extends BaseController {
 		String contact_name = request.getParameter("modify_contactName");
 		String contact_tel = request.getParameter("modify_contactTel");
 		String contact_addr = request.getParameter("modify_contactAddr");
+		String area = request.getParameter("modify_area");
 		String email = request.getParameter("modify_email");
 		String employeeId = request.getParameter("modify_employeeId");
 		String customer_type = request.getParameter("modify_customerType");
@@ -251,6 +254,7 @@ public class CustomerController extends BaseController {
 		tbCustomer.setContactName(contact_name);
 		tbCustomer.setContactTel(contact_tel);
 		tbCustomer.setContactAddr(contact_addr);
+		tbCustomer.setArea(area);
 		tbCustomer.setEmail(email);
 		tbCustomer.setCheckoutCode(checkout_code);
 		tbCustomer.setCheckoutWarning(checkoutWarning);
@@ -303,7 +307,7 @@ public class CustomerController extends BaseController {
 
 	@RequestMapping(value = "/customerReportExecl")
 	public View customerReportExecl(Model model, HttpServletRequest request) {
-		logger.info("------------Welcome storagecheckReportExecl page!-------------");
+		logger.info("------------Welcome customerReportExecl page!-------------");
 		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
 		View Excelview = new AbstractExcelView() {
 			@Override
@@ -371,6 +375,7 @@ public class CustomerController extends BaseController {
 				sheet.setColumnWidth(idx++, 32 * 180);
 				sheet.setColumnWidth(idx++, 32 * 180);
 				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
 				
 				int rowNum = 0;
 				idx = 0;
@@ -383,6 +388,7 @@ public class CustomerController extends BaseController {
 				header.createCell(idx++).setCellValue("联系人名称");
 				header.createCell(idx++).setCellValue("联系人电话");
 				header.createCell(idx++).setCellValue("客户地址");
+				header.createCell(idx++).setCellValue("区域");
 				header.createCell(idx++).setCellValue("E-mail");
 				header.createCell(idx++).setCellValue("业务员");
 				header.createCell(idx++).setCellValue("结账方式");
@@ -404,6 +410,7 @@ public class CustomerController extends BaseController {
 					row.createCell(idx++).setCellValue(tbCustomer.getContactName());
 					row.createCell(idx++).setCellValue(tbCustomer.getContactTel());
 					row.createCell(idx++).setCellValue(tbCustomer.getContactAddr());
+					row.createCell(idx++).setCellValue(tbCustomer.getArea());
 					row.createCell(idx++).setCellValue(tbCustomer.getEmail());
 					row.createCell(idx++).setCellValue(tbCustomer.getEmployeeName());
 					row.createCell(idx++).setCellValue(tbCustomer.getCheckoutName());

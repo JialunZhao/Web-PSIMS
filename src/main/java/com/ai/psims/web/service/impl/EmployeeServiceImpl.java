@@ -8,18 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.EmployeeMapper;
+
 import com.ai.psims.web.dao.TbEmployeeMapper;
-import com.ai.psims.web.model.Employee;
-import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.service.IEmployeeService;
 
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
-	@Resource(name = "employeeMapper")
-	private EmployeeMapper employeeMapper;
 	
 	@Resource(name = "tbEmployeeMapper")
 	private TbEmployeeMapper tbEmployeeMapper;
@@ -27,63 +23,59 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(EmployeeServiceImpl.class);
 	
-	@Override
-	public List<Employee> selectByExample(EmployeeExample example) {
-		return employeeMapper.selectByExample(example);
-	}
 
 	@Override
-	public List<Employee> getEmployee(String username, String password) {
-		EmployeeExample example = new EmployeeExample();
+	public List<TbEmployee> getEmployee(String username, String password) {
+		TbEmployeeExample example = new TbEmployeeExample();
 		example.createCriteria().andEmployeeCodeEqualTo(username).andLoginPasswordEqualTo(password);
-		return employeeMapper.selectByExample(example);
+		return tbEmployeeMapper.selectByExample(example);
 	}
 	
 	@Override
-	public List<Employee> getEmployee(String username) {
-		EmployeeExample example = new EmployeeExample();
+	public List<TbEmployee> getEmployee(String username) {
+		TbEmployeeExample example = new TbEmployeeExample();
 		example.createCriteria().andEmployeeCodeEqualTo(username);
-		return employeeMapper.selectByExample(example);
+		return tbEmployeeMapper.selectByExample(example);
 	}
 
 	@Override
-	public List<Employee> getlAllEmployee() {
-		EmployeeExample example = new EmployeeExample();
+	public List<TbEmployee> getlAllEmployee() {
+		TbEmployeeExample example = new TbEmployeeExample();
 		example.createCriteria().andStatusLike("01");
-		return employeeMapper.selectByExample(example);
+		return tbEmployeeMapper.selectByExample(example);
 	}
 
 	@Override
-	public Employee getUserById(int employeeId) {
-		return employeeMapper.selectByPrimaryKey(employeeId);
+	public TbEmployee getUserById(int employeeId) {
+		return tbEmployeeMapper.selectByPrimaryKey(employeeId);
 	}
 
 	@Override
-	public void update(Employee employee) {
+	public void update(TbEmployee employee) {
 		
-		employeeMapper.updateByPrimaryKeySelective(employee);
+		tbEmployeeMapper.updateByPrimaryKeySelective(employee);
 	}
 
 	@Override
-	public void add(Employee employee) {
-		employeeMapper.insertSelective(employee);
+	public void add(TbEmployee employee) {
+		tbEmployeeMapper.insertSelective(employee);
 	}
 
 	@Override
-	public void delete(Employee employee) {
+	public void delete(TbEmployee employee) {
 		
-		employeeMapper.updateByPrimaryKey(employee);
+		tbEmployeeMapper.updateByPrimaryKey(employee);
 	}
 
 	@Override
-	public Employee getEmployee(int id) {
-		return employeeMapper.selectByPrimaryKey(id);
+	public TbEmployee getEmployee(int id) {
+		return tbEmployeeMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public List<Employee> getEmployee(String employeeName, String sex,
+	public List<TbEmployee> getEmployee(String employeeName, String sex,
 			String role, String contactTel) {
-		EmployeeExample example = new EmployeeExample();
+		TbEmployeeExample example = new TbEmployeeExample();
 		if(employeeName!=null && employeeName.length()>0){
 			example.createCriteria().andEmployeeNameLike(employeeName);
 		}
@@ -96,7 +88,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		if(contactTel!=null && contactTel.length()>0){
 			example.createCriteria().andContactTelLike(contactTel);
 		}
-		return employeeMapper.selectByExample(example);
+		return tbEmployeeMapper.selectByExample(example);
 	}
 
 	@Override

@@ -11,6 +11,8 @@ public class TbImportGoods {
 
     private String goodsName;
 
+    private String goodsCode;
+
     private String importGoodsType;
 
     private Integer importGoodsAmount;
@@ -79,6 +81,14 @@ public class TbImportGoods {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName == null ? null : goodsName.trim();
+    }
+
+    public String getGoodsCode() {
+        return goodsCode;
+    }
+
+    public void setGoodsCode(String goodsCode) {
+        this.goodsCode = goodsCode == null ? null : goodsCode.trim();
     }
 
     public String getImportGoodsType() {

@@ -35,7 +35,7 @@ public class TbStoragecheck {
 
     private Integer goodsShelfLife;
 
-    private Long goodsPrice;
+    private String goodsPrice;
 
     private String goodsStatus;
 
@@ -187,12 +187,12 @@ public class TbStoragecheck {
         this.goodsShelfLife = goodsShelfLife;
     }
 
-    public Long getGoodsPrice() {
+    public String getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Long goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice == null ? null : goodsPrice.trim();
     }
 
     public String getGoodsStatus() {

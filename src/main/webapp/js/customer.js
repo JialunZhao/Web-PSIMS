@@ -26,30 +26,6 @@ function addcustomercheckNull() {
 	}
 }
 
-//
-// $("#addcustomersubmit").click(function customeradd() {
-// $.ajax({
-// type : 'POST',
-// async : true,
-// url : 'addCustomer.do',
-// data : $('#addcustomerForm').serialize(),
-// // data : {
-// // 'customer_name' : customer_name,
-// // 'customer_type' : customer_type,
-// // 'contact_name' : contact_name,
-// // 'contact_tel' : contact_tel,
-// // 'contact_addr' : contact_addr,
-// // 'email' : email,
-// // 'area' : area,
-// // 'remark' : remark
-// // },
-// success : function(data) {
-// $('#addcustomer').modal('hide');
-// window.location.href = "customer";
-// },
-// });
-// });
-// 2.刷新列表
 
 // 删除客户信息
 function delCurrentCustomer(obj) {
@@ -95,6 +71,7 @@ function modifyCurrentCustomer(obj) {
 			$('#modify_contactName').val(data[0].contactName)
 			$('#modify_contactTel').val(data[0].contactTel)
 			$('#modify_contactAddr').val(data[0].contactAddr)
+			$('#modify_area').val(data[0].area)
 			$('#modify_email').val(data[0].email)
 			$('#modify_employeeId').val(data[0].employeeId)
 			$('#modify_checkoutWarning').val(data[0].checkoutWarning)

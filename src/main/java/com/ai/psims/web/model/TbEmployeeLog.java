@@ -17,6 +17,8 @@ public class TbEmployeeLog {
 
     private Date birthday;
 
+    private String idcard;
+
     private String contactTel;
 
     private String contactAddr;
@@ -27,15 +29,15 @@ public class TbEmployeeLog {
 
     private String remark;
 
-    private String islogin;
-
-    private String loginPassword;
-
     private Date createtime;
 
     private Date modifytime;
 
     private Date endtime;
+
+    private String islogin;
+
+    private String loginPassword;
 
     public Integer getLogId() {
         return logId;
@@ -93,6 +95,14 @@ public class TbEmployeeLog {
         this.birthday = birthday;
     }
 
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard == null ? null : idcard.trim();
+    }
+
     public String getContactTel() {
         return contactTel;
     }
@@ -133,22 +143,6 @@ public class TbEmployeeLog {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getIslogin() {
-        return islogin;
-    }
-
-    public void setIslogin(String islogin) {
-        this.islogin = islogin == null ? null : islogin.trim();
-    }
-
-    public String getLoginPassword() {
-        return loginPassword;
-    }
-
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword == null ? null : loginPassword.trim();
-    }
-
     public Date getCreatetime() {
         return createtime;
     }
@@ -171,5 +165,21 @@ public class TbEmployeeLog {
 
     public void setEndtime(Date endtime) {
         this.endtime = endtime;
+    }
+
+    public String getIslogin() {
+        return islogin;
+    }
+
+    public void setIslogin(String islogin) {
+        this.islogin = islogin == null ? null : islogin.trim();
+    }
+
+    public String getLoginPassword() {
+        return loginPassword;
+    }
+
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword == null ? null : loginPassword.trim();
     }
 }

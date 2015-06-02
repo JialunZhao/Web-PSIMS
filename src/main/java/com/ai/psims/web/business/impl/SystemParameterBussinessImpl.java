@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
+import com.ai.psims.web.model.TbSystemParameterLog;
 import com.ai.psims.web.service.ISystemParameterService;
 import com.ai.psims.web.service.ISystemParameterServiceLog;
 
@@ -69,5 +70,13 @@ public class SystemParameterBussinessImpl implements ISystemParameterBussiness {
 		//按条件查询参数列表
 		logger.info("selectByExample");
 		return systemParameterService.selectByExample(tbSystemParameterExample);
+	}
+	@Override
+	public List<TbSystemParameterLog> getSysByLogId(int paramId) {
+		return systemParameterServiceLog.getSysByLogId(paramId);
+	}
+	@Override
+	public void updateByPid(TbSystemParameter systemParameter) {
+		systemParameterServiceLog.updateByPid(systemParameter);
 	}
 }

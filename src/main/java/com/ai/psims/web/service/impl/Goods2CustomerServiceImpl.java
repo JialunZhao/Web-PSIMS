@@ -70,7 +70,7 @@ public class Goods2CustomerServiceImpl implements IGoods2CustomerService {
 		tbGoods2customerLog.setGoodsShelfLife(tbGoods2customers.get(0).getGoodsShelfLife());
 		tbGoods2customerLog.setGoodsPrice(tbGoods2customers.get(0).getGoodsPrice());
 		tbGoods2customerLog.setGoodsDiscount(tbGoods2customers.get(0).getGoodsDiscount());
-		tbGoods2customerLog.setGoodsDiscountAmount(tbGoods2customers.get(0).getGoodsDiscountAmount());
+		tbGoods2customerLog.setGoodsPrizePoolRatio(tbGoods2customers.get(0).getGoodsPrizePoolRatio());
 		tbGoods2customerLog.setGoodsType(tbGoods2customers.get(0).getGoodsType());
 		tbGoods2customerLog.setGoodsStatus(tbGoods2customers.get(0).getGoodsStatus());
 		tbGoods2customerLog.setGoodsCreatetime(tbGoods2customers.get(0).getGoodsCreatetime());

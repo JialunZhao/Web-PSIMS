@@ -13,6 +13,8 @@ public class TbEmployee {
 
     private Date birthday;
 
+    private String idcard;
+
     private String contactTel;
 
     private String contactAddr;
@@ -71,6 +73,14 @@ public class TbEmployee {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard == null ? null : idcard.trim();
     }
 
     public String getContactTel() {

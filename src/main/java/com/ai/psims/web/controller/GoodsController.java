@@ -1,21 +1,29 @@
 package com.ai.psims.web.controller;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.business.IGoods2CustomerBusiness;
 import com.ai.psims.web.business.IGoodsBusiness;
@@ -32,7 +40,6 @@ import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
-import com.ai.psims.web.util.CreateIdUtil;
 
 /**
  * 商品管理Controller
@@ -77,6 +84,10 @@ public class GoodsController extends BaseController {
 		List<TbGoods> goodss =new ArrayList<TbGoods>();
 		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
+		List<TbSystemParameter> tbSystemParameters = new ArrayList<TbSystemParameter>();
+		TbSystemParameterExample tbSystemParameterExample =new TbSystemParameterExample();
+		TbSystemParameterExample.Criteria tbSystemParameterCriteria = tbSystemParameterExample.createCriteria();
+		
 		logger.info("------------2.获取参数-------------");
 		String query_goodsName = request.getParameter("query_goodsName") == "" ? null
 				: request.getParameter("query_goodsName");
@@ -98,8 +109,7 @@ public class GoodsController extends BaseController {
 			}
 		}
 		if (null != query_goodsPrice && query_goodsPrice.length() > 0) {
-			criteria.andGoodsPriceEqualTo(
-					Long.parseLong(query_goodsPrice));
+			criteria.andGoodsPriceEqualTo(query_goodsPrice);
 		}
 		if (null != query_goodsShelfLife && query_goodsShelfLife.length() > 0) {
 			criteria.andGoodsShelfLifeEqualTo(
@@ -109,12 +119,11 @@ public class GoodsController extends BaseController {
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		criteria.andGoodsStatusNotEqualTo("00");
 		goodss = goodsBusiness.goodsQuery(tbGoodsExample);
-		logger.info("------------4.1.转译供应商类型-------------");
+		logger.info("------------4.1.转译商品类型-------------");
 		for (TbGoods tbGoods : goodss) {
-			if (tbGoods.getGoodsType() == null) {
+			if (tbGoods.getGoodsType() == null && "".equals(tbGoods.getGoodsType()) ) {
 			} else {
-				tbGoods.setGoodsType(CreateIdUtil
-						.getGoodsType(tbGoods.getGoodsType()));
+				tbGoods.setGoodsType(systemParameterBussinessImpl.getSystemParameterPrizePool(Integer.parseInt(tbGoods.getGoodsType())).getPpDesc());
 			}
 		}
 		logger.info("------------4.2.转译基本单位-------------");
@@ -124,16 +133,25 @@ public class GoodsController extends BaseController {
 				tbGoods.setGoodsUnit(systemParameterBussinessImpl.getSystemParameterPrizePool(Integer.parseInt(tbGoods.getGoodsUnit())).getPpDesc());
 			}
 		}
+		logger.info("------------4.3.获取商品类型-------------");
+		tbSystemParameterCriteria.andPStatusEqualTo("01");
+		tbSystemParameterCriteria.andPValueEqualTo("GoodsType");
+		tbSystemParameters = systemParameterBussinessImpl.selectByExample(tbSystemParameterExample);
+		
 		logger.info("------------4.业务处理完成-------------");
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("goodss", goodss);
-
+		request.setAttribute("tbSystemParameters", tbSystemParameters);
+		request.setAttribute("goodsName", query_goodsName);
+		request.setAttribute("goodsType", query_goodsType);
+		request.setAttribute("goodsPrice", query_goodsPrice);
+		request.setAttribute("goodsShelfLife", query_goodsShelfLife);
 		logger.info("------------goods page finished!-------------");
 		return "goods";
 	}
 
 	/**
-	 * 商品管理-新增修改商品信息-获取供应商信息
+	 * 商品管理-新增修改商品信息-获取商品信息
 	 */
 	@RequestMapping(value = "/getProviderAddGoods", method = RequestMethod.POST)
 	public @ResponseBody List<TbProvider> tbProviders(
@@ -203,7 +221,7 @@ public class GoodsController extends BaseController {
 		String goodsShelfLife = request.getParameter("goodsShelfLife") == "" ? null : request.getParameter("goodsShelfLife");
 		String goodsProfit = request.getParameter("goodsProfit") == "" ? null : request.getParameter("goodsProfit");
 		String goodsPrice = request.getParameter("goodsPrice") == "" ? null : request.getParameter("goodsPrice");
-		String goodsDiscountAmount = request.getParameter("goodsDiscountAmount") == "" ? null : request.getParameter("goodsDiscountAmount");
+		String goodsPrizePoolRatio = request.getParameter("goodsPrizePoolRatio") == "" ? null : request.getParameter("goodsPrizePoolRatio");
 		String goodsType = request.getParameter("goodsType") == "" ? null : request.getParameter("goodsType");
 		String goodsStatus = request.getParameter("goodsStatus") == "" ? null : request.getParameter("goodsStatus");
 //		String goodsCreatetime = request.getParameter("goodsCreatetime") == "" ? null : request.getParameter("goodsCreatetime");
@@ -239,24 +257,18 @@ public class GoodsController extends BaseController {
 		if (null != goodsTotalStock && goodsTotalStock.length() > 0) {
 			goodsadd.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
 		}
-//		goodsadd.setGoodsProductionDate(Date.parse(goodsProductionDate));
-//		goodsadd.setGoodsExpirationDate(Date.parse(goodsExpirationDate);
 		if (null != goodsShelfLife && goodsShelfLife.length() > 0) {
 			goodsadd.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
 		}
 		if (null != goodsProfit && goodsProfit.length() > 0) {
-			goodsadd.setGoodsProfit(Long.parseLong(goodsProfit));
+			goodsadd.setGoodsProfit(goodsProfit);
 		}
-//		金额改造。(null != s2 && s2.length() != 0)
+//		金额改造 
 		if (null != goodsPrice  && goodsPrice.length() > 0) {
-//			1.将字符串乘以1000（1.0元 --》1000厘 ） 转化为数值类型 
-//			BigDecimal mathGoodsPrice = new BigDecimal(goodsPrice);
-//			goodsadd.setGoodsPrice(mathGoodsPrice.toString());
-			goodsadd.setGoodsPrice(Long.parseLong(goodsPrice));
-			
+			goodsadd.setGoodsPrice(new BigDecimal(goodsPrice).toString());
 		}
-		if (null != goodsDiscountAmount && goodsDiscountAmount.length() > 0) {
-			goodsadd.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
+		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
+			goodsadd.setGoodsPrizePoolRatio(new BigDecimal(goodsPrizePoolRatio).toString());
 		}
 		goodsadd.setGoodsType(goodsType);
 		goodsadd.setGoodsStatus(goodsStatus);
@@ -270,28 +282,28 @@ public class GoodsController extends BaseController {
 		goodsadd.setProviderCode(providerCode);
 		goodsadd.setRemark(remark);
 		if (null != goodsDiscount && goodsDiscount.length() > 0) {
-			goodsadd.setGoodsDiscount(Integer.parseInt(goodsDiscount));
+			goodsadd.setGoodsDiscount(new BigDecimal(goodsDiscount).toString());
 		}
 		if (null != quarterRebate && quarterRebate.length() > 0) {
-			goodsadd.setQuarterRebate(Long.parseLong(quarterRebate));
+			goodsadd.setQuarterRebate(new BigDecimal(quarterRebate).toString());
 		}
 		if (null != annualRebate && annualRebate.length() > 0) {
-			goodsadd.setAnnualRebate(Long.parseLong(annualRebate));
+			goodsadd.setAnnualRebate(new BigDecimal(annualRebate).toString());
 		}
 		if (null != providerSubsidy && providerSubsidy.length() > 0) {
-			goodsadd.setProviderSubsidy(Long.parseLong(providerSubsidy));
+			goodsadd.setProviderSubsidy(new BigDecimal(providerSubsidy).toString());
 		}
 		if (null != providerPackageSubsidy && providerPackageSubsidy.length() > 0) {
-			goodsadd.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
+			goodsadd.setProviderPackageSubsidy(new BigDecimal(providerPackageSubsidy).toString());
 		}
 		if (null != customerSubsidy && customerSubsidy.length() > 0) {
-			goodsadd.setCustomerSubsidy(Long.parseLong(customerSubsidy));
+			goodsadd.setCustomerSubsidy(new BigDecimal(customerSubsidy).toString());
 		}
 		if (null != otherSubsidy && otherSubsidy.length() > 0) {
-			goodsadd.setOtherSubsidy(Long.parseLong(otherSubsidy));
+			goodsadd.setOtherSubsidy(new BigDecimal(otherSubsidy).toString());
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			goodsadd.setGoodsActualCost(Long.parseLong(goodsActualCost));
+			goodsadd.setGoodsActualCost(new BigDecimal(goodsActualCost).toString());
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			goodsadd.setStorageWarning(Integer.parseInt(storagePrewarning));
@@ -410,7 +422,7 @@ public class GoodsController extends BaseController {
 		String goodsShelfLife = request.getParameter("modify_goodsShelfLife") == "" ? null : request.getParameter("modify_goodsShelfLife");
 		String goodsProfit = request.getParameter("modify_goodsProfit") == "" ? null : request.getParameter("modify_goodsProfit");
 		String goodsPrice = request.getParameter("modify_goodsPrice") == "" ? null : request.getParameter("modify_goodsPrice");
-		String goodsDiscountAmount = request.getParameter("modify_goodsDiscountAmount") == "" ? null : request.getParameter("modify_goodsDiscountAmount");
+		String goodsPrizePoolRatio = request.getParameter("modify_goodsPrizePoolRatio") == "" ? null : request.getParameter("modify_goodsPrizePoolRatio");
 		String goodsType = request.getParameter("modify_goodsType") == "" ? null : request.getParameter("modify_goodsType");
 		String goodsStatus = request.getParameter("modify_goodsStatus") == "" ? null : request.getParameter("modify_goodsStatus");
 //				String goodsCreatetime = request.getParameter("modify_goodsCreatetime") == "" ? null : request.getParameter("modify_goodsCreatetime");
@@ -451,21 +463,18 @@ public class GoodsController extends BaseController {
 		if (null != goodsTotalStock && goodsTotalStock.length() > 0) {
 			tbGoods.setGoodsTotalStock(Integer.parseInt(goodsTotalStock));
 		}
-//				tbGoods.setGoodsProductionDate(Date.parse(goodsProductionDate));
-//				tbGoods.setGoodsExpirationDate(Date.parse(goodsExpirationDate);
 		if (null != goodsShelfLife && goodsShelfLife.length() > 0) {
 			tbGoods.setGoodsShelfLife(Integer.parseInt(goodsShelfLife));
 		}
 		if (null != goodsProfit && goodsProfit.length() > 0) {
-			tbGoods.setGoodsProfit(Long.parseLong(goodsProfit));
+			tbGoods.setGoodsProfit(goodsProfit);
 		}
 		if (null != goodsPrice && goodsPrice.length() > 0) {
-//			tbGoods.setGoodsPrice(goodsPrice);
-			tbGoods.setGoodsPrice(Long.parseLong(goodsPrice));
+			tbGoods.setGoodsPrice(goodsPrice);
 
 		}
-		if (null != goodsDiscountAmount && goodsDiscountAmount.length() > 0) {
-			tbGoods.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount));
+		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
+			tbGoods.setGoodsPrizePoolRatio(goodsPrizePoolRatio);
 		}
 		tbGoods.setGoodsType(goodsType);
 		tbGoods.setGoodsStatus(goodsStatus);
@@ -479,28 +488,28 @@ public class GoodsController extends BaseController {
 		tbGoods.setProviderCode(providerCode);
 		tbGoods.setRemark(remark);
 		if (null != goodsDiscount && goodsDiscount.length() > 0) {
-			tbGoods.setGoodsDiscount(Integer.parseInt(goodsDiscount));
+			tbGoods.setGoodsDiscount(goodsDiscount);
 		}
 		if (null != quarterRebate && quarterRebate.length() > 0) {
-			tbGoods.setQuarterRebate(Long.parseLong(quarterRebate));
+			tbGoods.setQuarterRebate(quarterRebate);
 		}
 		if (null != annualRebate && annualRebate.length() > 0) {
-			tbGoods.setAnnualRebate(Long.parseLong(annualRebate));
+			tbGoods.setAnnualRebate(annualRebate);
 		}
 		if (null != providerSubsidy && providerSubsidy.length() > 0) {
-			tbGoods.setProviderSubsidy(Long.parseLong(providerSubsidy));
+			tbGoods.setProviderSubsidy(providerSubsidy);
 		}
 		if (null != providerPackageSubsidy && providerPackageSubsidy.length() > 0) {
-			tbGoods.setProviderPackageSubsidy(Long.parseLong(providerPackageSubsidy));
+			tbGoods.setProviderPackageSubsidy(providerPackageSubsidy);
 		}
 		if (null != customerSubsidy && customerSubsidy.length() > 0) {
-			tbGoods.setCustomerSubsidy(Long.parseLong(customerSubsidy));
+			tbGoods.setCustomerSubsidy(customerSubsidy);
 		}
 		if (null != otherSubsidy && otherSubsidy.length() > 0) {
-			tbGoods.setOtherSubsidy(Long.parseLong(otherSubsidy));
+			tbGoods.setOtherSubsidy(otherSubsidy);
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			tbGoods.setGoodsActualCost(Long.parseLong(goodsActualCost));
+			tbGoods.setGoodsActualCost(goodsActualCost);
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			tbGoods.setStorageWarning(Integer.parseInt(storagePrewarning));
@@ -549,6 +558,160 @@ public class GoodsController extends BaseController {
 			return tbGoodss;
 		}
 		return tbGoodss;
+	}
+	
+	@RequestMapping(value = "/goodsReportExecl")
+	public View goodsReportExecl(Model model, HttpServletRequest request) {
+		logger.info("------------Welcome goodsReportExecl page!-------------");
+		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
+		View Excelview = new AbstractExcelView() {
+			@Override
+			public void buildExcelDocument(@SuppressWarnings("rawtypes") Map map, HSSFWorkbook workbook,
+					HttpServletRequest request, HttpServletResponse response)
+					throws Exception {
+				logger.info("------------Welcome goods page!-------------");
+				logger.info("------------0.权限管理！-------------");	
+				logger.info("------------1.初始化！-------------");
+				List<TbGoods> goodss =new ArrayList<TbGoods>();
+				TbGoodsExample tbGoodsExample = new TbGoodsExample();
+				TbGoodsExample.Criteria criteria = tbGoodsExample.createCriteria();
+				List<TbSystemParameter> tbSystemParameters = new ArrayList<TbSystemParameter>();
+				TbSystemParameterExample tbSystemParameterExample =new TbSystemParameterExample();
+				TbSystemParameterExample.Criteria tbSystemParameterCriteria = tbSystemParameterExample.createCriteria();
+				
+				logger.info("------------2.获取参数-------------");
+				String query_goodsName = request.getParameter("query_goodsName") == "" ? null
+						: request.getParameter("query_goodsName");
+				String query_goodsType = request.getParameter("query_goodsType") == "" ? null
+						: request.getParameter("query_goodsType");
+				String query_goodsPrice = request.getParameter("query_goodsPrice") == "" ? null
+						: request.getParameter("query_goodsPrice");
+				String query_goodsShelfLife = request
+						.getParameter("query_goodsShelfLife") == "" ? null : request
+						.getParameter("query_goodsShelfLife");
+				logger.info("------------3.数据校验-------------");
+				if ( null != query_goodsName && query_goodsName.length() > 0) {
+					query_goodsName = "%" + query_goodsName + "%";
+					criteria.andGoodsNameLike(query_goodsName);
+				}
+				if (null != query_goodsType && query_goodsType.length() > 0) {
+					if (!query_goodsType.equals("0")) {
+						criteria.andGoodsTypeEqualTo(query_goodsType);
+					}
+				}
+				if (null != query_goodsPrice && query_goodsPrice.length() > 0) {
+					criteria.andGoodsPriceEqualTo(query_goodsPrice);
+				}
+				if (null != query_goodsShelfLife && query_goodsShelfLife.length() > 0) {
+					criteria.andGoodsShelfLifeEqualTo(
+							Integer.parseInt(query_goodsShelfLife));
+				}
+				logger.info("------------4.业务处理开始-------------");
+				// 只查询状态为正常的记录 00-失效 01-正常 99-异常
+				criteria.andGoodsStatusNotEqualTo("00");
+				goodss = goodsBusiness.goodsQuery(tbGoodsExample);
+				logger.info("------------4.1.转译商品类型-------------");
+				for (TbGoods tbGoods : goodss) {
+					if (tbGoods.getGoodsType() == null && "".equals(tbGoods.getGoodsType()) ) {
+					} else {
+						tbGoods.setGoodsType(systemParameterBussinessImpl.getSystemParameterPrizePool(Integer.parseInt(tbGoods.getGoodsType())).getPpDesc());
+					}
+				}
+				logger.info("------------4.2.转译基本单位-------------");
+				for (TbGoods tbGoods : goodss) {
+					if (tbGoods.getGoodsUnit() == null) {
+					} else {
+						tbGoods.setGoodsUnit(systemParameterBussinessImpl.getSystemParameterPrizePool(Integer.parseInt(tbGoods.getGoodsUnit())).getPpDesc());
+					}
+				}
+				logger.info("------------4.3.获取商品类型-------------");
+				tbSystemParameterCriteria.andPStatusEqualTo("01");
+				tbSystemParameterCriteria.andPValueEqualTo("GoodsType");
+				tbSystemParameters = systemParameterBussinessImpl.selectByExample(tbSystemParameterExample);
+				logger.info("------------4.业务处理完成-------------");
+				logger.info("------------5.返回结果-------------");
+
+
+
+				logger.info("------------建立 Excel -Sheet-------------");
+				HSSFSheet sheet = workbook.createSheet("供应商清单");
+				logger.info("------------设置行列的默认宽度和高度-------------");
+				int idx = 0;
+				sheet.setColumnWidth(idx++, 32 * 80);// 对A列设置宽度为180像素
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 80);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
+				
+				int rowNum = 0;
+				idx = 0;
+				logger.info("------------建立标题-------------");
+				HSSFRow header = sheet.createRow(rowNum++);
+				header.createCell(idx++).setCellValue("编号");
+				header.createCell(idx++).setCellValue("名称");
+				header.createCell(idx++).setCellValue("编码");
+				header.createCell(idx++).setCellValue("类型");
+				header.createCell(idx++).setCellValue("基本单位");
+				header.createCell(idx++).setCellValue("供应商");
+				header.createCell(idx++).setCellValue("进货价格");
+				header.createCell(idx++).setCellValue("销售价格");
+				header.createCell(idx++).setCellValue("奖金池折扣（%）");
+				header.createCell(idx++).setCellValue("保质期");
+				header.createCell(idx++).setCellValue("保质期预警");
+				header.createCell(idx++).setCellValue("库存量预警");
+				header.createCell(idx++).setCellValue("当前状态");
+				header.createCell(idx++).setCellValue("商品添加时间");
+				header.createCell(idx++).setCellValue("商品修改时间");
+				header.createCell(idx++).setCellValue("备注");
+				logger.info("------------输出内容-------------");
+				HSSFRow row;
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+
+				for (TbGoods tbGoods : goodss) {
+					idx = 0;
+					row = sheet.createRow(rowNum++);
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsId());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsName());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsCode());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsType());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsUnit());
+					row.createCell(idx++).setCellValue(tbGoods.getProviderName());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsActualCost());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsPrice());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsPrizePoolRatio());
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsShelfLife());
+					row.createCell(idx++).setCellValue(tbGoods.getShelfLifeWarning());
+					row.createCell(idx++).setCellValue(tbGoods.getStorageWarning());
+					if ("01"==tbGoods.getGoodsStatus()) {
+						row.createCell(idx++).setCellValue("上架销售中");
+					} else if ("02"==tbGoods.getGoodsStatus()) {
+						row.createCell(idx++).setCellValue("下架中");
+					} 
+					row.createCell(idx++).setCellValue(tbGoods.getGoodsStatus());
+					row.createCell(idx++).setCellValue(sdf.format(tbGoods.getGoodsCreatetime()));
+					if (null !=tbGoods.getGoodsModifytime()) {						
+						row.createCell(idx++).setCellValue(sdf.format(tbGoods.getGoodsModifytime()));
+					}else {
+						row.createCell(idx++).setCellValue("无");
+					}
+					row.createCell(idx++).setCellValue(tbGoods.getRemark());
+//					row.createCell(idx++).setCellValue(tbGoods.get);
+//					row.createCell(idx++).setCellValue(tbProvider.get);
+				}
+			}
+		};
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------回传 View 对象，返回生成的 Excel 档-------------");
+		logger.info("------------Bye goodsReportExecl page!-------------");
+		return Excelview;
 	}
 	
 	
@@ -641,16 +804,16 @@ public class GoodsController extends BaseController {
 		String goodsId = request.getParameter("goodsId") == "" ? null : request.getParameter("goodsId");
 		String[] goods2customerId = request.getParameterValues("goods2customerId");
 		String[] customerId = request.getParameterValues("customerId");
-		String[] goodsDiscountAmount = request.getParameterValues("goodsDiscountAmount");
-		String[] goodsProfit = request.getParameterValues("goodsProfit");
+		String[] goodsPrice = request.getParameterValues("goodsPrice");
+		String[] goodsPrizePoolRatio = request.getParameterValues("goodsPrizePoolRatio");
 		logger.info("------------3.数据校验-------------");
 		logger.info("------------4.业务处理-------------");
 		for (int i = 0; i < goods2customerId.length; i++) {
 			TbGoods2customer tbGoods2customer = new TbGoods2customer();
 			tbGoods2customer.setGoodsId(Integer.parseInt(goodsId));
 			tbGoods2customer.setCustomerId(Integer.parseInt(customerId[i]));
-			tbGoods2customer.setGoodsDiscountAmount(Long.parseLong(goodsDiscountAmount[i]));
-			tbGoods2customer.setGoodsProfit(Long.parseLong(goodsProfit[i]));
+			tbGoods2customer.setGoodsPrice(goodsPrice[i]);
+			tbGoods2customer.setGoodsPrizePoolRatio(goodsPrizePoolRatio[i]);
 			if (goods2customerId[i].isEmpty()) {
 				tbGoods2CustomersInsert.add(tbGoods2customer);
 			}else {
@@ -690,7 +853,6 @@ public class GoodsController extends BaseController {
 		}
 		tbGoods2CustomerDeleteNum= goods2CustomerBusiness.deleteGoods2CustomerInfo(tbGoods2customer);
 		logger.info("------------删除了：+ " + tbGoods2CustomerDeleteNum+ "条记录-------------");
-
 		logger.info("------------5.返回结果-------------");
 		return tbGoods2CustomerDeleteNum;
 	}

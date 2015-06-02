@@ -25,11 +25,13 @@ public class TbGoods {
 
     private Integer goodsShelfLife;
 
-    private Long goodsProfit;
+    private String goodsActualCost;
 
-    private Long goodsPrice;
+    private String goodsPrice;
 
-    private Long goodsDiscountAmount;
+    private String goodsProfit;
+
+    private String goodsPrizePoolRatio;
 
     private String goodsType;
 
@@ -49,21 +51,31 @@ public class TbGoods {
 
     private String remark;
 
-    private Integer goodsDiscount;
+    private String goodsDiscount;
 
-    private Long quarterRebate;
+    private String singleRebate;
 
-    private Long annualRebate;
+    private String quarterRebate;
 
-    private Long providerSubsidy;
+    private String annualRebate;
 
-    private Long providerPackageSubsidy;
+    private String purchaseRebate;
 
-    private Long customerSubsidy;
+    private String promotionRebate;
 
-    private Long otherSubsidy;
+    private String providerSubsidy;
 
-    private Long goodsActualCost;
+    private String customerBottleSubsidy;
+
+    private String customerPackageSubsidy;
+
+    private String providerPackageSubsidy;
+
+    private String customerSubsidy;
+
+    private String otherSubsidy;
+
+    private String singleFinalCost;
 
     private Integer storageWarning;
 
@@ -157,28 +169,36 @@ public class TbGoods {
         this.goodsShelfLife = goodsShelfLife;
     }
 
-    public Long getGoodsProfit() {
-        return goodsProfit;
+    public String getGoodsActualCost() {
+        return goodsActualCost;
     }
 
-    public void setGoodsProfit(Long goodsProfit) {
-        this.goodsProfit = goodsProfit;
+    public void setGoodsActualCost(String goodsActualCost) {
+        this.goodsActualCost = goodsActualCost == null ? null : goodsActualCost.trim();
     }
 
-    public Long getGoodsPrice() {
+    public String getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Long goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice == null ? null : goodsPrice.trim();
     }
 
-    public Long getGoodsDiscountAmount() {
-        return goodsDiscountAmount;
+    public String getGoodsProfit() {
+        return goodsProfit;
     }
 
-    public void setGoodsDiscountAmount(Long goodsDiscountAmount) {
-        this.goodsDiscountAmount = goodsDiscountAmount;
+    public void setGoodsProfit(String goodsProfit) {
+        this.goodsProfit = goodsProfit == null ? null : goodsProfit.trim();
+    }
+
+    public String getGoodsPrizePoolRatio() {
+        return goodsPrizePoolRatio;
+    }
+
+    public void setGoodsPrizePoolRatio(String goodsPrizePoolRatio) {
+        this.goodsPrizePoolRatio = goodsPrizePoolRatio == null ? null : goodsPrizePoolRatio.trim();
     }
 
     public String getGoodsType() {
@@ -253,68 +273,108 @@ public class TbGoods {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getGoodsDiscount() {
+    public String getGoodsDiscount() {
         return goodsDiscount;
     }
 
-    public void setGoodsDiscount(Integer goodsDiscount) {
-        this.goodsDiscount = goodsDiscount;
+    public void setGoodsDiscount(String goodsDiscount) {
+        this.goodsDiscount = goodsDiscount == null ? null : goodsDiscount.trim();
     }
 
-    public Long getQuarterRebate() {
+    public String getSingleRebate() {
+        return singleRebate;
+    }
+
+    public void setSingleRebate(String singleRebate) {
+        this.singleRebate = singleRebate == null ? null : singleRebate.trim();
+    }
+
+    public String getQuarterRebate() {
         return quarterRebate;
     }
 
-    public void setQuarterRebate(Long quarterRebate) {
-        this.quarterRebate = quarterRebate;
+    public void setQuarterRebate(String quarterRebate) {
+        this.quarterRebate = quarterRebate == null ? null : quarterRebate.trim();
     }
 
-    public Long getAnnualRebate() {
+    public String getAnnualRebate() {
         return annualRebate;
     }
 
-    public void setAnnualRebate(Long annualRebate) {
-        this.annualRebate = annualRebate;
+    public void setAnnualRebate(String annualRebate) {
+        this.annualRebate = annualRebate == null ? null : annualRebate.trim();
     }
 
-    public Long getProviderSubsidy() {
+    public String getPurchaseRebate() {
+        return purchaseRebate;
+    }
+
+    public void setPurchaseRebate(String purchaseRebate) {
+        this.purchaseRebate = purchaseRebate == null ? null : purchaseRebate.trim();
+    }
+
+    public String getPromotionRebate() {
+        return promotionRebate;
+    }
+
+    public void setPromotionRebate(String promotionRebate) {
+        this.promotionRebate = promotionRebate == null ? null : promotionRebate.trim();
+    }
+
+    public String getProviderSubsidy() {
         return providerSubsidy;
     }
 
-    public void setProviderSubsidy(Long providerSubsidy) {
-        this.providerSubsidy = providerSubsidy;
+    public void setProviderSubsidy(String providerSubsidy) {
+        this.providerSubsidy = providerSubsidy == null ? null : providerSubsidy.trim();
     }
 
-    public Long getProviderPackageSubsidy() {
+    public String getCustomerBottleSubsidy() {
+        return customerBottleSubsidy;
+    }
+
+    public void setCustomerBottleSubsidy(String customerBottleSubsidy) {
+        this.customerBottleSubsidy = customerBottleSubsidy == null ? null : customerBottleSubsidy.trim();
+    }
+
+    public String getCustomerPackageSubsidy() {
+        return customerPackageSubsidy;
+    }
+
+    public void setCustomerPackageSubsidy(String customerPackageSubsidy) {
+        this.customerPackageSubsidy = customerPackageSubsidy == null ? null : customerPackageSubsidy.trim();
+    }
+
+    public String getProviderPackageSubsidy() {
         return providerPackageSubsidy;
     }
 
-    public void setProviderPackageSubsidy(Long providerPackageSubsidy) {
-        this.providerPackageSubsidy = providerPackageSubsidy;
+    public void setProviderPackageSubsidy(String providerPackageSubsidy) {
+        this.providerPackageSubsidy = providerPackageSubsidy == null ? null : providerPackageSubsidy.trim();
     }
 
-    public Long getCustomerSubsidy() {
+    public String getCustomerSubsidy() {
         return customerSubsidy;
     }
 
-    public void setCustomerSubsidy(Long customerSubsidy) {
-        this.customerSubsidy = customerSubsidy;
+    public void setCustomerSubsidy(String customerSubsidy) {
+        this.customerSubsidy = customerSubsidy == null ? null : customerSubsidy.trim();
     }
 
-    public Long getOtherSubsidy() {
+    public String getOtherSubsidy() {
         return otherSubsidy;
     }
 
-    public void setOtherSubsidy(Long otherSubsidy) {
-        this.otherSubsidy = otherSubsidy;
+    public void setOtherSubsidy(String otherSubsidy) {
+        this.otherSubsidy = otherSubsidy == null ? null : otherSubsidy.trim();
     }
 
-    public Long getGoodsActualCost() {
-        return goodsActualCost;
+    public String getSingleFinalCost() {
+        return singleFinalCost;
     }
 
-    public void setGoodsActualCost(Long goodsActualCost) {
-        this.goodsActualCost = goodsActualCost;
+    public void setSingleFinalCost(String singleFinalCost) {
+        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
     }
 
     public Integer getStorageWarning() {

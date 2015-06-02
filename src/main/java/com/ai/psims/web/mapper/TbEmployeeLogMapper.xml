@@ -9,16 +9,17 @@
     <result column="employee_code" property="employeeCode" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
     <result column="contact_tel" property="contactTel" jdbcType="VARCHAR" />
     <result column="contact_addr" property="contactAddr" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="islogin" property="islogin" jdbcType="VARCHAR" />
-    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="islogin" property="islogin" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -79,9 +80,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    log_id, log_datetime, employee_id, employee_name, employee_code, sex, birthday, contact_tel, 
-    contact_addr, role, status, remark, islogin, login_password, createtime, modifytime, 
-    endtime
+    log_id, log_datetime, employee_id, employee_name, employee_code, sex, birthday, idcard, 
+    contact_tel, contact_addr, role, status, remark, createtime, modifytime, endtime, 
+    islogin, login_password
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbEmployeeLogExample" >
     select
@@ -116,16 +117,18 @@
   <insert id="insert" parameterType="com.ai.psims.web.model.TbEmployeeLog" >
     insert into tb_employee_log (log_id, log_datetime, employee_id, 
       employee_name, employee_code, sex, 
-      birthday, contact_tel, contact_addr, 
-      role, status, remark, 
-      islogin, login_password, createtime, 
-      modifytime, endtime)
+      birthday, idcard, contact_tel, 
+      contact_addr, role, status, 
+      remark, createtime, modifytime, 
+      endtime, islogin, login_password
+      )
     values (#{logId,jdbcType=INTEGER}, #{logDatetime,jdbcType=TIMESTAMP}, #{employeeId,jdbcType=INTEGER}, 
       #{employeeName,jdbcType=VARCHAR}, #{employeeCode,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=TIMESTAMP}, #{contactTel,jdbcType=VARCHAR}, #{contactAddr,jdbcType=VARCHAR}, 
-      #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{islogin,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP})
+      #{birthday,jdbcType=TIMESTAMP}, #{idcard,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}, 
+      #{contactAddr,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{islogin,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbEmployeeLog" >
     insert into tb_employee_log
@@ -151,6 +154,9 @@
       <if test="birthday != null" >
         birthday,
       </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
       <if test="contactTel != null" >
         contact_tel,
       </if>
@@ -166,12 +172,6 @@
       <if test="remark != null" >
         remark,
       </if>
-      <if test="islogin != null" >
-        islogin,
-      </if>
-      <if test="loginPassword != null" >
-        login_password,
-      </if>
       <if test="createtime != null" >
         createtime,
       </if>
@@ -180,6 +180,12 @@
       </if>
       <if test="endtime != null" >
         endtime,
+      </if>
+      <if test="islogin != null" >
+        islogin,
+      </if>
+      <if test="loginPassword != null" >
+        login_password,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -204,6 +210,9 @@
       <if test="birthday != null" >
         #{birthday,jdbcType=TIMESTAMP},
       </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
       <if test="contactTel != null" >
         #{contactTel,jdbcType=VARCHAR},
       </if>
@@ -219,12 +228,6 @@
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="islogin != null" >
-        #{islogin,jdbcType=VARCHAR},
-      </if>
-      <if test="loginPassword != null" >
-        #{loginPassword,jdbcType=VARCHAR},
-      </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -233,6 +236,12 @@
       </if>
       <if test="endtime != null" >
         #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islogin != null" >
+        #{islogin,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -266,6 +275,9 @@
       <if test="record.birthday != null" >
         birthday = #{record.birthday,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
       <if test="record.contactTel != null" >
         contact_tel = #{record.contactTel,jdbcType=VARCHAR},
       </if>
@@ -281,12 +293,6 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="record.islogin != null" >
-        islogin = #{record.islogin,jdbcType=VARCHAR},
-      </if>
-      <if test="record.loginPassword != null" >
-        login_password = #{record.loginPassword,jdbcType=VARCHAR},
-      </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
@@ -295,6 +301,12 @@
       </if>
       <if test="record.endtime != null" >
         endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.islogin != null" >
+        islogin = #{record.islogin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null" >
+        login_password = #{record.loginPassword,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -310,16 +322,17 @@
       employee_code = #{record.employeeCode,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      idcard = #{record.idcard,jdbcType=VARCHAR},
       contact_tel = #{record.contactTel,jdbcType=VARCHAR},
       contact_addr = #{record.contactAddr,jdbcType=VARCHAR},
       role = #{record.role,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
-      islogin = #{record.islogin,jdbcType=VARCHAR},
-      login_password = #{record.loginPassword,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
       modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
-      endtime = #{record.endtime,jdbcType=TIMESTAMP}
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      islogin = #{record.islogin,jdbcType=VARCHAR},
+      login_password = #{record.loginPassword,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -345,6 +358,9 @@
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=TIMESTAMP},
       </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
       <if test="contactTel != null" >
         contact_tel = #{contactTel,jdbcType=VARCHAR},
       </if>
@@ -360,12 +376,6 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="islogin != null" >
-        islogin = #{islogin,jdbcType=VARCHAR},
-      </if>
-      <if test="loginPassword != null" >
-        login_password = #{loginPassword,jdbcType=VARCHAR},
-      </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -374,6 +384,12 @@
       </if>
       <if test="endtime != null" >
         endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islogin != null" >
+        islogin = #{islogin,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        login_password = #{loginPassword,jdbcType=VARCHAR},
       </if>
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
@@ -386,16 +402,17 @@
       employee_code = #{employeeCode,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=TIMESTAMP},
+      idcard = #{idcard,jdbcType=VARCHAR},
       contact_tel = #{contactTel,jdbcType=VARCHAR},
       contact_addr = #{contactAddr,jdbcType=VARCHAR},
       role = #{role,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
-      islogin = #{islogin,jdbcType=VARCHAR},
-      login_password = #{loginPassword,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       modifytime = #{modifytime,jdbcType=TIMESTAMP},
-      endtime = #{endtime,jdbcType=TIMESTAMP}
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      islogin = #{islogin,jdbcType=VARCHAR},
+      login_password = #{loginPassword,jdbcType=VARCHAR}
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
 </mapper>

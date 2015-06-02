@@ -50,6 +50,7 @@
 		<div class="col-sm-5">
 			<priv:privilege power="商品管理.增删改">
 				<button type="button" class="btn btn-primary" id="addGoods_btn">新增商品</button>
+				<button type="button" class="btn btn-primary" id="excel">商品清单Excel导出</button>
 			</priv:privilege>
 		</div>
 	</div>
@@ -66,18 +67,20 @@
 					<th>编码</th>
 					<th>类型</th>
 					<th>基本单位</th>
-					<th>成本价格</th>
+					<th>供应商</th>
+					<th>进货价格</th>
 					<th>销售价格</th>
-					<th>销售利润</th>
-					<th>保质期（天）</th>
-					<th>库存量预警值</th>
-					<th>保质期预警值</th>
+					<th>奖金折扣(%)</th>
+					<th>保质期(天)</th>
+					<th>保质期预警</th>
+					<th>库存量预警</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="goodss" items="${goodss}">
-					<tr>
+					<tr data-toggle="tooltip" data-animation="false"
+							data-placement="auto" title="备注：${goodss.remark}">
 						<td class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></td>
 						<td>${goodss.goodsId}</td>
@@ -86,12 +89,13 @@
 						<td>${goodss.goodsCode}</td>
 						<td>${goodss.goodsType}</td>
 						<td>${goodss.goodsUnit}</td>
+						<td>${goodss.providerName}</td>
 						<td>${goodss.goodsActualCost}</td>
 						<td>${goodss.goodsPrice}</td>
-						<td>${goodss.goodsProfit}</td>
+						<td>${goodss.goodsPrizePoolRatio}</td>
 						<td>${goodss.goodsShelfLife}</td>
-						<td>${goodss.storageWarning}</td>
 						<td>${goodss.shelfLifeWarning}</td>
+						<td>${goodss.storageWarning}</td>
 						<priv:privilege power="商品管理.增删改">
 							<c:if test="${goodss.goodsStatus==01}">
 								<td><a href="javascript:void(0);"
@@ -130,7 +134,7 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品名称:</span> <input
-								type="text" class="form-control" name="goodsName"
+								type="text" class="form-control add" name="goodsName"
 								placeholder="商品名称" maxlength="200">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -142,71 +146,72 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品类型:</span> <select
-								class="form-control" tabindex="1" name="goodsType">
+								class="form-control addselect" tabindex="1" name="goodsType"
+								placeholder="商品类型">
 								<option value="0">请选择商品类型：</option>
-								<option value="1">啤酒</option>
-								<option value="2">白酒</option>
-								<option value="3">饮料</option>
-								<option value="4">原料</option>
+								<c:forEach var="tbSystemParameters"
+									items="${tbSystemParameters}">
+									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品供应商:</span> <select
-								class="form-control" tabindex="1" name="providerId"
-								id="add_providers">
+								class="form-control addselect" tabindex="1" name="providerId"
+								id="add_providers" placeholder="供应商">
 								<option value="0">请选择商品供应商：</option>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">基本单位:</span> <select
-								class="form-control" tabindex="1" name="goodsUnit"
-								id="add_goodsUnit">
+								class="form-control addselect" tabindex="1" name="goodsUnit"
+								id="add_goodsUnit" placeholder="基本单位">
 								<option value="0">请选择商品基本单位：</option>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">进货价格:</span> <input
-								type="text" class="form-control" name="goodsActualCost"
+								type="text" class="form-control add" name="goodsActualCost"
 								placeholder="进货价格" maxlength="20"> <span
 								class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">销售价格:</span> <input
-								type="text" class="form-control" name="goodsPrice"
+								type="text" class="form-control add" name="goodsPrice"
 								placeholder="销售价格" maxlength="20"> <span
 								class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品利润:</span> <input
-								type="text" class="form-control" name="goodsProfit"
-								placeholder="商品利润" maxlength="20"> <span
+								style="background-color: #1abc9c;">奖金折扣:</span> <input
+								type="text" class="form-control add" name="goodsPrizePoolRatio"
+								placeholder="奖金折扣" maxlength="20" value="100"> <span
 								class="input-group-addon">%</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">保质期：</span> <input
-								type="text" class="form-control" name="goodsShelfLife"
+								type="text" class="form-control add" name="goodsShelfLife"
 								placeholder="保质期" maxlength="20"> <span
 								class="input-group-addon">（天）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">保质期预警值：</span> <input
-								type="text" class="form-control" name="shelfLifePrewarning"
+								type="text" class="form-control add" name="shelfLifePrewarning"
 								placeholder="保质期预警值" maxlength="20"> <span
 								class="input-group-addon">（天）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">库存量预警值：</span> <input
-								type="text" class="form-control" name="storagePrewarning"
+								type="text" class="form-control add" name="storagePrewarning"
 								placeholder="库存量预警值" maxlength="20"> <span
-								class="input-group-addon">（天）</span>
+								class="input-group-addon">（单位）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -263,10 +268,10 @@
 								class="form-control" tabindex="1" id="modify_goodsType"
 								name="modify_goodsType">
 								<option value="0">请选择商品类型：</option>
-								<option value="1">啤酒</option>
-								<option value="2">白酒</option>
-								<option value="3">饮料</option>
-								<option value="4">原料</option>
+								<c:forEach var="tbSystemParameters"
+									items="${tbSystemParameters}">
+									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+								</c:forEach>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -302,9 +307,9 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品利润:</span> <input
-								type="text" class="form-control" id="modify_goodsProfit"
-								value="" name="modify_goodsProfit" placeholder="商品利润"
+								style="background-color: #1abc9c;">奖金折扣:</span> <input
+								type="text" class="form-control" id="modify_goodsPrizePoolRatio"
+								value="" name="modify_goodsPrizePoolRatio" placeholder="奖金折扣"
 								maxlength="20"> <span class="input-group-addon">%</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
@@ -326,7 +331,7 @@
 								style="background-color: #1abc9c;">库存量预警值：</span> <input
 								type="text" class="form-control" id="modify_storagePrewarning"
 								value="" name="modify_storagePrewarning" placeholder="库存量预警值"
-								maxlength="20"> <span class="input-group-addon">（天）</span>
+								maxlength="20"> <span class="input-group-addon">（单位）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -371,10 +376,9 @@
 								<thead>
 									<tr>
 										<th>客户名称</th>
-										<th>成本价格</th>
-										<th>标准销售价格</th>
-										<th>优惠销售价格</th>
-										<th>利润</th>
+										<th>进货价格</th>
+										<th>销售价格</th>
+										<th>奖金折扣</th>
 										<th>操作</th>
 									</tr>
 								</thead>
@@ -410,9 +414,10 @@
 <!-- /.modal -->
 <input type="hidden" id="tmpGoodId">
 <input type="hidden" id="tmpGoodsName">
+<input type="hidden" id="tmpGoodsUnit">
 <input type="hidden" id="tmpGoodsActualCost">
 <input type="hidden" id="tmpGoodsPrice">
-<input type="hidden" id="tmpGoodsProfit">
+<input type="hidden" id="tmpGoodsPrizePoolRatio">
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 <script src="<%=path%>/js/vendor/jquery.min.js"></script>
@@ -421,25 +426,35 @@
 <script src="<%=path%>/js/flat-ui.min.js"></script>
 <script src="<%=path%>/js/goods.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#delbtn").click(function() {
-			$("#delbtn").hide();
-			$("#delcommit").show();
-			$("#delcancle").show();
-			$(".chk").show();
-		});
-		$("#delcommit").click(function() {
-			$("#delbtn").show();
-			$("#delcommit").hide();
-			$("#delcancle").hide();
-			$(".chk").hide();
-		});
-		$("#delcancle").click(function() {
-			$("#delbtn").show();
-			$("#delcommit").hide();
-			$("#delcancle").hide();
-			$(".chk").hide();
-		});
-	});
+	$(document)
+			.ready(
+					function() {
+						$("#delbtn").click(function() {
+							$("#delbtn").hide();
+							$("#delcommit").show();
+							$("#delcancle").show();
+							$(".chk").show();
+						});
+						$("#delcommit").click(function() {
+							$("#delbtn").show();
+							$("#delcommit").hide();
+							$("#delcancle").hide();
+							$(".chk").hide();
+						});
+						$("#delcancle").click(function() {
+							$("#delbtn").show();
+							$("#delcommit").hide();
+							$("#delcancle").hide();
+							$(".chk").hide();
+						});
+						$("#excel")
+								.click(
+										function() {
+											window.location.href = "goodsReportExecl?query_goodsName=${goodsName}&query_goodsType=${goodsType}&query_goodsPrice=${goodsPrice}&query_goodsShelfLife=${goodsShelfLife}";
+										});
+						$(function() {
+							$('[data-toggle="tooltip"]').tooltip()
 
+						});
+					});
 </script>

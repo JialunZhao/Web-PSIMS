@@ -63,7 +63,7 @@ public class GoodsBusinessImpl implements IGoodsBusiness {
 		// 修改商品信息业务
 		goodsService.backupGoodsInfo(goodsModify);
 		logger.info("goodsModify");
-		//补全供应商信息s == null || s.length() < 1
+		//补全供应商信息
 		if (goodsModify.getProviderId() != null) {
 		TbProvider tbProvider = new  TbProvider();
 		tbProvider = providerServiceImpl.selectProvider(goodsModify.getProviderId());

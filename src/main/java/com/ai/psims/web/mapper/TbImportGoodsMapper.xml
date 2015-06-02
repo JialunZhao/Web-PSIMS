@@ -6,14 +6,15 @@
     <result column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_code" property="goodsCode" jdbcType="VARCHAR" />
     <result column="import_goods_type" property="importGoodsType" jdbcType="VARCHAR" />
     <result column="import_goods_amount" property="importGoodsAmount" jdbcType="INTEGER" />
     <result column="import_goods_unit" property="importGoodsUnit" jdbcType="VARCHAR" />
     <result column="import_goods_price" property="importGoodsPrice" jdbcType="BIGINT" />
     <result column="import_discount_amount" property="importDiscountAmount" jdbcType="BIGINT" />
-    <result column="import_goods_createtime" property="importGoodsCreatetime" jdbcType="DATE" />
-    <result column="import_goods_modifytime" property="importGoodsModifytime" jdbcType="DATE" />
-    <result column="import_goods_endtime" property="importGoodsEndtime" jdbcType="DATE" />
+    <result column="import_goods_createtime" property="importGoodsCreatetime" jdbcType="TIMESTAMP" />
+    <result column="import_goods_modifytime" property="importGoodsModifytime" jdbcType="TIMESTAMP" />
+    <result column="import_goods_endtime" property="importGoodsEndtime" jdbcType="TIMESTAMP" />
     <result column="import_goods_remark" property="importGoodsRemark" jdbcType="VARCHAR" />
     <result column="is_discount" property="isDiscount" jdbcType="VARCHAR" />
     <result column="is_box_bottle" property="isBoxBottle" jdbcType="VARCHAR" />
@@ -85,11 +86,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    import_goods_id, import_serial_number, goods_id, goods_name, import_goods_type, import_goods_amount, 
-    import_goods_unit, import_goods_price, import_discount_amount, import_goods_createtime, 
-    import_goods_modifytime, import_goods_endtime, import_goods_remark, is_discount, 
-    is_box_bottle, total_price, discount_duty_total_price, discount_total_price, discount_rate, 
-    box_bottle_price, box_bottle_total_price, res_import_goods_amount, goods_shelf_life
+    import_goods_id, import_serial_number, goods_id, goods_name, goods_code, import_goods_type, 
+    import_goods_amount, import_goods_unit, import_goods_price, import_discount_amount, 
+    import_goods_createtime, import_goods_modifytime, import_goods_endtime, import_goods_remark, 
+    is_discount, is_box_bottle, total_price, discount_duty_total_price, discount_total_price, 
+    discount_rate, box_bottle_price, box_bottle_total_price, res_import_goods_amount, 
+    goods_shelf_life
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbImportGoodsExample" >
     select
@@ -123,21 +125,21 @@
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.TbImportGoods" >
     insert into tb_import_goods (import_goods_id, import_serial_number, 
-      goods_id, goods_name, import_goods_type, 
-      import_goods_amount, import_goods_unit, import_goods_price, 
-      import_discount_amount, import_goods_createtime, 
-      import_goods_modifytime, import_goods_endtime, import_goods_remark, 
-      is_discount, is_box_bottle, total_price, 
-      discount_duty_total_price, discount_total_price, 
+      goods_id, goods_name, goods_code, 
+      import_goods_type, import_goods_amount, import_goods_unit, 
+      import_goods_price, import_discount_amount, import_goods_createtime, 
+      import_goods_modifytime, import_goods_endtime, 
+      import_goods_remark, is_discount, is_box_bottle, 
+      total_price, discount_duty_total_price, discount_total_price, 
       discount_rate, box_bottle_price, box_bottle_total_price, 
       res_import_goods_amount, goods_shelf_life)
     values (#{importGoodsId,jdbcType=INTEGER}, #{importSerialNumber,jdbcType=VARCHAR}, 
-      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{importGoodsType,jdbcType=VARCHAR}, 
-      #{importGoodsAmount,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}, #{importGoodsPrice,jdbcType=BIGINT}, 
-      #{importDiscountAmount,jdbcType=BIGINT}, #{importGoodsCreatetime,jdbcType=DATE}, 
-      #{importGoodsModifytime,jdbcType=DATE}, #{importGoodsEndtime,jdbcType=DATE}, #{importGoodsRemark,jdbcType=VARCHAR}, 
-      #{isDiscount,jdbcType=VARCHAR}, #{isBoxBottle,jdbcType=VARCHAR}, #{totalPrice,jdbcType=BIGINT}, 
-      #{discountDutyTotalPrice,jdbcType=BIGINT}, #{discountTotalPrice,jdbcType=BIGINT}, 
+      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsCode,jdbcType=VARCHAR}, 
+      #{importGoodsType,jdbcType=VARCHAR}, #{importGoodsAmount,jdbcType=INTEGER}, #{importGoodsUnit,jdbcType=VARCHAR}, 
+      #{importGoodsPrice,jdbcType=BIGINT}, #{importDiscountAmount,jdbcType=BIGINT}, #{importGoodsCreatetime,jdbcType=TIMESTAMP}, 
+      #{importGoodsModifytime,jdbcType=TIMESTAMP}, #{importGoodsEndtime,jdbcType=TIMESTAMP}, 
+      #{importGoodsRemark,jdbcType=VARCHAR}, #{isDiscount,jdbcType=VARCHAR}, #{isBoxBottle,jdbcType=VARCHAR}, 
+      #{totalPrice,jdbcType=BIGINT}, #{discountDutyTotalPrice,jdbcType=BIGINT}, #{discountTotalPrice,jdbcType=BIGINT}, 
       #{discountRate,jdbcType=BIGINT}, #{boxBottlePrice,jdbcType=BIGINT}, #{boxBottleTotalPrice,jdbcType=BIGINT}, 
       #{resImportGoodsAmount,jdbcType=INTEGER}, #{goodsShelfLife,jdbcType=INTEGER})
   </insert>
@@ -155,6 +157,9 @@
       </if>
       <if test="goodsName != null" >
         goods_name,
+      </if>
+      <if test="goodsCode != null" >
+        goods_code,
       </if>
       <if test="importGoodsType != null" >
         import_goods_type,
@@ -227,6 +232,9 @@
       <if test="goodsName != null" >
         #{goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="goodsCode != null" >
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
       <if test="importGoodsType != null" >
         #{importGoodsType,jdbcType=VARCHAR},
       </if>
@@ -243,13 +251,13 @@
         #{importDiscountAmount,jdbcType=BIGINT},
       </if>
       <if test="importGoodsCreatetime != null" >
-        #{importGoodsCreatetime,jdbcType=DATE},
+        #{importGoodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsModifytime != null" >
-        #{importGoodsModifytime,jdbcType=DATE},
+        #{importGoodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsEndtime != null" >
-        #{importGoodsEndtime,jdbcType=DATE},
+        #{importGoodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsRemark != null" >
         #{importGoodsRemark,jdbcType=VARCHAR},
@@ -307,6 +315,9 @@
       <if test="record.goodsName != null" >
         goods_name = #{record.goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="record.goodsCode != null" >
+        goods_code = #{record.goodsCode,jdbcType=VARCHAR},
+      </if>
       <if test="record.importGoodsType != null" >
         import_goods_type = #{record.importGoodsType,jdbcType=VARCHAR},
       </if>
@@ -323,13 +334,13 @@
         import_discount_amount = #{record.importDiscountAmount,jdbcType=BIGINT},
       </if>
       <if test="record.importGoodsCreatetime != null" >
-        import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=DATE},
+        import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.importGoodsModifytime != null" >
-        import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=DATE},
+        import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.importGoodsEndtime != null" >
-        import_goods_endtime = #{record.importGoodsEndtime,jdbcType=DATE},
+        import_goods_endtime = #{record.importGoodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.importGoodsRemark != null" >
         import_goods_remark = #{record.importGoodsRemark,jdbcType=VARCHAR},
@@ -375,14 +386,15 @@
       import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
       goods_id = #{record.goodsId,jdbcType=INTEGER},
       goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_code = #{record.goodsCode,jdbcType=VARCHAR},
       import_goods_type = #{record.importGoodsType,jdbcType=VARCHAR},
       import_goods_amount = #{record.importGoodsAmount,jdbcType=INTEGER},
       import_goods_unit = #{record.importGoodsUnit,jdbcType=VARCHAR},
       import_goods_price = #{record.importGoodsPrice,jdbcType=BIGINT},
       import_discount_amount = #{record.importDiscountAmount,jdbcType=BIGINT},
-      import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=DATE},
-      import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=DATE},
-      import_goods_endtime = #{record.importGoodsEndtime,jdbcType=DATE},
+      import_goods_createtime = #{record.importGoodsCreatetime,jdbcType=TIMESTAMP},
+      import_goods_modifytime = #{record.importGoodsModifytime,jdbcType=TIMESTAMP},
+      import_goods_endtime = #{record.importGoodsEndtime,jdbcType=TIMESTAMP},
       import_goods_remark = #{record.importGoodsRemark,jdbcType=VARCHAR},
       is_discount = #{record.isDiscount,jdbcType=VARCHAR},
       is_box_bottle = #{record.isBoxBottle,jdbcType=VARCHAR},
@@ -410,6 +422,9 @@
       <if test="goodsName != null" >
         goods_name = #{goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="goodsCode != null" >
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
       <if test="importGoodsType != null" >
         import_goods_type = #{importGoodsType,jdbcType=VARCHAR},
       </if>
@@ -426,13 +441,13 @@
         import_discount_amount = #{importDiscountAmount,jdbcType=BIGINT},
       </if>
       <if test="importGoodsCreatetime != null" >
-        import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
+        import_goods_createtime = #{importGoodsCreatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsModifytime != null" >
-        import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
+        import_goods_modifytime = #{importGoodsModifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsEndtime != null" >
-        import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
+        import_goods_endtime = #{importGoodsEndtime,jdbcType=TIMESTAMP},
       </if>
       <if test="importGoodsRemark != null" >
         import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
@@ -475,14 +490,15 @@
     set import_serial_number = #{importSerialNumber,jdbcType=VARCHAR},
       goods_id = #{goodsId,jdbcType=INTEGER},
       goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_code = #{goodsCode,jdbcType=VARCHAR},
       import_goods_type = #{importGoodsType,jdbcType=VARCHAR},
       import_goods_amount = #{importGoodsAmount,jdbcType=INTEGER},
       import_goods_unit = #{importGoodsUnit,jdbcType=VARCHAR},
       import_goods_price = #{importGoodsPrice,jdbcType=BIGINT},
       import_discount_amount = #{importDiscountAmount,jdbcType=BIGINT},
-      import_goods_createtime = #{importGoodsCreatetime,jdbcType=DATE},
-      import_goods_modifytime = #{importGoodsModifytime,jdbcType=DATE},
-      import_goods_endtime = #{importGoodsEndtime,jdbcType=DATE},
+      import_goods_createtime = #{importGoodsCreatetime,jdbcType=TIMESTAMP},
+      import_goods_modifytime = #{importGoodsModifytime,jdbcType=TIMESTAMP},
+      import_goods_endtime = #{importGoodsEndtime,jdbcType=TIMESTAMP},
       import_goods_remark = #{importGoodsRemark,jdbcType=VARCHAR},
       is_discount = #{isDiscount,jdbcType=VARCHAR},
       is_box_bottle = #{isBoxBottle,jdbcType=VARCHAR},

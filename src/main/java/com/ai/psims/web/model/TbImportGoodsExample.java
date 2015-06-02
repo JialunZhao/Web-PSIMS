@@ -2,7 +2,6 @@ package com.ai.psims.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TbImportGoodsExample {
@@ -104,32 +103,6 @@ public class TbImportGoodsExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andImportGoodsIdIsNull() {
@@ -389,6 +362,76 @@ public class TbImportGoodsExample {
 
         public Criteria andGoodsNameNotBetween(String value1, String value2) {
             addCriterion("goods_name not between", value1, value2, "goodsName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeIsNull() {
+            addCriterion("goods_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeIsNotNull() {
+            addCriterion("goods_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeEqualTo(String value) {
+            addCriterion("goods_code =", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeNotEqualTo(String value) {
+            addCriterion("goods_code <>", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeGreaterThan(String value) {
+            addCriterion("goods_code >", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_code >=", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeLessThan(String value) {
+            addCriterion("goods_code <", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeLessThanOrEqualTo(String value) {
+            addCriterion("goods_code <=", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeLike(String value) {
+            addCriterion("goods_code like", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeNotLike(String value) {
+            addCriterion("goods_code not like", value, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeIn(List<String> values) {
+            addCriterion("goods_code in", values, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeNotIn(List<String> values) {
+            addCriterion("goods_code not in", values, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeBetween(String value1, String value2) {
+            addCriterion("goods_code between", value1, value2, "goodsCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsCodeNotBetween(String value1, String value2) {
+            addCriterion("goods_code not between", value1, value2, "goodsCode");
             return (Criteria) this;
         }
 
@@ -723,52 +766,52 @@ public class TbImportGoodsExample {
         }
 
         public Criteria andImportGoodsCreatetimeEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime =", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime =", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime <>", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime <>", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime >", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime >", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime >=", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime >=", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeLessThan(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime <", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime <", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_createtime <=", value, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime <=", value, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_createtime in", values, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime in", values, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_createtime not in", values, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime not in", values, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_createtime between", value1, value2, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime between", value1, value2, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsCreatetimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_createtime not between", value1, value2, "importGoodsCreatetime");
+            addCriterion("import_goods_createtime not between", value1, value2, "importGoodsCreatetime");
             return (Criteria) this;
         }
 
@@ -783,52 +826,52 @@ public class TbImportGoodsExample {
         }
 
         public Criteria andImportGoodsModifytimeEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime =", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime =", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime <>", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime <>", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime >", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime >", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime >=", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime >=", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeLessThan(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime <", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime <", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_modifytime <=", value, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime <=", value, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_modifytime in", values, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime in", values, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_modifytime not in", values, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime not in", values, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_modifytime between", value1, value2, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime between", value1, value2, "importGoodsModifytime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsModifytimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_modifytime not between", value1, value2, "importGoodsModifytime");
+            addCriterion("import_goods_modifytime not between", value1, value2, "importGoodsModifytime");
             return (Criteria) this;
         }
 
@@ -843,52 +886,52 @@ public class TbImportGoodsExample {
         }
 
         public Criteria andImportGoodsEndtimeEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime =", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime =", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime <>", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime <>", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime >", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime >", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime >=", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime >=", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeLessThan(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime <", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime <", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_goods_endtime <=", value, "importGoodsEndtime");
+            addCriterion("import_goods_endtime <=", value, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_endtime in", values, "importGoodsEndtime");
+            addCriterion("import_goods_endtime in", values, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("import_goods_endtime not in", values, "importGoodsEndtime");
+            addCriterion("import_goods_endtime not in", values, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_endtime between", value1, value2, "importGoodsEndtime");
+            addCriterion("import_goods_endtime between", value1, value2, "importGoodsEndtime");
             return (Criteria) this;
         }
 
         public Criteria andImportGoodsEndtimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_goods_endtime not between", value1, value2, "importGoodsEndtime");
+            addCriterion("import_goods_endtime not between", value1, value2, "importGoodsEndtime");
             return (Criteria) this;
         }
 

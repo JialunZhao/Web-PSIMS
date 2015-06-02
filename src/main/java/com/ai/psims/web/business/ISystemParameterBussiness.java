@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.TbSystemParameterExample;
+import com.ai.psims.web.model.TbSystemParameterLog;
 
 public interface ISystemParameterBussiness {
 
@@ -26,5 +27,9 @@ public interface ISystemParameterBussiness {
 	void delete(TbSystemParameter sysParamete);
 
 	List<TbSystemParameter> getlAllParameter();
+
+	List<TbSystemParameterLog> getSysByLogId(int paramId);
+
+	void updateByPid(TbSystemParameter systemParameter);
 
 }

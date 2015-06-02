@@ -27,13 +27,23 @@ public class TbGoods2customerLog {
 
     private String goodsBarCode;
 
+    private Integer goodsCurrentStock;
+
+    private Integer goodsTotalStock;
+
+    private Date goodsProductionDate;
+
+    private Date goodsExpirationDate;
+
     private Integer goodsShelfLife;
 
-    private Long goodsPrice;
+    private String goodsActualCost;
 
-    private Integer goodsDiscount;
+    private String goodsPrice;
 
-    private Long goodsDiscountAmount;
+    private String goodsProfit;
+
+    private String goodsPrizePoolRatio;
 
     private String goodsType;
 
@@ -51,23 +61,37 @@ public class TbGoods2customerLog {
 
     private String providerCode;
 
-    private Long quarterRebate;
-
-    private Long annualRebate;
-
-    private Long providerSubsidy;
-
-    private Long providerPackageSubsidy;
-
-    private Long customerSubsidy;
-
-    private Long otherSubsidy;
-
-    private Long goodsActualCost;
-
-    private Long goodsProfit;
-
     private String remark;
+
+    private String goodsDiscount;
+
+    private String singleRebate;
+
+    private String quarterRebate;
+
+    private String annualRebate;
+
+    private String purchaseRebate;
+
+    private String promotionRebate;
+
+    private String providerSubsidy;
+
+    private String customerBottleSubsidy;
+
+    private String customerPackageSubsidy;
+
+    private String providerPackageSubsidy;
+
+    private String customerSubsidy;
+
+    private String otherSubsidy;
+
+    private Integer storageWarning;
+
+    private Integer shelfLifeWarning;
+
+    private String singleFinalCost;
 
     public Integer getLogId() {
         return logId;
@@ -165,6 +189,38 @@ public class TbGoods2customerLog {
         this.goodsBarCode = goodsBarCode == null ? null : goodsBarCode.trim();
     }
 
+    public Integer getGoodsCurrentStock() {
+        return goodsCurrentStock;
+    }
+
+    public void setGoodsCurrentStock(Integer goodsCurrentStock) {
+        this.goodsCurrentStock = goodsCurrentStock;
+    }
+
+    public Integer getGoodsTotalStock() {
+        return goodsTotalStock;
+    }
+
+    public void setGoodsTotalStock(Integer goodsTotalStock) {
+        this.goodsTotalStock = goodsTotalStock;
+    }
+
+    public Date getGoodsProductionDate() {
+        return goodsProductionDate;
+    }
+
+    public void setGoodsProductionDate(Date goodsProductionDate) {
+        this.goodsProductionDate = goodsProductionDate;
+    }
+
+    public Date getGoodsExpirationDate() {
+        return goodsExpirationDate;
+    }
+
+    public void setGoodsExpirationDate(Date goodsExpirationDate) {
+        this.goodsExpirationDate = goodsExpirationDate;
+    }
+
     public Integer getGoodsShelfLife() {
         return goodsShelfLife;
     }
@@ -173,28 +229,36 @@ public class TbGoods2customerLog {
         this.goodsShelfLife = goodsShelfLife;
     }
 
-    public Long getGoodsPrice() {
+    public String getGoodsActualCost() {
+        return goodsActualCost;
+    }
+
+    public void setGoodsActualCost(String goodsActualCost) {
+        this.goodsActualCost = goodsActualCost == null ? null : goodsActualCost.trim();
+    }
+
+    public String getGoodsPrice() {
         return goodsPrice;
     }
 
-    public void setGoodsPrice(Long goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice == null ? null : goodsPrice.trim();
     }
 
-    public Integer getGoodsDiscount() {
-        return goodsDiscount;
+    public String getGoodsProfit() {
+        return goodsProfit;
     }
 
-    public void setGoodsDiscount(Integer goodsDiscount) {
-        this.goodsDiscount = goodsDiscount;
+    public void setGoodsProfit(String goodsProfit) {
+        this.goodsProfit = goodsProfit == null ? null : goodsProfit.trim();
     }
 
-    public Long getGoodsDiscountAmount() {
-        return goodsDiscountAmount;
+    public String getGoodsPrizePoolRatio() {
+        return goodsPrizePoolRatio;
     }
 
-    public void setGoodsDiscountAmount(Long goodsDiscountAmount) {
-        this.goodsDiscountAmount = goodsDiscountAmount;
+    public void setGoodsPrizePoolRatio(String goodsPrizePoolRatio) {
+        this.goodsPrizePoolRatio = goodsPrizePoolRatio == null ? null : goodsPrizePoolRatio.trim();
     }
 
     public String getGoodsType() {
@@ -261,75 +325,131 @@ public class TbGoods2customerLog {
         this.providerCode = providerCode == null ? null : providerCode.trim();
     }
 
-    public Long getQuarterRebate() {
-        return quarterRebate;
-    }
-
-    public void setQuarterRebate(Long quarterRebate) {
-        this.quarterRebate = quarterRebate;
-    }
-
-    public Long getAnnualRebate() {
-        return annualRebate;
-    }
-
-    public void setAnnualRebate(Long annualRebate) {
-        this.annualRebate = annualRebate;
-    }
-
-    public Long getProviderSubsidy() {
-        return providerSubsidy;
-    }
-
-    public void setProviderSubsidy(Long providerSubsidy) {
-        this.providerSubsidy = providerSubsidy;
-    }
-
-    public Long getProviderPackageSubsidy() {
-        return providerPackageSubsidy;
-    }
-
-    public void setProviderPackageSubsidy(Long providerPackageSubsidy) {
-        this.providerPackageSubsidy = providerPackageSubsidy;
-    }
-
-    public Long getCustomerSubsidy() {
-        return customerSubsidy;
-    }
-
-    public void setCustomerSubsidy(Long customerSubsidy) {
-        this.customerSubsidy = customerSubsidy;
-    }
-
-    public Long getOtherSubsidy() {
-        return otherSubsidy;
-    }
-
-    public void setOtherSubsidy(Long otherSubsidy) {
-        this.otherSubsidy = otherSubsidy;
-    }
-
-    public Long getGoodsActualCost() {
-        return goodsActualCost;
-    }
-
-    public void setGoodsActualCost(Long goodsActualCost) {
-        this.goodsActualCost = goodsActualCost;
-    }
-
-    public Long getGoodsProfit() {
-        return goodsProfit;
-    }
-
-    public void setGoodsProfit(Long goodsProfit) {
-        this.goodsProfit = goodsProfit;
-    }
-
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getGoodsDiscount() {
+        return goodsDiscount;
+    }
+
+    public void setGoodsDiscount(String goodsDiscount) {
+        this.goodsDiscount = goodsDiscount == null ? null : goodsDiscount.trim();
+    }
+
+    public String getSingleRebate() {
+        return singleRebate;
+    }
+
+    public void setSingleRebate(String singleRebate) {
+        this.singleRebate = singleRebate == null ? null : singleRebate.trim();
+    }
+
+    public String getQuarterRebate() {
+        return quarterRebate;
+    }
+
+    public void setQuarterRebate(String quarterRebate) {
+        this.quarterRebate = quarterRebate == null ? null : quarterRebate.trim();
+    }
+
+    public String getAnnualRebate() {
+        return annualRebate;
+    }
+
+    public void setAnnualRebate(String annualRebate) {
+        this.annualRebate = annualRebate == null ? null : annualRebate.trim();
+    }
+
+    public String getPurchaseRebate() {
+        return purchaseRebate;
+    }
+
+    public void setPurchaseRebate(String purchaseRebate) {
+        this.purchaseRebate = purchaseRebate == null ? null : purchaseRebate.trim();
+    }
+
+    public String getPromotionRebate() {
+        return promotionRebate;
+    }
+
+    public void setPromotionRebate(String promotionRebate) {
+        this.promotionRebate = promotionRebate == null ? null : promotionRebate.trim();
+    }
+
+    public String getProviderSubsidy() {
+        return providerSubsidy;
+    }
+
+    public void setProviderSubsidy(String providerSubsidy) {
+        this.providerSubsidy = providerSubsidy == null ? null : providerSubsidy.trim();
+    }
+
+    public String getCustomerBottleSubsidy() {
+        return customerBottleSubsidy;
+    }
+
+    public void setCustomerBottleSubsidy(String customerBottleSubsidy) {
+        this.customerBottleSubsidy = customerBottleSubsidy == null ? null : customerBottleSubsidy.trim();
+    }
+
+    public String getCustomerPackageSubsidy() {
+        return customerPackageSubsidy;
+    }
+
+    public void setCustomerPackageSubsidy(String customerPackageSubsidy) {
+        this.customerPackageSubsidy = customerPackageSubsidy == null ? null : customerPackageSubsidy.trim();
+    }
+
+    public String getProviderPackageSubsidy() {
+        return providerPackageSubsidy;
+    }
+
+    public void setProviderPackageSubsidy(String providerPackageSubsidy) {
+        this.providerPackageSubsidy = providerPackageSubsidy == null ? null : providerPackageSubsidy.trim();
+    }
+
+    public String getCustomerSubsidy() {
+        return customerSubsidy;
+    }
+
+    public void setCustomerSubsidy(String customerSubsidy) {
+        this.customerSubsidy = customerSubsidy == null ? null : customerSubsidy.trim();
+    }
+
+    public String getOtherSubsidy() {
+        return otherSubsidy;
+    }
+
+    public void setOtherSubsidy(String otherSubsidy) {
+        this.otherSubsidy = otherSubsidy == null ? null : otherSubsidy.trim();
+    }
+
+    public Integer getStorageWarning() {
+        return storageWarning;
+    }
+
+    public void setStorageWarning(Integer storageWarning) {
+        this.storageWarning = storageWarning;
+    }
+
+    public Integer getShelfLifeWarning() {
+        return shelfLifeWarning;
+    }
+
+    public void setShelfLifeWarning(Integer shelfLifeWarning) {
+        this.shelfLifeWarning = shelfLifeWarning;
+    }
+
+    public String getSingleFinalCost() {
+        return singleFinalCost;
+    }
+
+    public void setSingleFinalCost(String singleFinalCost) {
+        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
     }
 }

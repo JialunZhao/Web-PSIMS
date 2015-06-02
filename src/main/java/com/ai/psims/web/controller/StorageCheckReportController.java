@@ -23,11 +23,13 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.business.IStorageCheckBusiness;
+import com.ai.psims.web.business.ISystemParameterBussiness;
+import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 
 /**
- * 客户管理Controller
+ * 库存报表Controller
  */
 @Controller
 @RequestMapping("/storageCheckReportController")
@@ -39,8 +41,12 @@ public class StorageCheckReportController extends BaseController {
 	@Resource(name = "storageCheckBusinessImpl")
 	private IStorageCheckBusiness storageCheckBusinessImpl;
 
+	@Resource(name = "systemParameterBussinessImpl")
+	private ISystemParameterBussiness systemParameterBussinessImpl;
+
+	
 	/**
-	 * 客户管理页面跳转
+	 * 库存报表页面跳转
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String storageCheckRedirectGET(HttpServletRequest request,
@@ -49,7 +55,7 @@ public class StorageCheckReportController extends BaseController {
 	}
 
 	/**
-	 * 客户管理页面跳转
+	 * 库存报表页面跳转
 	 */
 	@RequestMapping(value = "/storageCheckReport", method = RequestMethod.GET)
 	public String storageCheckReport(HttpServletRequest request,
@@ -90,7 +96,17 @@ public class StorageCheckReportController extends BaseController {
 		// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 		criteria.andGoodsStatusNotEqualTo("00");
 		tbStoragechecks = storageCheckBusinessImpl.selectStoragecheck(tbStoragecheckExample);
-		logger.info("------------4.1.转译用户类型-------------");
+		logger.info("------------4.1.转译商品单位-------------");
+		 for (TbStoragecheck tbStoragecheck : tbStoragechecks) {
+			 if (tbStoragecheck.getImportGoodsUnit() != null)
+				tbStoragecheck
+						.setImportGoodsUnit(systemParameterBussinessImpl
+								.getSystemParameterPrizePool(
+										Integer.parseInt(tbStoragecheck
+												.getImportGoodsUnit())).getPpDesc());
+
+		 }
+		logger.info("------------4.2.转译商品类型-------------");
 //		 for (TbStoragecheck tbStoragecheck : tbStoragechecks) {
 //
 //		 }
@@ -158,7 +174,18 @@ public class StorageCheckReportController extends BaseController {
 				// 只查询状态为正常的记录 00-失效 01-正常 99-异常
 				criteria.andGoodsStatusNotEqualTo("00");
 				tbStoragechecks = storageCheckBusinessImpl.selectStoragecheck(tbStoragecheckExample);
+				logger.info("------------4.1.转译商品单位-------------");
+				 for (TbStoragecheck tbStoragecheck : tbStoragechecks) {
+					 if (tbStoragecheck.getImportGoodsUnit() != null)
+						tbStoragecheck
+								.setImportGoodsUnit(systemParameterBussinessImpl
+										.getSystemParameterPrizePool(
+												Integer.parseInt(tbStoragecheck
+														.getImportGoodsUnit())).getPpDesc());
 
+				 }
+				 
+				 
 				logger.info("------------建立 Excel -Sheet-------------");
 				HSSFSheet sheet = workbook.createSheet("库存清单");
 				logger.info("------------设置行列的默认宽度和高度-------------");
@@ -206,8 +233,6 @@ public class StorageCheckReportController extends BaseController {
 					row.createCell(idx++).setCellValue(sdf.format(tbStoragecheck.getCreatetime()));
 					row.createCell(idx++).setCellValue(sdf.format(tbStoragecheck.getGoodsExpirationDate()));
 					row.createCell(idx++).setCellValue(tbStoragecheck.getRemark());
-//					row.createCell(idx++).setCellValue(tbStoragecheck.get);
-//					row.createCell(idx++).setCellValue(tbStoragecheck.get);
 				}
 			}
 		};

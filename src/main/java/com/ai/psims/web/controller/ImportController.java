@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ai.psims.web.business.IAddGoodsImportList;
 import com.ai.psims.web.business.IQueryImportList;
+import com.ai.psims.web.business.ISystemParameterBussiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddGoodsBean;
-import com.ai.psims.web.model.Goods;
-import com.ai.psims.web.model.GoodsExample;
+import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportExample;
 import com.ai.psims.web.model.TbImportExample.Criteria;
@@ -42,6 +43,10 @@ public class ImportController extends BaseController {
 	@Resource(name = "queryImportListImpl")
 	private IQueryImportList queryImportList;
 
+	@Resource(name = "systemParameterBussinessImpl")
+	private ISystemParameterBussiness systemParameterBussinessImpl;
+
+	
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
 		List<TbProvider> provider = new ArrayList<TbProvider>();
@@ -55,7 +60,7 @@ public class ImportController extends BaseController {
 		request.setAttribute("providerList", provider);
 		request.setAttribute("storehouseList", storehouse);
 		request.setAttribute("importList", importList);
-		return "importsales";
+		return "importorder";
 
 	}
 
@@ -83,17 +88,17 @@ public class ImportController extends BaseController {
 	@RequestMapping("/queryGoods")
 	public void queryGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String providerName = request.getParameter("providerName");
-		GoodsExample goodsExample = new GoodsExample();
+		String providerId = request.getParameter("providerId");
+		TbGoodsExample tbGoodsExample = new TbGoodsExample();
 		JSONObject data = new JSONObject();
-		List<Goods> goodsList = new ArrayList<Goods>();
-		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+		List<TbGoods> goodsList = new ArrayList<TbGoods>();
+		TbGoodsExample.Criteria criteria = tbGoodsExample
 				.createCriteria();
-		if (providerName != null && providerName != "") {
-			criteria.andProviderNameEqualTo(providerName);
+		if (providerId != null && providerId != "") {
+			criteria.andProviderIdEqualTo(Integer.parseInt(providerId));
 		}
 		criteria.andGoodsEndtimeIsNull();
-		goodsList = queryBus.queryGoodsByName(goodsExample);
+		goodsList = queryBus.queryGoodsByName(tbGoodsExample);
 		if (goodsList == null && goodsList.size() == 0) {
 			responseFailed(response, "ERROR", data);
 		} else {
@@ -163,12 +168,20 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String providerId = request.getParameter("providerId");
 		JSONObject data = new JSONObject();
-		TbProvider provider=new TbProvider();
-		provider=queryBus.queryProviderById(Integer.parseInt(providerId));
-		if (provider == null) {
+		TbProvider tbProvider=new TbProvider();
+		tbProvider=queryBus.queryProviderById(Integer.parseInt(providerId));
+		if (tbProvider == null) {
 			responseFailed(response, "ERROR", data);
 		} else {
-			data.put("prizePool", JSON.toJSONString(provider.getProviderPrizePool()));
+			if (null != tbProvider.getProviderPrizePool() && !"".equals(tbProvider.getProviderPrizePool())) {
+				tbProvider.setProviderPrizePool(systemParameterBussinessImpl
+						.getSystemParameterPrizePool(
+								Integer.parseInt(tbProvider.getProviderPrizePool()))
+								.getPpValue());
+			}else {
+				tbProvider.setProviderPrizePool("未关联奖金池");
+			}
+			data.put("prizePool", JSON.toJSONString(tbProvider.getProviderPrizePool()));
 			responseSuccess(response, "SUCCESS", data);
 		}
 	}
@@ -178,12 +191,12 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String goodsName = request.getParameter("goodsName");
 		String providerName = request.getParameter("providerName");
-		GoodsExample goodsExample = new GoodsExample();
-		com.ai.psims.web.model.GoodsExample.Criteria criteria = goodsExample
+		TbGoodsExample tbGoodsExample = new TbGoodsExample();
+		TbGoodsExample.Criteria criteria = tbGoodsExample
 				.createCriteria();
-		List<Goods> goodsList = new ArrayList<Goods>();
+		List<TbGoods> goodsList = new ArrayList<TbGoods>();
 		JSONObject data = new JSONObject();
-		Goods goods = new Goods();
+		TbGoods goods = new TbGoods();
 		if (goodsName != null && goodsName != "") {
 			criteria.andGoodsNameEqualTo(goodsName);
 		}
@@ -191,7 +204,7 @@ public class ImportController extends BaseController {
 			criteria.andProviderNameEqualTo(providerName);
 		}
 		criteria.andGoodsEndtimeIsNull();
-		goodsList = queryBus.queryGoodsByName(goodsExample);
+		goodsList = queryBus.queryGoodsByName(tbGoodsExample);
 		goods = goodsList.get(0);
 		if (goods == null) {
 			responseFailed(response, "ERROR", data);

@@ -13,9 +13,9 @@
     <result column="contact_email" property="contactEmail" jdbcType="VARCHAR" />
     <result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="createtime" property="createtime" jdbcType="DATE" />
-    <result column="modifytime" property="modifytime" jdbcType="DATE" />
-    <result column="endtime" property="endtime" jdbcType="DATE" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -121,8 +121,8 @@
     values (#{storehouseId,jdbcType=INTEGER}, #{storehouseName,jdbcType=VARCHAR}, #{storehouseCode,jdbcType=VARCHAR}, 
       #{area,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, 
       #{contactTel,jdbcType=VARCHAR}, #{contactFax,jdbcType=VARCHAR}, #{contactEmail,jdbcType=VARCHAR}, 
-      #{contactAddress,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, 
-      #{modifytime,jdbcType=DATE}, #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR}
+      #{contactAddress,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbStorehouse" >
@@ -209,13 +209,13 @@
         #{status,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        #{createtime,jdbcType=DATE},
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifytime != null" >
-        #{modifytime,jdbcType=DATE},
+        #{modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        #{endtime,jdbcType=DATE},
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
@@ -265,13 +265,13 @@
         status = #{record.status,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        createtime = #{record.createtime,jdbcType=DATE},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=DATE},
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.endtime != null" >
-        endtime = #{record.endtime,jdbcType=DATE},
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
@@ -294,9 +294,9 @@
       contact_email = #{record.contactEmail,jdbcType=VARCHAR},
       contact_address = #{record.contactAddress,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=DATE},
-      modifytime = #{record.modifytime,jdbcType=DATE},
-      endtime = #{record.endtime,jdbcType=DATE},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
       remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -336,13 +336,13 @@
         status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        createtime = #{createtime,jdbcType=DATE},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="modifytime != null" >
-        modifytime = #{modifytime,jdbcType=DATE},
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        endtime = #{endtime,jdbcType=DATE},
+        endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -362,9 +362,9 @@
       contact_email = #{contactEmail,jdbcType=VARCHAR},
       contact_address = #{contactAddress,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=DATE},
-      modifytime = #{modifytime,jdbcType=DATE},
-      endtime = #{endtime,jdbcType=DATE},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
       remark = #{remark,jdbcType=VARCHAR}
     where storehouse_id = #{storehouseId,jdbcType=INTEGER}
   </update>

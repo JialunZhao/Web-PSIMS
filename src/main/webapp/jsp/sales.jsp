@@ -161,10 +161,10 @@ String date=sdf.format(new Date());
 								style="background-color: #1abc9c;">客户名称:</span> <select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="addCustomerName" id="addCustomerName">
-								<option value="">请选择客户名称</option>
+								<option value="" emp="" remark="无">请选择客户名称</option>
 								<c:forEach var="customers" items="${customersList}"
 									varStatus="status">
-									<option value="${customers.customerId }">${customers.customerName }</option>
+									<option value="${customers.customerId }" emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
 								</c:forEach>
 							</select> <span class="input-group-addon"
 								style="background-color: #1abc9c;">销售人员：</span> <select
@@ -177,8 +177,12 @@ String date=sdf.format(new Date());
 								</c:forEach>
 							</select>
 						</div>						
-						<div class="input-group col-xs-1 col-md-offset-1">
+						<div class="input-group col-xs-10 col-md-offset-1">
 							<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
+							
+						</div>
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="col-xs-12" id="addremark"></span>			
 						</div>
 					</div>
 				</div>
@@ -196,7 +200,7 @@ String date=sdf.format(new Date());
 					</div>
 				</div>
 
-				<div class="modal-body" id="addgoodstb" style="display: none">
+				<div class="modal-body" id="addgoodstb" >
 					<div class="row">
 						<div class="table-responsive col-xs-15">
 							<table class="table table-striped" id="addGoodsTab">
@@ -217,15 +221,16 @@ String date=sdf.format(new Date());
 						</div>
 
 						<div class="input-group col-xs-1">
-							<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button>
+<!-- 							<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button> -->
+						
 						</div>
 					</div>
 				</div>
 
 
 				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" id="sureAdd">确认新增</button> -->
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+            <button type="button" class="btn btn-primary" id="sureAdd">确认新增</button> 
 					<button type="button" class="btn btn-primary" id="getBack">返回</button>
 				</div>
 			</div>
@@ -239,6 +244,14 @@ String date=sdf.format(new Date());
 	<script src="<%=path%>/js/vendor/video.js"></script>
 	<script src="<%=path%>/js/flat-ui.min.js"></script>
 	<script type="text/javascript">
+	$("#addCustomerName").change(function(e) {
+		// $('#addcustomer').modal('hide');
+		var employeeId = $("#addCustomerName").children('option:selected').attr("emp");
+		var remark = $("#addCustomerName").children('option:selected').attr("remark");
+		$("#addEmployeeName").val(employeeId);		
+		$("#addremark").text("客户备注："+remark);		
+	});
+	
     var len=$("#addGoodsTab tbody tr").length;
     function isPay(payStatus){
 		if (payStatus=="<%=Constants.PayStatus.YESPAY%>") {

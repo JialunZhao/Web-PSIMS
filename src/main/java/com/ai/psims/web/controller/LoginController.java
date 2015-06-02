@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ai.psims.web.model.Employee;
+import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbPrivilege;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.service.IEmployeeService;
@@ -58,7 +58,7 @@ public class LoginController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         MD5keyBean md5keyBean = new MD5keyBean();
         password = md5keyBean.getkeyBeanofStr(password);
-        List<Employee> employeeList = employeeServiceImpl.getEmployee(username, password);
+        List<TbEmployee> employeeList = employeeServiceImpl.getEmployee(username, password);
         System.out.println("===========================================" + username);
         System.out.println("======================================================" + password);
 
@@ -68,7 +68,7 @@ public class LoginController {
             return resultMap;
         }
 	 // 当验证都通过后，把用户信息放在session里
-	    Employee employee = employeeList.get(0);
+        TbEmployee employee = employeeList.get(0);
 	    String status = employee.getStatus();
 	    if(!status.equals("01")){
 	    	resultMap.put("status", Boolean.FALSE);

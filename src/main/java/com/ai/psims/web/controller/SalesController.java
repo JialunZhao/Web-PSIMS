@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ai.psims.web.business.ISalesBusiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddSalesGoodsBean;
-import com.ai.psims.web.model.Employee;
-import com.ai.psims.web.model.EmployeeExample;
 import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesExample;
 import com.ai.psims.web.model.SalesGoods;
@@ -30,6 +28,8 @@ import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.StoragecheckExample.Criteria;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
+import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
@@ -49,13 +49,13 @@ public class SalesController extends BaseController {
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
 		List<TbCustomer> customersList = new ArrayList<TbCustomer>();
-		List<Employee> employeesList = new ArrayList<Employee>();
+		List<TbEmployee> employeesList = new ArrayList<TbEmployee>();
 		List<Sales> salesList = new ArrayList<Sales>();
 		SalesExample salesExample = new SalesExample();
 		salesExample.createCriteria().andSalesStatusNotEqualTo("00");
 		TbCustomerExample customerExample = new TbCustomerExample();
 		customerExample.createCriteria().andEndtimeIsNull();
-		EmployeeExample employeeExample = new EmployeeExample();
+		TbEmployeeExample employeeExample = new TbEmployeeExample();
 		employeeExample.createCriteria().andEndtimeIsNull();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		salesList = salesBusiness.selectByExample(salesExample);
