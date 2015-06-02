@@ -71,6 +71,7 @@ function modifyCurrentCustomer(obj) {
 			$('#modify_contactName').val(data[0].contactName)
 			$('#modify_contactTel').val(data[0].contactTel)
 			$('#modify_contactAddr').val(data[0].contactAddr)
+			$('#modify_area').val(data[0].area)
 			$('#modify_email').val(data[0].email)
 			$('#modify_employeeId').val(data[0].employeeId)
 			$('#modify_checkoutWarning').val(data[0].checkoutWarning)

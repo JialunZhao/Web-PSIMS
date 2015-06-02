@@ -64,8 +64,8 @@
 						<th>供应商奖金池</th>
 						<th>联系人名称</th>
 						<th>联系人电话</th>
-						<th>供应商区域</th>
 						<th>供应商地址</th>
+						<th>供应商区域</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -127,7 +127,7 @@
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">供应商类型:</span> <select
 									class="form-control addselect" name="provider_type"
-									tabindex="1" placeholder="供应商代码">
+									tabindex="1" placeholder="供应商类型">
 									<option value="0">请选择供应商类型：</option>
 									<option value="1">连锁</option>
 									<option value="2">商户</option>
@@ -277,8 +277,8 @@
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">供应商地址:</span> <input
 									type="text" class="form-control modify"
-									id="modify_providerContactAddress "
-									name="modify_providerContactAddress" placeholder="供应商地址"maxlength="200">
+									id="modify_providerContactAddress"
+									name="modify_providerContactAddress" placeholder="供应商地址" maxlength="200">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"

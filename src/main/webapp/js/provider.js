@@ -122,14 +122,11 @@ function modifyCurrentProvider(obj) {
 			$('#modify_providerCode').val(data[0].providerCode)
 			$('#modify_providerType').val(data[0].providerType)
 			$("#modify_providerPrizePool").val(data[0].providerPrizePool);
-			$("#modify_providerPrizePool_prize").val(
-					$("#modify_providerPrizePool option:selected").attr(
-							"prizePool"));
+			$("#modify_providerPrizePool_prize").val($("#modify_providerPrizePool option:selected").attr("prizePool"));
 			$('#modify_providerContactName').val(data[0].providerContactName)
 			$('#modify_providerContactTel').val(data[0].providerContactTel)
 			$('#modify_providerContactFax').val(data[0].providerContactFax)
-			$('#modify_providerContactAddress').val(
-					data[0].providerContactAddress)
+			$('#modify_providerContactAddress').val(data[0].providerContactAddress)
 			$('#modify_providerContactEmail').val(data[0].providerContactEmail)
 			$('#modify_providerArea').val(data[0].providerArea)
 			$('#modify_providerRemark').val(data[0].providerRemark)

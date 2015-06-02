@@ -67,6 +67,7 @@
 					<th>编码</th>
 					<th>类型</th>
 					<th>基本单位</th>
+					<th>供应商</th>
 					<th>进货价格</th>
 					<th>销售价格</th>
 					<th>奖金折扣(%)</th>
@@ -88,6 +89,7 @@
 						<td>${goodss.goodsCode}</td>
 						<td>${goodss.goodsType}</td>
 						<td>${goodss.goodsUnit}</td>
+						<td>${goodss.providerName}</td>
 						<td>${goodss.goodsActualCost}</td>
 						<td>${goodss.goodsPrice}</td>
 						<td>${goodss.goodsPrizePoolRatio}</td>

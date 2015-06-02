@@ -117,7 +117,7 @@ public class ProviderController extends BaseController {
 			tbProvider.setProviderPrizePool(systemParameterBussinessImpl
 					.getSystemParameterPrizePool(
 							Integer.parseInt(tbProvider.getProviderPrizePool()))
-					.getPpValueint().toString());
+					.getPpValue());
 			}else {
 				tbProvider.setProviderPrizePool("未关联奖金池");
 			}
@@ -459,7 +459,7 @@ public class ProviderController extends BaseController {
 					row.createCell(idx++).setCellValue(systemParameterBussinessImpl
 							.getSystemParameterPrizePool(
 									Integer.parseInt(tbProvider.getProviderPrizePool()))
-							.getPpValueint());
+							.getPpValue());
 					}else {
 						row.createCell(idx++).setCellValue("未关联奖金池");
 						row.createCell(idx++).setCellValue("未关联奖金池");
