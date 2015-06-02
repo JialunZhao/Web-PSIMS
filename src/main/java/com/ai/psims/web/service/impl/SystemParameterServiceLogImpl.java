@@ -30,7 +30,6 @@ public class SystemParameterServiceLogImpl implements ISystemParameterServiceLog
 		systemParameterLog.setpValue(systemParameter.getpValue());
 		systemParameterLog.setPpDesc(systemParameter.getPpValue());
 		systemParameterLog.setPpValue(systemParameter.getPpValue());
-		systemParameterLog.setPpValueint(systemParameter.getPpValueint());
 		systemParameterLogMapper.insert(systemParameterLog);
 	}
 
@@ -44,7 +43,7 @@ public class SystemParameterServiceLogImpl implements ISystemParameterServiceLog
 	@Override
 	public void updateByPid(TbSystemParameter systemParameter) {
 		TbSystemParameterLog log = new TbSystemParameterLog();
-		log.setpValue(systemParameter.getPpValueint().toString());
+		log.setpValue(systemParameter.getPpValue().toString());
 		systemParameterLogMapper.updateByPrimaryKey(log);
 	}
 

@@ -166,7 +166,7 @@
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td><c:out value="${s.ppValueint}" /></td>
+								<td><c:out value="${s.ppValue}" /></td>
 <!-- 								<td><input type="text" class="form-control" placeholder="+" value="+"></td> -->
 <!-- 								<td><input type="text" class="form-control" placeholder="-" value="-"></td> -->
 								<td><a href="#" data-toggle="modal"
@@ -311,8 +311,8 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValueint2"
-								name="ppValueint" type="text" class="form-control"
+								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValue2"
+								name="ppValue" type="text" class="form-control"
 								placeholder="奖金池额度" value="">
 						</div>
 					</div>
@@ -482,7 +482,7 @@
 						$("#pValue3").attr("value",messageInfor.pValue);
 						$("#pDesc3").attr("value",messageInfor.pDesc);
 						$("#ppDesc3").attr("value",messageInfor.ppDesc);
-						$("#ppValueint3").attr("value",messageInfor.ppValueint);
+						$("#ppValueint3").attr("value",messageInfor.ppValue);
 						
 					}
 			})
@@ -565,7 +565,7 @@
 					paramId : $("#paramId3").val(),
 					pValue : $("#pValue3").val(),
 					pDesc : $("#pDesc3").val(),
-					ppValueint : $("#ppValueint3").val()
+					ppValue : $("#ppValueint3").val()
 			};
 			$.ajax({
 				url : '${ctx}/sys/update.do',

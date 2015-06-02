@@ -9,7 +9,6 @@
     <result column="pp_key" property="ppKey" jdbcType="VARCHAR" />
     <result column="pp_desc" property="ppDesc" jdbcType="VARCHAR" />
     <result column="pp_value" property="ppValue" jdbcType="VARCHAR" />
-    <result column="pp_valueINT" property="ppValueint" jdbcType="BIGINT" />
     <result column="p_remark" property="pRemark" jdbcType="VARCHAR" />
     <result column="p_createtime" property="pCreatetime" jdbcType="TIMESTAMP" />
     <result column="p_status" property="pStatus" jdbcType="VARCHAR" />
@@ -73,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    param_id, p_key, p_desc, p_value, pp_key, pp_desc, pp_value, pp_valueINT, p_remark, 
-    p_createtime, p_status
+    param_id, p_key, p_desc, p_value, pp_key, pp_desc, pp_value, p_remark, p_createtime, 
+    p_status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSystemParameterExample" >
     select
@@ -109,12 +108,12 @@
   <insert id="insert" parameterType="com.ai.psims.web.model.TbSystemParameter" >
     insert into tb_system_parameter (param_id, p_key, p_desc, 
       p_value, pp_key, pp_desc, 
-      pp_value, pp_valueINT, p_remark, 
-      p_createtime, p_status)
+      pp_value, p_remark, p_createtime, 
+      p_status)
     values (#{paramId,jdbcType=INTEGER}, #{pKey,jdbcType=VARCHAR}, #{pDesc,jdbcType=VARCHAR}, 
       #{pValue,jdbcType=VARCHAR}, #{ppKey,jdbcType=VARCHAR}, #{ppDesc,jdbcType=VARCHAR}, 
-      #{ppValue,jdbcType=VARCHAR}, #{ppValueint,jdbcType=BIGINT}, #{pRemark,jdbcType=VARCHAR}, 
-      #{pCreatetime,jdbcType=TIMESTAMP}, #{pStatus,jdbcType=VARCHAR})
+      #{ppValue,jdbcType=VARCHAR}, #{pRemark,jdbcType=VARCHAR}, #{pCreatetime,jdbcType=TIMESTAMP}, 
+      #{pStatus,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbSystemParameter" >
     insert into tb_system_parameter
@@ -139,9 +138,6 @@
       </if>
       <if test="ppValue != null" >
         pp_value,
-      </if>
-      <if test="ppValueint != null" >
-        pp_valueINT,
       </if>
       <if test="pRemark != null" >
         p_remark,
@@ -174,9 +170,6 @@
       </if>
       <if test="ppValue != null" >
         #{ppValue,jdbcType=VARCHAR},
-      </if>
-      <if test="ppValueint != null" >
-        #{ppValueint,jdbcType=BIGINT},
       </if>
       <if test="pRemark != null" >
         #{pRemark,jdbcType=VARCHAR},
@@ -219,9 +212,6 @@
       <if test="record.ppValue != null" >
         pp_value = #{record.ppValue,jdbcType=VARCHAR},
       </if>
-      <if test="record.ppValueint != null" >
-        pp_valueINT = #{record.ppValueint,jdbcType=BIGINT},
-      </if>
       <if test="record.pRemark != null" >
         p_remark = #{record.pRemark,jdbcType=VARCHAR},
       </if>
@@ -245,7 +235,6 @@
       pp_key = #{record.ppKey,jdbcType=VARCHAR},
       pp_desc = #{record.ppDesc,jdbcType=VARCHAR},
       pp_value = #{record.ppValue,jdbcType=VARCHAR},
-      pp_valueINT = #{record.ppValueint,jdbcType=BIGINT},
       p_remark = #{record.pRemark,jdbcType=VARCHAR},
       p_createtime = #{record.pCreatetime,jdbcType=TIMESTAMP},
       p_status = #{record.pStatus,jdbcType=VARCHAR}
@@ -274,9 +263,6 @@
       <if test="ppValue != null" >
         pp_value = #{ppValue,jdbcType=VARCHAR},
       </if>
-      <if test="ppValueint != null" >
-        pp_valueINT = #{ppValueint,jdbcType=BIGINT},
-      </if>
       <if test="pRemark != null" >
         p_remark = #{pRemark,jdbcType=VARCHAR},
       </if>
@@ -297,7 +283,6 @@
       pp_key = #{ppKey,jdbcType=VARCHAR},
       pp_desc = #{ppDesc,jdbcType=VARCHAR},
       pp_value = #{ppValue,jdbcType=VARCHAR},
-      pp_valueINT = #{ppValueint,jdbcType=BIGINT},
       p_remark = #{pRemark,jdbcType=VARCHAR},
       p_createtime = #{pCreatetime,jdbcType=TIMESTAMP},
       p_status = #{pStatus,jdbcType=VARCHAR}

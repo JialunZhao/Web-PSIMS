@@ -21,8 +21,6 @@ public class TbSystemParameterLog {
 
     private String ppValue;
 
-    private Long ppValueint;
-
     private String pRemark;
 
     private Date pCreatetime;
@@ -99,14 +97,6 @@ public class TbSystemParameterLog {
 
     public void setPpValue(String ppValue) {
         this.ppValue = ppValue == null ? null : ppValue.trim();
-    }
-
-    public Long getPpValueint() {
-        return ppValueint;
-    }
-
-    public void setPpValueint(Long ppValueint) {
-        this.ppValueint = ppValueint;
     }
 
     public String getpRemark() {
