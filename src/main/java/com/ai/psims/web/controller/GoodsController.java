@@ -339,6 +339,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------4.业务处理-------------");
 		// 逻辑删除 修改状态为 00-失效 （00-失效 01-正常 02-下架 99-异常）
 		tbGoods.setGoodsStatus("00");
+		tbGoods.setGoodsEndtime(new Date());
 		int res = goodsBusiness.goodsModify(tbGoods);
 		toString();
 		logger.info(String.valueOf(res));
@@ -649,6 +650,7 @@ public class GoodsController extends BaseController {
 				sheet.setColumnWidth(idx++, 32 * 180);
 				sheet.setColumnWidth(idx++, 32 * 180);
 				sheet.setColumnWidth(idx++, 32 * 180);
+				sheet.setColumnWidth(idx++, 32 * 180);
 				
 				int rowNum = 0;
 				idx = 0;
@@ -659,6 +661,7 @@ public class GoodsController extends BaseController {
 				header.createCell(idx++).setCellValue("编码");
 				header.createCell(idx++).setCellValue("类型");
 				header.createCell(idx++).setCellValue("基本单位");
+				header.createCell(idx++).setCellValue("供应商");
 				header.createCell(idx++).setCellValue("进货价格");
 				header.createCell(idx++).setCellValue("销售价格");
 				header.createCell(idx++).setCellValue("奖金池折扣（%）");
@@ -681,6 +684,7 @@ public class GoodsController extends BaseController {
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsCode());
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsType());
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsUnit());
+					row.createCell(idx++).setCellValue(tbGoods.getProviderName());
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsActualCost());
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsPrice());
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsPrizePoolRatio());
@@ -694,7 +698,7 @@ public class GoodsController extends BaseController {
 					} 
 					row.createCell(idx++).setCellValue(tbGoods.getGoodsStatus());
 					row.createCell(idx++).setCellValue(sdf.format(tbGoods.getGoodsCreatetime()));
-					if (null !=tbGoods.getGoodsCreatetime()) {						
+					if (null !=tbGoods.getGoodsModifytime()) {						
 						row.createCell(idx++).setCellValue(sdf.format(tbGoods.getGoodsModifytime()));
 					}else {
 						row.createCell(idx++).setCellValue("无");

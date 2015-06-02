@@ -14,7 +14,7 @@ $("#addprovider_btn").click(
 					$("#add_provider_prizepool_prize").val('');
 					for (var i = 0; i < data.length; i++) {
 						$("#add_provider_prizepool").append(
-								'<option prizePool="' + data[i].ppValueint
+								'<option prizePool="' + data[i].ppValue
 										+ '" value="' + data[i].paramId + '">'
 										+ data[i].ppDesc + '</option>');
 					}
@@ -99,11 +99,11 @@ function modifyCurrentProvider(obj) {
 					'<option prizePool="" value="">请选择供应商</option>');
 			for (var i = 0; i < data.length; i++) {
 				$("#modify_providerPrizePool").append(
-						'<option prizePool="' + data[i].ppValueint
+						'<option prizePool="' + data[i].ppValue
 								+ '" value="' + data[i].paramId + '">'
 								+ data[i].ppDesc + '</option>');
 			}
-			$("#modify_providerPrizePool_prize").val(data[0].ppValueint);
+			$("#modify_providerPrizePool_prize").val(data[0].ppValue);
 		},
 	});
 
@@ -122,14 +122,11 @@ function modifyCurrentProvider(obj) {
 			$('#modify_providerCode').val(data[0].providerCode)
 			$('#modify_providerType').val(data[0].providerType)
 			$("#modify_providerPrizePool").val(data[0].providerPrizePool);
-			$("#modify_providerPrizePool_prize").val(
-					$("#modify_providerPrizePool option:selected").attr(
-							"prizePool"));
+			$("#modify_providerPrizePool_prize").val($("#modify_providerPrizePool option:selected").attr("prizePool"));
 			$('#modify_providerContactName').val(data[0].providerContactName)
 			$('#modify_providerContactTel').val(data[0].providerContactTel)
 			$('#modify_providerContactFax').val(data[0].providerContactFax)
-			$('#modify_providerContactAddress').val(
-					data[0].providerContactAddress)
+			$('#modify_providerContactAddress').val(data[0].providerContactAddress)
 			$('#modify_providerContactEmail').val(data[0].providerContactEmail)
 			$('#modify_providerArea').val(data[0].providerArea)
 			$('#modify_providerRemark').val(data[0].providerRemark)

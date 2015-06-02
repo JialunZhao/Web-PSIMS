@@ -38,6 +38,7 @@ String date=sdf.format(new Date());
 								<th>入库批次号</th>
 								<th>支付方式</th>
 								<th>入库状态</th>
+								<th>备注</th>
 								<th>操作</th>
 							</tr>
 						</thead>
@@ -46,16 +47,17 @@ String date=sdf.format(new Date());
 								<tr>
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
-									<td>${imports.importSerialNumber }</td>
-									<td>${imports.providerName }</td>
+									<td>${imports.importSerialNumber}</td>
+									<td>${imports.providerName}</td>
 									<td><fmt:formatDate value="${imports.importDatetime }"
 											pattern="yyyy-MM-dd" /></td>
-									<td>${imports.importBatchNumber }</td>
-									<td>${imports.paymentType }</td>
-									<td>${imports.importStatus }</td>
+									<td>${imports.importBatchNumber}</td>
+									<td>${imports.paymentType}</td>
+									<td>${imports.importStatus}</td>
+									<td>${imports.importRemark}</td>
 									<priv:privilege power="货品入库.增删改">
 									<td><a href="#"
-										onclick="goodsImport(${imports.importSerialNumber })">入库</a></td>
+										onclick="goodsImport(${imports.importSerialNumber})">入库</a></td>
 									</priv:privilege>
 								</tr>
 							</c:forEach>

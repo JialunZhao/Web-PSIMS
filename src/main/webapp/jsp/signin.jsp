@@ -52,7 +52,6 @@
 		</form>
 		<h5 id="errorcontent"></h5>
 
-		</form>
 
 	</div>
 	<!-- /container -->
@@ -130,7 +129,6 @@
 				}
 			})
 		}
-	</script>
 	</script>
 </body>
 </html>

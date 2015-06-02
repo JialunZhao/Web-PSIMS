@@ -67,6 +67,7 @@
 						<th>联系人电话</th>
 						<th>业务员</th>
 						<th>客户地址</th>
+						<th>区域</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -83,6 +84,7 @@
 							<td>${tbCustomers.contactTel}</td>
 							<td>${tbCustomers.employeeName}</td>
 							<td>${tbCustomers.contactAddr}</td>
+							<td>${tbCustomers.area}</td>
 							<priv:privilege power="客户管理.增删改">
 								<td><a href="javascript:void(0);"
 									onClick="modifyCurrentCustomer(this)">修改</a>/<a
@@ -167,6 +169,12 @@
 									style="background-color: #1abc9c;">客户地址:</span> <input
 									type="text" class="form-control add" name="contact_addr"
 									placeholder="客户地址" maxlength="200">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户区域:</span> <input
+									type="text" class="form-control add" name="area"
+									placeholder="客户区域" maxlength="20">
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
@@ -257,7 +265,8 @@
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">结账方式:</span> <select
 									class="form-control modifyselect" tabindex="1"
-									name="modify_checkout_code" id="modify_checkout_code" placeholder="结账方式">
+									name="modify_checkout_code" id="modify_checkout_code"
+									placeholder="结账方式">
 									<option value="0">请选择结账方式：</option>
 									<c:forEach var="tbSystemParameters"
 										items="${tbSystemParameters}">
@@ -285,6 +294,13 @@
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
+									style="background-color: #1abc9c;">客户区域:</span> <input
+									type="text" class="form-control add" name="modify_area"
+									id="modify_area"
+									placeholder="客户区域" maxlength="20">
+							</div>
+							<div class="input-group col-xs-6 col-md-offset-3">
+								<span class="input-group-addon"
 									style="background-color: #1abc9c;">客户电子邮箱:</span> <input
 									type="text" class="form-control" id="modify_email"
 									name="modify_email" placeholder="客户电子邮箱" value="">
@@ -303,7 +319,8 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">结账到期提醒：</span> <input
-									type="text" class="form-control modify" name="modify_checkoutWarning" id="modify_checkoutWarning"
+									type="text" class="form-control modify"
+									name="modify_checkoutWarning" id="modify_checkoutWarning"
 									placeholder="结账到期提醒："><span class="input-group-addon">天</span>
 							</div>
 							<div class="input-group col-xs-6 col-md-offset-3">
@@ -333,35 +350,39 @@
 	<script src="<%=path%>/js/flat-ui.min.js"></script>
 	<script src="<%=path%>/js/customer.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#delbtn").click(function() {
-				$("#delbtn").hide();
-				$("#delcommit").show();
-				$("#delcancle").show();
-				$(".chk").show();
-			});
-			$("#delcommit").click(function() {
-				$("#delbtn").show();
-				$("#delcommit").hide();
-				$("#delcancle").hide();
-				$(".chk").hide();
-			});
-			$("#delcancle").click(function() {
-				$("#delbtn").show();
-				$("#delcommit").hide();
-				$("#delcancle").hide();
-				$(".chk").hide();
-			});
-			$("#excel").click(function() {
-				window.location.href = "customerReportExecl?query_customerName=${customer_name}&query_customerType=${customer_type}&query_contactName=${contact_name}&query_contactTel=${contact_tel}";
-			});
-			$(function() {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
-		});
+		$(document)
+				.ready(
+						function() {
+							$("#delbtn").click(function() {
+								$("#delbtn").hide();
+								$("#delcommit").show();
+								$("#delcancle").show();
+								$(".chk").show();
+							});
+							$("#delcommit").click(function() {
+								$("#delbtn").show();
+								$("#delcommit").hide();
+								$("#delcancle").hide();
+								$(".chk").hide();
+							});
+							$("#delcancle").click(function() {
+								$("#delbtn").show();
+								$("#delcommit").hide();
+								$("#delcancle").hide();
+								$(".chk").hide();
+							});
+							$("#excel")
+									.click(
+											function() {
+												window.location.href = "customerReportExecl?query_customerName=${customer_name}&query_customerType=${customer_type}&query_contactName=${contact_name}&query_contactTel=${contact_tel}";
+											});
+							$(function() {
+								$('[data-toggle="tooltip"]').tooltip()
+							})
+						});
 	</script>
-	
-	
-	
+
+
+
 </body>
 </html>
