@@ -95,6 +95,7 @@ public class SystemParameterController {
     	String ppDesc = request.getParameter("ppDesc");
     	String pDesc = request.getParameter("pDesc");
     	int paramId = Integer.parseInt(request.getParameter("paramId"));
+    	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
     	String pKey = request.getParameter("pKey");
     	String ppValue = request.getParameter("ppValue");
     	TbSystemParameter systemParameter = new TbSystemParameter();
@@ -105,7 +106,7 @@ public class SystemParameterController {
     	systemParameter.setPpValue(ppValue);
     	systemParameterBussinessImpl.update(systemParameter);
     	if(systemParameter.getPpValue()!=null){
-    		TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
+    		sysParamete.setpRemark(ppValue);
     		systemParameterBussinessImpl.addRecord(sysParamete);
     	}
         resultMap.put("status", Boolean.TRUE);
