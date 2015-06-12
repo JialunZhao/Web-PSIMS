@@ -463,15 +463,20 @@
 			url: '${ctx}/sys/'+id+'/showPrizePool.do',
 			type: 'get',
 			success: function(messageRespon){
+				var vv = Math.pow(10,2);
 // 				alert(messageRespon.length);
 				var length=messageRespon.length;
 				for (var i = 0; i <length; i++) {
 					var tr = $("<tr></tr>");
 					var j=i+1;
+					var num = messageRespon[i].ppValue-messageRespon[i].pRemark;
+					var mun = messageRespon[i].pRemark-messageRespon[i].ppValue;
+					num = Math.round(num*vv)/vv;
+					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ (messageRespon[i].pRemark-messageRespon[i].ppValue) +
-							"</td>" + "<td>"+ (messageRespon[i].ppValue-messageRespon[i].pRemark) +
+							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
+							"</td>" + "<td>"+ num +
 							"</td>" + "<td>"+ messageRespon[i].pRemark +
 							"</td>")
 					tr.append(td);
