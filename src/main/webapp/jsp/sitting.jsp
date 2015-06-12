@@ -173,8 +173,8 @@
 									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a></td>
 								<td>
 									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
-									href="${s.paramId}/delete.do">删除</a></td>
+									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#" data-toggle="modal"
+									onclick="deleted(${s.paramId})">删除</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -411,8 +411,27 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="${ctx}/js/vendor/video.js"></script>
 <script src="${ctx}/js/flat-ui.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 <script type="text/javascript">
+	
 	function deleted(paramId){
+		var id = paramId;
+// 		alert("dfdfd");
+		var flag=false;
+        $.dialog.confirm("您确定要执行操作吗？", function () {
+        	   $.dialog.tips('执行确定操作');
+        	   next(id);
+//         	   alert(flag);
+        }, function(){
+            $.dialog.tips('执行取消操作');
+            flag=false;
+        });
+		
+		
+			
+		
+	}
+	function next(paramId){
 		var id = paramId;
 		$.ajax({
 			url : '${ctx}/providerController/'+id+'/delQue.do',
