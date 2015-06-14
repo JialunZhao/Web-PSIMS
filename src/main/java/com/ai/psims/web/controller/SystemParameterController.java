@@ -68,7 +68,7 @@ public class SystemParameterController {
     public List<TbSystemParameterLog> showPrizePool(@PathVariable int paramId) throws ParseException {
     	List<TbSystemParameterLog> list = new ArrayList<TbSystemParameterLog>();
     	List<TbSystemParameterLog> sysParamete = systemParameterBussinessImpl.getSysByLogId(paramId);
-    	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	if(sysParamete.size()>0){
     		for(TbSystemParameterLog log : sysParamete){
     			Date logDatetime = log.getLogDatetime();

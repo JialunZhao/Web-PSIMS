@@ -197,7 +197,7 @@
 							<tr>
 								<th>编号</th>
 								<th>奖金池名称</th>
-								<th>日期</th>
+								<th>修改时间</th>
 								<th>原始奖金</th>
 								<th>增加</th>
 								<th>减少</th>
@@ -369,7 +369,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel1">修改系统参数</h4>
+				<h4 class="modal-title" id="myModalLabel1">修改奖金池</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -389,7 +389,17 @@
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
 						<input id="ppValueint3" name="ppValueint3" type="text"
-							class="form-control" placeholder="奖金池额度"> 
+							class="form-control" placeholder="奖金池额度" onkeydown="onlyNum();"> 
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">+ :</span>
+						<input id="addval" name="addval" type="text"
+							class="form-control" placeholder="新增额度" onkeydown="onlyNum();"> 
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">—:</span>
+						<input id="cutval" name="cutval" type="text"
+							class="form-control" placeholder="减少额度" onkeydown="onlyNum();"> 
 					</div>
 				</div>
 			</div>
@@ -413,6 +423,13 @@
 <script src="${ctx}/js/flat-ui.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 <script type="text/javascript">
+	function onlyNum()
+	{
+// 		alert("只能输入数字");
+		if(!(event.keyCode==46)&&!(event.keyCode==8)&&!(event.keyCode==37)&&!(event.keyCode==39))
+			  if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)))
+			    event.returnValue=false;
+	}
 	
 	function deleted(paramId){
 		var id = paramId;
@@ -469,10 +486,10 @@
 				for (var i = 0; i <length; i++) {
 					var tr = $("<tr></tr>");
 					var j=i+1;
-					var num = messageRespon[i].ppValue-messageRespon[i].pRemark;
-					var mun = messageRespon[i].pRemark-messageRespon[i].ppValue;
-					num = Math.round(num*vv)/vv;
-					mun = Math.round(mun*vv)/vv;
+					var num = parseInt(messageRespon[i].ppValue)-parseInt(messageRespon[i].pRemark);
+					var mun = parseInt(messageRespon[i].pRemark)-parseInt(messageRespon[i].ppValue);
+// 					num = Math.round(num*vv)/vv;
+// 					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
 							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
@@ -583,13 +600,19 @@
 	}
 	function update(pValue){
 // 		alert(pValue);
+		var addval = $("#addval").val();
+		var cutval = $("#cutval").val();
+		var ppValueint3 = $("#ppValueint3").val();
+		var finalval = parseInt(ppValueint3)+parseInt(addval)-parseInt(cutval);
+		
+// 		alert(parseInt(addval));
 		if(pValue=="p_ee"){
 			var obj = {
 					ppDesc : $("#ppDesc3").val(),
 					paramId : $("#paramId3").val(),
 					pValue : $("#pValue3").val(),
 					pDesc : $("#pDesc3").val(),
-					ppValue : $("#ppValueint3").val()
+					ppValue : finalval,
 			};
 			$.ajax({
 				url : '${ctx}/sys/update.do',
