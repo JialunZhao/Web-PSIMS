@@ -243,8 +243,7 @@ public class EmployeeController extends BaseController{
 				TbEmployeeExample.Criteria criteria = tbEmployeeExample.createCriteria();
 				
 				logger.info("------------4.业务处理-------------");
-				// 只查询状态为正常的记录 00-失效 01-正常 99-异常
-//				criteria.andGoodsStatusNotEqualTo("00");
+				criteria.andStatusEqualTo("01");
 				tbEmployees = employeeServiceImpl.selectByExample(tbEmployeeExample);
 				
 				logger.info("------------建立 Excel -Sheet-------------");
@@ -282,12 +281,36 @@ public class EmployeeController extends BaseController{
 					row = sheet.createRow(rowNum++);
 					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().toString() == null ? "无" : tbEmployee.getEmployeeId().toString());
 					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName() == null ? "无" : tbEmployee.getEmployeeName());
-					row.createCell(idx++).setCellValue(tbEmployee.getSex() == null ? "无" : tbEmployee.getSex());
-//					row.createCell(idx++).setCellValue(tbEmployee.getBirthday().toString() == null ? "无" : tbEmployee.getBirthday().toString());
+					if(tbEmployee.getSex()=="1"){
+						row.createCell(idx++).setCellValue("男");
+					}
+					if(tbEmployee.getSex()=="0"){
+						row.createCell(idx++).setCellValue("女");
+					}
+					if(tbEmployee.getSex()==null){
+						row.createCell(idx++).setCellValue("无");
+					}
 					row.createCell(idx++).setCellValue(tbEmployee.getIdcard() == null ? "无" : tbEmployee.getIdcard());
 					row.createCell(idx++).setCellValue(tbEmployee.getContactTel() == null ? "无" : tbEmployee.getContactTel());
 					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr() == null ? "无" : tbEmployee.getContactAddr());
-					row.createCell(idx++).setCellValue(tbEmployee.getRole() == null ? "无" : tbEmployee.getRole());
+					if(tbEmployee.getRole()=="1"){
+						row.createCell(idx++).setCellValue("销售");
+					}
+					if(tbEmployee.getRole()=="2"){
+						row.createCell(idx++).setCellValue("管理");
+					}
+					if(tbEmployee.getRole()=="3"){
+						row.createCell(idx++).setCellValue("财务");
+					}
+					if(tbEmployee.getRole()=="4"){
+						row.createCell(idx++).setCellValue("物流");
+					}
+					if(tbEmployee.getRole()=="5"){
+						row.createCell(idx++).setCellValue("其它");
+					}
+					if(tbEmployee.getRole()==null){
+						row.createCell(idx++).setCellValue("无");
+					}
 					row.createCell(idx++).setCellValue(tbEmployee.getRemark() == null ? "无" : tbEmployee.getRemark());
 				}
 			}

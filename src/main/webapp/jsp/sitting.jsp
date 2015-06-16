@@ -5,15 +5,15 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	<h3 class="page-header">系统设置管理</h3>
 	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#p_aa" data-toggle="tab">基本单位</a></li>
+		<li class="active"><a href="#p_ee" data-toggle="tab">奖金池</a></li>
+		<li><a href="#p_aa" data-toggle="tab">基本单位</a></li>
 		<li><a href="#p_bb" data-toggle="tab">商品类型</a></li>
 		<li><a href="#p_cc" data-toggle="tab">支付方式</a></li>
 		<li><a href="#p_dd" data-toggle="tab">收款方式</a></li>
-		<li><a href="#p_ee" data-toggle="tab">奖金池</a></li>
 		<li><a href="#p_ff" data-toggle="tab">结账方式</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
-		<div class="tab-pane fade in active" id="p_aa">
+		<div class="tab-pane fade" id="p_aa">
 		<button type="button" class="btn btn-primary" onclick="add('GoodsUnit')">新增基本单位</button>
 			<table class="table table-striped">
 				<thead>
@@ -140,7 +140,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="tab-pane fade" id="p_ee">
+		<div class="tab-pane fade in active" id="p_ee">
 		<button type="button" class="btn btn-primary" onclick="add('PrizePool')">新增奖金池</button>
 			<table class="table table-striped">
 				<thead>
@@ -312,7 +312,7 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValue2"
-								name="ppValue" type="text" class="form-control"
+								name="ppValue" type="text" class="form-control" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)"
 								placeholder="奖金池额度" value="">
 						</div>
 					</div>
@@ -389,17 +389,17 @@
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
 						<input id="ppValueint3" name="ppValueint3" type="text"
-							class="form-control" placeholder="奖金池额度" onkeydown="onlyNum();"> 
+							class="form-control" placeholder="奖金池额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">+ :</span>
 						<input id="addval" name="addval" type="text"
-							class="form-control" placeholder="新增额度" onkeydown="onlyNum();"> 
+							class="form-control" placeholder="新增额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">—:</span>
 						<input id="cutval" name="cutval" type="text"
-							class="form-control" placeholder="减少额度" onkeydown="onlyNum();"> 
+							class="form-control" placeholder="减少额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
 					</div>
 				</div>
 			</div>
@@ -423,13 +423,25 @@
 <script src="${ctx}/js/flat-ui.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 <script type="text/javascript">
-	function onlyNum()
-	{
-// 		alert("只能输入数字");
-		if(!(event.keyCode==46)&&!(event.keyCode==8)&&!(event.keyCode==37)&&!(event.keyCode==39))
-			  if(!((event.keyCode>=48&&event.keyCode<=57)||(event.keyCode>=96&&event.keyCode<=105)))
-			    event.returnValue=false;
-	}
+	function clearNoNum(event,obj){ 
+	    //响应鼠标事件，允许左右方向键移动 
+	    event = window.event||event; 
+	    if(event.keyCode == 37 | event.keyCode == 39){ 
+	        return; 
+	    } 
+	    //先把非数字的都替换掉，除了数字和. 
+	    obj.value = obj.value.replace(/[^\d.]/g,""); 
+	    //必须保证第一个为数字而不是. 
+	    obj.value = obj.value.replace(/^\./g,""); 
+	    //保证只有出现一个.而没有多个. 
+	    obj.value = obj.value.replace(/\.{2,}/g,"."); 
+	    //保证.只出现一次，而不能出现两次以上 
+	    obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$","."); 
+	} 
+	function checkNum(obj){ 
+	    //为了去除最后一个. 
+	    obj.value = obj.value.replace(/\.$/g,""); 
+	} 
 	
 	function deleted(paramId){
 		var id = paramId;
@@ -486,10 +498,10 @@
 				for (var i = 0; i <length; i++) {
 					var tr = $("<tr></tr>");
 					var j=i+1;
-					var num = parseInt(messageRespon[i].ppValue)-parseInt(messageRespon[i].pRemark);
-					var mun = parseInt(messageRespon[i].pRemark)-parseInt(messageRespon[i].ppValue);
-// 					num = Math.round(num*vv)/vv;
-// 					mun = Math.round(mun*vv)/vv;
+					var num = parseFloat(messageRespon[i].ppValue)-parseFloat(messageRespon[i].pRemark);
+					var mun = parseFloat(messageRespon[i].pRemark)-parseFloat(messageRespon[i].ppValue);
+					num = Math.round(num*vv)/vv;
+					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
 							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
@@ -613,7 +625,7 @@
 // 		alert(cutval);
 		var ppValueint3 = $("#ppValueint3").val();
 		
-		var finalval = parseInt(ppValueint3)+parseInt(addval)-parseInt(cutval);
+		var finalval = parseFloat(ppValueint3)+parseFloat(addval)-parseFloat(cutval);
 // 		alert(finalval);
 		
 // 		alert(parseInt(addval));
