@@ -600,10 +600,21 @@
 	}
 	function update(pValue){
 // 		alert(pValue);
+		
 		var addval = $("#addval").val();
+		if($("#addval").val()=="" || $("#addval").val().length==0){
+			addval = 0;
+		}
+// 		alert(addval);
 		var cutval = $("#cutval").val();
+		if($("#cutval").val()=="" || $("#cutval").val().length==0){
+			cutval = 0;
+		}
+// 		alert(cutval);
 		var ppValueint3 = $("#ppValueint3").val();
+		
 		var finalval = parseInt(ppValueint3)+parseInt(addval)-parseInt(cutval);
+// 		alert(finalval);
 		
 // 		alert(parseInt(addval));
 		if(pValue=="p_ee"){
@@ -613,6 +624,7 @@
 					pValue : $("#pValue3").val(),
 					pDesc : $("#pDesc3").val(),
 					ppValue : finalval,
+					pKey : "SYS",
 			};
 			$.ajax({
 				url : '${ctx}/sys/update.do',
@@ -621,6 +633,7 @@
 				success : function(messageInfor) {
 					
 //						var messageInfor = eval("(" + messageRespon + ")");
+// 					alert(messageInfor.status);
 					if (messageInfor.status) {
 //							messageLabel.html("<div style='color:limegreen'>"
 //									+ messageInfor.message + "</div>");
