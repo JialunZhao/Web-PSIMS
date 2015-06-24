@@ -84,7 +84,6 @@ public class ImportController extends BaseController {
 
 	}
 
-	@SuppressWarnings("null")
 	@RequestMapping("/queryGoods")
 	public void queryGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -98,8 +97,9 @@ public class ImportController extends BaseController {
 			criteria.andProviderIdEqualTo(Integer.parseInt(providerId));
 		}
 		criteria.andGoodsEndtimeIsNull();
+		criteria.andGoodsStatusEqualTo("01");
 		goodsList = queryBus.queryGoodsByName(tbGoodsExample);
-		if (goodsList == null && goodsList.size() == 0) {
+		if (null == goodsList || goodsList.size() ==0) {
 			responseFailed(response, "ERROR", data);
 		} else {
 			data.put("list", JSON.toJSONString(goodsList));

@@ -84,4 +84,10 @@ public class CustomerBusinessImpl implements ICustomerBusiness {
 		return customerServiceImpl.modifyCustomerInfo(customerModify);
 	}
 
+	@Override
+	public TbCustomer customerById(Integer customerId) {
+		logger.info("customerById");
+		return customerServiceImpl.selectCustomerInfo(customerId);
+	}
+
 }

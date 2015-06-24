@@ -104,7 +104,7 @@
 								href="#"
 								onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
 								href="#"
-								onclick="deleteImportData(${imports.importSerialNumber },${imports.importStatus })">删除</a></td>
+								onclick="deleteImportData(${imports.importSerialNumber },'${imports.importStatus }')">删除</a></td>
 						</priv:privilege>
 					</tr>
 				</c:forEach>
@@ -280,17 +280,17 @@
 						</table>
 					</div>
 
-					<div class="input-group col-xs-1">
-						<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button>
-					</div>
+					<!-- 					<div class="input-group col-xs-1"> -->
+					<!-- 					<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button> -->
+					<!-- 					</div> -->
 				</div>
 			</div>
 
 
 			<div class="modal-footer">
-				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" id="sureAdd">确认新增</button> -->
-				<button type="button" class="btn btn-primary" id="getBack">返回</button>
+				<!-- 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button> -->
+				<button type="submit" class="btn btn-primary" id="suerAdd" style="display: none;" >确认下单</button>
+				<button type="button" class="btn btn-default" id="getBack">返回</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -440,7 +440,7 @@
 	    					                  	+'<td>'+isNull(goodsList[i].importBatchNumber)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].paymentType)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].importStatus)+'</td>'
-	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a>/<a href="#" onclick="deleteImportData('+isNull(goodsList[i].importSerialNumber)+','+isNull(goodsList[i].importStatus)+')">删除</a></td></tr>' );
+	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a>/<a href="#" onclick="deleteImportData('+isNull(goodsList[i].importSerialNumber)+',\''+isNull(goodsList[i].importStatus)+'\')">删除</a></td></tr>' );
 	        								
     								}
                                 
@@ -479,8 +479,13 @@
                         modal : true,
                         showBusi : false,
                         data:{'providerId':providerId},
-                        success:function(data){  
+                        success:function(data){    
+//                         			console.dir(data);
                         			var json = $.parseJSON(data);
+									if (json.RES_RESULT=="FAILED") {
+										alert("此供应商下无商品");
+										return
+									}
     								var goodsList=$.parseJSON(json.RES_DATA.list);
     									for (var i = 0; i < goodsList.length; i++) {
         									$("#goodsName").append( "<option value='"+goodsList[i].goodsId+"'>"+goodsList[i].goodsName+"</option>" );
@@ -506,6 +511,7 @@
 		}
     	
     	function deleteImportData(importSerialNumber,importStatus){
+    		alert(importSerialNumber);
     		if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01%>') {
 				alert("商品部分到货，该订单不能删除。");
 			}else {
@@ -554,7 +560,6 @@
       $("#addgoodsbtn").click(function(){
     	var providerName=$("#providerName").val();
     	var payStatus=$("#payStatus").val();
-    	alert(providerName);
     	if (checkIsNull(providerName) || providerName =="0" ) {
 			alert("请选择供应商");
 			return;
@@ -702,6 +707,7 @@
         $("#addgoodstb").show();
         $("#addgoodsbtn").show();
         $("#importgoodsform").show();
+        $("#suerAdd").show();
       });
       $("#modifyaddgoodsbtn").click(function(){
         $("#modifyaddgoods").show();
@@ -762,6 +768,7 @@
                     	  $("#addgoodstb").hide();
                     	  $("#importgoodsform").show();
                     	  $("#addgoodsbtn").show();
+                          $("#suerAdd").hide();
                   	  }  
                   });      
       });

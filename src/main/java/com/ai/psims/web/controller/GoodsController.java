@@ -339,6 +339,7 @@ public class GoodsController extends BaseController {
 		logger.info("------------4.业务处理-------------");
 		// 逻辑删除 修改状态为 00-失效 （00-失效 01-正常 02-下架 99-异常）
 		tbGoods.setGoodsStatus("00");
+		tbGoods.setGoodsEndtime(new Date());
 		int res = goodsBusiness.goodsModify(tbGoods);
 		toString();
 		logger.info(String.valueOf(res));

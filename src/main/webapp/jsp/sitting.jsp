@@ -444,16 +444,16 @@
 			url: '${ctx}/sys/'+id+'/showPrizePool.do',
 			type: 'get',
 			success: function(messageRespon){
-				alert(messageRespon.length);
+// 				alert(messageRespon.length);
 				var length=messageRespon.length;
 				for (var i = 0; i <length; i++) {
 					var tr = $("<tr></tr>");
 					var j=i+1;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ messageRespon[i].ppValueint +"</td>"+ "<td>"+ messageRespon[i].ppValueint +
-							"</td>" + "<td>"+ messageRespon[i].ppValueint +
-							"</td>" + "<td>"+ messageRespon[i].ppValueint +
+							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ (messageRespon[i].pRemark-messageRespon[i].ppValue) +
+							"</td>" + "<td>"+ (messageRespon[i].ppValue-messageRespon[i].pRemark) +
+							"</td>" + "<td>"+ messageRespon[i].pRemark +
 							"</td>")
 					tr.append(td);
 					$("#tableGood").append(tr);

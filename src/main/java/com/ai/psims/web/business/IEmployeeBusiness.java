@@ -8,4 +8,6 @@ import com.ai.psims.web.model.TbEmployeeExample;
 public interface IEmployeeBusiness {
 
 	public List<TbEmployee> getEmployees(TbEmployeeExample employeeExample);
+
+	public TbEmployee getEmployeeById(Integer employeeId);
 }

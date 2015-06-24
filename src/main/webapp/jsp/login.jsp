@@ -142,6 +142,5 @@
 	<script src="${ctx}/js/vendor/video.js"></script>
 	<script src="${ctx}/js/flat-ui.min.js"></script>
 	
-	</script>
 </body>
 </html>

@@ -28,8 +28,9 @@ public class SystemParameterServiceLogImpl implements ISystemParameterServiceLog
 		systemParameterLog.setpDesc(systemParameter.getpDesc());
 		systemParameterLog.setpKey(systemParameter.getpKey());
 		systemParameterLog.setpValue(systemParameter.getpValue());
-		systemParameterLog.setPpDesc(systemParameter.getPpValue());
+		systemParameterLog.setPpDesc(systemParameter.getPpDesc());
 		systemParameterLog.setPpValue(systemParameter.getPpValue());
+		systemParameterLog.setpRemark(systemParameter.getpRemark());
 		systemParameterLogMapper.insert(systemParameterLog);
 	}
 

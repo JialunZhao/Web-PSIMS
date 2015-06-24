@@ -174,6 +174,7 @@ String date=sdf.format(new Date());
     		selOpt.remove();
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		$("#importSerialNumber").val(importSerialNumber);
+			$("#importgoods").modal("show");
 			$.ajax(  
                     {  
                         url:'<%=path%>/importController/goodsImport.do',  
@@ -186,8 +187,7 @@ String date=sdf.format(new Date());
 								var goodsName=$.parseJSON(json.RES_DATA.goodsName);
 								for (var i = 0; i < goodsName.length; i++) {
 									$("#goodsName").append( "<option value='"+goodsName[i]+"'>"+goodsName[i]+"</option>" );
-								}
-								$("#importgoods").modal("show");
+								}								
 							}
                                 
                     }  
@@ -377,7 +377,7 @@ String date=sdf.format(new Date());
     	  var addbtnIsHidden=$("#addgoodstb").is(":hidden");
     	  var addGoodIsHidden=$("#addgoods").is(":hidden");
     	  if (!impIsHidden) {
-    		  $("#importgoods").hide();
+    		  $("#importgoods").modal("hide");
 		  }
     	  if(!addbtnIsHidden){
     		  $("#addgoods").show();

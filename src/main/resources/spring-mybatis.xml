@@ -98,6 +98,7 @@
            <!--拦截查看所有用户登录操作-->
              <mvc:mapping path="/user/*.do"/>
              <mvc:mapping path="/sys/*.do"/>
+             <mvc:mapping path="/reLogin.do"/>
              <mvc:mapping path="/customerController/*"/>  
              <mvc:mapping path="/providerController/*"/>  
              <mvc:mapping path="/goodsController/*"/>  
