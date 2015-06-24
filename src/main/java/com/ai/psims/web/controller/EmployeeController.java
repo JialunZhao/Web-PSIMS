@@ -1,5 +1,7 @@
 package com.ai.psims.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.model.TbPrivilege;
 import com.ai.psims.web.service.IEmployeeService;
 import com.ai.psims.web.service.IPrivilegeService;
@@ -35,7 +46,10 @@ import com.ai.psims.web.util.MD5keyBean;
 @Controller
 @SessionAttributes("mysession")
 @RequestMapping("/user")
-public class EmployeeController {
+public class EmployeeController extends BaseController{
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(StorageCheckReportController.class);
 
 	@Resource(name="employeeServiceImpl")
     private IEmployeeService employeeServiceImpl;
@@ -214,7 +228,97 @@ public class EmployeeController {
        
         return resultMap;
     }
+    
+    @RequestMapping(value = "/execl")
+	public View execl(Model model, HttpServletRequest request) {
+		logger.info("------------以 Apache POI 实现 AbstractExcelView-------------");
+		View view = new AbstractExcelView() {
+			@Override
+			public void buildExcelDocument(@SuppressWarnings("rawtypes") Map map, HSSFWorkbook workbook,
+					HttpServletRequest request, HttpServletResponse response)
+					throws Exception {
+				logger.info("------------1.初始化-------------");
+				List<TbEmployee> tbEmployees = new ArrayList<TbEmployee>();
+				TbEmployeeExample tbEmployeeExample = new TbEmployeeExample();
+				TbEmployeeExample.Criteria criteria = tbEmployeeExample.createCriteria();
+				
+				logger.info("------------4.业务处理-------------");
+				criteria.andStatusEqualTo("01");
+				tbEmployees = employeeServiceImpl.selectByExample(tbEmployeeExample);
+				
+				logger.info("------------建立 Excel -Sheet-------------");
+				HSSFSheet sheet = workbook.createSheet("库存清单");
+				logger.info("------------设置行列的默认宽度和高度-------------");
+				sheet.setColumnWidth(0, 32 * 80);// 对A列设置宽度为180像素
+				sheet.setColumnWidth(1, 32 * 180);
+				sheet.setColumnWidth(2, 32 * 80);
+				sheet.setColumnWidth(3, 32 * 80);
+				sheet.setColumnWidth(4, 32 * 80);
+				sheet.setColumnWidth(5, 32 * 80);
+				sheet.setColumnWidth(6, 32 * 80);
+				sheet.setColumnWidth(7, 32 * 180);
+//				sheet.setColumnWidth(8, 32 * 180);
+//				sheet.setColumnWidth(9, 32 * 180);
+				
+				int rowNum = 0;
+				int idx = 0;
+				logger.info("------------建立标题-------------");
+				HSSFRow header = sheet.createRow(rowNum++);
+				header.createCell(idx++).setCellValue("编号");
+				header.createCell(idx++).setCellValue("员工姓名");
+				header.createCell(idx++).setCellValue("员工性别");
+				header.createCell(idx++).setCellValue("身份证号");
+				header.createCell(idx++).setCellValue("联系电话");
+				header.createCell(idx++).setCellValue("联络地址");
+				header.createCell(idx++).setCellValue("职务");
+				header.createCell(idx++).setCellValue("备注");
+				logger.info("------------输出内容-------------");
+				HSSFRow row;
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
 
+				for (TbEmployee tbEmployee : tbEmployees) {
+					idx = 0;
+					row = sheet.createRow(rowNum++);
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().toString() == null ? "无" : tbEmployee.getEmployeeId().toString());
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName() == null ? "无" : tbEmployee.getEmployeeName());
+					if(tbEmployee.getSex()=="1"){
+						row.createCell(idx++).setCellValue("男");
+					}
+					if(tbEmployee.getSex()=="0"){
+						row.createCell(idx++).setCellValue("女");
+					}
+					if(tbEmployee.getSex()==null){
+						row.createCell(idx++).setCellValue("无");
+					}
+					row.createCell(idx++).setCellValue(tbEmployee.getIdcard() == null ? "无" : tbEmployee.getIdcard());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactTel() == null ? "无" : tbEmployee.getContactTel());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr() == null ? "无" : tbEmployee.getContactAddr());
+					if(tbEmployee.getRole()=="1"){
+						row.createCell(idx++).setCellValue("销售");
+					}
+					if(tbEmployee.getRole()=="2"){
+						row.createCell(idx++).setCellValue("管理");
+					}
+					if(tbEmployee.getRole()=="3"){
+						row.createCell(idx++).setCellValue("财务");
+					}
+					if(tbEmployee.getRole()=="4"){
+						row.createCell(idx++).setCellValue("物流");
+					}
+					if(tbEmployee.getRole()=="5"){
+						row.createCell(idx++).setCellValue("其它");
+					}
+					if(tbEmployee.getRole()==null){
+						row.createCell(idx++).setCellValue("无");
+					}
+					row.createCell(idx++).setCellValue(tbEmployee.getRemark() == null ? "无" : tbEmployee.getRemark());
+				}
+			}
+		};
+		logger.info("------------5.返回结果-------------");
+		logger.info("------------回传 View 对象，返回生成的 Excel 档-------------");
+		return view;
+	}
 
 
 

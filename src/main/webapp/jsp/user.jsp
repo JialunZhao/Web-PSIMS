@@ -62,7 +62,7 @@
 						<thead>
 							<tr>
 								<th class="chk" style="display: none"><input
-									type="checkbox" aria-label="..."></th>
+									type="checkbox"  aria-label="..."></th>
 								<th>编号</th>
 								<th>员工名称</th>
 								<th>登录账号</th>
@@ -667,9 +667,11 @@
 				$("#delbtn").hide();
 				$("#delcommit").show();
 				$("#delcancle").show();
-				$(".chk").show();
+				$(".chk").hide();
+				
 			});
 			$("#delcommit").click(function() {
+				window.location.href = "execl";
 				$("#delbtn").show();
 				$("#delcommit").hide();
 				$("#delcancle").hide();

@@ -5,15 +5,15 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	<h3 class="page-header">系统设置管理</h3>
 	<ul id="myTab" class="nav nav-tabs">
-		<li class="active"><a href="#p_aa" data-toggle="tab">基本单位</a></li>
+		<li class="active"><a href="#p_ee" data-toggle="tab">奖金池</a></li>
+		<li><a href="#p_aa" data-toggle="tab">基本单位</a></li>
 		<li><a href="#p_bb" data-toggle="tab">商品类型</a></li>
 		<li><a href="#p_cc" data-toggle="tab">支付方式</a></li>
 		<li><a href="#p_dd" data-toggle="tab">收款方式</a></li>
-		<li><a href="#p_ee" data-toggle="tab">奖金池</a></li>
 		<li><a href="#p_ff" data-toggle="tab">结账方式</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
-		<div class="tab-pane fade in active" id="p_aa">
+		<div class="tab-pane fade" id="p_aa">
 		<button type="button" class="btn btn-primary" onclick="add('GoodsUnit')">新增基本单位</button>
 			<table class="table table-striped">
 				<thead>
@@ -140,7 +140,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="tab-pane fade" id="p_ee">
+		<div class="tab-pane fade in active" id="p_ee">
 		<button type="button" class="btn btn-primary" onclick="add('PrizePool')">新增奖金池</button>
 			<table class="table table-striped">
 				<thead>
@@ -173,8 +173,8 @@
 									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a></td>
 								<td>
 									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a
-									href="${s.paramId}/delete.do">删除</a></td>
+									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#" data-toggle="modal"
+									onclick="deleted(${s.paramId})">删除</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -197,7 +197,7 @@
 							<tr>
 								<th>编号</th>
 								<th>奖金池名称</th>
-								<th>日期</th>
+								<th>修改时间</th>
 								<th>原始奖金</th>
 								<th>增加</th>
 								<th>减少</th>
@@ -312,7 +312,7 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValue2"
-								name="ppValue" type="text" class="form-control"
+								name="ppValue" type="text" class="form-control" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)"
 								placeholder="奖金池额度" value="">
 						</div>
 					</div>
@@ -369,7 +369,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel1">修改系统参数</h4>
+				<h4 class="modal-title" id="myModalLabel1">修改奖金池</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -389,7 +389,17 @@
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
 						<input id="ppValueint3" name="ppValueint3" type="text"
-							class="form-control" placeholder="奖金池额度"> 
+							class="form-control" placeholder="奖金池额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">+ :</span>
+						<input id="addval" name="addval" type="text"
+							class="form-control" placeholder="新增额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
+					</div>
+					<div class="input-group col-xs-6 col-md-offset-3">
+						<span class="input-group-addon" style="background-color: #1abc9c;">—:</span>
+						<input id="cutval" name="cutval" type="text"
+							class="form-control" placeholder="减少额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
 					</div>
 				</div>
 			</div>
@@ -411,8 +421,46 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="${ctx}/js/vendor/video.js"></script>
 <script src="${ctx}/js/flat-ui.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 <script type="text/javascript">
+	function clearNoNum(event,obj){ 
+	    //响应鼠标事件，允许左右方向键移动 
+	    event = window.event||event; 
+	    if(event.keyCode == 37 | event.keyCode == 39){ 
+	        return; 
+	    } 
+	    //先把非数字的都替换掉，除了数字和. 
+	    obj.value = obj.value.replace(/[^\d.]/g,""); 
+	    //必须保证第一个为数字而不是. 
+	    obj.value = obj.value.replace(/^\./g,""); 
+	    //保证只有出现一个.而没有多个. 
+	    obj.value = obj.value.replace(/\.{2,}/g,"."); 
+	    //保证.只出现一次，而不能出现两次以上 
+	    obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$","."); 
+	} 
+	function checkNum(obj){ 
+	    //为了去除最后一个. 
+	    obj.value = obj.value.replace(/\.$/g,""); 
+	} 
+	
 	function deleted(paramId){
+		var id = paramId;
+// 		alert("dfdfd");
+		var flag=false;
+        $.dialog.confirm("您确定要执行操作吗？", function () {
+        	   $.dialog.tips('执行确定操作');
+        	   next(id);
+//         	   alert(flag);
+        }, function(){
+            $.dialog.tips('执行取消操作');
+            flag=false;
+        });
+		
+		
+			
+		
+	}
+	function next(paramId){
 		var id = paramId;
 		$.ajax({
 			url : '${ctx}/providerController/'+id+'/delQue.do',
@@ -444,15 +492,20 @@
 			url: '${ctx}/sys/'+id+'/showPrizePool.do',
 			type: 'get',
 			success: function(messageRespon){
+				var vv = Math.pow(10,2);
 // 				alert(messageRespon.length);
 				var length=messageRespon.length;
 				for (var i = 0; i <length; i++) {
 					var tr = $("<tr></tr>");
 					var j=i+1;
+					var num = parseFloat(messageRespon[i].ppValue)-parseFloat(messageRespon[i].pRemark);
+					var mun = parseFloat(messageRespon[i].pRemark)-parseFloat(messageRespon[i].ppValue);
+					num = Math.round(num*vv)/vv;
+					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ (messageRespon[i].pRemark-messageRespon[i].ppValue) +
-							"</td>" + "<td>"+ (messageRespon[i].ppValue-messageRespon[i].pRemark) +
+							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
+							"</td>" + "<td>"+ num +
 							"</td>" + "<td>"+ messageRespon[i].pRemark +
 							"</td>")
 					tr.append(td);
@@ -559,13 +612,31 @@
 	}
 	function update(pValue){
 // 		alert(pValue);
+		
+		var addval = $("#addval").val();
+		if($("#addval").val()=="" || $("#addval").val().length==0){
+			addval = 0;
+		}
+// 		alert(addval);
+		var cutval = $("#cutval").val();
+		if($("#cutval").val()=="" || $("#cutval").val().length==0){
+			cutval = 0;
+		}
+// 		alert(cutval);
+		var ppValueint3 = $("#ppValueint3").val();
+		
+		var finalval = parseFloat(ppValueint3)+parseFloat(addval)-parseFloat(cutval);
+// 		alert(finalval);
+		
+// 		alert(parseInt(addval));
 		if(pValue=="p_ee"){
 			var obj = {
 					ppDesc : $("#ppDesc3").val(),
 					paramId : $("#paramId3").val(),
 					pValue : $("#pValue3").val(),
 					pDesc : $("#pDesc3").val(),
-					ppValue : $("#ppValueint3").val()
+					ppValue : finalval,
+					pKey : "SYS",
 			};
 			$.ajax({
 				url : '${ctx}/sys/update.do',
@@ -574,6 +645,7 @@
 				success : function(messageInfor) {
 					
 //						var messageInfor = eval("(" + messageRespon + ")");
+// 					alert(messageInfor.status);
 					if (messageInfor.status) {
 //							messageLabel.html("<div style='color:limegreen'>"
 //									+ messageInfor.message + "</div>");
