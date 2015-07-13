@@ -13,4 +13,6 @@ public interface ICustomerBusiness {
 	public int customerModify(TbCustomer customerModify);
 
 	public List<TbCustomer> customerQuery(TbCustomerExample customerQuery);
+
+	public TbCustomer customerById(Integer customerId);
 }
