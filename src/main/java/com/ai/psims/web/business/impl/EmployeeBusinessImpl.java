@@ -15,12 +15,12 @@ import com.ai.psims.web.service.IEmployeeService;
 
 @Service
 public class EmployeeBusinessImpl implements IEmployeeBusiness {
-	
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(EmployeeBusinessImpl.class);
-	
+
 	@Resource(name = "employeeServiceImpl")
-	private IEmployeeService  employeeServiceImpl;
+	private IEmployeeService employeeServiceImpl;
 
 	@Override
 	public List<TbEmployee> getEmployees(TbEmployeeExample employeeExample) {
@@ -29,6 +29,10 @@ public class EmployeeBusinessImpl implements IEmployeeBusiness {
 		return employeeServiceImpl.selectByExample(employeeExample);
 	}
 
-
+	@Override
+	public TbEmployee getEmployeeById(Integer employeeId) {
+		logger.info("getEmployeeById");
+		return employeeServiceImpl.getEmployee(employeeId);
+	}
 
 }

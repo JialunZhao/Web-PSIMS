@@ -4,16 +4,29 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.Region;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
 
+import com.ai.psims.web.business.ICustomerBusiness;
+import com.ai.psims.web.business.IEmployeeBusiness;
 import com.ai.psims.web.business.ISalesBusiness;
 import com.ai.psims.web.common.interfaces.IQueryBus;
 import com.ai.psims.web.model.AddSalesGoodsBean;
@@ -36,9 +49,17 @@ import com.ai.psims.web.util.Constants;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+@SuppressWarnings("deprecation")
 @Controller
 @RequestMapping("/salesController")
 public class SalesController extends BaseController {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(SalesController.class);
+	@Resource(name = "customerBusinessImpl")
+	private ICustomerBusiness customerBusiness;
+	@Resource(name = "employeeBusinessImpl")
+	private IEmployeeBusiness employeeBusiness;
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
 	@Resource(name = "salesBusinessImpl")
@@ -149,7 +170,6 @@ public class SalesController extends BaseController {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/queryGoodsDemo")
 	public String queryGoodsDemo(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -248,6 +268,237 @@ public class SalesController extends BaseController {
 			responseSuccess(response, "SUCCESS", data);
 		}
 
+	}
+
+	@RequestMapping("/printSalesData")
+	public View printSalesData(Model model, HttpServletRequest request)
+			throws Exception {
+		logger.info("------------销售下单打印----------------");
+		View view = new AbstractExcelView() {
+			@Override
+			public void buildExcelDocument(
+					@SuppressWarnings("rawtypes") Map map,
+					HSSFWorkbook workbook, HttpServletRequest request,
+					HttpServletResponse response) throws Exception {
+				String salesSerialNumber = request
+						.getParameter("salesSerialNumber");
+
+				Sales sales = new Sales();
+				List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
+				sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+				SalesGoodsExample example = new SalesGoodsExample();
+				com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
+						.createCriteria();
+				criteria.andSalesSerialNumberEqualTo(salesSerialNumber);
+				criteria.andSalesGoodsEndtimeIsNull();
+				salesGoodsList = salesBusiness.selectSalesGoods(example);
+				TbCustomer customer = new TbCustomer();
+				customer = customerBusiness.customerById(sales.getCustomerId());
+				TbEmployee employee = new TbEmployee();
+				employee = employeeBusiness.getEmployeeById(sales
+						.getEmployeeId());
+
+				logger.info("------------建立 Excel -Sheet-------------");
+				HSSFSheet sheet = workbook.createSheet("销售清单");
+				logger.info("------------设置行列的默认宽度和高度-------------");
+				sheet.setColumnWidth(0, 32 * 80);// 对A列设置宽度为180像素
+				sheet.setColumnWidth(1, 32 * 80);
+				sheet.setColumnWidth(2, 32 * 80);
+				sheet.setColumnWidth(3, 32 * 80);
+				sheet.setColumnWidth(4, 32 * 80);
+				sheet.setColumnWidth(5, 32 * 80);
+				sheet.setColumnWidth(6, 32 * 80);
+				sheet.setColumnWidth(7, 32 * 80);
+				sheet.setColumnWidth(8, 32 * 80);
+				sheet.setColumnWidth(9, 32 * 80);
+
+				int rowNum = 0;
+				int idx = 0;
+				HSSFRow row;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("电话");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				HSSFRichTextString context = new HSSFRichTextString(
+						employee.getContactTel());
+				row.createCell(idx++).setCellValue(context);
+				idx++;
+				row.createCell(idx++).setCellValue("地址");
+				sheet.addMergedRegion(new Region(rowNum, (short) 4, rowNum,
+						(short) 5));
+				row.createCell(idx++).setCellValue(employee.getContactAddr());
+				idx++;
+				row.createCell(idx++).setCellValue("单据编号");
+				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
+						(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
+						(short) 9));
+				row.createCell(idx++).setCellValue(salesSerialNumber);
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("客户");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 3));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 4));
+				row.createCell(idx++).setCellValue(customer.getCustomerName());
+				idx += 3;
+				row.createCell(idx++).setCellValue("客户地址");
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 7));
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 9));
+				row.createCell(idx++).setCellValue(customer.getContactAddr());
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("联系电话");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				row.createCell(idx++).setCellValue(customer.getContactTel());
+				idx++;
+				row.createCell(idx++).setCellValue("联系人");
+				row.createCell(idx++).setCellValue(customer.getEmployeeName());
+				row.createCell(idx++).setCellValue("摘要");
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 7));
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
+						(short) 9));
+				row.createCell(idx++).setCellValue(customer.getCheckoutName());
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("商品编号");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 3));
+				row.createCell(idx++).setCellValue("商品全名");
+				idx += 2;
+				sheet.addMergedRegion(new Region(rowNum, (short) 4, rowNum,
+						(short) 5));
+				row.createCell(idx++).setCellValue("规格");
+				idx++;
+				row.createCell(idx++).setCellValue("单位");
+				row.createCell(idx++).setCellValue("数量");
+				row.createCell(idx++).setCellValue("单价");
+				row.createCell(idx++).setCellValue("金额");
+
+				long totalPrice = 0l;
+				for (SalesGoods salesGoods : salesGoodsList) {
+					rowNum++;
+					idx = 0;
+					row = sheet.createRow(rowNum);
+					row.createCell(idx++).setCellValue(salesGoods.getGoodsId());
+					sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+							(short) 2));
+					sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+							(short) 3));
+					row.createCell(idx++).setCellValue(
+							salesGoods.getGoodsName());
+					idx += 2;
+					sheet.addMergedRegion(new Region(rowNum, (short) 4, rowNum,
+							(short) 5));
+					row.createCell(idx++).setCellValue("");
+					idx++;
+					row.createCell(idx++).setCellValue(
+							salesGoods.getSalesGoodsUnit());
+					// row.createCell(idx++).setCellValue("");
+					row.createCell(idx++).setCellValue(
+							salesGoods.getSalesGoodsAmount());
+					row.createCell(idx++).setCellValue(
+							salesGoods.getSalesGoodsPrice());
+					// row.createCell(idx++).setCellValue("");
+					row.createCell(idx++).setCellValue(
+							salesGoods.getSalesGoodsTotalPrice());
+					totalPrice += salesGoods.getSalesGoodsTotalPrice();
+				}
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("总计");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 3));
+				row.createCell(idx++).setCellValue("");
+				idx += 2;
+				sheet.addMergedRegion(new Region(rowNum, (short) 4, rowNum,
+						(short) 5));
+				row.createCell(idx++).setCellValue("");
+				idx++;
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue(totalPrice);
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("联系人");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 3));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 4));
+				row.createCell(idx++).setCellValue("");
+				idx += 3;
+				sheet.addMergedRegion(new Region(rowNum, (short) 5, rowNum,
+						(short) 6));
+				row.createCell(idx++).setCellValue("余额大写");
+				idx++;
+				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
+						(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
+						(short) 9));
+				row.createCell(idx++).setCellValue("");
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("收货人");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("送货人");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("核单人");
+				row.createCell(idx++).setCellValue("管理员");
+				row.createCell(idx++).setCellValue("发车时间");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("还车时间");
+				row.createCell(idx++).setCellValue("");
+
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("库管");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("车牌号");
+				row.createCell(idx++).setCellValue("");
+				row.createCell(idx++).setCellValue("起始油表数");
+				sheet.addMergedRegion(new Region(rowNum, (short) 5, rowNum,
+						(short) 6));
+				row.createCell(idx++).setCellValue("");
+				idx++;
+				row.createCell(idx++).setCellValue("返回油表数");
+				sheet.addMergedRegion(new Region(rowNum, (short) 8, rowNum,
+						(short) 9));
+				row.createCell(idx++).setCellValue("");
+			}
+		};
+
+		return view;
 	}
 
 	@RequestMapping("/updataImprotGoodsList")

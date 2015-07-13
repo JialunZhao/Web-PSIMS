@@ -103,7 +103,7 @@
 								href="#"
 								onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
 								href="#"
-								onclick="deleteImportData(${imports.importSerialNumber },${imports.importStatus })">删除</a></td>
+								onclick="deleteImportData(${imports.importSerialNumber },'${imports.importStatus }')">删除</a></td>
 						</priv:privilege>
 					</tr>
 				</c:forEach>
@@ -486,7 +486,7 @@
 	    					                  	+'<td>'+isNull(goodsList[i].importBatchNumber)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].paymentType)+'</td>'
 	    					                  	+'<td>'+isNull(goodsList[i].importStatus)+'</td>'
-	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a>/<a href="#" onclick="deleteImportData('+isNull(goodsList[i].importSerialNumber)+','+isNull(goodsList[i].importStatus)+')">删除</a></td></tr>' );
+	    					                  	+'<td><a href="#" data-toggle="modal" data-target="#importgoodsprint">打印</a>/<a href="#" onclick="updateImportData('+isNull(goodsList[i].importSerialNumber)+')" >修改</a>/<a href="#" onclick="deleteImportData('+isNull(goodsList[i].importSerialNumber)+',\''+isNull(goodsList[i].importStatus)+'\')">删除</a></td></tr>' );
 	        								
     								}
                                 
@@ -557,6 +557,7 @@
 		}
     	
     	function deleteImportData(importSerialNumber,importStatus){
+    		alert(importSerialNumber);
     		if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01%>') {
 				alert("商品部分到货，该订单不能删除。");
 			}else {

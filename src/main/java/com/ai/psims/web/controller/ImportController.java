@@ -32,6 +32,7 @@ import com.ai.psims.web.model.TbImportExample.Criteria;
 import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbProvider;
+import com.ai.psims.web.model.TbProviderExample;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.util.Constants;

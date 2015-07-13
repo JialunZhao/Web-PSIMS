@@ -54,13 +54,13 @@ String date=sdf.format(new Date());
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">生产日期:</span>
 				<input type="text" class="form-control" value="2015-01-01"
-					id="goodsProductionDate" onblur="getGoodsExpirationDate(this.value)">
+					id="goodsProductionDate">
 			</div>
 
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">失效日期:</span>
 				<input type="text" class="form-control" value=""
-					id="goodsExpirationDate">
+					id="goodsExpirationDate" onblur="getGoodsExpirationDate()">
 			</div>
 
 		</div>
@@ -95,13 +95,16 @@ String date=sdf.format(new Date());
 		  }
 		 
 		
-		function getGoodsExpirationDate(goodsProductionDate){
-  			if (checkDataFomat(goodsProductionDate)) {
-				return;
-			}
-  			var goodsShelfLife=$("#goodsShelfLife").val();
-  			var goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
-  			$("#goodsExpirationDate").val(goodsExpirationDate);
+		function getGoodsExpirationDate(){
+			var goodsProductionDate=$("#goodsProductionDate").val();
+			if(!checkIsNull(goodsProductionDate)){
+				if (checkDataFomat(goodsProductionDate)) {
+					return;
+				}
+	  			var goodsShelfLife=$("#goodsShelfLife").val();
+	  			var goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
+	  			$("#goodsExpirationDate").val(goodsExpirationDate);
+			}  			
   		}
   		
   		

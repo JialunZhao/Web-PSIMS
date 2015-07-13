@@ -111,11 +111,7 @@ String date=sdf.format(new Date());
 									<td>${sales.salesTotalPrice }</td>
 									<td>${sales.salesStatus }</td>
 									<priv:privilege power="销售出库.增删改">
-									<td><a href="#">打印</a>/<a href="#" data-toggle="modal"
-										data-target="#salesgoodsmodify"
-										onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a
-										href="#"
-										onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
+									<td><a href="#" onclick="printSalesData(${sales.salesSerialNumber })">打印</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
 									</priv:privilege>
 								</tr>
 							</c:forEach>
@@ -230,7 +226,7 @@ String date=sdf.format(new Date());
 
 				<div class="modal-footer">
 					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-            <button type="button" class="btn btn-primary" id="sureAdd">确认新增</button> 
+            <button type="button" class="btn btn-primary" id="suerAdd">确认新增</button> 
 					<button type="button" class="btn btn-primary" id="getBack">返回</button>
 				</div>
 			</div>
@@ -267,6 +263,11 @@ String date=sdf.format(new Date());
   	  }
   	  return false;
     }
+    
+    function printSalesData(salesSerialNumber){
+    	window.location.href = '<%=path%>/salesController/printSalesData.do?salesSerialNumber='+salesSerialNumber;		    
+	}
+    
     
     function deleteSalesData(salesSerialNumber){
 		$.ajax({  
