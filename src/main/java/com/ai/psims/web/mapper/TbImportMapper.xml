@@ -2,17 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.psims.web.dao.TbImportMapper" >
   <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbImport" >
+    <id column="import_id" property="importId" jdbcType="INTEGER" />
     <id column="import_serial_number" property="importSerialNumber" jdbcType="VARCHAR" />
-    <result column="import_datetime" property="importDatetime" jdbcType="DATE" />
+    <result column="import_datetime" property="importDatetime" jdbcType="TIMESTAMP" />
     <result column="import_batch_number" property="importBatchNumber" jdbcType="VARCHAR" />
-    <result column="import_total_price" property="importTotalPrice" jdbcType="BIGINT" />
+    <result column="import_total_price" property="importTotalPrice" jdbcType="VARCHAR" />
+    <result column="payment_status" property="paymentStatus" jdbcType="CHAR" />
     <result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
-    <result column="payment_time" property="paymentTime" jdbcType="DATE" />
+    <result column="payment_time" property="paymentTime" jdbcType="TIMESTAMP" />
     <result column="import_type" property="importType" jdbcType="VARCHAR" />
     <result column="import_status" property="importStatus" jdbcType="VARCHAR" />
     <result column="import_remark" property="importRemark" jdbcType="VARCHAR" />
     <result column="provider_id" property="providerId" jdbcType="INTEGER" />
     <result column="provider_name" property="providerName" jdbcType="VARCHAR" />
+    <result column="provider_code" property="providerCode" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    import_serial_number, import_datetime, import_batch_number, import_total_price, payment_type, 
-    payment_time, import_type, import_status, import_remark, provider_id, provider_name
+    import_id, import_serial_number, import_datetime, import_batch_number, import_total_price, 
+    payment_status, payment_type, payment_time, import_type, import_status, import_remark, 
+    provider_id, provider_name, provider_code
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbImportExample" >
     select
@@ -90,15 +94,28 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbImportKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_import
+    where import_id = #{importId,jdbcType=INTEGER}
+      and import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySerialNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from tb_import
     where import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+  <select id="getImportSerialNumber" resultType="java.lang.String" parameterType="java.lang.String" >
+    select max(import_serial_number)
+    from tb_import
+    where import_serial_number like CONCAT(CONCAT('%', #{importSerialNumber,jdbcType=VARCHAR}), '%') 
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.psims.web.model.TbImportKey" >
     delete from tb_import
-    where import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
+    where import_id = #{importId,jdbcType=INTEGER}
+      and import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbImportExample" >
     delete from tb_import
@@ -107,20 +124,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ai.psims.web.model.TbImport" >
-    insert into tb_import (import_serial_number, import_datetime, 
-      import_batch_number, import_total_price, payment_type, 
-      payment_time, import_type, import_status, 
-      import_remark, provider_id, provider_name
-      )
-    values (#{importSerialNumber,jdbcType=VARCHAR}, #{importDatetime,jdbcType=DATE}, 
-      #{importBatchNumber,jdbcType=VARCHAR}, #{importTotalPrice,jdbcType=BIGINT}, #{paymentType,jdbcType=VARCHAR}, 
-      #{paymentTime,jdbcType=DATE}, #{importType,jdbcType=VARCHAR}, #{importStatus,jdbcType=VARCHAR}, 
-      #{importRemark,jdbcType=VARCHAR}, #{providerId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}
-      )
+    insert into tb_import (import_id, import_serial_number, import_datetime, 
+      import_batch_number, import_total_price, payment_status, 
+      payment_type, payment_time, import_type, 
+      import_status, import_remark, provider_id, 
+      provider_name, provider_code)
+    values (#{importId,jdbcType=INTEGER}, #{importSerialNumber,jdbcType=VARCHAR}, #{importDatetime,jdbcType=TIMESTAMP}, 
+      #{importBatchNumber,jdbcType=VARCHAR}, #{importTotalPrice,jdbcType=VARCHAR}, #{paymentStatus,jdbcType=CHAR}, 
+      #{paymentType,jdbcType=VARCHAR}, #{paymentTime,jdbcType=TIMESTAMP}, #{importType,jdbcType=VARCHAR}, 
+      #{importStatus,jdbcType=VARCHAR}, #{importRemark,jdbcType=VARCHAR}, #{providerId,jdbcType=INTEGER}, 
+      #{providerName,jdbcType=VARCHAR}, #{providerCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbImport" >
     insert into tb_import
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="importId != null" >
+        import_id,
+      </if>
       <if test="importSerialNumber != null" >
         import_serial_number,
       </if>
@@ -132,6 +152,9 @@
       </if>
       <if test="importTotalPrice != null" >
         import_total_price,
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status,
       </if>
       <if test="paymentType != null" >
         payment_type,
@@ -154,25 +177,34 @@
       <if test="providerName != null" >
         provider_name,
       </if>
+      <if test="providerCode != null" >
+        provider_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="importId != null" >
+        #{importId,jdbcType=INTEGER},
+      </if>
       <if test="importSerialNumber != null" >
         #{importSerialNumber,jdbcType=VARCHAR},
       </if>
       <if test="importDatetime != null" >
-        #{importDatetime,jdbcType=DATE},
+        #{importDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="importBatchNumber != null" >
         #{importBatchNumber,jdbcType=VARCHAR},
       </if>
       <if test="importTotalPrice != null" >
-        #{importTotalPrice,jdbcType=BIGINT},
+        #{importTotalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentStatus != null" >
+        #{paymentStatus,jdbcType=CHAR},
       </if>
       <if test="paymentType != null" >
         #{paymentType,jdbcType=VARCHAR},
       </if>
       <if test="paymentTime != null" >
-        #{paymentTime,jdbcType=DATE},
+        #{paymentTime,jdbcType=TIMESTAMP},
       </if>
       <if test="importType != null" >
         #{importType,jdbcType=VARCHAR},
@@ -189,6 +221,9 @@
       <if test="providerName != null" >
         #{providerName,jdbcType=VARCHAR},
       </if>
+      <if test="providerCode != null" >
+        #{providerCode,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.psims.web.model.TbImportExample" resultType="java.lang.Integer" >
@@ -197,31 +232,32 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-    <select id="getImportSerialNumber" resultType="java.lang.String" parameterType="java.lang.String" >
-    select max(import_serial_number)
-    from tb_import
-    where import_serial_number like CONCAT(CONCAT('%', #{importSerialNumber,jdbcType=VARCHAR}), '%') 
-  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update tb_import
     <set >
+      <if test="record.importId != null" >
+        import_id = #{record.importId,jdbcType=INTEGER},
+      </if>
       <if test="record.importSerialNumber != null" >
         import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.importDatetime != null" >
-        import_datetime = #{record.importDatetime,jdbcType=DATE},
+        import_datetime = #{record.importDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.importBatchNumber != null" >
         import_batch_number = #{record.importBatchNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.importTotalPrice != null" >
-        import_total_price = #{record.importTotalPrice,jdbcType=BIGINT},
+        import_total_price = #{record.importTotalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentStatus != null" >
+        payment_status = #{record.paymentStatus,jdbcType=CHAR},
       </if>
       <if test="record.paymentType != null" >
         payment_type = #{record.paymentType,jdbcType=VARCHAR},
       </if>
       <if test="record.paymentTime != null" >
-        payment_time = #{record.paymentTime,jdbcType=DATE},
+        payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.importType != null" >
         import_type = #{record.importType,jdbcType=VARCHAR},
@@ -238,6 +274,9 @@
       <if test="record.providerName != null" >
         provider_name = #{record.providerName,jdbcType=VARCHAR},
       </if>
+      <if test="record.providerCode != null" >
+        provider_code = #{record.providerCode,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -245,17 +284,20 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tb_import
-    set import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
-      import_datetime = #{record.importDatetime,jdbcType=DATE},
+    set import_id = #{record.importId,jdbcType=INTEGER},
+      import_serial_number = #{record.importSerialNumber,jdbcType=VARCHAR},
+      import_datetime = #{record.importDatetime,jdbcType=TIMESTAMP},
       import_batch_number = #{record.importBatchNumber,jdbcType=VARCHAR},
-      import_total_price = #{record.importTotalPrice,jdbcType=BIGINT},
+      import_total_price = #{record.importTotalPrice,jdbcType=VARCHAR},
+      payment_status = #{record.paymentStatus,jdbcType=CHAR},
       payment_type = #{record.paymentType,jdbcType=VARCHAR},
-      payment_time = #{record.paymentTime,jdbcType=DATE},
+      payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
       import_type = #{record.importType,jdbcType=VARCHAR},
       import_status = #{record.importStatus,jdbcType=VARCHAR},
       import_remark = #{record.importRemark,jdbcType=VARCHAR},
       provider_id = #{record.providerId,jdbcType=INTEGER},
-      provider_name = #{record.providerName,jdbcType=VARCHAR}
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      provider_code = #{record.providerCode,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -264,19 +306,22 @@
     update tb_import
     <set >
       <if test="importDatetime != null" >
-        import_datetime = #{importDatetime,jdbcType=DATE},
+        import_datetime = #{importDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="importBatchNumber != null" >
         import_batch_number = #{importBatchNumber,jdbcType=VARCHAR},
       </if>
       <if test="importTotalPrice != null" >
-        import_total_price = #{importTotalPrice,jdbcType=BIGINT},
+        import_total_price = #{importTotalPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status = #{paymentStatus,jdbcType=CHAR},
       </if>
       <if test="paymentType != null" >
         payment_type = #{paymentType,jdbcType=VARCHAR},
       </if>
       <if test="paymentTime != null" >
-        payment_time = #{paymentTime,jdbcType=DATE},
+        payment_time = #{paymentTime,jdbcType=TIMESTAMP},
       </if>
       <if test="importType != null" >
         import_type = #{importType,jdbcType=VARCHAR},
@@ -293,21 +338,28 @@
       <if test="providerName != null" >
         provider_name = #{providerName,jdbcType=VARCHAR},
       </if>
+      <if test="providerCode != null" >
+        provider_code = #{providerCode,jdbcType=VARCHAR},
+      </if>
     </set>
-    where import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
+    where import_id = #{importId,jdbcType=INTEGER}
+      and import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbImport" >
     update tb_import
-    set import_datetime = #{importDatetime,jdbcType=DATE},
+    set import_datetime = #{importDatetime,jdbcType=TIMESTAMP},
       import_batch_number = #{importBatchNumber,jdbcType=VARCHAR},
-      import_total_price = #{importTotalPrice,jdbcType=BIGINT},
+      import_total_price = #{importTotalPrice,jdbcType=VARCHAR},
+      payment_status = #{paymentStatus,jdbcType=CHAR},
       payment_type = #{paymentType,jdbcType=VARCHAR},
-      payment_time = #{paymentTime,jdbcType=DATE},
+      payment_time = #{paymentTime,jdbcType=TIMESTAMP},
       import_type = #{importType,jdbcType=VARCHAR},
       import_status = #{importStatus,jdbcType=VARCHAR},
       import_remark = #{importRemark,jdbcType=VARCHAR},
       provider_id = #{providerId,jdbcType=INTEGER},
-      provider_name = #{providerName,jdbcType=VARCHAR}
-    where import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      provider_code = #{providerCode,jdbcType=VARCHAR}
+    where import_id = #{importId,jdbcType=INTEGER}
+      and import_serial_number = #{importSerialNumber,jdbcType=VARCHAR}
   </update>
 </mapper>

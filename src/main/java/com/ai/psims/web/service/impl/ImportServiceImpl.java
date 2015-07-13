@@ -26,7 +26,7 @@ public class ImportServiceImpl implements IImportService {
 	}
 
 	public TbImport selectByPrimaryKey(String importSerialNumber) {
-		return tbImportMapper.selectByPrimaryKey(importSerialNumber);
+		return tbImportMapper.selectBySerialNumber(importSerialNumber);
 	}
 
 	public int updateImport(TbImport import1) {
@@ -41,7 +41,7 @@ public class ImportServiceImpl implements IImportService {
 
 	public int deleteImport(String importSerialNumber) {
 		TbImport import1 = new TbImport();
-		import1 = tbImportMapper.selectByPrimaryKey(importSerialNumber);
+		import1 = tbImportMapper.selectBySerialNumber(importSerialNumber);
 		insertToLog(import1);
 		// 00-失效；01-有效
 		import1.setImportStatus("00");
@@ -51,7 +51,7 @@ public class ImportServiceImpl implements IImportService {
 	@Override
 	public int insertToLog(TbImport import1) {
 		TbImport imports = new TbImport();
-		imports = tbImportMapper.selectByPrimaryKey(import1
+		imports = tbImportMapper.selectBySerialNumber(import1
 				.getImportSerialNumber());
 		TbImportLog log = new TbImportLog();
 		log.setImportBatchNumber(imports.getImportBatchNumber());

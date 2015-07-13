@@ -7,13 +7,17 @@ public class TbImportLog {
 
     private Date logDatetime;
 
+    private Integer importId;
+
     private String importSerialNumber;
 
     private Date importDatetime;
 
     private String importBatchNumber;
 
-    private Long importTotalPrice;
+    private String importTotalPrice;
+
+    private String paymentStatus;
 
     private String paymentType;
 
@@ -29,6 +33,8 @@ public class TbImportLog {
 
     private String providerName;
 
+    private String providerCode;
+
     public Integer getLogId() {
         return logId;
     }
@@ -43,6 +49,14 @@ public class TbImportLog {
 
     public void setLogDatetime(Date logDatetime) {
         this.logDatetime = logDatetime;
+    }
+
+    public Integer getImportId() {
+        return importId;
+    }
+
+    public void setImportId(Integer importId) {
+        this.importId = importId;
     }
 
     public String getImportSerialNumber() {
@@ -69,12 +83,20 @@ public class TbImportLog {
         this.importBatchNumber = importBatchNumber == null ? null : importBatchNumber.trim();
     }
 
-    public Long getImportTotalPrice() {
+    public String getImportTotalPrice() {
         return importTotalPrice;
     }
 
-    public void setImportTotalPrice(Long importTotalPrice) {
-        this.importTotalPrice = importTotalPrice;
+    public void setImportTotalPrice(String importTotalPrice) {
+        this.importTotalPrice = importTotalPrice == null ? null : importTotalPrice.trim();
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus == null ? null : paymentStatus.trim();
     }
 
     public String getPaymentType() {
@@ -131,5 +153,13 @@ public class TbImportLog {
 
     public void setProviderName(String providerName) {
         this.providerName = providerName == null ? null : providerName.trim();
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode == null ? null : providerCode.trim();
     }
 }

@@ -579,7 +579,7 @@ public class GoodsController extends BaseController {
 				List<TbSystemParameter> tbSystemParameters = new ArrayList<TbSystemParameter>();
 				TbSystemParameterExample tbSystemParameterExample =new TbSystemParameterExample();
 				TbSystemParameterExample.Criteria tbSystemParameterCriteria = tbSystemParameterExample.createCriteria();
-				
+				tbSystemParameters.clear();
 				logger.info("------------2.获取参数-------------");
 				String query_goodsName = request.getParameter("query_goodsName") == "" ? null
 						: request.getParameter("query_goodsName");

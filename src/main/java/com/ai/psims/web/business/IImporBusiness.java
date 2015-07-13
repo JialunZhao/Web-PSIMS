@@ -7,7 +7,7 @@ import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.UpdateImportDemo;
 
-public interface IAddGoodsImportList {
+public interface IImporBusiness {
 	public String addGoodsList(AddGoodsBean goodsBean);
 
 	public List<TbImportGoods> selBySerNum(String importSerialNumber);

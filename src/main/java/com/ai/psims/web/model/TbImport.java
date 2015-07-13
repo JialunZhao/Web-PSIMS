@@ -2,14 +2,14 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class TbImport {
-    private String importSerialNumber;
-
+public class TbImport extends TbImportKey {
     private Date importDatetime;
 
     private String importBatchNumber;
 
-    private Long importTotalPrice;
+    private String importTotalPrice;
+
+    private String paymentStatus;
 
     private String paymentType;
 
@@ -25,13 +25,7 @@ public class TbImport {
 
     private String providerName;
 
-    public String getImportSerialNumber() {
-        return importSerialNumber;
-    }
-
-    public void setImportSerialNumber(String importSerialNumber) {
-        this.importSerialNumber = importSerialNumber == null ? null : importSerialNumber.trim();
-    }
+    private String providerCode;
 
     public Date getImportDatetime() {
         return importDatetime;
@@ -49,12 +43,20 @@ public class TbImport {
         this.importBatchNumber = importBatchNumber == null ? null : importBatchNumber.trim();
     }
 
-    public Long getImportTotalPrice() {
+    public String getImportTotalPrice() {
         return importTotalPrice;
     }
 
-    public void setImportTotalPrice(Long importTotalPrice) {
-        this.importTotalPrice = importTotalPrice;
+    public void setImportTotalPrice(String importTotalPrice) {
+        this.importTotalPrice = importTotalPrice == null ? null : importTotalPrice.trim();
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus == null ? null : paymentStatus.trim();
     }
 
     public String getPaymentType() {
@@ -111,5 +113,13 @@ public class TbImport {
 
     public void setProviderName(String providerName) {
         this.providerName = providerName == null ? null : providerName.trim();
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode == null ? null : providerCode.trim();
     }
 }

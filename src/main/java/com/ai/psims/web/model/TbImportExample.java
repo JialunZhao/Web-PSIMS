@@ -2,7 +2,6 @@ package com.ai.psims.web.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class TbImportExample {
@@ -106,30 +105,64 @@ public class TbImportExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        public Criteria andImportIdIsNull() {
+            addCriterion("import_id is null");
+            return (Criteria) this;
         }
 
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
+        public Criteria andImportIdIsNotNull() {
+            addCriterion("import_id is not null");
+            return (Criteria) this;
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+        public Criteria andImportIdEqualTo(Integer value) {
+            addCriterion("import_id =", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdNotEqualTo(Integer value) {
+            addCriterion("import_id <>", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdGreaterThan(Integer value) {
+            addCriterion("import_id >", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("import_id >=", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdLessThan(Integer value) {
+            addCriterion("import_id <", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdLessThanOrEqualTo(Integer value) {
+            addCriterion("import_id <=", value, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdIn(List<Integer> values) {
+            addCriterion("import_id in", values, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdNotIn(List<Integer> values) {
+            addCriterion("import_id not in", values, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdBetween(Integer value1, Integer value2) {
+            addCriterion("import_id between", value1, value2, "importId");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("import_id not between", value1, value2, "importId");
+            return (Criteria) this;
         }
 
         public Criteria andImportSerialNumberIsNull() {
@@ -213,52 +246,52 @@ public class TbImportExample {
         }
 
         public Criteria andImportDatetimeEqualTo(Date value) {
-            addCriterionForJDBCDate("import_datetime =", value, "importDatetime");
+            addCriterion("import_datetime =", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("import_datetime <>", value, "importDatetime");
+            addCriterion("import_datetime <>", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("import_datetime >", value, "importDatetime");
+            addCriterion("import_datetime >", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_datetime >=", value, "importDatetime");
+            addCriterion("import_datetime >=", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeLessThan(Date value) {
-            addCriterionForJDBCDate("import_datetime <", value, "importDatetime");
+            addCriterion("import_datetime <", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("import_datetime <=", value, "importDatetime");
+            addCriterion("import_datetime <=", value, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeIn(List<Date> values) {
-            addCriterionForJDBCDate("import_datetime in", values, "importDatetime");
+            addCriterion("import_datetime in", values, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("import_datetime not in", values, "importDatetime");
+            addCriterion("import_datetime not in", values, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_datetime between", value1, value2, "importDatetime");
+            addCriterion("import_datetime between", value1, value2, "importDatetime");
             return (Criteria) this;
         }
 
         public Criteria andImportDatetimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("import_datetime not between", value1, value2, "importDatetime");
+            addCriterion("import_datetime not between", value1, value2, "importDatetime");
             return (Criteria) this;
         }
 
@@ -342,53 +375,133 @@ public class TbImportExample {
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceEqualTo(Long value) {
+        public Criteria andImportTotalPriceEqualTo(String value) {
             addCriterion("import_total_price =", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceNotEqualTo(Long value) {
+        public Criteria andImportTotalPriceNotEqualTo(String value) {
             addCriterion("import_total_price <>", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceGreaterThan(Long value) {
+        public Criteria andImportTotalPriceGreaterThan(String value) {
             addCriterion("import_total_price >", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andImportTotalPriceGreaterThanOrEqualTo(String value) {
             addCriterion("import_total_price >=", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceLessThan(Long value) {
+        public Criteria andImportTotalPriceLessThan(String value) {
             addCriterion("import_total_price <", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceLessThanOrEqualTo(Long value) {
+        public Criteria andImportTotalPriceLessThanOrEqualTo(String value) {
             addCriterion("import_total_price <=", value, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceIn(List<Long> values) {
+        public Criteria andImportTotalPriceLike(String value) {
+            addCriterion("import_total_price like", value, "importTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportTotalPriceNotLike(String value) {
+            addCriterion("import_total_price not like", value, "importTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andImportTotalPriceIn(List<String> values) {
             addCriterion("import_total_price in", values, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceNotIn(List<Long> values) {
+        public Criteria andImportTotalPriceNotIn(List<String> values) {
             addCriterion("import_total_price not in", values, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceBetween(Long value1, Long value2) {
+        public Criteria andImportTotalPriceBetween(String value1, String value2) {
             addCriterion("import_total_price between", value1, value2, "importTotalPrice");
             return (Criteria) this;
         }
 
-        public Criteria andImportTotalPriceNotBetween(Long value1, Long value2) {
+        public Criteria andImportTotalPriceNotBetween(String value1, String value2) {
             addCriterion("import_total_price not between", value1, value2, "importTotalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusIsNull() {
+            addCriterion("payment_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusIsNotNull() {
+            addCriterion("payment_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusEqualTo(String value) {
+            addCriterion("payment_status =", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusNotEqualTo(String value) {
+            addCriterion("payment_status <>", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusGreaterThan(String value) {
+            addCriterion("payment_status >", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("payment_status >=", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusLessThan(String value) {
+            addCriterion("payment_status <", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusLessThanOrEqualTo(String value) {
+            addCriterion("payment_status <=", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusLike(String value) {
+            addCriterion("payment_status like", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusNotLike(String value) {
+            addCriterion("payment_status not like", value, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusIn(List<String> values) {
+            addCriterion("payment_status in", values, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusNotIn(List<String> values) {
+            addCriterion("payment_status not in", values, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusBetween(String value1, String value2) {
+            addCriterion("payment_status between", value1, value2, "paymentStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPaymentStatusNotBetween(String value1, String value2) {
+            addCriterion("payment_status not between", value1, value2, "paymentStatus");
             return (Criteria) this;
         }
 
@@ -473,52 +586,52 @@ public class TbImportExample {
         }
 
         public Criteria andPaymentTimeEqualTo(Date value) {
-            addCriterionForJDBCDate("payment_time =", value, "paymentTime");
+            addCriterion("payment_time =", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("payment_time <>", value, "paymentTime");
+            addCriterion("payment_time <>", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("payment_time >", value, "paymentTime");
+            addCriterion("payment_time >", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("payment_time >=", value, "paymentTime");
+            addCriterion("payment_time >=", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeLessThan(Date value) {
-            addCriterionForJDBCDate("payment_time <", value, "paymentTime");
+            addCriterion("payment_time <", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("payment_time <=", value, "paymentTime");
+            addCriterion("payment_time <=", value, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeIn(List<Date> values) {
-            addCriterionForJDBCDate("payment_time in", values, "paymentTime");
+            addCriterion("payment_time in", values, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("payment_time not in", values, "paymentTime");
+            addCriterion("payment_time not in", values, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("payment_time between", value1, value2, "paymentTime");
+            addCriterion("payment_time between", value1, value2, "paymentTime");
             return (Criteria) this;
         }
 
         public Criteria andPaymentTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("payment_time not between", value1, value2, "paymentTime");
+            addCriterion("payment_time not between", value1, value2, "paymentTime");
             return (Criteria) this;
         }
 
@@ -859,6 +972,76 @@ public class TbImportExample {
 
         public Criteria andProviderNameNotBetween(String value1, String value2) {
             addCriterion("provider_name not between", value1, value2, "providerName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeIsNull() {
+            addCriterion("provider_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeIsNotNull() {
+            addCriterion("provider_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeEqualTo(String value) {
+            addCriterion("provider_code =", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeNotEqualTo(String value) {
+            addCriterion("provider_code <>", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeGreaterThan(String value) {
+            addCriterion("provider_code >", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("provider_code >=", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeLessThan(String value) {
+            addCriterion("provider_code <", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeLessThanOrEqualTo(String value) {
+            addCriterion("provider_code <=", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeLike(String value) {
+            addCriterion("provider_code like", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeNotLike(String value) {
+            addCriterion("provider_code not like", value, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeIn(List<String> values) {
+            addCriterion("provider_code in", values, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeNotIn(List<String> values) {
+            addCriterion("provider_code not in", values, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeBetween(String value1, String value2) {
+            addCriterion("provider_code between", value1, value2, "providerCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andProviderCodeNotBetween(String value1, String value2) {
+            addCriterion("provider_code not between", value1, value2, "providerCode");
             return (Criteria) this;
         }
     }

@@ -44,15 +44,17 @@ public class QueryBus implements IQueryBus {
 	private IEmployeeService employeeService;
 
 	public List<TbProvider> queryProvider() {
-		List<TbProvider> pList = new ArrayList<TbProvider>();
+		List<TbProvider> tbProviders = new ArrayList<TbProvider>();
 		TbProviderExample tbProviderExample = new TbProviderExample();
-		pList = providerService.queryProvider(tbProviderExample);
-		return pList;
+		TbProviderExample.Criteria criteria =tbProviderExample.createCriteria();
+		criteria.andProviderStatusEqualTo("01");
+		tbProviders = providerService.queryProvider(tbProviderExample);
+		return tbProviders;
 	}
 
 	public List<TbStorehouse> queryStorehouse() {
 		TbStorehouseExample example = new TbStorehouseExample();
-		example.createCriteria().andEndtimeIsNull();
+		example.createCriteria().andEndtimeIsNull().andStatusEqualTo("01");
 		return storehouseService.queryStorehouse(example);
 	}
 

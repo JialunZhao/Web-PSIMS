@@ -63,7 +63,7 @@ public class ImportGoodsServiceImpl implements IImportGoodsService {
 
 		log.setGoodsId(importGood.getGoodsId());
 		log.setGoodsName(importGood.getGoodsName());
-		log.setImportDiscountAmount(importGood.getImportDiscountAmount());
+		log.setImportDiscountPrice(importGood.getImportDiscountPrice());
 		log.setImportGoodsAmount(importGood.getImportGoodsAmount());
 		log.setImportGoodsCreatetime(importGood.getImportGoodsCreatetime());
 		log.setImportGoodsEndtime(importGood.getImportGoodsEndtime());
@@ -76,10 +76,10 @@ public class ImportGoodsServiceImpl implements IImportGoodsService {
 		log.setImportSerialNumber(importGood.getImportSerialNumber());
 		log.setLogDatetime(new Date());
 		log.setDiscountDutyTotalPrice(importGood.getDiscountDutyTotalPrice());
-		log.setDiscountTotalPrice(importGood.getDiscountTotalPrice());
-		log.setDiscountRate(importGood.getDiscountRate());
+		log.setDiscountGoodsTotalPrice(importGood.getDiscountGoodsTotalPrice());
+		log.setImportDiscountRate(importGood.getImportDiscountRate());
 		log.setIsDiscount(importGood.getIsDiscount());
-		log.setTotalPrice(importGood.getTotalPrice());
+		log.setImportTotalPrice(importGood.getImportTotalPrice());
 		log.setIsBoxBottle(importGood.getIsBoxBottle());
 		log.setBoxBottlePrice(importGood.getBoxBottlePrice());
 		log.setResImportGoodsAmount(importGood.getResImportGoodsAmount());

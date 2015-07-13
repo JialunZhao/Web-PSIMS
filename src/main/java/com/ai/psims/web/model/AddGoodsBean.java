@@ -1,26 +1,27 @@
 package com.ai.psims.web.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class AddGoodsBean implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String goodList;
-	private String providerName;
+	private List<TbImportGoods> goodList;
+	private TbImport tbImport;
+	private Integer providerId;
 	private String payMed;
 	private String payStatus;
 	private String importcreatetime;
 	private String payTime;
-	private String providerId;
 
-	public AddGoodsBean(String goodList, String providerName, String payMed,
+	public AddGoodsBean(List<TbImportGoods> goodList, TbImport tbImport ,String payMed,
 			String payStatus, String importcreatetime, String payTime,
-			String providerId) {
+			Integer providerId) {
 		super();
+		this.tbImport = tbImport;
 		this.goodList = goodList;
-		this.providerName = providerName;
 		this.payMed = payMed;
 		this.payStatus = payStatus;
 		this.importcreatetime = importcreatetime;
@@ -28,11 +29,11 @@ public class AddGoodsBean implements Serializable {
 		this.providerId = providerId;
 	}
 
-	public String getProviderId() {
+	public Integer getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(String providerId) {
+	public void setProviderId(Integer providerId) {
 		this.providerId = providerId;
 	}
 
@@ -44,20 +45,12 @@ public class AddGoodsBean implements Serializable {
 		this.payTime = payTime;
 	}
 
-	public String getGoodList() {
+	public List<TbImportGoods> getGoodList() {
 		return goodList;
 	}
 
-	public void setGoodList(String goodList) {
+	public void setGoodList(List<TbImportGoods> goodList) {
 		this.goodList = goodList;
-	}
-
-	public String getProviderName() {
-		return providerName;
-	}
-
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
 	}
 
 	public String getPayMed() {
@@ -82,6 +75,14 @@ public class AddGoodsBean implements Serializable {
 
 	public void setImportcreatetime(String importcreatetime) {
 		this.importcreatetime = importcreatetime;
+	}
+
+	public TbImport getTbImport() {
+		return tbImport;
+	}
+
+	public void setTbImport(TbImport tbImport) {
+		this.tbImport = tbImport;
 	}
 
 }

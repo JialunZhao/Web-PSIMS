@@ -2,6 +2,7 @@ package com.ai.psims.web.dao;
 
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportExample;
+import com.ai.psims.web.model.TbImportKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +11,7 @@ public interface TbImportMapper {
 
     int deleteByExample(TbImportExample example);
 
-    int deleteByPrimaryKey(String importSerialNumber);
+    int deleteByPrimaryKey(TbImportKey key);
 
     int insert(TbImport record);
 
@@ -18,7 +19,9 @@ public interface TbImportMapper {
 
     List<TbImport> selectByExample(TbImportExample example);
 
-    TbImport selectByPrimaryKey(String importSerialNumber);
+    TbImport selectByPrimaryKey(TbImportKey key);
+    
+    TbImport selectBySerialNumber(String importSerialNumber);
     
     String getImportSerialNumber(String importSerialNumber);
 

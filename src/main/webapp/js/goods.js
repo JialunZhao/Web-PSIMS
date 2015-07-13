@@ -232,9 +232,9 @@ function goods2customer(obj) {
 	var goodsId = $(obj).parent().parent().children("td").get(1).innerHTML;
 	var goodsName = $(obj).parent().parent().children("td").get(2).innerHTML;
 	var goodsUnit = $(obj).parent().parent().children("td").get(5).innerHTML;
-	var goodsActualCost = $(obj).parent().parent().children("td").get(6).innerHTML;
-	var goodsPrice = $(obj).parent().parent().children("td").get(7).innerHTML;
-	var goodsPrizePoolRatio = $(obj).parent().parent().children("td").get(8).innerHTML;
+	var goodsActualCost = $(obj).parent().parent().children("td").get(7).innerHTML;
+	var goodsPrice = $(obj).parent().parent().children("td").get(8).innerHTML;
+	var goodsPrizePoolRatio = $(obj).parent().parent().children("td").get(9).innerHTML;
 
 	$
 			.ajax({
