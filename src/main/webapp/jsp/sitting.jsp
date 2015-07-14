@@ -170,7 +170,10 @@
 <!-- 								<td><input type="text" class="form-control" placeholder="+" value="+"></td> -->
 <!-- 								<td><input type="text" class="form-control" placeholder="-" value="-"></td> -->
 								<td><a href="#" data-toggle="modal"
-									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a></td>
+									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a>/
+									<a href="#" data-toggle="modal"
+									onclick="delcommit(${s.paramId},'p_ee')">打印</a>
+									</td>
 								<td>
 									<a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#" data-toggle="modal"
@@ -484,6 +487,17 @@
 	                alert(textStatus);
 	            }
 		})
+	}
+	function delcommit(paramId){
+		var id = paramId;
+// 		$.ajax({
+// 			url: '${ctx}/sys/'+id+'/execl.do',
+// 			type: 'get',
+// 			success: function(messageRespon){
+// 				alert("已导出");
+// 			}
+// 		})	
+		window.location.href = '${ctx}/sys/'+id+'/execl';
 	}
 	function detail(paramId){
 		var id = paramId;

@@ -106,26 +106,27 @@
   </select>
     <select id="seekStore" resultMap="BaseResultMap">
 	  	 SELECT * FROM (SELECT SUM(storage_rate_current) AS ratestorage , tb.*   FROM tb_storagecheck  tb  GROUP BY tb.goods_id) t,(
-	 SELECT tb2.storage_warning  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) tt  WHERE
+	 SELECT tb2.storage_warning  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) tt  WHERE
 	 t.ratestorage &lt; tt.storage_warning AND t.goods_id=tt.goods_id;
   </select>
   <select id="seekBStore" resultMap="BaseResultMap">
 	  	SELECT * FROM (SELECT SUM(storage_rate_current) AS ratestorage , tb.*   FROM tb_storagecheck  tb  GROUP BY tb.goods_id) t,(
-	 SELECT tb2.storage_warning  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) tt, 
+	  SELECT tb2.storage_warning AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) tt, 
 	 (
-	 SELECT tb2.storage_warning*2  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) ttt WHERE
+	  SELECT tb2.storage_warning*2 AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) ttt WHERE
 	 t.ratestorage BETWEEN tt.storage_warning  AND ttt.storage_warning AND t.goods_id=ttt.goods_id AND t.goods_id=tt.goods_id ;
   </select>
   <select id="seekCStore" resultMap="BaseResultMap">
   		SELECT * FROM (SELECT SUM(storage_rate_current) AS ratestorage , tb.*   FROM tb_storagecheck  tb  GROUP BY tb.goods_id) t,(
-	 SELECT tb2.storage_warning*2  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) tt, 
+	  SELECT tb2.storage_warning*2 AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) tt, 
 	 (
-	 SELECT tb2.storage_warning*3  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) ttt WHERE
+	  SELECT tb2.storage_warning*3 AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) ttt WHERE
 	 t.ratestorage BETWEEN tt.storage_warning  AND ttt.storage_warning AND t.goods_id=ttt.goods_id AND t.goods_id=tt.goods_id ;
+
   </select>
   <select id="seekDStore" resultMap="BaseResultMap">
   		SELECT * FROM (SELECT SUM(storage_rate_current) AS ratestorage , tb.*   FROM tb_storagecheck  tb  GROUP BY tb.goods_id) t,(
-	 SELECT tb2.storage_warning*3 AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2,tb_storagecheck  tb WHERE tb2.goods_id=tb.goods_id) tt  WHERE
+	 SELECT tb2.storage_warning  AS storage_warning,tb2.goods_id AS goods_id FROM tb_goods tb2 WHERE tb2.goods_id IN (SELECT tb.goods_id FROM tb_storagecheck tb GROUP BY tb.goods_id)) tt  WHERE
 	 t.ratestorage &gt; tt.storage_warning AND t.goods_id=tt.goods_id;
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

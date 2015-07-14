@@ -250,11 +250,11 @@ public class EmployeeController extends BaseController{
 				HSSFSheet sheet = workbook.createSheet("库存清单");
 				logger.info("------------设置行列的默认宽度和高度-------------");
 				sheet.setColumnWidth(0, 32 * 80);// 对A列设置宽度为180像素
-				sheet.setColumnWidth(1, 32 * 180);
+				sheet.setColumnWidth(1, 32 * 80);
 				sheet.setColumnWidth(2, 32 * 80);
-				sheet.setColumnWidth(3, 32 * 80);
-				sheet.setColumnWidth(4, 32 * 80);
-				sheet.setColumnWidth(5, 32 * 80);
+				sheet.setColumnWidth(3, 32 * 120);
+				sheet.setColumnWidth(4, 32 * 120);
+				sheet.setColumnWidth(5, 32 * 120);
 				sheet.setColumnWidth(6, 32 * 80);
 				sheet.setColumnWidth(7, 32 * 180);
 //				sheet.setColumnWidth(8, 32 * 180);
@@ -279,39 +279,39 @@ public class EmployeeController extends BaseController{
 				for (TbEmployee tbEmployee : tbEmployees) {
 					idx = 0;
 					row = sheet.createRow(rowNum++);
-					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().toString() == null ? "无" : tbEmployee.getEmployeeId().toString());
-					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName() == null ? "无" : tbEmployee.getEmployeeName());
-					if(tbEmployee.getSex()=="1"){
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().toString() .equals(null) ? "无" : tbEmployee.getEmployeeId().toString());
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName().equals(null) ? "无" : tbEmployee.getEmployeeName());
+					if(tbEmployee.getSex().equals("1")){
 						row.createCell(idx++).setCellValue("男");
 					}
-					if(tbEmployee.getSex()=="0"){
+					if(tbEmployee.getSex().equals("0")){
 						row.createCell(idx++).setCellValue("女");
 					}
-					if(tbEmployee.getSex()==null){
+					if(tbEmployee.getSex().equals(null)){
 						row.createCell(idx++).setCellValue("无");
 					}
-					row.createCell(idx++).setCellValue(tbEmployee.getIdcard() == null ? "无" : tbEmployee.getIdcard());
-					row.createCell(idx++).setCellValue(tbEmployee.getContactTel() == null ? "无" : tbEmployee.getContactTel());
-					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr() == null ? "无" : tbEmployee.getContactAddr());
-					if(tbEmployee.getRole()=="1"){
+					row.createCell(idx++).setCellValue(tbEmployee.getIdcard().equals(null)? "无" : tbEmployee.getIdcard());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactTel().equals(null) ? "无" : tbEmployee.getContactTel());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr().equals(null) ? "无" : tbEmployee.getContactAddr());
+					if(tbEmployee.getRole().equals("1")){
 						row.createCell(idx++).setCellValue("销售");
 					}
-					if(tbEmployee.getRole()=="2"){
+					if(tbEmployee.getRole().equals("2")){
 						row.createCell(idx++).setCellValue("管理");
 					}
-					if(tbEmployee.getRole()=="3"){
+					if(tbEmployee.getRole().equals("3")){
 						row.createCell(idx++).setCellValue("财务");
 					}
-					if(tbEmployee.getRole()=="4"){
+					if(tbEmployee.getRole().equals("4")){
 						row.createCell(idx++).setCellValue("物流");
 					}
-					if(tbEmployee.getRole()=="5"){
+					if(tbEmployee.getRole().equals("5")){
 						row.createCell(idx++).setCellValue("其它");
 					}
-					if(tbEmployee.getRole()==null){
+					if(tbEmployee.getRole().equals(null)){
 						row.createCell(idx++).setCellValue("无");
 					}
-					row.createCell(idx++).setCellValue(tbEmployee.getRemark() == null ? "无" : tbEmployee.getRemark());
+					row.createCell(idx++).setCellValue(tbEmployee.getRemark().equals(null) ? "无" : tbEmployee.getRemark());
 				}
 			}
 		};
