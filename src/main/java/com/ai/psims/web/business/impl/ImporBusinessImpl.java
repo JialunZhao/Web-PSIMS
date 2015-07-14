@@ -2,7 +2,6 @@ package com.ai.psims.web.business.impl;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Time;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,13 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.business.IImporBusiness;
 import com.ai.psims.web.model.AddGoodsBean;
-import com.ai.psims.web.model.Goods;
 import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbImport;
 import com.ai.psims.web.model.TbImportGoods;
 import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbImportGoodsExample.Criteria;
-import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbSystemParameter;
@@ -33,6 +30,7 @@ import com.ai.psims.web.service.IImportService;
 import com.ai.psims.web.service.IProviderService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.service.ISystemParameterService;
+import com.ai.psims.web.service.ISystemParameterServiceLog;
 import com.ai.psims.web.util.Constants;
 
 @Service
@@ -50,6 +48,9 @@ public class ImporBusinessImpl implements IImporBusiness {
 
 	@Resource(name = "systemParameterServiceImpl")
 	private ISystemParameterService systemParameterService;
+	
+	@Resource(name = "systemParameterServiceLogImpl")
+	private ISystemParameterServiceLog systemParameterServiceLog;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(ImporBusinessImpl.class);
@@ -168,10 +169,13 @@ public class ImporBusinessImpl implements IImporBusiness {
 			importGoodsService.insertImportGoods(goodsArray.get(i));
 
 			// 奖金池金额更新
+			//addRecord
 			if (prizePool != null) {
 				TbSystemParameter tbSystemParameter = new TbSystemParameter();
 				tbSystemParameter = systemParameterService
-						.getSystemParameterPrizePool(goodsBean.getProviderId());
+						.getSystemParameterPrizePool(Integer.parseInt(providerInfo.getProviderPrizePool()));
+				systemParameterServiceLog.addRecord(tbSystemParameter);
+
 				tbSystemParameter.setPpValue(new BigDecimal(tbSystemParameter
 						.getPpValue()).subtract(prizePoolUsedBD).toString());
 				systemParameterService.update(tbSystemParameter);
