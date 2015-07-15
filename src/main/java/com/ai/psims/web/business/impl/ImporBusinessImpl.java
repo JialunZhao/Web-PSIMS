@@ -59,7 +59,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 
 		logger.info("addGoodsList");
 
-		TbImport tbImport = new TbImport();
+		TbImport tbImport = goodsBean.getTbImport();
 		String prizePool = new String();
 		String providerName = new String();
 		String goodsAllPay = null;
@@ -121,7 +121,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 			// 奖金池使用总额(未税)
 			BigDecimal prizePoolUsedBD = goodsPriceBD.multiply(goodsAmountBD)
 					.multiply(discountRateBD)
-					.divide(new BigDecimal(117), 3, BigDecimal.ROUND_HALF_UP);
+					.divide(new BigDecimal(117), 2, BigDecimal.ROUND_HALF_UP);
 			// 折扣销售总额(含税)
 			BigDecimal prizePoolBD = new BigDecimal(prizePool);
 			BigDecimal discountDutyTotalPriceBD = new BigDecimal(0); // =总价-奖金池使用金额
@@ -134,7 +134,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 				// 折扣额小于奖金池金额 ：goodsPrice*goodsCount*(100-discountRate)/100;
 				discountDutyTotalPriceBD = totalPriceBD.multiply(
 						new BigDecimal(100).subtract(discountRateBD)).divide(
-						new BigDecimal(100), 3, BigDecimal.ROUND_HALF_UP);
+						new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP);
 			}
 
 			goodsArray.get(i).setGoodsName(tbGoods.getGoodsName());
@@ -174,7 +174,11 @@ public class ImporBusinessImpl implements IImporBusiness {
 				TbSystemParameter tbSystemParameter = new TbSystemParameter();
 				tbSystemParameter = systemParameterService
 						.getSystemParameterPrizePool(Integer.parseInt(providerInfo.getProviderPrizePool()));
-				systemParameterServiceLog.addRecord(tbSystemParameter);
+
+				TbSystemParameter tbSystemParameterLog = tbSystemParameter;
+				tbSystemParameterLog.setpRemark(new BigDecimal(tbSystemParameterLog
+						.getPpValue()).subtract(prizePoolUsedBD).toString());
+				systemParameterServiceLog.addRecord(tbSystemParameterLog);
 
 				tbSystemParameter.setPpValue(new BigDecimal(tbSystemParameter
 						.getPpValue()).subtract(prizePoolUsedBD).toString());

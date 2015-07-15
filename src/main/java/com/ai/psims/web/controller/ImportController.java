@@ -60,18 +60,30 @@ public class ImportController extends BaseController {
 	
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
+		logger.info("------------Welcome importOrder page!-------------");
+		logger.info("------------1.初始化-------------");
 		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
-		TbImportExample example = new TbImportExample();
-		example.createCriteria().andImportStatusNotEqualTo("00");
-		example.setOrderByClause("import_serial_number desc");
 		List<TbImport> importList = new ArrayList<TbImport>();
+		TbImportExample example = new TbImportExample();
+		TbImportExample.Criteria criteria = example.createCriteria();
+		logger.info("------------2.获取参数-------------");
+		logger.info("------------3.数据校验-------------");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");  
+		Date date=new Date();  
+		String todayMonth=sdf.format(date) + "%";  
+		criteria.andImportStatusNotEqualTo("00");
+		criteria.andImportSerialNumberLike(todayMonth);
+		example.setOrderByClause("import_serial_number desc");
+		logger.info("------------4.业务处理-------------");
 		importList = queryBus.queryImport(example);
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();
+		logger.info("------------5.返回结果-------------");
 		request.setAttribute("providerList", provider);
 		request.setAttribute("storehouseList", storehouse);
 		request.setAttribute("importList", importList);
+		logger.info("------------Bye importOrder page!-------------");
 		return "importorder";
 
 	}

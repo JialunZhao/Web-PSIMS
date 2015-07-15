@@ -557,7 +557,7 @@
 		}
     	
     	function deleteImportData(importSerialNumber,importStatus){
-    		alert(importSerialNumber);
+    		alert(importSerialNumber+importStatus);
     		if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01%>') {
 				alert("商品部分到货，该订单不能删除。");
 			}else {
