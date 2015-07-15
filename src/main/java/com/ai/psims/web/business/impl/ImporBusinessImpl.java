@@ -48,7 +48,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 
 	@Resource(name = "systemParameterServiceImpl")
 	private ISystemParameterService systemParameterService;
-	
+
 	@Resource(name = "systemParameterServiceLogImpl")
 	private ISystemParameterServiceLog systemParameterServiceLog;
 
@@ -108,15 +108,15 @@ public class ImporBusinessImpl implements IImporBusiness {
 			}
 
 			// 单项商品总价：（正价销售总额(含税)）
-			BigDecimal goodsPriceBD = new BigDecimal(goodsArray.get(i)
-					.getImportGoodsPrice()); // 100
 			BigDecimal goodsAmountBD = new BigDecimal(goodsArray.get(i)
 					.getImportGoodsAmount()); // 100
-			BigDecimal totalPriceBD = goodsPriceBD.multiply(goodsAmountBD); // 10000=100*100
+			BigDecimal goodsPriceBD = new BigDecimal(goodsArray.get(i)
+					.getImportGoodsPrice()); // 100
 			BigDecimal discountRateBD = new BigDecimal(goodsArray.get(i)
 					.getImportDiscountRate()); // 60%
 			BigDecimal importDiscountPriceBD = goodsPriceBD.multiply(
 					discountRateBD).multiply(new BigDecimal(0.01)); // 60=100*60%
+			BigDecimal totalPriceBD = goodsPriceBD.multiply(goodsAmountBD); // 10000=100*100
 			importTotalPrice = importTotalPrice.add(totalPriceBD);
 			// 奖金池使用总额(未税)
 			BigDecimal prizePoolUsedBD = goodsPriceBD.multiply(goodsAmountBD)
@@ -124,17 +124,19 @@ public class ImporBusinessImpl implements IImporBusiness {
 					.divide(new BigDecimal(117), 2, BigDecimal.ROUND_HALF_UP);
 			// 折扣销售总额(含税)
 			BigDecimal prizePoolBD = new BigDecimal(prizePool);
-			BigDecimal discountDutyTotalPriceBD = new BigDecimal(0); // =总价-奖金池使用金额
+			BigDecimal discountDutyTotalPriceBD = new BigDecimal(0); // 奖金池抵用金额
+			BigDecimal discountGoodsTotalPriceBD = new BigDecimal(0); // =总价-(奖金池使用金额*1.17)
 			if (prizePoolUsedBD.compareTo(prizePoolBD) == 1) {
-				// 折扣额大于奖金池金额 ： goodsPrice*goodsCount-(prizePool*1.17);
-				discountDutyTotalPriceBD = totalPriceBD.subtract(prizePoolBD
-						.multiply(new BigDecimal(1.17)));
-				prizePoolUsedBD = prizePoolBD;
+				// 折扣额大于奖金池金额 ： goodsPrice*goodsAmount-(prizePool*1.17);
+				discountGoodsTotalPriceBD = totalPriceBD.subtract(prizePoolBD
+						.multiply(new BigDecimal(1.17))).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+				discountDutyTotalPriceBD = prizePoolBD;
 			} else {
-				// 折扣额小于奖金池金额 ：goodsPrice*goodsCount*(100-discountRate)/100;
-				discountDutyTotalPriceBD = totalPriceBD.multiply(
+				// 折扣额小于奖金池金额 ：goodsPrice*goodsAmount*(100-discountRate)/100;
+				discountGoodsTotalPriceBD = totalPriceBD.multiply(
 						new BigDecimal(100).subtract(discountRateBD)).divide(
 						new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP);
+				discountDutyTotalPriceBD = prizePoolUsedBD;
 			}
 
 			goodsArray.get(i).setGoodsName(tbGoods.getGoodsName());
@@ -148,7 +150,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 			goodsArray.get(i).setDiscountDutyTotalPrice(
 					discountDutyTotalPriceBD.toString());
 			goodsArray.get(i).setDiscountGoodsTotalPrice(
-					discountDutyTotalPriceBD.toString());
+					discountGoodsTotalPriceBD.toString());
 			goodsArray.get(i)
 					.setImportId(goodsBean.getTbImport().getImportId());
 			goodsArray.get(i).setImportSerialNumber(importSerialNumber);
@@ -169,19 +171,21 @@ public class ImporBusinessImpl implements IImporBusiness {
 			importGoodsService.insertImportGoods(goodsArray.get(i));
 
 			// 奖金池金额更新
-			//addRecord
+			// addRecord
 			if (prizePool != null) {
 				TbSystemParameter tbSystemParameter = new TbSystemParameter();
 				tbSystemParameter = systemParameterService
-						.getSystemParameterPrizePool(Integer.parseInt(providerInfo.getProviderPrizePool()));
+						.getSystemParameterPrizePool(Integer
+								.parseInt(providerInfo.getProviderPrizePool()));
 
 				TbSystemParameter tbSystemParameterLog = tbSystemParameter;
-				tbSystemParameterLog.setpRemark(new BigDecimal(tbSystemParameterLog
-						.getPpValue()).subtract(prizePoolUsedBD).toString());
+				tbSystemParameterLog.setpRemark(new BigDecimal(
+						tbSystemParameterLog.getPpValue()).subtract(
+								discountDutyTotalPriceBD).toString());
 				systemParameterServiceLog.addRecord(tbSystemParameterLog);
 
 				tbSystemParameter.setPpValue(new BigDecimal(tbSystemParameter
-						.getPpValue()).subtract(prizePoolUsedBD).toString());
+						.getPpValue()).subtract(discountDutyTotalPriceBD).toString());
 				systemParameterService.update(tbSystemParameter);
 			}
 		}

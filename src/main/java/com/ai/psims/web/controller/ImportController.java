@@ -65,24 +65,33 @@ public class ImportController extends BaseController {
 		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		List<TbImport> importList = new ArrayList<TbImport>();
-		TbImportExample example = new TbImportExample();
-		TbImportExample.Criteria criteria = example.createCriteria();
+		TbImportExample tbImportExample = new TbImportExample();
+		TbImportExample.Criteria criteria = tbImportExample.createCriteria();
+		List<TbImportGoods> tbImportGoodsList = new ArrayList<TbImportGoods>();
+		TbImportGoodsExample tbImportGoodsExample = new TbImportGoodsExample();
+		TbImportGoodsExample.Criteria tbImportGoodsExampleCriteria = tbImportGoodsExample.createCriteria();
+
+		
 		logger.info("------------2.获取参数-------------");
+		
 		logger.info("------------3.数据校验-------------");
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");  
 		Date date=new Date();  
 		String todayMonth=sdf.format(date) + "%";  
 		criteria.andImportStatusNotEqualTo("00");
 		criteria.andImportSerialNumberLike(todayMonth);
-		example.setOrderByClause("import_serial_number desc");
+		tbImportExample.setOrderByClause("import_serial_number desc");
 		logger.info("------------4.业务处理-------------");
-		importList = queryBus.queryImport(example);
+		importList = queryBus.queryImport(tbImportExample);
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();
+		tbImportGoodsList = imporBusinessImpl.queryImportGoods(tbImportGoodsExample);
+
 		logger.info("------------5.返回结果-------------");
 		request.setAttribute("providerList", provider);
 		request.setAttribute("storehouseList", storehouse);
 		request.setAttribute("importList", importList);
+		request.setAttribute("tbImportGoodsList", tbImportGoodsList);
 		logger.info("------------Bye importOrder page!-------------");
 		return "importorder";
 
@@ -154,6 +163,8 @@ public class ImportController extends BaseController {
 			criteria.andImportSerialNumberLike("%" + importSerialNumber + "%");
 		}
 		criteria.andImportStatusNotEqualTo("00");
+		example.setOrderByClause("import_serial_number desc");
+
 		List<TbImport> importList = new ArrayList<TbImport>();
 		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
@@ -304,12 +315,16 @@ public class ImportController extends BaseController {
 		for (int i = 0; i < goodsId.length; i++) {
 			TbImportGoods tbImportGoods =new TbImportGoods();
 			tbImportGoods.setGoodsId(Integer.parseInt(goodsId[i])); 
+			tbImportGoods.setGoodsName(goodsName[i]);
 			tbImportGoods.setGoodsCode(goodsCode[i]);
 			tbImportGoods.setImportGoodsUnit(goodsUnit[i]);
 			tbImportGoods.setGoodsShelfLife(Integer.parseInt(goodsShelfLife[i]));
 			tbImportGoods.setImportGoodsAmount(Integer.parseInt(goodsCount[i]));
 			tbImportGoods.setImportGoodsPrice(goodsPrice[i]);
 			tbImportGoods.setImportDiscountRate(discountRate[i]);
+			tbImportGoods.setImportTotalPrice(totalPrice[i]);
+			tbImportGoods.setDiscountDutyTotalPrice(discountDutyTotalPrice[i]);
+			tbImportGoods.setDiscountGoodsTotalPrice(prizePoolUsed[i]);
 			goodsList.add(tbImportGoods);
 		}
 		logger.info("------------3.数据校验-------------");
