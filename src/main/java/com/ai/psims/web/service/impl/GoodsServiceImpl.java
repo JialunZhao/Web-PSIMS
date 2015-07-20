@@ -9,11 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.GoodsMapper;
 import com.ai.psims.web.dao.TbGoodsLogMapper;
 import com.ai.psims.web.dao.TbGoodsMapper;
-import com.ai.psims.web.model.Goods;
-import com.ai.psims.web.model.GoodsExample;
 import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbGoodsExample;
 import com.ai.psims.web.model.TbGoodsLog;
@@ -21,8 +18,7 @@ import com.ai.psims.web.service.IGoodsService;
 
 @Service
 public class GoodsServiceImpl implements IGoodsService {
-	@Resource(name = "goodsMapper")
-	private GoodsMapper goodsMapper;
+
 
 	@Resource(name = "tbGoodsMapper")
 	private TbGoodsMapper tbGoodsMapper;
@@ -32,20 +28,7 @@ public class GoodsServiceImpl implements IGoodsService {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(GoodsServiceImpl.class);
-	
-	
-	public List<Goods> selectByExample(GoodsExample example) {
-		return goodsMapper.selectByExample(example);
-	}
 
-	@Override
-	public Goods selectByKey(Integer goodsId) {
-		
-		return goodsMapper.selectByPrimaryKey(goodsId);
-		
-	}
-	
-	//////////////////////////////
 
 	
 	@Override

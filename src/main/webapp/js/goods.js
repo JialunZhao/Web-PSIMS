@@ -272,12 +272,11 @@ function goods2customer(obj) {
 													+ '</option></select>'
 													+ '</td><td>'
 													+ data[i].goodsActualCost
+													+ '</td><td>'
+													+ data[i].goodsNormalPrice
 													+ '</td><td><input class="control-group saveg2c" name="goodsPrice" type="text" value="'
 													+ data[i].goodsPrice
-													+ '"placeholder="销售价格"></td>'
-													+ '</td><td><input class="control-group saveg2c" name="goodsPrizePoolRatio" type="text" value="'
-													+ data[i].goodsPrizePoolRatio
-													+ '"placeholder="奖金池折扣"></td>'
+													+ '"placeholder="本客户优惠后价格"></td>'
 													+ '<td><a onClick="deleteGoods2Customer(this)">删除</a></td></tr>');
 						}
 					}
@@ -308,13 +307,11 @@ function addgoods2customer(obj) {
 											+ '<select class="saveg2cselect" name="customerId"  placeholder="客户名称"><option value="0">请选择客户：</option></select>'
 											+ '</td><td>'
 											+ $('#tmpGoodsActualCost').val()
+											+ '</td><td>'
+											+ $('#tmpGoodsPrice').val()
 											+ '</td><td><input class="control-group saveg2c" name="goodsPrice" type="text" value="'
 											+ $('#tmpGoodsPrice').val()
-											+ '"placeholder="销售价格"></td>'
-											+ '</td><td><input class="control-group saveg2c" name="goodsPrizePoolRatio" type="text" value="'
-											+ $('#tmpGoodsPrizePoolRatio')
-													.val()
-											+ '"placeholder="奖金池折扣">%</td>'
+											+ '"placeholder="本客户优惠后价格"></td>'
 											+ '<td><a onClick="deleteGoods2Customer(this)" >删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
