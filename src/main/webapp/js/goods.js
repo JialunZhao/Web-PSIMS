@@ -204,7 +204,6 @@ function modifyCurrentGoods(obj) {
 			$('#modify_shelfLifePrewarning').val(data[0].shelfLifeWarning)
 			$('#modify_storagePrewarning').val(data[0].storageWarning)
 			$('#modify_remark').val(data[0].remark)
-
 			$('#modifygoods').modal('show');
 		},
 	});
@@ -278,7 +277,7 @@ function goods2customer(obj) {
 													+ '"placeholder="销售价格"></td>'
 													+ '</td><td><input class="control-group saveg2c" name="goodsPrizePoolRatio" type="text" value="'
 													+ data[i].goodsPrizePoolRatio
-													+ '"placeholder="奖金池折扣">%</td>'
+													+ '"placeholder="奖金池折扣"></td>'
 													+ '<td><a onClick="deleteGoods2Customer(this)">删除</a></td></tr>');
 						}
 					}

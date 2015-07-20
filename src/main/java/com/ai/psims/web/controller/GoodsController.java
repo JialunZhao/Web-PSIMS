@@ -265,7 +265,7 @@ public class GoodsController extends BaseController {
 		}
 //		金额改造 
 		if (null != goodsPrice  && goodsPrice.length() > 0) {
-			goodsadd.setGoodsPrice(new BigDecimal(goodsPrice).toString());
+			goodsadd.setGoodsPrice(new BigDecimal(goodsPrice).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
 			goodsadd.setGoodsPrizePoolRatio(new BigDecimal(goodsPrizePoolRatio).toString());
@@ -303,7 +303,7 @@ public class GoodsController extends BaseController {
 			goodsadd.setOtherSubsidy(new BigDecimal(otherSubsidy).toString());
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			goodsadd.setGoodsActualCost(new BigDecimal(goodsActualCost).toString());
+			goodsadd.setGoodsActualCost(new BigDecimal(goodsActualCost).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			goodsadd.setStorageWarning(Integer.parseInt(storagePrewarning));
@@ -471,8 +471,7 @@ public class GoodsController extends BaseController {
 			tbGoods.setGoodsProfit(goodsProfit);
 		}
 		if (null != goodsPrice && goodsPrice.length() > 0) {
-			tbGoods.setGoodsPrice(goodsPrice);
-
+			tbGoods.setGoodsPrice(new BigDecimal(goodsPrice).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
 			tbGoods.setGoodsPrizePoolRatio(goodsPrizePoolRatio);
@@ -510,7 +509,7 @@ public class GoodsController extends BaseController {
 			tbGoods.setOtherSubsidy(otherSubsidy);
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			tbGoods.setGoodsActualCost(goodsActualCost);
+			tbGoods.setGoodsActualCost(new BigDecimal(goodsActualCost).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			tbGoods.setStorageWarning(Integer.parseInt(storagePrewarning));

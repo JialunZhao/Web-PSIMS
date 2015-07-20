@@ -111,12 +111,12 @@ public class ImporBusinessImpl implements IImporBusiness {
 			BigDecimal goodsAmountBD = new BigDecimal(goodsArray.get(i)
 					.getImportGoodsAmount()); // 100
 			BigDecimal goodsPriceBD = new BigDecimal(goodsArray.get(i)
-					.getImportGoodsPrice()); // 100
+					.getImportGoodsPrice()).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP); // 100
 			BigDecimal discountRateBD = new BigDecimal(goodsArray.get(i)
 					.getImportDiscountRate()); // 60%
 			BigDecimal importDiscountPriceBD = goodsPriceBD.multiply(
-					discountRateBD).multiply(new BigDecimal(0.01)); // 60=100*60%
-			BigDecimal totalPriceBD = goodsPriceBD.multiply(goodsAmountBD); // 10000=100*100
+					discountRateBD).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP); // 60=100*60%
+			BigDecimal totalPriceBD = goodsPriceBD.multiply(goodsAmountBD).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP); // 10000=100*100
 			importTotalPrice = importTotalPrice.add(totalPriceBD);
 			// 奖金池使用总额(未税)
 			BigDecimal prizePoolUsedBD = goodsPriceBD.multiply(goodsAmountBD)

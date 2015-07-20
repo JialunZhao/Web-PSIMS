@@ -2,20 +2,44 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class TbGoods2customer {
-    private Integer goods2customerId;
+public class TbSalesGoods {
+    private Integer salesGoodsId;
+
+    private String salesSerialNumber;
+
+    private String salesGoodsType;
+
+    private Integer salesGoodsAmount;
+
+    private String salesGoodsUnit;
+
+    private String salesGoodsPrice;
+
+    private Date salesGoodsProductionDate;
+
+    private Date salesGoodsExpirationDate;
+
+    private String salesGoodsTotalPrice;
+
+    private String salesDiscountAmount;
+
+    private String salesFinalAmount;
+
+    private Date salesGoodsCreatetime;
+
+    private Date salesGoodsModifytime;
+
+    private Date salesGoodsEndtime;
+
+    private String salesGoodsRemark;
+
+    private Integer storageId;
 
     private Integer goodsId;
 
     private String goodsName;
 
     private String goodsCode;
-
-    private Integer customerId;
-
-    private String customerName;
-
-    private String customerCode;
 
     private Integer goodsVersion;
 
@@ -35,13 +59,11 @@ public class TbGoods2customer {
 
     private String goodsActualCost;
 
-    private String goodsNormalPrice;
-
     private String goodsPrice;
 
     private String goodsProfit;
 
-    private String goodsPrizePoolRatio;
+    private String goodsDiscountAmount;
 
     private String goodsType;
 
@@ -85,18 +107,138 @@ public class TbGoods2customer {
 
     private String otherSubsidy;
 
+    private String singleFinalCost;
+
     private Integer storageWarning;
 
     private Integer shelfLifeWarning;
 
-    private String singleFinalCost;
-
-    public Integer getGoods2customerId() {
-        return goods2customerId;
+    public Integer getSalesGoodsId() {
+        return salesGoodsId;
     }
 
-    public void setGoods2customerId(Integer goods2customerId) {
-        this.goods2customerId = goods2customerId;
+    public void setSalesGoodsId(Integer salesGoodsId) {
+        this.salesGoodsId = salesGoodsId;
+    }
+
+    public String getSalesSerialNumber() {
+        return salesSerialNumber;
+    }
+
+    public void setSalesSerialNumber(String salesSerialNumber) {
+        this.salesSerialNumber = salesSerialNumber == null ? null : salesSerialNumber.trim();
+    }
+
+    public String getSalesGoodsType() {
+        return salesGoodsType;
+    }
+
+    public void setSalesGoodsType(String salesGoodsType) {
+        this.salesGoodsType = salesGoodsType == null ? null : salesGoodsType.trim();
+    }
+
+    public Integer getSalesGoodsAmount() {
+        return salesGoodsAmount;
+    }
+
+    public void setSalesGoodsAmount(Integer salesGoodsAmount) {
+        this.salesGoodsAmount = salesGoodsAmount;
+    }
+
+    public String getSalesGoodsUnit() {
+        return salesGoodsUnit;
+    }
+
+    public void setSalesGoodsUnit(String salesGoodsUnit) {
+        this.salesGoodsUnit = salesGoodsUnit == null ? null : salesGoodsUnit.trim();
+    }
+
+    public String getSalesGoodsPrice() {
+        return salesGoodsPrice;
+    }
+
+    public void setSalesGoodsPrice(String salesGoodsPrice) {
+        this.salesGoodsPrice = salesGoodsPrice == null ? null : salesGoodsPrice.trim();
+    }
+
+    public Date getSalesGoodsProductionDate() {
+        return salesGoodsProductionDate;
+    }
+
+    public void setSalesGoodsProductionDate(Date salesGoodsProductionDate) {
+        this.salesGoodsProductionDate = salesGoodsProductionDate;
+    }
+
+    public Date getSalesGoodsExpirationDate() {
+        return salesGoodsExpirationDate;
+    }
+
+    public void setSalesGoodsExpirationDate(Date salesGoodsExpirationDate) {
+        this.salesGoodsExpirationDate = salesGoodsExpirationDate;
+    }
+
+    public String getSalesGoodsTotalPrice() {
+        return salesGoodsTotalPrice;
+    }
+
+    public void setSalesGoodsTotalPrice(String salesGoodsTotalPrice) {
+        this.salesGoodsTotalPrice = salesGoodsTotalPrice == null ? null : salesGoodsTotalPrice.trim();
+    }
+
+    public String getSalesDiscountAmount() {
+        return salesDiscountAmount;
+    }
+
+    public void setSalesDiscountAmount(String salesDiscountAmount) {
+        this.salesDiscountAmount = salesDiscountAmount == null ? null : salesDiscountAmount.trim();
+    }
+
+    public String getSalesFinalAmount() {
+        return salesFinalAmount;
+    }
+
+    public void setSalesFinalAmount(String salesFinalAmount) {
+        this.salesFinalAmount = salesFinalAmount == null ? null : salesFinalAmount.trim();
+    }
+
+    public Date getSalesGoodsCreatetime() {
+        return salesGoodsCreatetime;
+    }
+
+    public void setSalesGoodsCreatetime(Date salesGoodsCreatetime) {
+        this.salesGoodsCreatetime = salesGoodsCreatetime;
+    }
+
+    public Date getSalesGoodsModifytime() {
+        return salesGoodsModifytime;
+    }
+
+    public void setSalesGoodsModifytime(Date salesGoodsModifytime) {
+        this.salesGoodsModifytime = salesGoodsModifytime;
+    }
+
+    public Date getSalesGoodsEndtime() {
+        return salesGoodsEndtime;
+    }
+
+    public void setSalesGoodsEndtime(Date salesGoodsEndtime) {
+        this.salesGoodsEndtime = salesGoodsEndtime;
+    }
+
+    public String getSalesGoodsRemark() {
+        return salesGoodsRemark;
+    }
+
+    public void setSalesGoodsRemark(String salesGoodsRemark) {
+        this.salesGoodsRemark = salesGoodsRemark == null ? null : salesGoodsRemark.trim();
+    }
+
+    public Integer getStorageId() {
+        return storageId;
+    }
+
+    public void setStorageId(Integer storageId) {
+        this.storageId = storageId;
     }
 
     public Integer getGoodsId() {
@@ -121,30 +263,6 @@ public class TbGoods2customer {
 
     public void setGoodsCode(String goodsCode) {
         this.goodsCode = goodsCode == null ? null : goodsCode.trim();
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName == null ? null : customerName.trim();
-    }
-
-    public String getCustomerCode() {
-        return customerCode;
-    }
-
-    public void setCustomerCode(String customerCode) {
-        this.customerCode = customerCode == null ? null : customerCode.trim();
     }
 
     public Integer getGoodsVersion() {
@@ -219,14 +337,6 @@ public class TbGoods2customer {
         this.goodsActualCost = goodsActualCost == null ? null : goodsActualCost.trim();
     }
 
-    public String getGoodsNormalPrice() {
-        return goodsNormalPrice;
-    }
-
-    public void setGoodsNormalPrice(String goodsNormalPrice) {
-        this.goodsNormalPrice = goodsNormalPrice == null ? null : goodsNormalPrice.trim();
-    }
-
     public String getGoodsPrice() {
         return goodsPrice;
     }
@@ -243,12 +353,12 @@ public class TbGoods2customer {
         this.goodsProfit = goodsProfit == null ? null : goodsProfit.trim();
     }
 
-    public String getGoodsPrizePoolRatio() {
-        return goodsPrizePoolRatio;
+    public String getGoodsDiscountAmount() {
+        return goodsDiscountAmount;
     }
 
-    public void setGoodsPrizePoolRatio(String goodsPrizePoolRatio) {
-        this.goodsPrizePoolRatio = goodsPrizePoolRatio == null ? null : goodsPrizePoolRatio.trim();
+    public void setGoodsDiscountAmount(String goodsDiscountAmount) {
+        this.goodsDiscountAmount = goodsDiscountAmount == null ? null : goodsDiscountAmount.trim();
     }
 
     public String getGoodsType() {
@@ -419,6 +529,14 @@ public class TbGoods2customer {
         this.otherSubsidy = otherSubsidy == null ? null : otherSubsidy.trim();
     }
 
+    public String getSingleFinalCost() {
+        return singleFinalCost;
+    }
+
+    public void setSingleFinalCost(String singleFinalCost) {
+        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
+    }
+
     public Integer getStorageWarning() {
         return storageWarning;
     }
@@ -433,13 +551,5 @@ public class TbGoods2customer {
 
     public void setShelfLifeWarning(Integer shelfLifeWarning) {
         this.shelfLifeWarning = shelfLifeWarning;
-    }
-
-    public String getSingleFinalCost() {
-        return singleFinalCost;
-    }
-
-    public void setSingleFinalCost(String singleFinalCost) {
-        this.singleFinalCost = singleFinalCost == null ? null : singleFinalCost.trim();
     }
 }

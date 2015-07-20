@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.psims.web.dao.TbSalesMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbSales" >
+    <id column="sales_id" property="salesId" jdbcType="INTEGER" />
+    <id column="sales_serial_number" property="salesSerialNumber" jdbcType="VARCHAR" />
+    <result column="sales_date" property="salesDate" jdbcType="TIMESTAMP" />
+    <result column="customer_id" property="customerId" jdbcType="INTEGER" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="storehouse_id" property="storehouseId" jdbcType="INTEGER" />
+    <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR" />
+    <result column="employee_id" property="employeeId" jdbcType="INTEGER" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="income_type" property="incomeType" jdbcType="VARCHAR" />
+    <result column="income_time" property="incomeTime" jdbcType="TIMESTAMP" />
+    <result column="total_sales_amount" property="totalSalesAmount" jdbcType="VARCHAR" />
+    <result column="total_settlement_amount" property="totalSettlementAmount" jdbcType="VARCHAR" />
+    <result column="total_credit_amount" property="totalCreditAmount" jdbcType="VARCHAR" />
+    <result column="sales_status" property="salesStatus" jdbcType="VARCHAR" />
+    <result column="sales_type" property="salesType" jdbcType="VARCHAR" />
+    <result column="sales_remark" property="salesRemark" jdbcType="VARCHAR" />
+    <result column="storehouse_manager" property="storehouseManager" jdbcType="VARCHAR" />
+    <result column="touching_manager" property="touchingManager" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="departure_time" property="departureTime" jdbcType="TIMESTAMP" />
+    <result column="still_time" property="stillTime" jdbcType="TIMESTAMP" />
+    <result column="start_oil_number" property="startOilNumber" jdbcType="VARCHAR" />
+    <result column="return_oil_number" property="returnOilNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sales_id, sales_serial_number, sales_date, customer_id, customer_name, storehouse_id, 
+    storehouse_name, employee_id, employee_name, income_type, income_time, total_sales_amount, 
+    total_settlement_amount, total_credit_amount, sales_status, sales_type, sales_remark, 
+    storehouse_manager, touching_manager, receiver, sender, car_number, departure_time, 
+    still_time, start_oil_number, return_oil_number
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSalesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSalesKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sales
+    where sales_id = #{salesId,jdbcType=INTEGER}
+      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.psims.web.model.TbSalesKey" >
+    delete from tb_sales
+    where sales_id = #{salesId,jdbcType=INTEGER}
+      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbSalesExample" >
+    delete from tb_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.psims.web.model.TbSales" >
+    insert into tb_sales (sales_id, sales_serial_number, sales_date, 
+      customer_id, customer_name, storehouse_id, 
+      storehouse_name, employee_id, employee_name, 
+      income_type, income_time, total_sales_amount, 
+      total_settlement_amount, total_credit_amount, 
+      sales_status, sales_type, sales_remark, 
+      storehouse_manager, touching_manager, receiver, 
+      sender, car_number, departure_time, 
+      still_time, start_oil_number, return_oil_number
+      )
+    values (#{salesId,jdbcType=INTEGER}, #{salesSerialNumber,jdbcType=VARCHAR}, #{salesDate,jdbcType=TIMESTAMP}, 
+      #{customerId,jdbcType=INTEGER}, #{customerName,jdbcType=VARCHAR}, #{storehouseId,jdbcType=INTEGER}, 
+      #{storehouseName,jdbcType=VARCHAR}, #{employeeId,jdbcType=INTEGER}, #{employeeName,jdbcType=VARCHAR}, 
+      #{incomeType,jdbcType=VARCHAR}, #{incomeTime,jdbcType=TIMESTAMP}, #{totalSalesAmount,jdbcType=VARCHAR}, 
+      #{totalSettlementAmount,jdbcType=VARCHAR}, #{totalCreditAmount,jdbcType=VARCHAR}, 
+      #{salesStatus,jdbcType=VARCHAR}, #{salesType,jdbcType=VARCHAR}, #{salesRemark,jdbcType=VARCHAR}, 
+      #{storehouseManager,jdbcType=VARCHAR}, #{touchingManager,jdbcType=VARCHAR}, #{receiver,jdbcType=VARCHAR}, 
+      #{sender,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, #{departureTime,jdbcType=TIMESTAMP}, 
+      #{stillTime,jdbcType=TIMESTAMP}, #{startOilNumber,jdbcType=VARCHAR}, #{returnOilNumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbSales" >
+    insert into tb_sales
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="salesId != null" >
+        sales_id,
+      </if>
+      <if test="salesSerialNumber != null" >
+        sales_serial_number,
+      </if>
+      <if test="salesDate != null" >
+        sales_date,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id,
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name,
+      </if>
+      <if test="employeeId != null" >
+        employee_id,
+      </if>
+      <if test="employeeName != null" >
+        employee_name,
+      </if>
+      <if test="incomeType != null" >
+        income_type,
+      </if>
+      <if test="incomeTime != null" >
+        income_time,
+      </if>
+      <if test="totalSalesAmount != null" >
+        total_sales_amount,
+      </if>
+      <if test="totalSettlementAmount != null" >
+        total_settlement_amount,
+      </if>
+      <if test="totalCreditAmount != null" >
+        total_credit_amount,
+      </if>
+      <if test="salesStatus != null" >
+        sales_status,
+      </if>
+      <if test="salesType != null" >
+        sales_type,
+      </if>
+      <if test="salesRemark != null" >
+        sales_remark,
+      </if>
+      <if test="storehouseManager != null" >
+        storehouse_manager,
+      </if>
+      <if test="touchingManager != null" >
+        touching_manager,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="departureTime != null" >
+        departure_time,
+      </if>
+      <if test="stillTime != null" >
+        still_time,
+      </if>
+      <if test="startOilNumber != null" >
+        start_oil_number,
+      </if>
+      <if test="returnOilNumber != null" >
+        return_oil_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="salesId != null" >
+        #{salesId,jdbcType=INTEGER},
+      </if>
+      <if test="salesSerialNumber != null" >
+        #{salesSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="salesDate != null" >
+        #{salesDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeType != null" >
+        #{incomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTime != null" >
+        #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalSalesAmount != null" >
+        #{totalSalesAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSettlementAmount != null" >
+        #{totalSettlementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCreditAmount != null" >
+        #{totalCreditAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="salesStatus != null" >
+        #{salesStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="salesType != null" >
+        #{salesType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRemark != null" >
+        #{salesRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseManager != null" >
+        #{storehouseManager,jdbcType=VARCHAR},
+      </if>
+      <if test="touchingManager != null" >
+        #{touchingManager,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null" >
+        #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stillTime != null" >
+        #{stillTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startOilNumber != null" >
+        #{startOilNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="returnOilNumber != null" >
+        #{returnOilNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.psims.web.model.TbSalesExample" resultType="java.lang.Integer" >
+    select count(*) from tb_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_sales
+    <set >
+      <if test="record.salesId != null" >
+        sales_id = #{record.salesId,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesSerialNumber != null" >
+        sales_serial_number = #{record.salesSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesDate != null" >
+        sales_date = #{record.salesDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storehouseId != null" >
+        storehouse_id = #{record.storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storehouseName != null" >
+        storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeId != null" >
+        employee_id = #{record.employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeName != null" >
+        employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incomeType != null" >
+        income_type = #{record.incomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incomeTime != null" >
+        income_time = #{record.incomeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalSalesAmount != null" >
+        total_sales_amount = #{record.totalSalesAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalSettlementAmount != null" >
+        total_settlement_amount = #{record.totalSettlementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalCreditAmount != null" >
+        total_credit_amount = #{record.totalCreditAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesStatus != null" >
+        sales_status = #{record.salesStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesType != null" >
+        sales_type = #{record.salesType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesRemark != null" >
+        sales_remark = #{record.salesRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storehouseManager != null" >
+        storehouse_manager = #{record.storehouseManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touchingManager != null" >
+        touching_manager = #{record.touchingManager,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sender != null" >
+        sender = #{record.sender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNumber != null" >
+        car_number = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departureTime != null" >
+        departure_time = #{record.departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stillTime != null" >
+        still_time = #{record.stillTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startOilNumber != null" >
+        start_oil_number = #{record.startOilNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnOilNumber != null" >
+        return_oil_number = #{record.returnOilNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_sales
+    set sales_id = #{record.salesId,jdbcType=INTEGER},
+      sales_serial_number = #{record.salesSerialNumber,jdbcType=VARCHAR},
+      sales_date = #{record.salesDate,jdbcType=TIMESTAMP},
+      customer_id = #{record.customerId,jdbcType=INTEGER},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      storehouse_id = #{record.storehouseId,jdbcType=INTEGER},
+      storehouse_name = #{record.storehouseName,jdbcType=VARCHAR},
+      employee_id = #{record.employeeId,jdbcType=INTEGER},
+      employee_name = #{record.employeeName,jdbcType=VARCHAR},
+      income_type = #{record.incomeType,jdbcType=VARCHAR},
+      income_time = #{record.incomeTime,jdbcType=TIMESTAMP},
+      total_sales_amount = #{record.totalSalesAmount,jdbcType=VARCHAR},
+      total_settlement_amount = #{record.totalSettlementAmount,jdbcType=VARCHAR},
+      total_credit_amount = #{record.totalCreditAmount,jdbcType=VARCHAR},
+      sales_status = #{record.salesStatus,jdbcType=VARCHAR},
+      sales_type = #{record.salesType,jdbcType=VARCHAR},
+      sales_remark = #{record.salesRemark,jdbcType=VARCHAR},
+      storehouse_manager = #{record.storehouseManager,jdbcType=VARCHAR},
+      touching_manager = #{record.touchingManager,jdbcType=VARCHAR},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      sender = #{record.sender,jdbcType=VARCHAR},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      departure_time = #{record.departureTime,jdbcType=TIMESTAMP},
+      still_time = #{record.stillTime,jdbcType=TIMESTAMP},
+      start_oil_number = #{record.startOilNumber,jdbcType=VARCHAR},
+      return_oil_number = #{record.returnOilNumber,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbSales" >
+    update tb_sales
+    <set >
+      <if test="salesDate != null" >
+        sales_date = #{salesDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseId != null" >
+        storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="storehouseName != null" >
+        storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null" >
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="employeeName != null" >
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeType != null" >
+        income_type = #{incomeType,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTime != null" >
+        income_time = #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalSalesAmount != null" >
+        total_sales_amount = #{totalSalesAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalSettlementAmount != null" >
+        total_settlement_amount = #{totalSettlementAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCreditAmount != null" >
+        total_credit_amount = #{totalCreditAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="salesStatus != null" >
+        sales_status = #{salesStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="salesType != null" >
+        sales_type = #{salesType,jdbcType=VARCHAR},
+      </if>
+      <if test="salesRemark != null" >
+        sales_remark = #{salesRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="storehouseManager != null" >
+        storehouse_manager = #{storehouseManager,jdbcType=VARCHAR},
+      </if>
+      <if test="touchingManager != null" >
+        touching_manager = #{touchingManager,jdbcType=VARCHAR},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null" >
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null" >
+        departure_time = #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stillTime != null" >
+        still_time = #{stillTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startOilNumber != null" >
+        start_oil_number = #{startOilNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="returnOilNumber != null" >
+        return_oil_number = #{returnOilNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sales_id = #{salesId,jdbcType=INTEGER}
+      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbSales" >
+    update tb_sales
+    set sales_date = #{salesDate,jdbcType=TIMESTAMP},
+      customer_id = #{customerId,jdbcType=INTEGER},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      storehouse_id = #{storehouseId,jdbcType=INTEGER},
+      storehouse_name = #{storehouseName,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      income_type = #{incomeType,jdbcType=VARCHAR},
+      income_time = #{incomeTime,jdbcType=TIMESTAMP},
+      total_sales_amount = #{totalSalesAmount,jdbcType=VARCHAR},
+      total_settlement_amount = #{totalSettlementAmount,jdbcType=VARCHAR},
+      total_credit_amount = #{totalCreditAmount,jdbcType=VARCHAR},
+      sales_status = #{salesStatus,jdbcType=VARCHAR},
+      sales_type = #{salesType,jdbcType=VARCHAR},
+      sales_remark = #{salesRemark,jdbcType=VARCHAR},
+      storehouse_manager = #{storehouseManager,jdbcType=VARCHAR},
+      touching_manager = #{touchingManager,jdbcType=VARCHAR},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      sender = #{sender,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      departure_time = #{departureTime,jdbcType=TIMESTAMP},
+      still_time = #{stillTime,jdbcType=TIMESTAMP},
+      start_oil_number = #{startOilNumber,jdbcType=VARCHAR},
+      return_oil_number = #{returnOilNumber,jdbcType=VARCHAR}
+    where sales_id = #{salesId,jdbcType=INTEGER}
+      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

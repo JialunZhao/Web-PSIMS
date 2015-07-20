@@ -1135,6 +1135,76 @@ public class TbGoods2customerExample {
             return (Criteria) this;
         }
 
+        public Criteria andGoodsNormalPriceIsNull() {
+            addCriterion("goods_normal_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceIsNotNull() {
+            addCriterion("goods_normal_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceEqualTo(String value) {
+            addCriterion("goods_normal_price =", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceNotEqualTo(String value) {
+            addCriterion("goods_normal_price <>", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceGreaterThan(String value) {
+            addCriterion("goods_normal_price >", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_normal_price >=", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceLessThan(String value) {
+            addCriterion("goods_normal_price <", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceLessThanOrEqualTo(String value) {
+            addCriterion("goods_normal_price <=", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceLike(String value) {
+            addCriterion("goods_normal_price like", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceNotLike(String value) {
+            addCriterion("goods_normal_price not like", value, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceIn(List<String> values) {
+            addCriterion("goods_normal_price in", values, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceNotIn(List<String> values) {
+            addCriterion("goods_normal_price not in", values, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceBetween(String value1, String value2) {
+            addCriterion("goods_normal_price between", value1, value2, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsNormalPriceNotBetween(String value1, String value2) {
+            addCriterion("goods_normal_price not between", value1, value2, "goodsNormalPrice");
+            return (Criteria) this;
+        }
+
         public Criteria andGoodsPriceIsNull() {
             addCriterion("goods_price is null");
             return (Criteria) this;

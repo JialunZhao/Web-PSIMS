@@ -90,7 +90,7 @@
 					<tr>
 						<td class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></td>
-						<td><font size="4" color="#16a085">${imports.importSerialNumber}</font></td>
+						<td><font color="#16a085">${imports.importSerialNumber}</font></td>
 						<td><font size="4" color="#16a085">${imports.providerName}</font></td>
 						<td><font size="4" color="#16a085"><fmt:formatDate value="${imports.importDatetime}"
 								pattern="yyyy-MM-dd" /></font></td>
@@ -111,7 +111,7 @@
 						<td>商品名称</td>
 						<td>商品单价</td>
 						<td>商品数量</td>
-						<td>折扣率</td>
+						<td>总价</td>
 						<td>奖金池支付总额</td>
 						<td>现金支付总额</td>
 					</tr>
@@ -124,7 +124,7 @@
 								<td>${tbImportGoodsList.goodsName}</td>
 								<td>${tbImportGoodsList.importGoodsPrice}</td>
 								<td>${tbImportGoodsList.importGoodsAmount}</td>
-								<td>${tbImportGoodsList.importDiscountRate}</td>
+								<td>${tbImportGoodsList.importGoodsTotalPrice}</td>
 								<td>${tbImportGoodsList.discountDutyTotalPrice}</td>
 								<td>${tbImportGoodsList.discountGoodsTotalPrice}</td>
 							</tr>
