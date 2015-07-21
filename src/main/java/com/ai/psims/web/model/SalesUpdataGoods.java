@@ -4,9 +4,9 @@ public class SalesUpdataGoods {
 	private int salesGoodsId;
 	private String salesSerialNumber;
 	private String goodsName;
-	private long salesGoodsPrice;
+	private String salesGoodsPrice;
 	private int salesGoodsAmount;
-	private long salesGoodsTotalPrice;
+	private String salesGoodsTotalPrice;
 	private int storageRateCurrent;
 
 	public int getStorageRateCurrent() {
@@ -41,11 +41,11 @@ public class SalesUpdataGoods {
 		this.goodsName = goodsName;
 	}
 
-	public long getSalesGoodsPrice() {
+	public String getSalesGoodsPrice() {
 		return salesGoodsPrice;
 	}
 
-	public void setSalesGoodsPrice(long salesGoodsPrice) {
+	public void setSalesGoodsPrice(String salesGoodsPrice) {
 		this.salesGoodsPrice = salesGoodsPrice;
 	}
 
@@ -57,11 +57,11 @@ public class SalesUpdataGoods {
 		this.salesGoodsAmount = salesGoodsAmount;
 	}
 
-	public long getSalesGoodsTotalPrice() {
+	public String getSalesGoodsTotalPrice() {
 		return salesGoodsTotalPrice;
 	}
 
-	public void setSalesGoodsTotalPrice(long salesGoodsTotalPrice) {
+	public void setSalesGoodsTotalPrice(String salesGoodsTotalPrice) {
 		this.salesGoodsTotalPrice = salesGoodsTotalPrice;
 	}
 

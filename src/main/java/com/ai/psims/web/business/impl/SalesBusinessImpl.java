@@ -77,14 +77,14 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods
 					.setSalesGoodsAmount(Integer.parseInt(salesCountArray[i]));
 			salesGoods.setSalesGoodsUnit(storagecheck.getImportGoodsUnit());
-			salesGoods.setSalesGoodsPrice(Long.parseLong(salesPriceArray[i]));
+			salesGoods.setSalesGoodsPrice(salesPriceArray[i]);
 			salesGoods.setSalesGoodsProductionDate(storagecheck
 					.getGoodsProductionDate());
 			salesGoods.setSalesGoodsExpirationDate(storagecheck
 					.getGoodsExpirationDate());
-			salesGoods.setSalesGoodsTotalPrice(Long
+			salesGoods.setSalesGoodsTotalPrice((Long
 					.parseLong(salesCountArray[i])
-					* Long.parseLong(salesPriceArray[i]));
+					* Long.parseLong(salesPriceArray[i]))+"");
 			salesGoods.setStorageId(storagecheck.getStorageId());
 			if (storagecheck.getStorageRateCurrent() == Integer
 					.parseInt(salesCountArray[i])) {
@@ -108,7 +108,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		sales.setStorehouseName(addSalesGoodsBean.getStoreName());
 		sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
 		sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
-		sales.setSalesTotalPrice(goodsAllPay);
+		sales.setTotalSalesAmount(goodsAllPay+"");
 		sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
 		salesService.insertSelective(sales);
 		return "SUCCESS";
@@ -135,12 +135,12 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	}
 
 	@Override
-	public String updateSalesData(SalesUpdateData salesUpdateData) {
+	public String updateSalesData(SalesUpdateData salesUpdateData,Sales sales) {
 		String[] salesGoodsIds = salesUpdateData.getSalesGoodsIdList().split(
 				",");
 		String[] goodsAmounts = salesUpdateData.getGoodsAmountList().split(",");
 		String salesSerialNumber = salesUpdateData.getSalesSerialNumber();
-		Long totalPrice = 0L;
+		float totalPrice = 0.0f;
 		for (int i = 0; i < goodsAmounts.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
@@ -148,7 +148,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					.parseInt(salesGoodsIds[i]));
 			storagecheck = storagecheckService.selectByKey(salesGoods
 					.getStorageId());
-			totalPrice = totalPrice + salesGoods.getSalesGoodsPrice()
+			totalPrice = totalPrice + Float.parseFloat(salesGoods.getSalesGoodsPrice())
 					* Long.parseLong(goodsAmounts[i]);
 			int count = salesGoods.getSalesGoodsAmount()
 					- Integer.parseInt(goodsAmounts[i]);
@@ -165,17 +165,13 @@ public class SalesBusinessImpl implements ISalesBusiness {
 				SalesGoods salesGoods2 = new SalesGoods();
 				salesGoods2.setSalesGoodsId(Integer.parseInt(salesGoodsIds[i]));
 				salesGoods2.setSalesGoodsAmount(Integer.parseInt(goodsAmounts[i]));
-				salesGoods2.setSalesGoodsTotalPrice(salesGoods.getSalesGoodsPrice()
-						* Long.parseLong(goodsAmounts[i]));
+				salesGoods2.setSalesGoodsTotalPrice((Float.parseFloat(salesGoods.getSalesGoodsPrice())
+						* Long.parseLong(goodsAmounts[i]))+"");
 				salesGoodsService.updateSalesGoodsByKey(salesGoods2);
 			}			
 		}
-		Sales sales = new Sales();
+//		Sales sales = new Sales();
 		if (salesUpdateData.getSalesStatus().equals(
-				Constants.SalesStatus.CREDIT)) {
-			sales.setCreditCount(Long.parseLong(salesUpdateData
-					.getCreditCount()));
-		} else if (salesUpdateData.getSalesStatus().equals(
 				Constants.SalesStatus.SQUARE)) {
 			sales.setIncomeType(salesUpdateData.getPayMed());
 			sales.setIncomeTime(java.sql.Date.valueOf(salesUpdateData
@@ -183,7 +179,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		}
 		sales.setSalesStatus(salesUpdateData.getSalesStatus());
 		sales.setSalesSerialNumber(salesSerialNumber);
-		sales.setSalesTotalPrice(totalPrice);
+		sales.setTotalSalesAmount(totalPrice+"");
 		salesService.updateSalesByKey(sales);
 		return "SUCCESS";
 	}

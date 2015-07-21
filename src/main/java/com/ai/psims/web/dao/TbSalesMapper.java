@@ -28,4 +28,6 @@ public interface TbSalesMapper {
     int updateByPrimaryKeySelective(TbSales record);
 
     int updateByPrimaryKey(TbSales record);
+    
+    String selectSalesSerialNumber(String salesSerialNumber);
 }

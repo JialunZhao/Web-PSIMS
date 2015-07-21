@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ai.psims.web.dao.TbSalesGoodsLogMapper" >
-  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbSalesGoodsLog" >
+<mapper namespace="com.ai.psims.web.dao.SalesGoodsLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.SalesGoodsLog" >
     <id column="log_id" property="logId" jdbcType="INTEGER" />
     <result column="log_datetime" property="logDatetime" jdbcType="TIMESTAMP" />
     <result column="sales_goods_id" property="salesGoodsId" jdbcType="INTEGER" />
@@ -132,7 +132,7 @@
     provider_package_subsidy, customer_subsidy, other_subsidy, single_final_cost, storage_warning, 
     shelf_life_warning
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSalesGoodsLogExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.SalesGoodsLogExample" >
     select
     <if test="distinct" >
       distinct
@@ -156,13 +156,13 @@
     delete from tb_sales_goods_log
     where log_id = #{logId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbSalesGoodsLogExample" >
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.SalesGoodsLogExample" >
     delete from tb_sales_goods_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.psims.web.model.TbSalesGoodsLog" >
+  <insert id="insert" parameterType="com.ai.psims.web.model.SalesGoodsLog" >
     insert into tb_sales_goods_log (log_id, log_datetime, sales_goods_id, 
       sales_serial_number, sales_goods_type, sales_goods_amount, 
       sales_goods_unit, sales_goods_price, sales_goods_production_date, 
@@ -208,7 +208,7 @@
       #{otherSubsidy,jdbcType=VARCHAR}, #{singleFinalCost,jdbcType=VARCHAR}, #{storageWarning,jdbcType=INTEGER}, 
       #{shelfLifeWarning,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbSalesGoodsLog" >
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.SalesGoodsLog" >
     insert into tb_sales_goods_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="logId != null" >
@@ -557,7 +557,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.psims.web.model.TbSalesGoodsLogExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ai.psims.web.model.SalesGoodsLogExample" resultType="java.lang.Integer" >
     select count(*) from tb_sales_goods_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -805,7 +805,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbSalesGoodsLog" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.SalesGoodsLog" >
     update tb_sales_goods_log
     <set >
       <if test="logDatetime != null" >
@@ -979,7 +979,7 @@
     </set>
     where log_id = #{logId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbSalesGoodsLog" >
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.SalesGoodsLog" >
     update tb_sales_goods_log
     set log_datetime = #{logDatetime,jdbcType=TIMESTAMP},
       sales_goods_id = #{salesGoodsId,jdbcType=INTEGER},

@@ -102,18 +102,38 @@ String date=sdf.format(new Date());
 								<tr>
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
-									<td>${sales.salesSerialNumber }</td>
-									<td><fmt:formatDate value="${sales.salesDate }"
-											pattern="yyyy-MM-dd" /></td>
-									<td>${sales.employeeName }</td>
-									<td>${sales.customerName }</td>
-									<td>${sales.storehouseName }</td>
-									<td>${sales.salesTotalPrice }</td>
-									<td>${sales.salesStatus }</td>
+									<td><font color="#16a085">${sales.salesSerialNumber }</font></td>
+									<td><font size="4" color="#16a085"><fmt:formatDate value="${sales.salesDate }"
+											pattern="yyyy-MM-dd" /></font></td>
+									<td><font size="4" color="#16a085">${sales.employeeName }</font></td>
+									<td><font size="4" color="#16a085">${sales.customerName }</font></td>
+									<td><font size="4" color="#16a085">${sales.storehouseName }</font></td>
+									<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td>
+									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
 									<priv:privilege power="销售出库.增删改">
 									<td><a href="#" onclick="printSalesData(${sales.salesSerialNumber })">打印</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
 									</priv:privilege>
 								</tr>
+								<tr>
+									<td>订单详情</td>
+									<td>商品名称</td>
+									<td>商品单价</td>
+									<td>商品数量</td>
+									<td>总价</td>
+								</tr>
+								<c:forEach var="salesGoods" items="${salesGoodsList}"
+									varStatus="status">
+								<c:if
+									test="${salesGoods.salesSerialNumber==sales.salesSerialNumber}">
+								<tr id="#collapse${salesGoods.salesSerialNumber}">
+									<td>订单详情</td>
+									<td>${salesGoods.goodsName}</td>
+									<td>${salesGoods.salesGoodsPrice}</td>
+									<td>${salesGoods.salesGoodsAmount}</td>
+									<td>${salesGoods.salesGoodsTotalPrice}</td>
+								</tr>
+						</c:if>
+					</c:forEach>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -318,7 +338,7 @@ String date=sdf.format(new Date());
     					                  	+'<td>'+isNull(salesList[i].employeeName)+'</td>'
     					                  	+'<td>'+isNull(salesList[i].customerName)+'</td>'
     					                  	+'<td>'+isNull(salesList[i].storehouseName)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].salesTotalPrice)+'</td>'
+    					                  	+'<td>'+isNull(salesList[i].totalSalesAmount)+'</td>'
     					                  	+'<td>'+isNull(salesList[i].salesStatus)+'</td>'
     					                  	+'<td><a href="#">打印</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>' );
         								

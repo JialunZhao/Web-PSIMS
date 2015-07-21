@@ -25,7 +25,7 @@ public interface ISalesBusiness {
 
 	public List<SalesGoods> selectSalesGoods(SalesGoodsExample example);
 
-	public String updateSalesData(SalesUpdateData salesUpdateData);
+	public String updateSalesData(SalesUpdateData salesUpdateData,Sales sales);
 
 	public String deleteSalesData(String salesSerialNumber);
 }

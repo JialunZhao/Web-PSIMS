@@ -2,9 +2,7 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class Sales {
-    private String salesSerialNumber;
-
+public class Sales extends TbSalesKey {
     private Date salesDate;
 
     private Integer customerId;
@@ -23,23 +21,35 @@ public class Sales {
 
     private Date incomeTime;
 
+    private String totalSalesAmount;
+
+    private String totalSettlementAmount;
+
+    private String totalCreditAmount;
+
     private String salesStatus;
 
     private String salesType;
 
     private String salesRemark;
 
-    private Long salesTotalPrice;
+    private String storehouseManager;
 
-    private Long creditCount;
+    private String touchingManager;
 
-    public String getSalesSerialNumber() {
-        return salesSerialNumber;
-    }
+    private String receiver;
 
-    public void setSalesSerialNumber(String salesSerialNumber) {
-        this.salesSerialNumber = salesSerialNumber == null ? null : salesSerialNumber.trim();
-    }
+    private String sender;
+
+    private String carNumber;
+
+    private Date departureTime;
+
+    private Date stillTime;
+
+    private String startOilNumber;
+
+    private String returnOilNumber;
 
     public Date getSalesDate() {
         return salesDate;
@@ -113,6 +123,30 @@ public class Sales {
         this.incomeTime = incomeTime;
     }
 
+    public String getTotalSalesAmount() {
+        return totalSalesAmount;
+    }
+
+    public void setTotalSalesAmount(String totalSalesAmount) {
+        this.totalSalesAmount = totalSalesAmount == null ? null : totalSalesAmount.trim();
+    }
+
+    public String getTotalSettlementAmount() {
+        return totalSettlementAmount;
+    }
+
+    public void setTotalSettlementAmount(String totalSettlementAmount) {
+        this.totalSettlementAmount = totalSettlementAmount == null ? null : totalSettlementAmount.trim();
+    }
+
+    public String getTotalCreditAmount() {
+        return totalCreditAmount;
+    }
+
+    public void setTotalCreditAmount(String totalCreditAmount) {
+        this.totalCreditAmount = totalCreditAmount == null ? null : totalCreditAmount.trim();
+    }
+
     public String getSalesStatus() {
         return salesStatus;
     }
@@ -137,19 +171,75 @@ public class Sales {
         this.salesRemark = salesRemark == null ? null : salesRemark.trim();
     }
 
-    public Long getSalesTotalPrice() {
-        return salesTotalPrice;
+    public String getStorehouseManager() {
+        return storehouseManager;
     }
 
-    public void setSalesTotalPrice(Long salesTotalPrice) {
-        this.salesTotalPrice = salesTotalPrice;
+    public void setStorehouseManager(String storehouseManager) {
+        this.storehouseManager = storehouseManager == null ? null : storehouseManager.trim();
     }
 
-    public Long getCreditCount() {
-        return creditCount;
+    public String getTouchingManager() {
+        return touchingManager;
     }
 
-    public void setCreditCount(Long creditCount) {
-        this.creditCount = creditCount;
+    public void setTouchingManager(String touchingManager) {
+        this.touchingManager = touchingManager == null ? null : touchingManager.trim();
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver == null ? null : receiver.trim();
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender == null ? null : sender.trim();
+    }
+
+    public String getCarNumber() {
+        return carNumber;
+    }
+
+    public void setCarNumber(String carNumber) {
+        this.carNumber = carNumber == null ? null : carNumber.trim();
+    }
+
+    public Date getDepartureTime() {
+        return departureTime;
+    }
+
+    public void setDepartureTime(Date departureTime) {
+        this.departureTime = departureTime;
+    }
+
+    public Date getStillTime() {
+        return stillTime;
+    }
+
+    public void setStillTime(Date stillTime) {
+        this.stillTime = stillTime;
+    }
+
+    public String getStartOilNumber() {
+        return startOilNumber;
+    }
+
+    public void setStartOilNumber(String startOilNumber) {
+        this.startOilNumber = startOilNumber == null ? null : startOilNumber.trim();
+    }
+
+    public String getReturnOilNumber() {
+        return returnOilNumber;
+    }
+
+    public void setReturnOilNumber(String returnOilNumber) {
+        this.returnOilNumber = returnOilNumber == null ? null : returnOilNumber.trim();
     }
 }

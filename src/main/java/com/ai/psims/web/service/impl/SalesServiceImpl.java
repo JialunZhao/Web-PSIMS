@@ -23,7 +23,7 @@ public class SalesServiceImpl implements ISalesService {
 
 	@Override
 	public int insertSelective(Sales sales) {
-		return salesMapper.insert(sales);
+		return salesMapper.insertSelective(sales);
 	}
 
 	@Override
@@ -38,13 +38,13 @@ public class SalesServiceImpl implements ISalesService {
 
 	@Override
 	public Sales selectByKey(String salesSerialNumber) {
-		return salesMapper.selectByPrimaryKey(salesSerialNumber);
+		return salesMapper.selectBySerialNumber(salesSerialNumber);
 	}
 
 	@Override
 	public int updateSales(Sales sales) {
 		insertToLog(sales);
-		return salesMapper.updateByPrimaryKey(sales);
+		return salesMapper.updateByPrimaryKeySelective(sales);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class SalesServiceImpl implements ISalesService {
 	@Override
 	public int deleteSales(String salesSerialNumber) {
 		Sales sales = new Sales();
-		sales = salesMapper.selectByPrimaryKey(salesSerialNumber);
+		sales = salesMapper.selectBySerialNumber(salesSerialNumber);
 		insertToLog(sales);
 		// 00-失效
 		sales.setSalesStatus("00");
@@ -66,7 +66,7 @@ public class SalesServiceImpl implements ISalesService {
 	@Override
 	public int insertToLog(Sales sales) {
 		Sales sale = new Sales();
-		sale = salesMapper.selectByPrimaryKey(sales.getSalesSerialNumber());
+		sale = salesMapper.selectBySerialNumber(sales.getSalesSerialNumber());
 		SalesLog log = new SalesLog();
 
 		log.setCustomerId(sale.getCustomerId());
@@ -80,11 +80,10 @@ public class SalesServiceImpl implements ISalesService {
 		log.setSalesRemark(sale.getSalesRemark());
 		log.setSalesSerialNumber(sale.getSalesSerialNumber());
 		log.setSalesStatus(sale.getSalesStatus());
-		log.setSalesTotalPrice(sale.getSalesTotalPrice());
+		log.setTotalSettlementAmount(sale.getTotalSettlementAmount());
 		log.setSalesType(sale.getSalesType());
 		log.setStorehouseId(sale.getStorehouseId());
 		log.setStorehouseName(sale.getStorehouseName());
-		log.setCreditCount(sale.getCreditCount());
 
 		return salesLogMapper.insertSelective(log);
 	}

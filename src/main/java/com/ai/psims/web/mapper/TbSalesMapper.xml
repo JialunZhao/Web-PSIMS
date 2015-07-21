@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ai.psims.web.dao.TbSalesMapper" >
-  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.TbSales" >
+<mapper namespace="com.ai.psims.web.dao.SalesMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.psims.web.model.Sales" >
     <id column="sales_id" property="salesId" jdbcType="INTEGER" />
     <id column="sales_serial_number" property="salesSerialNumber" jdbcType="VARCHAR" />
     <result column="sales_date" property="salesDate" jdbcType="TIMESTAMP" />
@@ -94,7 +94,7 @@
     storehouse_manager, touching_manager, receiver, sender, car_number, departure_time, 
     still_time, start_oil_number, return_oil_number
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSalesExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.SalesExample" >
     select
     <if test="distinct" >
       distinct
@@ -108,6 +108,13 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  <select id="selectSalesSerialNumber" resultType="java.lang.String" parameterType="java.lang.String" >
+    select max(sales_serial_number)
+    from tb_sales
+    where sales_serial_number like CONCAT(CONCAT('%', #{salesSerialNumber,jdbcType=VARCHAR}), '%') 
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.psims.web.model.TbSalesKey" >
     select 
     <include refid="Base_Column_List" />
@@ -115,18 +122,32 @@
     where sales_id = #{salesId,jdbcType=INTEGER}
       and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectBySerialNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sales
+    where sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="com.ai.psims.web.model.TbSalesKey" >
     delete from tb_sales
     where sales_id = #{salesId,jdbcType=INTEGER}
       and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.TbSalesExample" >
+  
+  <delete id="deleteBySerialNumber" parameterType="java.lang.String" >
+    delete from tb_sales
+    where sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.ai.psims.web.model.SalesExample" >
     delete from tb_sales
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.psims.web.model.TbSales" >
+  <insert id="insert" parameterType="com.ai.psims.web.model.Sales" >
     insert into tb_sales (sales_id, sales_serial_number, sales_date, 
       customer_id, customer_name, storehouse_id, 
       storehouse_name, employee_id, employee_name, 
@@ -148,7 +169,7 @@
       #{stillTime,jdbcType=TIMESTAMP}, #{startOilNumber,jdbcType=VARCHAR}, #{returnOilNumber,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.psims.web.model.TbSales" >
+  <insert id="insertSelective" parameterType="com.ai.psims.web.model.Sales" >
     insert into tb_sales
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="salesId != null" >
@@ -311,7 +332,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ai.psims.web.model.TbSalesExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.ai.psims.web.model.SalesExample" resultType="java.lang.Integer" >
     select count(*) from tb_sales
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -435,7 +456,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.TbSales" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.psims.web.model.Sales" >
     update tb_sales
     <set >
       <if test="salesDate != null" >
@@ -511,10 +532,9 @@
         return_oil_number = #{returnOilNumber,jdbcType=VARCHAR},
       </if>
     </set>
-    where sales_id = #{salesId,jdbcType=INTEGER}
-      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+    where sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.TbSales" >
+  <update id="updateByPrimaryKey" parameterType="com.ai.psims.web.model.Sales" >
     update tb_sales
     set sales_date = #{salesDate,jdbcType=TIMESTAMP},
       customer_id = #{customerId,jdbcType=INTEGER},
@@ -540,7 +560,6 @@
       still_time = #{stillTime,jdbcType=TIMESTAMP},
       start_oil_number = #{startOilNumber,jdbcType=VARCHAR},
       return_oil_number = #{returnOilNumber,jdbcType=VARCHAR}
-    where sales_id = #{salesId,jdbcType=INTEGER}
-      and sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
+    where sales_serial_number = #{salesSerialNumber,jdbcType=VARCHAR}
   </update>
 </mapper>

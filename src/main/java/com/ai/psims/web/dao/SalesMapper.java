@@ -2,6 +2,8 @@ package com.ai.psims.web.dao;
 
 import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesExample;
+import com.ai.psims.web.model.TbSales;
+import com.ai.psims.web.model.TbSalesKey;
 
 import java.util.List;
 
@@ -12,7 +14,9 @@ public interface SalesMapper {
 
     int deleteByExample(SalesExample example);
 
-    int deleteByPrimaryKey(String salesSerialNumber);
+    int deleteBySerialNumber(String salesSerialNumber);
+
+    int deleteByPrimaryKey(TbSalesKey key);
 
     int insert(Sales record);
 
@@ -20,7 +24,9 @@ public interface SalesMapper {
 
     List<Sales> selectByExample(SalesExample example);
 
-    Sales selectByPrimaryKey(String salesSerialNumber);
+    Sales selectBySerialNumber(String salesSerialNumber);
+
+    Sales selectByPrimaryKey(TbSalesKey key);
 
     int updateByExampleSelective(@Param("record") Sales record, @Param("example") SalesExample example);
 
