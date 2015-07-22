@@ -56,7 +56,7 @@
                   			<td>
                   				<fmt:formatDate value="${storagechecks.goodsExpirationDate }" pattern="yyyy-MM-dd"/>
                   			</td>
-                  			<td id="salesPrice${status.index }">${storagechecks.importGoodsUnit }</td>
+                  			<td id="salesPrice${status.index }">${storagechecks.goodsPrice }</td>
                   			<td id="storeCount${status.index }">${storagechecks.storageRateCurrent }</td>
                   			<td><input type="text" id="salesCount${status.index }"></td>
                   			<td><input type="text" id="goodsTotalPay${status.index }" onfocus="getGoodsAllPay(${status.index })"></td>
