@@ -23,7 +23,7 @@ public class SalesGoodsServiceImpl implements ISalesGoodsService {
 
 	@Override
 	public int insertSelective(SalesGoods salesGoods) {
-		return salesGoodsMapper.insert(salesGoods);
+		return salesGoodsMapper.insertSelective(salesGoods);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class SalesGoodsServiceImpl implements ISalesGoodsService {
 	@Override
 	public int updateSalesGoods(SalesGoods salesGoods) {
 		insertToLog(salesGoods);
-		return salesGoodsMapper.updateByPrimaryKey(salesGoods);
+		return salesGoodsMapper.updateByPrimaryKeySelective(salesGoods);
 	}
 
 	@Override

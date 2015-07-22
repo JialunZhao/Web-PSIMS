@@ -37,6 +37,12 @@ public class GoodsBusinessImpl implements IGoodsBusiness {
 		logger.info("goodsQuery");
 		return goodsService.queryGoods(goodsQuery);
 	}
+	
+	public TbGoods goodsQueryByKey(Integer goodsId) {
+		// 查询商品信息业务
+		logger.info("goodsQuery");
+		return goodsService.selectGoodsInfo(goodsId);
+	}
 
 	@Override
 	public int goodsAdd(TbGoods goodsAdd) {

@@ -265,7 +265,7 @@ public class GoodsController extends BaseController {
 		}
 //		金额改造 
 		if (null != goodsPrice  && goodsPrice.length() > 0) {
-			goodsadd.setGoodsPrice(new BigDecimal(goodsPrice).toString());
+			goodsadd.setGoodsPrice(new BigDecimal(goodsPrice).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
 			goodsadd.setGoodsPrizePoolRatio(new BigDecimal(goodsPrizePoolRatio).toString());
@@ -303,7 +303,7 @@ public class GoodsController extends BaseController {
 			goodsadd.setOtherSubsidy(new BigDecimal(otherSubsidy).toString());
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			goodsadd.setGoodsActualCost(new BigDecimal(goodsActualCost).toString());
+			goodsadd.setGoodsActualCost(new BigDecimal(goodsActualCost).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			goodsadd.setStorageWarning(Integer.parseInt(storagePrewarning));
@@ -471,8 +471,7 @@ public class GoodsController extends BaseController {
 			tbGoods.setGoodsProfit(goodsProfit);
 		}
 		if (null != goodsPrice && goodsPrice.length() > 0) {
-			tbGoods.setGoodsPrice(goodsPrice);
-
+			tbGoods.setGoodsPrice(new BigDecimal(goodsPrice).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != goodsPrizePoolRatio && goodsPrizePoolRatio.length() > 0) {
 			tbGoods.setGoodsPrizePoolRatio(goodsPrizePoolRatio);
@@ -510,7 +509,7 @@ public class GoodsController extends BaseController {
 			tbGoods.setOtherSubsidy(otherSubsidy);
 		}
 		if (null != goodsActualCost && goodsActualCost.length() > 0) {
-			tbGoods.setGoodsActualCost(goodsActualCost);
+			tbGoods.setGoodsActualCost(new BigDecimal(goodsActualCost).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 		}
 		if (null != storagePrewarning && storagePrewarning.length() > 0) {
 			tbGoods.setStorageWarning(Integer.parseInt(storagePrewarning));
@@ -801,20 +800,21 @@ public class GoodsController extends BaseController {
 		List<TbGoods2customer> tbGoods2CustomersUpdate = new ArrayList<TbGoods2customer>();
 		int tbGoods2CustomersInsertnum = 0;
 		int tbGoods2CustomersUpdatenum = 0;
+		TbGoods tbGoods = new TbGoods();
 		logger.info("------------2.获取参数-------------");
 		String goodsId = request.getParameter("goodsId") == "" ? null : request.getParameter("goodsId");
 		String[] goods2customerId = request.getParameterValues("goods2customerId");
 		String[] customerId = request.getParameterValues("customerId");
 		String[] goodsPrice = request.getParameterValues("goodsPrice");
-		String[] goodsPrizePoolRatio = request.getParameterValues("goodsPrizePoolRatio");
 		logger.info("------------3.数据校验-------------");
 		logger.info("------------4.业务处理-------------");
+		tbGoods =  goodsBusiness.goodsQueryByKey(Integer.parseInt(goodsId));
 		for (int i = 0; i < goods2customerId.length; i++) {
 			TbGoods2customer tbGoods2customer = new TbGoods2customer();
 			tbGoods2customer.setGoodsId(Integer.parseInt(goodsId));
 			tbGoods2customer.setCustomerId(Integer.parseInt(customerId[i]));
+			tbGoods2customer.setGoodsNormalPrice(tbGoods.getGoodsPrice());
 			tbGoods2customer.setGoodsPrice(goodsPrice[i]);
-			tbGoods2customer.setGoodsPrizePoolRatio(goodsPrizePoolRatio[i]);
 			if (goods2customerId[i].isEmpty()) {
 				tbGoods2CustomersInsert.add(tbGoods2customer);
 			}else {

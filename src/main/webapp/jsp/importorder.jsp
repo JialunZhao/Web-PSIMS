@@ -85,27 +85,51 @@
 					<th>操作</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="accordion">
 				<c:forEach var="imports" items="${importList}" varStatus="status">
 					<tr>
 						<td class="chk" style="display: none"><input type="checkbox"
 							aria-label="..."></td>
-						<td>${imports.importSerialNumber}</td>
-						<td>${imports.providerName}</td>
-						<td><fmt:formatDate value="${imports.importDatetime}"
-								pattern="yyyy-MM-dd" /></td>
-						<td>${imports.importBatchNumber}</td>
-						<td>${imports.importRemark}</td>
-						<td>${imports.importStatus}</td>
+						<td><font color="#16a085">${imports.importSerialNumber}</font></td>
+						<td><font size="4" color="#16a085">${imports.providerName}</font></td>
+						<td><font size="4" color="#16a085"><fmt:formatDate value="${imports.importDatetime}"
+								pattern="yyyy-MM-dd" /></font></td>
+						<td><font size="4" color="#16a085">${imports.importBatchNumber}</font></td>
+						<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
+						<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
 						<priv:privilege power="货品入库下单.增删改">
 							<td><a href="#"
-								onclick="importgoodsprint(${imports.importSerialNumber })">打印</a>/<a
+								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/<a
 								href="#"
-								onclick="updateImportData(${imports.importSerialNumber })">修改</a>/<a
+								onclick="updateImportData(${imports.importSerialNumber})">修改</a>/<a
 								href="#"
-								onclick="deleteImportData(${imports.importSerialNumber },'${imports.importStatus }')">删除</a></td>
+								onclick="deleteImportData(${imports.importSerialNumber},'${imports.importStatus}')">删除</a></td>
 						</priv:privilege>
 					</tr>
+					<tr>
+						<td>订单详情</td>
+						<td>商品名称</td>
+						<td>商品单价</td>
+						<td>商品数量</td>
+						<td>总价</td>
+						<td>奖金池支付总额</td>
+						<td>现金支付总额</td>
+					</tr>
+					<c:forEach var="tbImportGoodsList" items="${tbImportGoodsList}"
+						varStatus="status">
+						<c:if
+							test="${tbImportGoodsList.importSerialNumber==imports.importSerialNumber}">
+							<tr id="#collapse${tbImportGoodsList.importSerialNumber}">
+								<td>订单详情</td>
+								<td>${tbImportGoodsList.goodsName}</td>
+								<td>${tbImportGoodsList.importGoodsPrice}</td>
+								<td>${tbImportGoodsList.importGoodsAmount}</td>
+								<td>${tbImportGoodsList.importGoodsTotalPrice}</td>
+								<td>${tbImportGoodsList.discountDutyTotalPrice}</td>
+								<td>${tbImportGoodsList.discountGoodsTotalPrice}</td>
+							</tr>
+						</c:if>
+					</c:forEach>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -179,8 +203,8 @@
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">入库批次号：</span><input type="text"
-								class="form-control" placeholder="入库批次号" value=""
+								style="background-color: #1abc9c;">入库批次号：</span><input
+								type="text" class="form-control" placeholder="入库批次号" value=""
 								name="importBatchNumber" id="importBatchNumber">
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-1">
@@ -219,14 +243,14 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">进货价格:</span> <input
-								type="text" id="goodsPrice"  class="form-control"
+								type="text" id="goodsPrice" class="form-control"
 								placeholder="进货价格" value="" readonly> <span
 								class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">保质期：</span> <input
-								type="text" id="goodsShelfLife"class="form-control"
+								type="text" id="goodsShelfLife" class="form-control"
 								placeholder="保质期" value="" readonly> <span
 								class="input-group-addon">天</span>
 						</div>
@@ -258,7 +282,7 @@
 							id="discountRates">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">奖金池使用总额(未税)</span> <input
-								type="text" id="prizePoolUsed"  class="form-control"
+								type="text" id="prizePoolUsed" class="form-control"
 								placeholder="奖金池使用总额(未税)" value="" readonly><span
 								class="input-group-addon">元</span>
 						</div>
@@ -326,6 +350,23 @@
 <script src="<%=path%>/js/vendor/video.js"></script>
 <script src="<%=path%>/js/flat-ui.min.js"></script>
 <script type="text/javascript">
+	function showImportGoods(importSerialNumber){
+		$.ajax({  
+            url:'<%=path%>/importController/queryPrizePool.do',  
+            type:"post",
+            async:false,
+            modal : true,
+            showBusi : false,
+            data:{'importSerialNumber':importSerialNumber},
+            success:function(data){
+            	var json = $.parseJSON(data);
+				var prizePool=$.parseJSON(json.RES_DATA.prizePool);
+				$("#prizePool").val(prizePool);
+				$("#prizePool").attr('readonly');
+			}
+        }); 
+	}
+
 	function showPrizePoolUsed(){
 		//奖金池使用量=进货价格*数量*折扣率/1.17
 		var goodsPrice = $("#goodsPrice").val();

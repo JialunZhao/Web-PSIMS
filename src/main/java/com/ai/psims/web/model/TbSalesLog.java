@@ -2,7 +2,15 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class Sales extends TbSalesKey {
+public class TbSalesLog {
+    private Integer logId;
+
+    private Date logDatetime;
+
+    private Integer salesId;
+
+    private String salesSerialNumber;
+
     private Date salesDate;
 
     private Integer customerId;
@@ -50,6 +58,38 @@ public class Sales extends TbSalesKey {
     private String startOilNumber;
 
     private String returnOilNumber;
+
+    public Integer getLogId() {
+        return logId;
+    }
+
+    public void setLogId(Integer logId) {
+        this.logId = logId;
+    }
+
+    public Date getLogDatetime() {
+        return logDatetime;
+    }
+
+    public void setLogDatetime(Date logDatetime) {
+        this.logDatetime = logDatetime;
+    }
+
+    public Integer getSalesId() {
+        return salesId;
+    }
+
+    public void setSalesId(Integer salesId) {
+        this.salesId = salesId;
+    }
+
+    public String getSalesSerialNumber() {
+        return salesSerialNumber;
+    }
+
+    public void setSalesSerialNumber(String salesSerialNumber) {
+        this.salesSerialNumber = salesSerialNumber == null ? null : salesSerialNumber.trim();
+    }
 
     public Date getSalesDate() {
         return salesDate;

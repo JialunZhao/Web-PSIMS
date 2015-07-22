@@ -54,18 +54,22 @@ public class ImportServiceImpl implements IImportService {
 		imports = tbImportMapper.selectBySerialNumber(import1
 				.getImportSerialNumber());
 		TbImportLog log = new TbImportLog();
-		log.setImportBatchNumber(imports.getImportBatchNumber());
-		log.setImportDatetime(imports.getImportDatetime());
-		log.setImportRemark(imports.getImportRemark());
-		log.setImportSerialNumber(imports.getImportSerialNumber());
-		log.setImportStatus(imports.getImportStatus());
-		log.setImportTotalPrice(imports.getImportTotalPrice());
-		log.setImportType(imports.getImportType());
 		log.setLogDatetime(new Date());
-		log.setPaymentTime(imports.getPaymentTime());
+		log.setImportId(imports.getImportId());
+		log.setImportSerialNumber(imports.getImportSerialNumber());
+		log.setImportDatetime(imports.getImportDatetime());
+		log.setImportBatchNumber(imports.getImportBatchNumber());
+		log.setImportTotalPrice(imports.getImportTotalPrice());
+		log.setPaymentStatus(imports.getPaymentStatus());
 		log.setPaymentType(imports.getPaymentType());
+		log.setPaymentTime(imports.getPaymentTime());
+//		log.setPaymentPrice(imports.getPaymentPrice());
+		log.setImportType(imports.getImportType());
+		log.setImportStatus(imports.getImportStatus());
+		log.setImportRemark(imports.getImportRemark());
 		log.setProviderId(imports.getProviderId());
 		log.setProviderName(imports.getProviderName());
+		log.setProviderCode(imports.getProviderCode());
 
 		return tbImportLogMapper.insertSelective(log);
 	}

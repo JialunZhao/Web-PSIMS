@@ -2,7 +2,11 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class SalesGoods {
+public class TbSalesGoodsLog {
+    private Integer logId;
+
+    private Date logDatetime;
+
     private Integer salesGoodsId;
 
     private String salesSerialNumber;
@@ -112,6 +116,22 @@ public class SalesGoods {
     private Integer storageWarning;
 
     private Integer shelfLifeWarning;
+
+    public Integer getLogId() {
+        return logId;
+    }
+
+    public void setLogId(Integer logId) {
+        this.logId = logId;
+    }
+
+    public Date getLogDatetime() {
+        return logDatetime;
+    }
+
+    public void setLogDatetime(Date logDatetime) {
+        this.logDatetime = logDatetime;
+    }
 
     public Integer getSalesGoodsId() {
         return salesGoodsId;

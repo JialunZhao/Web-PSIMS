@@ -2,7 +2,7 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class Sales extends TbSalesKey {
+public class TbSales extends TbSalesKey {
     private Date salesDate;
 
     private Integer customerId;

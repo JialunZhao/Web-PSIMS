@@ -35,6 +35,8 @@ public class TbGoods2customer {
 
     private String goodsActualCost;
 
+    private String goodsNormalPrice;
+
     private String goodsPrice;
 
     private String goodsProfit;
@@ -215,6 +217,14 @@ public class TbGoods2customer {
 
     public void setGoodsActualCost(String goodsActualCost) {
         this.goodsActualCost = goodsActualCost == null ? null : goodsActualCost.trim();
+    }
+
+    public String getGoodsNormalPrice() {
+        return goodsNormalPrice;
+    }
+
+    public void setGoodsNormalPrice(String goodsNormalPrice) {
+        this.goodsNormalPrice = goodsNormalPrice == null ? null : goodsNormalPrice.trim();
     }
 
     public String getGoodsPrice() {

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SalesGoodsLogExample {
+public class TbSalesGoodsExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public SalesGoodsLogExample() {
+    public TbSalesGoodsExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -103,126 +103,6 @@ public class SalesGoodsLogExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        public Criteria andLogIdIsNull() {
-            addCriterion("log_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdIsNotNull() {
-            addCriterion("log_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdEqualTo(Integer value) {
-            addCriterion("log_id =", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdNotEqualTo(Integer value) {
-            addCriterion("log_id <>", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdGreaterThan(Integer value) {
-            addCriterion("log_id >", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("log_id >=", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdLessThan(Integer value) {
-            addCriterion("log_id <", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdLessThanOrEqualTo(Integer value) {
-            addCriterion("log_id <=", value, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdIn(List<Integer> values) {
-            addCriterion("log_id in", values, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdNotIn(List<Integer> values) {
-            addCriterion("log_id not in", values, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdBetween(Integer value1, Integer value2) {
-            addCriterion("log_id between", value1, value2, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("log_id not between", value1, value2, "logId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeIsNull() {
-            addCriterion("log_datetime is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeIsNotNull() {
-            addCriterion("log_datetime is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeEqualTo(Date value) {
-            addCriterion("log_datetime =", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeNotEqualTo(Date value) {
-            addCriterion("log_datetime <>", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeGreaterThan(Date value) {
-            addCriterion("log_datetime >", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("log_datetime >=", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeLessThan(Date value) {
-            addCriterion("log_datetime <", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeLessThanOrEqualTo(Date value) {
-            addCriterion("log_datetime <=", value, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeIn(List<Date> values) {
-            addCriterion("log_datetime in", values, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeNotIn(List<Date> values) {
-            addCriterion("log_datetime not in", values, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeBetween(Date value1, Date value2) {
-            addCriterion("log_datetime between", value1, value2, "logDatetime");
-            return (Criteria) this;
-        }
-
-        public Criteria andLogDatetimeNotBetween(Date value1, Date value2) {
-            addCriterion("log_datetime not between", value1, value2, "logDatetime");
-            return (Criteria) this;
         }
 
         public Criteria andSalesGoodsIdIsNull() {

@@ -18,9 +18,12 @@ import com.ai.psims.web.model.SalesGoodsExample;
 import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
+import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.ISalesGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
+import com.ai.psims.web.service.impl.GoodsServiceImpl;
 import com.ai.psims.web.util.Constants;
 import com.ai.psims.web.util.CreateIdUtil;
 
@@ -32,6 +35,8 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	private ISalesService salesService;
 	@Resource(name = "salesGoodsServiceImpl")
 	private ISalesGoodsService salesGoodsService;
+	@Resource(name="goodsServiceImpl")
+	private IGoodsService goodsService;
 
 	@Override
 	public List<Storagecheck> queryStrStoragechecks(
@@ -67,8 +72,10 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		for (int i = 0; i < storageIdArray.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
+			TbGoods goods=new TbGoods();
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIdArray[i]));
+			goods=goodsService.selectGoodsInfo(storagecheck.getGoodsId());
 			goodsAllPay += Long.parseLong(salesCountArray[i])
 					* Long.parseLong(salesPriceArray[i]);
 			salesGoods.setSalesSerialNumber(salesSerialNumber);
@@ -77,15 +84,36 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods
 					.setSalesGoodsAmount(Integer.parseInt(salesCountArray[i]));
 			salesGoods.setSalesGoodsUnit(storagecheck.getImportGoodsUnit());
-			salesGoods.setSalesGoodsPrice(Long.parseLong(salesPriceArray[i]));
+			salesGoods.setSalesGoodsPrice(salesPriceArray[i]);
 			salesGoods.setSalesGoodsProductionDate(storagecheck
 					.getGoodsProductionDate());
 			salesGoods.setSalesGoodsExpirationDate(storagecheck
 					.getGoodsExpirationDate());
-			salesGoods.setSalesGoodsTotalPrice(Long
+			salesGoods.setSalesGoodsTotalPrice((Long
 					.parseLong(salesCountArray[i])
-					* Long.parseLong(salesPriceArray[i]));
+					* Long.parseLong(salesPriceArray[i]))+"");
 			salesGoods.setStorageId(storagecheck.getStorageId());
+			
+			salesGoods.setGoodsCurrentStock(goods.getGoodsCurrentStock());
+			salesGoods.setGoodsTotalStock(goods.getGoodsTotalStock());
+			salesGoods.setGoodsActualCost(goods.getGoodsActualCost());
+			salesGoods.setGoodsPrice(goods.getGoodsPrice());
+			salesGoods.setGoodsProfit(goods.getGoodsProfit());
+			salesGoods.setGoodsType(goods.getGoodsType());
+			salesGoods.setGoodsStatus(goods.getGoodsStatus());
+			salesGoods.setGoodsDiscount(goods.getGoodsDiscount());
+			salesGoods.setSingleRebate(goods.getSingleRebate());
+			salesGoods.setQuarterRebate(goods.getQuarterRebate());
+			salesGoods.setAnnualRebate(goods.getAnnualRebate());
+			salesGoods.setPromotionRebate(goods.getPromotionRebate());
+			salesGoods.setPurchaseRebate(goods.getPurchaseRebate());
+			salesGoods.setProviderSubsidy(goods.getProviderSubsidy());
+			salesGoods.setCustomerBottleSubsidy(goods.getCustomerBottleSubsidy());
+			salesGoods.setProviderPackageSubsidy(goods.getProviderPackageSubsidy());
+			salesGoods.setCustomerSubsidy(goods.getCustomerSubsidy());
+			salesGoods.setOtherSubsidy(goods.getOtherSubsidy());
+			salesGoods.setSingleFinalCost(goods.getSingleFinalCost());
+			
 			if (storagecheck.getStorageRateCurrent() == Integer
 					.parseInt(salesCountArray[i])) {
 				storagecheck.setStorageRateCurrent(0);
@@ -108,7 +136,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		sales.setStorehouseName(addSalesGoodsBean.getStoreName());
 		sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
 		sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
-		sales.setSalesTotalPrice(goodsAllPay);
+		sales.setTotalSalesAmount(goodsAllPay+"");
 		sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
 		salesService.insertSelective(sales);
 		return "SUCCESS";
@@ -135,12 +163,12 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	}
 
 	@Override
-	public String updateSalesData(SalesUpdateData salesUpdateData) {
+	public String updateSalesData(SalesUpdateData salesUpdateData,Sales sales) {
 		String[] salesGoodsIds = salesUpdateData.getSalesGoodsIdList().split(
 				",");
 		String[] goodsAmounts = salesUpdateData.getGoodsAmountList().split(",");
 		String salesSerialNumber = salesUpdateData.getSalesSerialNumber();
-		Long totalPrice = 0L;
+		float totalPrice = 0.0f;
 		for (int i = 0; i < goodsAmounts.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
@@ -148,7 +176,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					.parseInt(salesGoodsIds[i]));
 			storagecheck = storagecheckService.selectByKey(salesGoods
 					.getStorageId());
-			totalPrice = totalPrice + salesGoods.getSalesGoodsPrice()
+			totalPrice = totalPrice + Float.parseFloat(salesGoods.getSalesGoodsPrice())
 					* Long.parseLong(goodsAmounts[i]);
 			int count = salesGoods.getSalesGoodsAmount()
 					- Integer.parseInt(goodsAmounts[i]);
@@ -165,17 +193,13 @@ public class SalesBusinessImpl implements ISalesBusiness {
 				SalesGoods salesGoods2 = new SalesGoods();
 				salesGoods2.setSalesGoodsId(Integer.parseInt(salesGoodsIds[i]));
 				salesGoods2.setSalesGoodsAmount(Integer.parseInt(goodsAmounts[i]));
-				salesGoods2.setSalesGoodsTotalPrice(salesGoods.getSalesGoodsPrice()
-						* Long.parseLong(goodsAmounts[i]));
+				salesGoods2.setSalesGoodsTotalPrice((Float.parseFloat(salesGoods.getSalesGoodsPrice())
+						* Long.parseLong(goodsAmounts[i]))+"");
 				salesGoodsService.updateSalesGoodsByKey(salesGoods2);
 			}			
 		}
-		Sales sales = new Sales();
+//		Sales sales = new Sales();
 		if (salesUpdateData.getSalesStatus().equals(
-				Constants.SalesStatus.CREDIT)) {
-			sales.setCreditCount(Long.parseLong(salesUpdateData
-					.getCreditCount()));
-		} else if (salesUpdateData.getSalesStatus().equals(
 				Constants.SalesStatus.SQUARE)) {
 			sales.setIncomeType(salesUpdateData.getPayMed());
 			sales.setIncomeTime(java.sql.Date.valueOf(salesUpdateData
@@ -183,7 +207,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		}
 		sales.setSalesStatus(salesUpdateData.getSalesStatus());
 		sales.setSalesSerialNumber(salesSerialNumber);
-		sales.setSalesTotalPrice(totalPrice);
+		sales.setTotalSalesAmount(totalPrice+"");
 		salesService.updateSalesByKey(sales);
 		return "SUCCESS";
 	}

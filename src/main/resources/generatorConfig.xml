@@ -39,12 +39,16 @@
 		<!-- 要生成哪些表 -->
 		<!-- <table schema="psims" tableName="tb_import" /> -->
 		<!-- <table schema="psims" tableName="tb_import_log" /> -->
-		<table schema="psims" tableName="tb_import_goods" />
-		<table schema="psims" tableName="tb_import_goods_log" />
+		<!-- <table schema="psims" tableName="tb_import_goods" /> -->
+		<!-- <table schema="psims" tableName="tb_import_goods_log" /> -->
 		<!-- <table schema="psims" tableName="tb_storehouse" /> -->
 		<!-- <table schema="psims" tableName="tb_storehouse_log" /> -->
-		<!-- <table schema="psims" tableName="tb_goods2customer" /> -->
-		<!-- <table schema="psims" tableName="tb_goods2customer_log" /> -->
+		<table schema="psims" tableName="tb_goods2customer" />
+		<table schema="psims" tableName="tb_goods2customer_log" />
+		<table schema="psims" tableName="tb_sales" />
+		<table schema="psims" tableName="tb_sales_log" />
+		<table schema="psims" tableName="tb_sales_goods" />
+		<table schema="psims" tableName="tb_sales_goods_log" />
 		<!-- <table schema="psims" tableName="tb_goods" /> -->
 		<!-- <table schema="psims" tableName="tb_goods_log" /> -->
 		<!-- <table schema="psims" tableName="tb_customer" /> -->

@@ -105,6 +105,41 @@
 				<input type="text" class="form-control" value="" id="creditCount">
 			</div>
 		</div>
+		<div class="col-sm-offset-1">
+		<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">库管人:</span>
+				<input type="text" class="form-control" value="" id="storemanager">
+				<span class="input-group-addon" style="background-color: #1abc9c;">制单人:</span>
+				<input type="text" class="form-control" value="" id="touchmanager">
+		</div>
+		
+		<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">收货人:</span>
+				<input type="text" class="form-control" value="" id="receiver">
+				<span class="input-group-addon" style="background-color: #1abc9c;">送货人:</span>
+				<input type="text" class="form-control" value="" id="sender">
+		</div>
+		
+		<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">车牌号:</span>
+				<input type="text" class="form-control" value="" id="carnumber">
+				<span class="input-group-addon" style="background-color: #1abc9c;">结账金额:</span>
+				<input type="text" class="form-control" value="" id="totalsettlementamount">
+		</div>
+		<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">发车时间:</span>
+				<input type="text" class="form-control" value="" id="departuretime">
+				<span class="input-group-addon" style="background-color: #1abc9c;">还车时间:</span>
+				<input type="text" class="form-control" value="" id="stilltime">
+		</div>
+		
+		<div class="input-group col-xs-10 col-md-offset-1">
+				<span class="input-group-addon" style="background-color: #1abc9c;">起始油表数:</span>
+				<input type="text" class="form-control" value="" id="startoilnum">
+				<span class="input-group-addon" style="background-color: #1abc9c;">返回油表数:</span>
+				<input type="text" class="form-control" value="" id="returnoilnum">
+		</div>
+		</div>
 		<div class="row placeholders" id="addgoodstb">
             <div class="row">
               <div class="table-responsive col-xs-12">
@@ -157,6 +192,17 @@
 			var creditCount="";
 			var i=0;
 			
+			var storemanager=$("#storemanager").val();
+			var touchmanager=$("#touchmanager").val();
+			var receiver=$("#receiver").val();
+			var sender=$("#sender").val();
+			var carnumber=$("#carnumber").val();
+			var totalsettlementamount=$("#totalsettlementamount").val();
+			var departuretime=$("#departuretime").val();
+			var stilltime=$("#stilltime").val();
+			var startoilnum=$("#startoilnum").val();
+			var returnoilnum=$("#returnoilnum").val();
+			
 			if(salesStatus=='<%=Constants.SalesStatus.SQUARE%>'){
 				payMed=$("#payMed").val();
 				payTime=$("#payTime").val();
@@ -173,9 +219,32 @@
 		        }
 			});
 			
+			if(departuretime!=""||departuretime!=null){
+				if (checkTimeFomat(departuretime)) {
+					$("#departuretime").val("");
+					return;
+				}
+			}
+			if(stilltime!=""||stilltime!=null){
+				if (checkTimeFomat(stilltime)) {
+					$("#departuretime").val("");
+					return;
+				}
+			}
+			
 			var url="<%=_base %>/salesController/updataImprotGoodsList.do?salesGoodsIdList="
 					+ salesGoodsIdList + "&salesStatus="
-					+ salesStatus + "&payMed="
+					+ salesStatus + "&storemanager="
+					+ storemanager + "&touchmanager="
+					+ touchmanager + "&receiver="
+					+ receiver + "&sender="
+					+ sender + "&carnumber="
+					+ carnumber + "&totalsettlementamount="
+					+ totalsettlementamount + "&departuretime="
+					+ departuretime + "&stilltime="
+					+ stilltime + "&startoilnum="
+					+ startoilnum + "&returnoilnum="
+					+ returnoilnum + "&payMed="
 					+ payMed + "&creditCount="
 					+ creditCount + "&payTime="
 					+ payTime + "&salesSerialNumber="
@@ -210,11 +279,20 @@
 			}
 		}
 		
+		function checkTimeFomat(data){
+	      	  var a = /^(\d{2}):(\d{2})$/;
+	      	  if (!a.test(data)) { 
+	      		  alert("时间格式不正确!正确格式为:HH:MM"); 
+	      		  return true;
+	      	  };
+	      	  return false;
+	      }
+		
 		function checkDataFomat(data){
-	    	  var a = /^(\d{4})-(\d{2})-(\d{2})$/;
-	    	  if (!a.test(data)) { 
-	    		  alert("日期格式不正确!正确格式为:yyyy-mm-dd");
-	    	  };
+	      	  var a = /^(\d{4})-(\d{2})-(\d{2})$/;
+	      	  if (!a.test(data)) { 
+	      		  alert("日期格式不正确!正确格式为:yyyy-mm-dd"); 
+	      	  };
 	      }
 
 	</script>

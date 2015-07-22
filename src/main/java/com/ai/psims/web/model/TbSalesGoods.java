@@ -2,7 +2,7 @@ package com.ai.psims.web.model;
 
 import java.util.Date;
 
-public class SalesGoods {
+public class TbSalesGoods {
     private Integer salesGoodsId;
 
     private String salesSerialNumber;
