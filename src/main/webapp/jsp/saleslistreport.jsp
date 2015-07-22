@@ -19,15 +19,6 @@
 			<button type="submit" class="btn btn-primary">销售报表导出</button>
 		</form>
 	</div>
-
-	<div class="row placeholders ">
-		<div class="col-sm-5">
-			<priv:privilege power="客户管理.增删改">
-				<button type="button" id="excel" class="btn btn-primary"  >导出为Excel</button>
-			</priv:privilege>
-		</div>
-	</div>
-
 	
 	
 </div>
@@ -40,9 +31,7 @@
 <script src="<%=path%>/js/customer.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#excel").click(function() {
-			window.location.href = "storageCheckReportExecl?goodsName=${goodsName}&goodsType=${goodsType}&goodsCode=${goodsCode}&storehouseName=${storehouseName}";
-		});
+		
 	});
 </script>
 </body>

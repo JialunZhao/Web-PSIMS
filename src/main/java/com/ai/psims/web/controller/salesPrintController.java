@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -137,72 +138,103 @@ public class salesPrintController extends BaseController {
 				logger.info("------------输出内容-------------");
 				HSSFRow row;
 				// SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-
+				String singleRebate, goodsDiscount, goodsActualCost, providerSubsidy, providerPackageSubsidy, purchaseRebate, promotionRebate, annualRebate, salesGoodsPrice;
 				for (SalesGoods salesGoods : salesGoodsList) {
 					idx = 0;
+
+					singleRebate = (salesGoods.getSingleRebate() == "" || salesGoods
+							.getSingleRebate() == null) ? "0.00" : salesGoods
+							.getSingleRebate();
+					goodsDiscount = (salesGoods.getGoodsDiscount() == "" || salesGoods
+							.getGoodsDiscount() == null) ? "0.00" : salesGoods
+							.getGoodsDiscount();
+					goodsActualCost = (salesGoods.getGoodsActualCost() == "" || salesGoods
+							.getGoodsActualCost() == null) ? "0.00"
+							: salesGoods.getGoodsActualCost();
+					providerSubsidy = (salesGoods.getProviderSubsidy() == "" || salesGoods
+							.getProviderSubsidy() == null) ? "0.00"
+							: salesGoods.getProviderSubsidy();
+					providerPackageSubsidy = (salesGoods
+							.getProviderPackageSubsidy() == "" || salesGoods
+							.getProviderPackageSubsidy() == null) ? "0.00"
+							: salesGoods.getProviderPackageSubsidy();
+					purchaseRebate = (salesGoods.getPurchaseRebate() == "" || salesGoods
+							.getPurchaseRebate() == null) ? "0.00" : salesGoods
+							.getPurchaseRebate();
+					promotionRebate = (salesGoods.getPromotionRebate() == "" || salesGoods
+							.getPromotionRebate() == null) ? "0.00"
+							: salesGoods.getPromotionRebate();
+					salesGoodsPrice = (salesGoods.getSalesGoodsPrice() == "" || salesGoods
+							.getSalesGoodsPrice() == null) ? "0.00"
+							: salesGoods.getSalesGoodsPrice();
+					annualRebate = (salesGoods.getAnnualRebate() == "" || salesGoods
+							.getAnnualRebate() == null) ? "0.00" : salesGoods
+							.getAnnualRebate();
+
 					row = sheet.createRow(rowNum++);
 					row.createCell(idx++).setCellValue(
 							salesGoods.getGoodsName());
 					row.createCell(idx++).setCellValue(
 							salesGoods.getSalesGoodsAmount());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getSalesGoodsPrice());
+					row.createCell(idx++).setCellValue(salesGoodsPrice);
 					row.createCell(idx++).setCellValue(
 							salesGoods.getSalesGoodsTotalPrice());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getGoodsActualCost());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getProviderSubsidy());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getProviderPackageSubsidy());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getSingleRebate());
+					row.createCell(idx++).setCellValue(goodsActualCost);
+					row.createCell(idx++).setCellValue(providerSubsidy);
+					row.createCell(idx++).setCellValue(providerPackageSubsidy);
+					row.createCell(idx++).setCellValue(singleRebate);
 					row.createCell(idx++).setCellValue(
 							salesGoods.getGoodsDiscount());
 					row.createCell(idx++).setCellValue(
-							Float.parseFloat(salesGoods.getSingleRebate())
-									* Float.parseFloat(salesGoods
-											.getGoodsDiscount()) / 1.17);
-					row.createCell(idx++).setCellValue(
-							salesGoods.getPurchaseRebate());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getPromotionRebate());
-					row.createCell(idx++).setCellValue(
-							salesGoods.getAnnualRebate());
+							new BigDecimal(singleRebate)
+									.multiply(new BigDecimal(goodsDiscount))
+									.divide(new BigDecimal(1.17),
+											BigDecimal.ROUND_CEILING)
+									.toString());
+					row.createCell(idx++).setCellValue(purchaseRebate);
+					row.createCell(idx++).setCellValue(promotionRebate);
+					row.createCell(idx++).setCellValue(annualRebate);
 					row.createCell(idx++).setCellValue(
 							salesGoods.getCustomerBottleSubsidy());
 					row.createCell(idx++).setCellValue(
 							salesGoods.getCustomerPackageSubsidy());
 					row.createCell(idx++).setCellValue(
 							salesGoods.getCustomerSubsidy());
-					row.createCell(idx++).setCellValue(
-							Float.parseFloat(salesGoods.getGoodsActualCost())
-									- Float.parseFloat(salesGoods
-											.getProviderSubsidy())
-									- Float.parseFloat(salesGoods
-											.getProviderPackageSubsidy())
-									- Float.parseFloat(salesGoods
-											.getSingleRebate())
-									* Float.parseFloat(salesGoods
-											.getGoodsDiscount())
-									/ 1.17
-									- Float.parseFloat(salesGoods
-											.getPurchaseRebate())
-									- Float.parseFloat(salesGoods
-											.getPromotionRebate())
-									- Float.parseFloat(salesGoods
-											.getAnnualRebate()));
-					row.createCell(idx++).setCellValue(
-							Float.parseFloat(salesGoods.getSalesGoodsPrice())
-									- Float.parseFloat(salesGoods
-											.getGoodsActualCost()));
 					row.createCell(idx++)
 							.setCellValue(
-									(Float.parseFloat(salesGoods
-											.getSalesGoodsPrice()) - Float
-											.parseFloat(salesGoods
-													.getGoodsActualCost()))
-											* salesGoods.getSalesGoodsAmount());
+									(new BigDecimal(goodsActualCost)
+											.subtract(
+													new BigDecimal(
+															providerSubsidy))
+											.subtract(
+													new BigDecimal(
+															providerPackageSubsidy))
+											.subtract(
+													new BigDecimal(singleRebate)
+															.multiply(
+																	new BigDecimal(
+																			goodsDiscount))
+															.divide(new BigDecimal(
+																	1.17)))
+											.subtract(
+													new BigDecimal(
+															purchaseRebate))
+											.subtract(
+													new BigDecimal(
+															promotionRebate))
+											.subtract(new BigDecimal(
+													annualRebate))).toString());
+					row.createCell(idx++)
+							.setCellValue(
+									new BigDecimal(salesGoodsPrice).subtract(
+											new BigDecimal(goodsActualCost))
+											.toString());
+					row.createCell(idx++).setCellValue(
+							((new BigDecimal(salesGoodsPrice)
+									.subtract(new BigDecimal(goodsActualCost)))
+									.multiply(new BigDecimal(salesGoods
+											.getSalesGoodsAmount())))
+									.toString());
 				}
 			}
 		};
