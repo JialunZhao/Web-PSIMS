@@ -122,8 +122,8 @@
 								<tr>
 									<td>${importGoods.importSerialNumber }</td>
 									<td>${importGoods.goodsName }</td>
-									<td style="display: none">${importGoods.importGoodsId }</td>
-									<td>${importGoods.importGoodsPrice/1000 }</td>
+									<td style="display: none">${importGoods.goodsId}</td>
+									<td>${importGoods.importGoodsPrice}</td>
 									<td><input type="text" name="goodsAmount"
 										value="${importGoods.importGoodsAmount }"></td>
 								</tr>
@@ -170,7 +170,7 @@
 			 var url="<%=_base%>/importController/updataImprotGoodsList.do?providerId="
 					+ providerId
 					+ "&providerName="
-					+ encodeURI(encodeURI(providerName))
+					+ providerName
 					+ "&importStatus="
 					+ importStatus
 					+ "&payTime="
