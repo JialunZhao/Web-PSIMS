@@ -39,7 +39,8 @@
 			 * */
 			var obj = {
 				username : $("#username").val(),
-				password : $("#password").val()
+				password : $("#password").val(),
+				remeberMe : $("#remeberMe").val()
 			};
 			//        alert(obj);
 
@@ -104,13 +105,13 @@
 		<form class="form-signin">
 			<h2 class="form-signin-heading">用户登录</h2>
 			<label for="inputEmail" class="sr-only">用户名</label> <input
-				type="text" id="username" class="form-control" placeholder="用户名"
+				type="text" id="username" class="form-control" placeholder="用户名" value="${requestScope.name }" 
 				required autofocus> <label for="inputPassword"
 				class="sr-only"><input type="hidden">密码</label> <input type="password" id="password"
-				class="form-control" autocomplete="off" placeholder="密码" required>
+				class="form-control" autocomplete="off" placeholder="密码" required value="${requestScope.password }" >
 			<h5 id="errorcontent" class="btn"></h5>
 			<div class="checkbox">
-				<label> <input type="checkbox" value="remember-me">记住密码
+				<label> <input type="checkbox" name="remeberMe" id="remeberMe" value="yes" ${requestScope.checked }>记住密码
 				</label>
 			</div>
 			<a class="btn btn-lg btn-primary btn-block" onclick="login()">登录</a>

@@ -1,11 +1,14 @@
 package com.ai.psims.web.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbPrivilege;
-import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.service.IEmployeeService;
-import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.service.IPrivilegeService;
+import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.MD5keyBean;
 
 /**
@@ -57,6 +60,7 @@ public class LoginController {
             HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         MD5keyBean md5keyBean = new MD5keyBean();
+        String psd = password;
         password = md5keyBean.getkeyBeanofStr(password);
         List<TbEmployee> employeeList = employeeServiceImpl.getEmployee(username, password);
         System.out.println("===========================================" + username);
@@ -75,6 +79,7 @@ public class LoginController {
             resultMap.put("message", "用户名不存在");
             return resultMap;
 	    }
+	    remeberMe(request, response, username, psd);
 //		request.getSession().setAttribute("userSession", employee);
 //		request.getSession().setAttribute("userSessionId", employee.getEmployeeId());
 //        if (employee.getStatus()!="2") {
@@ -135,19 +140,45 @@ public class LoginController {
 
     //退出系统LogOut.do
     @RequestMapping(value = "/LogOut.do")
-    public String logout(HttpServletRequest request,ModelMap modelMap) {
+    public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap) {
     	HttpSession session = request.getSession();
     	Object mysession = session.getAttribute("mysession");
     	if(mysession!=null){
     		session.getAttribute("mysession");
     		modelMap.addAttribute("mysession", "");
     	}
-    	mysession = session.getAttribute("privilege");
-    	if(mysession!=null){
-    		session.removeAttribute("privilege");
-    		modelMap.addAttribute("privilege", "");
-    	}
         return "login";
     }
+    public static void remeberMe(HttpServletRequest request,
+			HttpServletResponse response, String name, String password) {
+		//创建2个Cookie
+		//如果name存在中文
+		try {
+			name = URLEncoder.encode(name, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		Cookie nameCookie = new Cookie("name",name);
+		Cookie passwordCookie = new Cookie("password",password);
+		//设置Cookie的有效路径
+		nameCookie.setPath(request.getContextPath()+"/");
+		passwordCookie.setPath(request.getContextPath()+"/");
+		//设置Cookie的有效时长（一周），当页面复选框选中的时候，设置
+		//获取页面复选框的值
+		String remeberMe = request.getParameter("remeberMe");
+		//选中页面复选框
+		if(remeberMe!=null && remeberMe.equals("yes")){
+			nameCookie.setMaxAge(7*24*60*60);
+			passwordCookie.setMaxAge(7*24*60*60);
+		}
+		//如果没有被选中，清空有效时长
+		else{
+			nameCookie.setMaxAge(0);
+			passwordCookie.setMaxAge(0);
+		}
+		//将2个Cookie放置到response对象中
+		response.addCookie(nameCookie);
+		response.addCookie(passwordCookie);
+	}
 
 }

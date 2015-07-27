@@ -152,6 +152,7 @@ public class EmployeeController extends BaseController{
     	employeeServiceImpl.delete(employee);
         return "redirect:/user/show.do";
     }
+    
 
     //服务器查询到数据把数据放到对象中，再通过键值来取
     @RequestMapping(value = "/{employeeId}/toUpdate.do", method = RequestMethod.GET)

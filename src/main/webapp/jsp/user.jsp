@@ -102,7 +102,7 @@
 									<td>
 										<priv:privilege power="员工权限.增删改">
 										<a href="#" data-toggle="modal" onclick="chenge(${u.employeeId})">修改</a>/
-										<a href="${u.employeeId}/delete.do">删除</a>
+										<a href="#" data-toggle="modal" onclick="deleted(${u.employeeId})">删除</a>
 										</priv:privilege>
 									</td>
 								</tr>
@@ -443,6 +443,7 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="${ctx}/js/vendor/video.js"></script>
 	<script src="${ctx}/js/flat-ui.min.js"></script>
+	<script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 	
 	<script type="text/javascript">
 		$(function() {
@@ -629,6 +630,23 @@
                     psims = "";
                 },
 			})
+		}
+		function deleted(employeeId){
+			var id = employeeId;
+//	 		alert("dfdfd");
+			var flag=false;
+	        $.dialog.confirm("您确定要执行操作吗？", function () {
+	        	   $.dialog.tips('执行确定操作');
+	        	   next(id);
+//	         	   alert(flag);
+	        }, function(){
+	            $.dialog.tips('执行取消操作');
+	            flag=false;
+	        });
+		}
+		function next(employeeId){
+			var id = employeeId;
+			document.location.href = '${ctx}/user/'+id+'/delete.do';
 		}
 		
 		$(document).ready(function() {

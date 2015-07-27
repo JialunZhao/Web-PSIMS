@@ -440,6 +440,7 @@
 	    obj.value = obj.value.replace(/\.{2,}/g,"."); 
 	    //保证.只出现一次，而不能出现两次以上 
 	    obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$","."); 
+	   
 	} 
 	function checkNum(obj){ 
 	    //为了去除最后一个. 
@@ -458,10 +459,6 @@
             $.dialog.tips('执行取消操作');
             flag=false;
         });
-		
-		
-			
-		
 	}
 	function next(paramId){
 		var id = paramId;
@@ -518,9 +515,9 @@
 					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
+							"<td>"+ Math.round(messageRespon[i].ppValue) +"</td>"+ "<td>"+ mun +
 							"</td>" + "<td>"+ num +
-							"</td>" + "<td>"+ messageRespon[i].pRemark +
+							"</td>" + "<td>"+ Math.round(messageRespon[i].pRemark) +
 							"</td>")
 					tr.append(td);
 					$("#tableGood").append(tr);
