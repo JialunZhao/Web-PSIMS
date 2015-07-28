@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,12 +105,14 @@ public class SystemParameterController {
     	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
     	String pKey = request.getParameter("pKey");
     	String ppValue = request.getParameter("ppValue");
+    	BigDecimal ppValueBD = new BigDecimal(ppValue);
+    	ppValueBD = ppValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
     	TbSystemParameter systemParameter = new TbSystemParameter();
     	systemParameter.setPpDesc(ppDesc);
     	systemParameter.setpDesc(pDesc);
     	systemParameter.setParamId(paramId);
     	systemParameter.setpKey(pKey);
-    	systemParameter.setPpValue(ppValue);
+    	systemParameter.setPpValue(ppValueBD.toString());
     	systemParameterBussinessImpl.update(systemParameter);
     	if(systemParameter.getPpValue()!=null){
     		sysParamete.setpRemark(ppValue);

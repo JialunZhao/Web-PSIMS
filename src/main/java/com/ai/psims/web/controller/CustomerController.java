@@ -91,6 +91,10 @@ public class CustomerController extends BaseController {
 				: request.getParameter("query_contactName");
 		String contact_tel = request.getParameter("query_contactTel") == "" ? null
 				: request.getParameter("query_contactTel");
+		
+		
+		TbEmployee employee = (TbEmployee)request.getSession().getAttribute("mysession");
+		String nameString = employee.getEmployeeName();
 		logger.info("------------3.数据校验-------------");
 		if (customer_name != null && customer_name.length() > 0) {
 			customer_name = "%" + customer_name + "%";

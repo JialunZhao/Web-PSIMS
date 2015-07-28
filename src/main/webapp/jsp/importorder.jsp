@@ -137,8 +137,7 @@
 </div>
 
 
-
-
+  
 <!-- 模态框（Modal） -->
 <!-- 添加入库单模态框（Modal） -->
 <div class="modal fade" id="importgoods" tabindex="-1" role="dialog"

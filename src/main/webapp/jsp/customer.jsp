@@ -295,7 +295,7 @@
 							<div class="input-group col-xs-6 col-md-offset-3">
 								<span class="input-group-addon"
 									style="background-color: #1abc9c;">客户区域:</span> <input
-									type="text" class="form-control add" name="modify_area"
+									type="text" class="form-control modify" name="modify_area"
 									id="modify_area"
 									placeholder="客户区域" maxlength="20">
 							</div>
