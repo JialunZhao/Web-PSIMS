@@ -179,15 +179,15 @@ public class SystemParameterController {
    				for (TbSystemParameterLog systemParameterLog : tbSystemParameterLogs) {
    					idx = 0;
    					row = sheet.createRow(rowNum++);
-   					row.createCell(idx++).setCellValue(systemParameterLog.getLogId().toString().equals(null) ? "无" : systemParameterLog.getLogId().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpDesc().toString().equals(null) ? "无" : systemParameterLog.getPpDesc().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpKey().toString().equals(null) ? "无" : systemParameterLog.getPpKey().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpValue().toString().equals(null) ? "无" : systemParameterLog.getPpValue().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getLogId().equals(null)||systemParameterLog.getLogId().equals("") ? "无" : systemParameterLog.getLogId().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpDesc().equals(null)||systemParameterLog.getPpDesc().equals("") ? "无" : systemParameterLog.getPpDesc().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpKey().equals(null)||systemParameterLog.getPpKey().equals("") ? "无" : systemParameterLog.getPpKey().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpValue().equals(null)||systemParameterLog.getPpValue().equals("") ? "无" : systemParameterLog.getPpValue().toString());
    					float pRemark = Float.parseFloat(systemParameterLog.getpRemark());
    					float PpValue = Float.parseFloat(systemParameterLog.getPpValue());
    					row.createCell(idx++).setCellValue(pRemark-PpValue);
    					row.createCell(idx++).setCellValue(PpValue-pRemark);
-   					row.createCell(idx++).setCellValue(systemParameterLog.getpRemark().toString().equals(null) ? "无" : systemParameterLog.getpRemark().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getpRemark().equals(null)||systemParameterLog.getpRemark().equals("") ? "无" : systemParameterLog.getpRemark().toString());
    				}
    			}
    		};

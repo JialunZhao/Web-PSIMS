@@ -63,7 +63,7 @@ public class SystemFilter implements Filter {
 			return;
 		}
 		//重定向到登陆页面（error.jsp实现5秒后跳转到登录页面）
-		response.sendRedirect(request.getContextPath()+"/error.jsp");
+		response.sendRedirect(request.getContextPath());
 	}
 
 	

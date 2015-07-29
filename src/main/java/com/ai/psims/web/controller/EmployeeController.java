@@ -280,20 +280,20 @@ public class EmployeeController extends BaseController{
 				for (TbEmployee tbEmployee : tbEmployees) {
 					idx = 0;
 					row = sheet.createRow(rowNum++);
-					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().toString() .equals(null) ? "无" : tbEmployee.getEmployeeId().toString());
-					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName().equals(null) ? "无" : tbEmployee.getEmployeeName());
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeId().equals(null)||tbEmployee.getEmployeeId().equals("") ? "无" : tbEmployee.getEmployeeId().toString());
+					row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName().equals(null)||tbEmployee.getEmployeeName().equals("") ? "无" : tbEmployee.getEmployeeName());
 					if(tbEmployee.getSex().equals("1")){
 						row.createCell(idx++).setCellValue("男");
 					}
-					if(tbEmployee.getSex().equals("0")){
+					if(tbEmployee.getSex().equals("2")){
 						row.createCell(idx++).setCellValue("女");
 					}
-					if(tbEmployee.getSex().equals(null)){
+					if(tbEmployee.getSex().equals(null)||tbEmployee.getSex().equals("")){
 						row.createCell(idx++).setCellValue("无");
 					}
-					row.createCell(idx++).setCellValue(tbEmployee.getIdcard().equals(null)? "无" : tbEmployee.getIdcard());
-					row.createCell(idx++).setCellValue(tbEmployee.getContactTel().equals(null) ? "无" : tbEmployee.getContactTel());
-					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr().equals(null) ? "无" : tbEmployee.getContactAddr());
+					row.createCell(idx++).setCellValue(tbEmployee.getIdcard().equals(null)||tbEmployee.getIdcard().equals("")? "无" : tbEmployee.getIdcard().toString());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactTel().equals(null)||tbEmployee.getContactTel().equals("") ? "无" : tbEmployee.getContactTel().toString());
+					row.createCell(idx++).setCellValue(tbEmployee.getContactAddr().equals(null)||tbEmployee.getContactAddr().equals("") ? "无" : tbEmployee.getContactAddr().toString());
 					if(tbEmployee.getRole().equals("1")){
 						row.createCell(idx++).setCellValue("销售");
 					}
@@ -309,10 +309,10 @@ public class EmployeeController extends BaseController{
 					if(tbEmployee.getRole().equals("5")){
 						row.createCell(idx++).setCellValue("其它");
 					}
-					if(tbEmployee.getRole().equals(null)){
+					if(tbEmployee.getRole().equals(null)||tbEmployee.getRole().equals("")){
 						row.createCell(idx++).setCellValue("无");
 					}
-					row.createCell(idx++).setCellValue(tbEmployee.getRemark().equals(null) ? "无" : tbEmployee.getRemark());
+					row.createCell(idx++).setCellValue(tbEmployee.getRemark().equals(null)||tbEmployee.getRemark().equals("") ? "无" : tbEmployee.getRemark().toString());
 				}
 			}
 		};
