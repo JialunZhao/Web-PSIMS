@@ -387,7 +387,7 @@ public class SalesController extends BaseController {
 				idx++;
 				row.createCell(idx++).setCellValue("联系人");
 				row.createCell(idx++).setCellValue(customer.getEmployeeName());
-				row.createCell(idx++).setCellValue("摘要");
+				row.createCell(idx++).setCellValue("结账方式");
 				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
 						(short) 7));
 				sheet.addMergedRegion(new Region(rowNum, (short) 6, rowNum,
@@ -515,6 +515,21 @@ public class SalesController extends BaseController {
 				row.createCell(idx++).setCellValue("返回油表数");
 				sheet.addMergedRegion(new Region(rowNum, (short) 8, rowNum,
 						(short) 9));
+				row.createCell(idx++).setCellValue("");
+				
+				
+				rowNum++;
+				idx = 0;
+				row = sheet.createRow(rowNum);
+				row.createCell(idx++).setCellValue("备注");
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 3));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 4));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 5));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 6));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 7));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 9));
 				row.createCell(idx++).setCellValue("");
 			}
 		};

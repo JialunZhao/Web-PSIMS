@@ -832,52 +832,52 @@ public class StoragecheckExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceEqualTo(Long value) {
+        public Criteria andGoodsPriceEqualTo(String value) {
             addCriterion("goods_price =", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceNotEqualTo(Long value) {
+        public Criteria andGoodsPriceNotEqualTo(String value) {
             addCriterion("goods_price <>", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceGreaterThan(Long value) {
+        public Criteria andGoodsPriceGreaterThan(String value) {
             addCriterion("goods_price >", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andGoodsPriceGreaterThanOrEqualTo(String value) {
             addCriterion("goods_price >=", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceLessThan(Long value) {
+        public Criteria andGoodsPriceLessThan(String value) {
             addCriterion("goods_price <", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceLessThanOrEqualTo(Long value) {
+        public Criteria andGoodsPriceLessThanOrEqualTo(String value) {
             addCriterion("goods_price <=", value, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceIn(List<Long> values) {
+        public Criteria andGoodsPriceIn(List<String> values) {
             addCriterion("goods_price in", values, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceNotIn(List<Long> values) {
+        public Criteria andGoodsPriceNotIn(List<String> values) {
             addCriterion("goods_price not in", values, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceBetween(Long value1, Long value2) {
+        public Criteria andGoodsPriceBetween(String value1, String value2) {
             addCriterion("goods_price between", value1, value2, "goodsPrice");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsPriceNotBetween(Long value1, Long value2) {
+        public Criteria andGoodsPriceNotBetween(String value1, String value2) {
             addCriterion("goods_price not between", value1, value2, "goodsPrice");
             return (Criteria) this;
         }

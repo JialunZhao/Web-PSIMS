@@ -108,36 +108,36 @@
 		<div class="col-sm-offset-1">
 		<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">库管人:</span>
-				<input type="text" class="form-control" value="" id="storemanager">
+				<input type="text" class="form-control" value="${sales.storehouseManager }" id="storemanager">
 				<span class="input-group-addon" style="background-color: #1abc9c;">制单人:</span>
-				<input type="text" class="form-control" value="" id="touchmanager">
+				<input type="text" class="form-control" value="${sales.touchingManager }" id="touchmanager">
 		</div>
 		
 		<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">收货人:</span>
-				<input type="text" class="form-control" value="" id="receiver">
+				<input type="text" class="form-control" value="${sales.receiver }" id="receiver">
 				<span class="input-group-addon" style="background-color: #1abc9c;">送货人:</span>
-				<input type="text" class="form-control" value="" id="sender">
+				<input type="text" class="form-control" value="${sales.sender }" id="sender">
 		</div>
 		
 		<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">车牌号:</span>
-				<input type="text" class="form-control" value="" id="carnumber">
+				<input type="text" class="form-control" value="${sales.carNumber }" id="carnumber">
 				<span class="input-group-addon" style="background-color: #1abc9c;">结账金额:</span>
-				<input type="text" class="form-control" value="" id="totalsettlementamount">
+				<input type="text" class="form-control" value="${sales.totalSettlementAmount }" id="totalsettlementamount">
 		</div>
 		<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">发车时间:</span>
-				<input type="text" class="form-control" value="" id="departuretime">
+				<input type="text" class="form-control" value="<fmt:formatDate value="${sales.departureTime }" pattern="HH:mm"/>" id="departuretime">
 				<span class="input-group-addon" style="background-color: #1abc9c;">还车时间:</span>
-				<input type="text" class="form-control" value="" id="stilltime">
+				<input type="text" class="form-control" value="<fmt:formatDate value="${sales.stillTime }" pattern="HH:mm"/>" id="stilltime">
 		</div>
 		
 		<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">起始油表数:</span>
-				<input type="text" class="form-control" value="" id="startoilnum">
+				<input type="text" class="form-control" value="${sales.startOilNumber }" id="startoilnum">
 				<span class="input-group-addon" style="background-color: #1abc9c;">返回油表数:</span>
-				<input type="text" class="form-control" value="" id="returnoilnum">
+				<input type="text" class="form-control" value="${sales.returnOilNumber }" id="returnoilnum">
 		</div>
 		</div>
 		<div class="row placeholders" id="addgoodstb">
@@ -219,15 +219,15 @@
 		        }
 			});
 			
-			if(departuretime!=""||departuretime!=null){
+			if(departuretime!=""){
 				if (checkTimeFomat(departuretime)) {
 					$("#departuretime").val("");
 					return;
 				}
 			}
-			if(stilltime!=""||stilltime!=null){
+			if(stilltime!=""){
 				if (checkTimeFomat(stilltime)) {
-					$("#departuretime").val("");
+					$("#stilltime").val("");
 					return;
 				}
 			}
