@@ -167,7 +167,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 			goodsArray.get(i).setProviderId(tbImport.getProviderId());
 			goodsArray.get(i).setProviderCode(tbImport.getProviderCode());
 			goodsArray.get(i).setProviderName(tbImport.getProviderName());
-
+			goodsArray.get(i).setResImportGoodsAmount(goodsArray.get(i).getImportGoodsAmount());
+			
 			importGoodsService.insertImportGoods(goodsArray.get(i));
 
 			// 奖金池金额更新
@@ -304,7 +305,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 				haveBoxNamePrice = iGoods.getBoxBottlePrice();
 				isDiscount = iGoods.getIsDiscount();
 				haveBox = iGoods.getIsBoxBottle();
-				// importGoods.setTotalPrice(goodsCount*goodsPrice);
+				// importGoods.setTotalPrice(goodsCount*goodsPrice); //19890401
 				// if (isDiscount.equals(Constants.DiscountMed.YES)) {
 				// importGoods.setDiscountDutyTotalPrice((long) (goodsCount
 				// * goodsPrice * (1 - discountRate * 1.0 / 1000)));

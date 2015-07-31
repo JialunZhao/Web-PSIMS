@@ -14,7 +14,8 @@
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade" id="p_aa">
-		<button type="button" class="btn btn-primary" onclick="add('GoodsUnit')">新增基本单位</button>
+			<button type="button" class="btn btn-primary"
+				onclick="add('GoodsUnit')">新增基本单位</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -30,13 +31,12 @@
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pValue == 'GoodsUnit' }">
 							<tr>
-							<c:set value="${seq + 1}" var="seq"></c:set>
+								<c:set value="${seq + 1}" var="seq"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${seq}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td>
-									<a href="#" data-toggle="modal"
+								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
@@ -46,7 +46,8 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_bb">
-		<button type="button" class="btn btn-primary" onclick="add('GoodsType')">新增商品类型</button>
+			<button type="button" class="btn btn-primary"
+				onclick="add('GoodsType')">新增商品类型</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -62,13 +63,12 @@
 					<c:forEach items="${sitting}" var="s" step="1">
 						<c:if test="${s.pValue == 'GoodsType' }">
 							<tr>
-							<c:set value="${seq1 + 1}" var="seq1"></c:set>
+								<c:set value="${seq1 + 1}" var="seq1"></c:set>
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${seq1}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td>
-									<a href="#" data-toggle="modal"
+								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a></td>
 							</tr>
 						</c:if>
@@ -77,7 +77,8 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_cc">
-		<button type="button" class="btn btn-primary" onclick="add('PaymentType')">新增支付方式</button>
+			<button type="button" class="btn btn-primary"
+				onclick="add('PaymentType')">新增支付方式</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -98,8 +99,7 @@
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe2}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td>
-									<a href="#" data-toggle="modal"
+								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
@@ -109,8 +109,9 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="p_dd">
-		<button type="button" class="btn btn-primary" onclick="add('IncomeType')">新增收款方式</button>
-		<table class="table table-striped">
+			<button type="button" class="btn btn-primary"
+				onclick="add('IncomeType')">新增收款方式</button>
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th class="chk" style="display: none"><input type="checkbox"
@@ -130,8 +131,7 @@
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td>
-									<a href="#" data-toggle="modal"
+								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
@@ -141,7 +141,8 @@
 			</table>
 		</div>
 		<div class="tab-pane fade in active" id="p_ee">
-		<button type="button" class="btn btn-primary" onclick="add('PrizePool')">新增奖金池</button>
+			<button type="button" class="btn btn-primary"
+				onclick="add('PrizePool')">新增奖金池</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -150,8 +151,8 @@
 						<th>编号</th>
 						<th>奖金池名称</th>
 						<th>奖金池额度</th>
-<!-- 						<th>手动增加奖金池</th> -->
-<!-- 						<th>手动降低奖金池</th> -->
+						<!-- 						<th>手动增加奖金池</th> -->
+						<!-- 						<th>手动降低奖金池</th> -->
 						<th>奖金池历史</th>
 						<th>操作</th>
 					</tr>
@@ -167,17 +168,15 @@
 								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><c:out value="${s.ppValue}" /></td>
-<!-- 								<td><input type="text" class="form-control" placeholder="+" value="+"></td> -->
-<!-- 								<td><input type="text" class="form-control" placeholder="-" value="-"></td> -->
+								<!-- 								<td><input type="text" class="form-control" placeholder="+" value="+"></td> -->
+								<!-- 								<td><input type="text" class="form-control" placeholder="-" value="-"></td> -->
 								<td><a href="#" data-toggle="modal"
 									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a>/
 									<a href="#" data-toggle="modal"
-									onclick="delcommit(${s.paramId},'p_ee')">打印</a>
-									</td>
-								<td>
-									<a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#" data-toggle="modal"
-									onclick="deleted(${s.paramId})">删除</a></td>
+									onclick="delcommit(${s.paramId},'p_ee')">打印</a></td>
+								<td><a href="#" data-toggle="modal"
+									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#"
+									data-toggle="modal" onclick="deleted(${s.paramId})">删除</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -185,42 +184,43 @@
 			</table>
 		</div>
 		<div class="modal fade" id="goods-10" tabindex="-1" role="dialog"
-	aria-labelledby="addgoods" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">奖金池历史列表</h4>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="table-responsive" id="tbA">
-						<table class="table table-striped" id="tableGood">
-							<tr>
-								<th>编号</th>
-								<th>奖金池名称</th>
-								<th>修改时间</th>
-								<th>原始奖金</th>
-								<th>增加</th>
-								<th>减少</th>
-								<th>最终余额</th>
-							</tr>
-							<tbody>
-						</table>
+			aria-labelledby="addgoods" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">奖金池历史列表</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="table-responsive" id="tbA">
+								<table class="table table-striped" id="tableGood">
+									<tr>
+										<th>编号</th>
+										<th>奖金池名称</th>
+										<th>修改时间</th>
+										<th>原始奖金</th>
+										<th>增加</th>
+										<th>减少</th>
+										<th>最终余额</th>
+									</tr>
+									<tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					</div>
 				</div>
+				<!-- /.modal-content -->
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			</div>
+			<!-- /.modal-dialog -->
 		</div>
-		<!-- /.modal-content -->
-	</div>
-	<!-- /.modal-dialog -->
-</div>
 		<div class="tab-pane fade" id="p_ff">
-		<button type="button" class="btn btn-primary" onclick="add('CheckoutType')">新增结账方式</button>
+			<button type="button" class="btn btn-primary"
+				onclick="add('CheckoutType')">新增结账方式</button>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -240,10 +240,9 @@
 								<td class="chk" style="display: none"><input
 									type="checkbox" aria-label="..."></td>
 								<td><c:out value="${sqe3}" /></td>
-<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
+								<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
 								<td><c:out value="${s.ppDesc}" /></td>
-								<td>
-									<a href="#" data-toggle="modal"
+								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId})">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
@@ -252,7 +251,7 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 	</div>
 
 </div>
@@ -271,11 +270,10 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
-							<input type="hidden" name="pValue" id="pValue" >
-							<input type="hidden" name="pDesc" id="pDesc" >
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">参数名称:</span> <input id="ppDesc"
-								name="ppDesc" type="text" class="form-control"
+							<input type="hidden" name="pValue" id="pValue"> <input
+								type="hidden" name="pDesc" id="pDesc"> <span
+								class="input-group-addon" style="background-color: #1abc9c;">参数名称:</span>
+							<input id="ppDesc" name="ppDesc" type="text" class="form-control"
 								placeholder="参数名称" value="">
 						</div>
 					</div>
@@ -303,19 +301,21 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
-							<input type="hidden" name="pValue" id="pValue1" >
-							<input type="hidden" name="pDesc" id="pDesc2" >
-<!-- 							<input type="hidden" name="ppDesc" id="ppDesc2" > -->
+							<input type="hidden" name="pValue" id="pValue1"> <input
+								type="hidden" name="pDesc" id="pDesc2">
+							<!-- 							<input type="hidden" name="ppDesc" id="ppDesc2" > -->
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池名称:</span> <input id="ppDesc2"
-								name="ppDesc" type="text" class="form-control" placeholder="奖金池名称">
+								style="background-color: #1abc9c;">奖金池名称:</span> <input
+								id="ppDesc2" name="ppDesc" type="text" class="form-control"
+								placeholder="奖金池名称">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池额度:</span> <input id="ppValue2"
-								name="ppValue" type="text" class="form-control" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)"
+								style="background-color: #1abc9c;">奖金池额度:</span> <input
+								id="ppValue2" name="ppValue" type="text" class="form-control"
+								onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)"
 								placeholder="奖金池额度" value="">
 						</div>
 					</div>
@@ -377,38 +377,41 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="input-group col-xs-6 col-md-offset-3">
-						<input
-							id="paramId3" name="paramId3" type="hidden" class="form-control"
-							placeholder="参数名称"> <input id="pValue3" name="pValue3"
-							type="hidden" class="form-control" placeholder="参数名称"> <input
-							id="pDesc3" name="pDesc3" type="hidden" class="form-control"
-							placeholder="参数名称">
+						<input id="paramId3" name="paramId3" type="hidden"
+							class="form-control" placeholder="参数名称"> <input
+							id="pValue3" name="pValue3" type="hidden" class="form-control"
+							placeholder="参数名称"> <input id="pDesc3" name="pDesc3"
+							type="hidden" class="form-control" placeholder="参数名称">
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池名称:</span>
 						<input id="ppDesc3" name="ppDesc3" type="text"
-							class="form-control" placeholder="奖金池名称"> 
+							class="form-control" placeholder="奖金池名称">
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">奖金池额度:</span>
 						<input id="ppValueint3" name="ppValueint3" type="text"
-							class="form-control" placeholder="奖金池额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
+							class="form-control"  AUTOCOMPLETE="off"  placeholder="奖金池额度"
+							onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";">
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
-						<span class="input-group-addon" style="background-color: #1abc9c;">+ :</span>
-						<input id="addval" name="addval" type="text"
-							class="form-control" placeholder="新增额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
+						<span class="input-group-addon" style="background-color: #1abc9c;">+
+							:</span> <input id="addval" name="addval" type="text"
+							class="form-control" placeholder="新增额度"
+							onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";">
 					</div>
 					<div class="input-group col-xs-6 col-md-offset-3">
 						<span class="input-group-addon" style="background-color: #1abc9c;">—:</span>
-						<input id="cutval" name="cutval" type="text"
-							class="form-control" placeholder="减少额度" onKeyUp="clearNoNum(event,this)" onBlur="checkNum(this)";"> 
+						<input id="cutval" name="cutval" type="text" class="form-control"
+							placeholder="减少额度" onKeyUp="clearNoNum(event,this)"
+							onBlur="checkNum(this)";">
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-				<button type="button" class="btn btn-primary" onclick="update('p_ee')">确认修改</button>
+				<button type="button" class="btn btn-primary"
+					onclick="update('p_ee')">确认修改</button>
 			</div>
 		</div>
 		<!-- /.modal-content -->
@@ -440,6 +443,7 @@
 	    obj.value = obj.value.replace(/\.{2,}/g,"."); 
 	    //保证.只出现一次，而不能出现两次以上 
 	    obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$","."); 
+	   
 	} 
 	function checkNum(obj){ 
 	    //为了去除最后一个. 
@@ -458,10 +462,6 @@
             $.dialog.tips('执行取消操作');
             flag=false;
         });
-		
-		
-			
-		
 	}
 	function next(paramId){
 		var id = paramId;
@@ -518,9 +518,9 @@
 					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun +
+							"<td>"+ Math.round(messageRespon[i].ppValue) +"</td>"+ "<td>"+ mun +
 							"</td>" + "<td>"+ num +
-							"</td>" + "<td>"+ messageRespon[i].pRemark +
+							"</td>" + "<td>"+ Math.round(messageRespon[i].pRemark) +
 							"</td>")
 					tr.append(td);
 					$("#tableGood").append(tr);
@@ -549,12 +549,11 @@
 						$("#pValue3").attr("value",messageInfor.pValue);
 						$("#pDesc3").attr("value",messageInfor.pDesc);
 						$("#ppDesc3").attr("value",messageInfor.ppDesc);
-						$("#ppValueint3").attr("value",messageInfor.ppValue);
-						
+						$("#ppValueint3").val(messageInfor.ppValue);
 					}
 			})
-			return false;
-		}
+		}else{
+			
 		
 		$("#modifyrecoveryimport").modal(id);
 		$.ajax({
@@ -571,7 +570,10 @@
 				},
 				
 		})
+		}
 	}
+	
+	
 	function add(pValue) {
 // 		alert(pValue);
 		if(pValue=="PrizePool"){

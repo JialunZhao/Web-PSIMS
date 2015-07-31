@@ -36,6 +36,15 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<!-- 自定义过滤器-->
+  	<filter>
+  		<filter-name>SystemFilter</filter-name>
+  		<filter-class>com.ai.psims.web.common.SystemFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+  		<filter-name>SystemFilter</filter-name>
+  		<url-pattern>*.do</url-pattern>
+  	</filter-mapping>
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<!-- Spring监听器 -->

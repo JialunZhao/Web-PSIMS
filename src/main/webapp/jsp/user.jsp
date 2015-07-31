@@ -102,7 +102,7 @@
 									<td>
 										<priv:privilege power="员工权限.增删改">
 										<a href="#" data-toggle="modal" onclick="chenge(${u.employeeId})">修改</a>/
-										<a href="${u.employeeId}/delete.do">删除</a>
+										<a href="#" data-toggle="modal" onclick="deleted(${u.employeeId})">删除</a>
 										</priv:privilege>
 									</td>
 								</tr>
@@ -443,38 +443,9 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="${ctx}/js/vendor/video.js"></script>
 	<script src="${ctx}/js/flat-ui.min.js"></script>
+	<script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
 	
 	<script type="text/javascript">
-		$(function() {
-	        $("#checkAll").click(function() {
-	             $('input[name="subBox"]').attr("checked",this.checked); 
-	         });
-	         var $subBox = $("input[name='subBox']");
-	         $subBox.click(function(){
-	             $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
-	         });
-	        $("#checkAll1").click(function() {
-	             $('input[name="subBox1"]').attr("checked",this.checked); 
-	         });
-	         var $subBox = $("input[name='subBox1']");
-	         $subBox.click(function(){
-	             $("#checkAll1").attr("checked",$subBox.length == $("input[name='subBox1']:checked").length ? true : false);
-	         });
-	        $("#checkAll3").click(function() {
-	             $('input[name="subBox3"]').attr("checked",this.checked); 
-	         });
-	         var $subBox = $("input[name='subBox3']");
-	         $subBox.click(function(){
-	             $("#checkAll3").attr("checked",$subBox.length == $("input[name='subBox3']:checked").length ? true : false);
-	         });
-	        $("#checkAll2").click(function() {
-	             $('input[name="subBox2"]').attr("checked",this.checked); 
-	         });
-	         var $subBox = $("input[name='subBox2']");
-	         $subBox.click(function(){
-	             $("#checkAll3").attr("checked",$subBox.length == $("input[name='subBox2']:checked").length ? true : false);
-	         });
-	     });
 		function chenge(employeeId) {
 			
 			var id = employeeId;
@@ -630,6 +601,23 @@
                 },
 			})
 		}
+		function deleted(employeeId){
+			var id = employeeId;
+//	 		alert("dfdfd");
+			var flag=false;
+	        $.dialog.confirm("您确定要执行操作吗？", function () {
+	        	   $.dialog.tips('执行确定操作');
+	        	   next(id);
+//	         	   alert(flag);
+	        }, function(){
+	            $.dialog.tips('执行取消操作');
+	            flag=false;
+	        });
+		}
+		function next(employeeId){
+			var id = employeeId;
+			document.location.href = '${ctx}/user/'+id+'/delete.do';
+		}
 		
 		$(document).ready(function() {
 			
@@ -641,7 +629,7 @@
 					$("input[name='privilegeMen']").prop("checked",false);
 				}
 			});
-			$("#checkAll3").click(function(){
+			$("#checkAll3").click(function(event){
 				if($(event.currentTarget).prop("checked")){
 					$("input[name='privilegeBut']").prop("checked",true);
 				}else{
@@ -655,7 +643,7 @@
 					$("input[name='privilegeMenEdit']").prop("checked",false);
 				}
 			});
-			$("#checkAll1").click(function(){
+			$("#checkAll1").click(function(event){
 				if($(event.currentTarget).prop("checked")){
 					$("input[name='privilegeButEdit']").prop("checked",true);
 				}else{

@@ -1,5 +1,6 @@
 package com.ai.psims.web.controller;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,12 +105,14 @@ public class SystemParameterController {
     	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
     	String pKey = request.getParameter("pKey");
     	String ppValue = request.getParameter("ppValue");
+    	BigDecimal ppValueBD = new BigDecimal(ppValue);
+    	ppValueBD = ppValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
     	TbSystemParameter systemParameter = new TbSystemParameter();
     	systemParameter.setPpDesc(ppDesc);
     	systemParameter.setpDesc(pDesc);
     	systemParameter.setParamId(paramId);
     	systemParameter.setpKey(pKey);
-    	systemParameter.setPpValue(ppValue);
+    	systemParameter.setPpValue(ppValueBD.toString());
     	systemParameterBussinessImpl.update(systemParameter);
     	if(systemParameter.getPpValue()!=null){
     		sysParamete.setpRemark(ppValue);
@@ -176,15 +179,15 @@ public class SystemParameterController {
    				for (TbSystemParameterLog systemParameterLog : tbSystemParameterLogs) {
    					idx = 0;
    					row = sheet.createRow(rowNum++);
-   					row.createCell(idx++).setCellValue(systemParameterLog.getLogId().toString().equals(null) ? "无" : systemParameterLog.getLogId().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpDesc().toString().equals(null) ? "无" : systemParameterLog.getPpDesc().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpKey().toString().equals(null) ? "无" : systemParameterLog.getPpKey().toString());
-   					row.createCell(idx++).setCellValue(systemParameterLog.getPpValue().toString().equals(null) ? "无" : systemParameterLog.getPpValue().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getLogId().equals(null)||systemParameterLog.getLogId().equals("") ? "无" : systemParameterLog.getLogId().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpDesc().equals(null)||systemParameterLog.getPpDesc().equals("") ? "无" : systemParameterLog.getPpDesc().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpKey().equals(null)||systemParameterLog.getPpKey().equals("") ? "无" : systemParameterLog.getPpKey().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getPpValue().equals(null)||systemParameterLog.getPpValue().equals("") ? "无" : systemParameterLog.getPpValue().toString());
    					float pRemark = Float.parseFloat(systemParameterLog.getpRemark());
    					float PpValue = Float.parseFloat(systemParameterLog.getPpValue());
    					row.createCell(idx++).setCellValue(pRemark-PpValue);
    					row.createCell(idx++).setCellValue(PpValue-pRemark);
-   					row.createCell(idx++).setCellValue(systemParameterLog.getpRemark().toString().equals(null) ? "无" : systemParameterLog.getpRemark().toString());
+   					row.createCell(idx++).setCellValue(systemParameterLog.getpRemark().equals(null)||systemParameterLog.getpRemark().equals("") ? "无" : systemParameterLog.getpRemark().toString());
    				}
    			}
    		};

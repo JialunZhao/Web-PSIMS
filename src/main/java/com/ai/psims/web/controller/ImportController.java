@@ -402,7 +402,6 @@ public class ImportController extends BaseController {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/showImportGoods")
 	public String showImportGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -422,7 +421,6 @@ public class ImportController extends BaseController {
 		return "goodsimport";
 	}
 
-	@SuppressWarnings("deprecation")
 	@RequestMapping("/updataImprotGoodsList")
 	public String updataImprotGoodsList(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -431,10 +429,10 @@ public class ImportController extends BaseController {
 		String providerId = request.getParameter("providerId");
 		String paymentType = request.getParameter("paymentType");
 		String importStatus = request.getParameter("importStatus");
+		
 		String payTime = request.getParameter("payTime");
 		String importSerialNumber = request.getParameter("importSerialNumber");
 		String providerName = request.getParameter("providerName");
-		providerName = URLDecoder.decode(providerName);
 		String goodsAmounts[] = goodsAmountList.split(",");
 		String importGoodsIds[] = importGoodsIdList.split(",");
 		List<TbImportGoods> importGoodsLists = new ArrayList<TbImportGoods>();
@@ -444,9 +442,12 @@ public class ImportController extends BaseController {
 			importGoods.setImportGoodsAmount(Integer.parseInt(goodsAmounts[i]));
 			importGoodsLists.add(importGoods);
 		}
-		UpdateImportDemo updateImportDemo = new UpdateImportDemo(
-				importGoodsLists, providerId, paymentType, importStatus,
-				payTime, importSerialNumber, providerName);
+		UpdateImportDemo updateImportDemo = new UpdateImportDemo(importGoodsLists, providerId, paymentType, importStatus, payTime, importSerialNumber, providerName);
+//		UpdateImportDemo updateImportDemo = new UpdateImportDemo(
+//				importGoodsLists, providerId, paymentType, importStatus,
+//				payTime, importSerialNumber, providerName);
+		
+		updateImportDemo.setImportGoodsList(importGoodsLists);
 		String result = imporBusinessImpl.updateImportGoods(updateImportDemo);
 		request.setAttribute("result", result);
 		return "import";

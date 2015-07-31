@@ -10,13 +10,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<h3 class="page-header">货品入库下单</h3>
+	<h3 class="page-header">货品入库下单报表</h3>
 
 	<div class="row placeholders">
-		<form class="form-inline">
+		<form class="form-inline" action="importOrderReport" method="get">
 			<div class="form-group">
 				<label for="exampleInputName2">供应商名称：</label> <select
-					class="form-control" tabindex="1" name="providerlist"
+					class="form-control" tabindex="1" name="queProviderId"
 					id="queProviderName">
 					<option value="">请选择供货商</option>
 					<c:forEach var="provider" items="${providerList}"
@@ -50,18 +50,17 @@
 
 			<div class="form-group">
 				<label for="exampleInputEmail2">入库流水号</label> <input type="text"
-					class="form-control" id="queImportSerialNumber" placeholder="入库流水号">
+					class="form-control" id="queImportSerialNumber" name="queImportSerialNumber"  placeholder="入库流水号">
 			</div>
-			<button type="button" class="btn btn-primary"
-				onclick="queryImportList()">搜索</button>
+			<button type="submit" class="btn btn-primary">搜索</button>
 		</form>
 	</div>
 
 	<div class="row placeholders ">
 		<div class="col-sm-2">
 			<priv:privilege power="货品入库下单.增删改">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#importgoods">新增入库单</button>
+				<button type="button" id="excel" class="btn btn-primary"  >导出为Excel</button>
+
 				<!-- <button type="button" class="btn btn-primary" onclick="showAddDialog()">新增入库单</button> -->
 				<!--  <button type="button" id="delbtn" class="btn btn-primary">批量删除入库单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的入库单</button>
@@ -82,7 +81,6 @@
 					<th>入库批次号</th>
 					<th>备注</th>
 					<th>入库状态</th>
-					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody id="accordion">
@@ -97,17 +95,8 @@
 						<td><font size="4" color="#16a085">${imports.importBatchNumber}</font></td>
 						<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
 						<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
-						<priv:privilege power="货品入库下单.增删改">
-							<td><a href="#"
-								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/<a
-								href="#"
-								onclick="updateImportData(${imports.importSerialNumber})">修改</a>/<a
-								href="#"
-								onclick="deleteImportData(${imports.importSerialNumber},'${imports.importStatus}')">删除</a></td>
-						</priv:privilege>
 					</tr>
 					<tr>
-						<td>订单详情</td>
 						<td>商品名称</td>
 						<td>商品单价</td>
 						<td>商品数量</td>
@@ -120,7 +109,6 @@
 						<c:if
 							test="${tbImportGoodsList.importSerialNumber==imports.importSerialNumber}">
 							<tr id="#collapse${tbImportGoodsList.importSerialNumber}">
-								<td>订单详情</td>
 								<td>${tbImportGoodsList.goodsName}</td>
 								<td>${tbImportGoodsList.importGoodsPrice}</td>
 								<td>${tbImportGoodsList.importGoodsAmount}</td>
@@ -137,218 +125,16 @@
 </div>
 
 
-  
-<!-- 模态框（Modal） -->
-<!-- 添加入库单模态框（Modal） -->
-<div class="modal fade" id="importgoods" tabindex="-1" role="dialog"
-	aria-labelledby="importgoods" aria-hidden="true">
-	<form id="addGoodsTabForm">
-
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">新增入库单</h4>
-				</div>
-				<div class="modal-body" id="importgoodsform">
-					<div class="row placeholders">
-						<div class="input-group col-xs-10 col-md-offset-1">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">采购下单时间:</span> <input
-								type="text" class="form-control" placeholder="2015-03-03"
-								value="<%=date%>" name="importcreatetime" id="importcreatetime">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">供货商名称:</span> <select
-								class="form-control" tabindex="1" name="providerId"
-								id="providerId" onchange="queryPrizePool(this.value)">
-								<option value="0">请选择供货商</option>
-								<c:forEach var="provider" items="${providerList}"
-									varStatus="status">
-									<option value="${provider.providerId }">${provider.providerName }</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-1">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池金额：</span><input
-								type="text" class="form-control" placeholder="0" value=""
-								name="prizePool" id="prizePool" readonly>
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-1">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">支付状态：</span> <select
-								class="form-control" tabindex="1" name="payStatus"
-								id="payStatus" onchange="isPay(this.value)">
-								<option value="">请选择支付状态</option>
-								<option value="10">未付款</option>
-								<option value="11">已付款</option>
-							</select>
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-1" id="isPay"
-							style="display: none">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">支付方式：</span> <select
-								class="form-control" tabindex="1" name="payMed" id="payMed">
-								<option value="">请选择支付方式</option>
-								<option value="00">现金</option>
-								<option value="01">转账</option>
-								<option value="02">支票</option>
-								<option value="03">赊账</option>
-							</select> <span class="input-group-addon"
-								style="background-color: #1abc9c;">支付时间：</span> <input
-								type="text" class="form-control" placeholder="2015-03-03"
-								value="2015-03-03" name="payTime" id="payTime">
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-1">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">入库批次号：</span><input
-								type="text" class="form-control" placeholder="入库批次号" value=""
-								name="importBatchNumber" id="importBatchNumber">
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-1">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">备注：</span><input type="text"
-								class="form-control" placeholder="备注" value=""
-								name="importRemark" id="importRemark">
-						</div>
-						<div class="input-group col-xs-1 col-md-offset-1">
-							<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
-						</div>
-					</div>
-				</div>
-				<div class="modal-body" id="addgoods" style="display: none">
-					<div class="row placeholders">
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品名称:</span> <select
-								class="form-control" tabindex="1" 
-								id="goodsName" onChange="showTable()">
-
-							</select>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">商品编码:</span> <input
-								type="text" id="goodsCode" class="form-control"
-								placeholder="商品编码" value="" readonly>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">基本单位:</span> <input
-								type="text" id="goodsUnit" class="form-control"
-								placeholder="基本单位" value="" readonly>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">进货价格:</span> <input
-								type="text" id="goodsPrice" class="form-control"
-								placeholder="进货价格" value="" readonly> <span
-								class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">保质期：</span> <input
-								type="text" id="goodsShelfLife" class="form-control"
-								placeholder="保质期" value="" readonly> <span
-								class="input-group-addon">天</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3"
-							id="discountRates">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">折扣率:</span> <input
-								type="text" id="discountRate" class="form-control"
-								placeholder="折扣率" value="" readonly><span
-								class="input-group-addon"> %</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3"
-							id="discountRates">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">正价销售总额(含税)</span> <input
-								type="text" id="totalPrice" class="form-control"
-								placeholder="正价销售总额(含税)" value="" readonly><span
-								class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3"
-							id="discountRates">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">折扣销售总额(含税)</span> <input
-								type="text" id="discountDutyTotalPrice" class="form-control"
-								placeholder="折扣销售总额(含税)" value="" readonly><span
-								class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3"
-							id="discountRates">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">奖金池使用总额(未税)</span> <input
-								type="text" id="prizePoolUsed" class="form-control"
-								placeholder="奖金池使用总额(未税)" value="" readonly><span
-								class="input-group-addon">元</span>
-						</div>
-						<div class="input-group col-xs-6 col-md-offset-3">
-							<span class="input-group-addon"
-								style="background-color: #1abc9c;">进货数量：</span><input
-								type="text" id="goodsCount" class="form-control"
-								placeholder="进货数量" onChange="showPrizePoolUsed()"
-								onkeyup="showPrizePoolUsed()">
-						</div>
-						<div class="input-group col-xs-10 col-md-offset-3">
-							<button type="button" class="btn btn-primary" id="addgoodsokbtn">确认添加</button>
-							<button type="button" class="btn btn-primary"
-								id="continAddgoodsokbtn">继续添加</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="modal-body" id="addgoodstb">
-					<div class="row">
-						<div class="table-responsive col-xs-15">
-							<input type="hidden" id="providerId">
-
-							<table class="table table-striped" id="addGoodsTab">
-								<thead>
-									<tr>
-										<th>商品编码</th>
-										<th>商品名称</th>
-										<th>基本单位</th>
-										<th>保质期</th>
-										<th>进货数量</th>
-										<th>进货价格</th>
-										<th>折扣率</th>
-										<th>正价销售总额(含税)</th>
-										<th>正价销售总额(含税)</th>
-										<th>奖金池使用总额(未税)</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-
-						</div>
-					</div>
-				</div>
-
-
-				<div class="modal-footer">
-					<!-- 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button> -->
-					<button type="button" class="btn btn-primary" id="suerAdd"
-						style="display: none;">确认下单</button>
-					<button type="button" class="btn btn-default" id="getBack">返回</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</form>
-</div>
-<!-- /.modal -->
-
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="<%=path%>/js/vendor/video.js"></script>
 <script src="<%=path%>/js/flat-ui.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#excel").click(function() {
+		window.location.href = "importOrderReportExecl?queProviderId=${queProviderId}&quePayMed=${quePayMed}&queImportStatus=${queImportStatus}&queImportSerialNumber=${queImportSerialNumber}";
+	});
+});
 	function showImportGoods(importSerialNumber){
 		$.ajax({  
             url:'<%=path%>/importController/queryPrizePool.do',  
