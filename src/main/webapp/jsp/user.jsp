@@ -32,7 +32,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">员工联系电话：</label> <input name="contactTel1"
+							<label for="exampleInputEmail2">员工联系电话：</label> <input name="contactTel1" maxlength="11"
 								type="text" class="form-control" id="exampleInputEmail2"
 								placeholder="员工联系电话">
 						</div>
@@ -161,8 +161,8 @@
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">员工联系电话：</span> <input id="contactTel"
-								name="contactTel" type="text" class="form-control" placeholder="员工联系电话">
+								style="background-color: #1abc9c;">员工联系电话：</span> <input id="contactTel" maxlength="11"
+								name="contactTel" type="text" class="form-control" placeholder="员工联系电话" onBlur="checkNum(this)">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
@@ -326,7 +326,7 @@
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">员工联系电话：</span>
-                <input id="contactTel1" type="text" class="form-control" placeholder="员工联系电话" value="">
+                <input id="contactTel1" type="text" class="form-control" placeholder="员工联系电话" value="" onBlur="checkNum(this)">
               </div>           
               <div class="input-group col-xs-6 col-md-offset-3">
                 <span class="input-group-addon" style="background-color: #1abc9c;">员工联系地址:</span>
@@ -528,6 +528,7 @@
 				});
 			
 		}
+		
 		function update(){
 			var	sex = $("#sex1").val();
 			var obj = {
@@ -685,15 +686,18 @@
 				} else {
 					$("#needsigninmodifydiv").hide();
 				}
-				;
 			});
 			
 			$("#submitFom1").click(function(){
-				if($("#needsigninchk").prop("checked")){
-					if($("#employeeCode").val()==''){
-						alert("用户名不能为空");
-						return;
-					}
+// 				alert("用户名不能为空");
+				if($("#employeeName").val()==""){
+					alert("用户名不能为空");
+				}
+				if($("#contactTel").val()==""){
+					alert("联系电话不能为空");
+					return;
+					
+				}else{
 					$.post("${ctx}/user/check.do",{name:$("#employeeCode").val()},function(resp){
 						if(resp==false){
 							alert("登录名已存在");
@@ -701,9 +705,8 @@
 							$("#formA").submit();
 						}
 					});
-				}else{
 					$("#formA").submit();
-				}
+				};
 			});
 
 		});
