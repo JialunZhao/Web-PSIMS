@@ -1,5 +1,6 @@
 package com.ai.psims.web.business.impl;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,11 +20,12 @@ import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.ISalesGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
-import com.ai.psims.web.service.impl.GoodsServiceImpl;
 import com.ai.psims.web.util.Constants;
 import com.ai.psims.web.util.CreateIdUtil;
 
@@ -49,11 +51,26 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	public Storagecheck selectByKey(Integer storageId) {
 		return storagecheckService.selectByKey(storageId);
 	}
+	
+	@Override
+	public TbStoragecheck queryStoragecheck(
+			TbStoragecheckExample storagecheckExample,String goodsName) {
+		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
+		storagechecksList=storagecheckService.selectTbStoragecheck(storagecheckExample);
+		Integer storageRateCurrent=storagecheckService.selectStorageRateCurrentByName(goodsName);
+		if (storagechecksList.size()>0) {
+			storagechecksList.get(0).setStorageRateCurrent(storageRateCurrent);
+			return storagechecksList.get(0);
+		}else {
+			return null;
+		}		
+	}
 
 	@Override
 	public String addSalesList(AddSalesGoodsBean addSalesGoodsBean) {
 		java.util.Date date = new java.util.Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String number = sdf.format(date);
 		String salesSerialNumber = salesService.selectSalesSerialNumber(number);
 		if (salesSerialNumber == null) {
@@ -68,7 +85,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 				",");
 		String[] salesPriceArray = addSalesGoodsBean.getSalesPriceList().split(
 				",");
-		Long goodsAllPay = 0l;
+		BigDecimal totalPriceBD=new BigDecimal(0);
 		for (int i = 0; i < storageIdArray.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
@@ -76,8 +93,9 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIdArray[i]));
 			goods=goodsService.selectGoodsInfo(storagecheck.getGoodsId());
-			goodsAllPay += Long.parseLong(salesCountArray[i])
-					* Long.parseLong(salesPriceArray[i]);
+			BigDecimal salesPriceBD = new BigDecimal(salesPriceArray[i]).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+			BigDecimal goodsAmountBD = new BigDecimal(salesCountArray[i]);
+			totalPriceBD = salesPriceBD.multiply(goodsAmountBD).add(totalPriceBD);
 			salesGoods.setSalesSerialNumber(salesSerialNumber);
 			salesGoods.setGoodsId(storagecheck.getGoodsId());
 			salesGoods.setGoodsName(storagecheck.getGoodsName());
@@ -89,9 +107,8 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					.getGoodsProductionDate());
 			salesGoods.setSalesGoodsExpirationDate(storagecheck
 					.getGoodsExpirationDate());
-			salesGoods.setSalesGoodsTotalPrice((Long
-					.parseLong(salesCountArray[i])
-					* Long.parseLong(salesPriceArray[i]))+"");
+			salesGoods.setSalesGoodsCreatetime(new java.util.Date());
+			salesGoods.setSalesGoodsTotalPrice(salesPriceBD.multiply(goodsAmountBD).toString());
 			salesGoods.setStorageId(storagecheck.getStorageId());
 			
 			salesGoods.setGoodsCurrentStock(goods.getGoodsCurrentStock());
@@ -114,17 +131,43 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods.setOtherSubsidy(goods.getOtherSubsidy());
 			salesGoods.setSingleFinalCost(goods.getSingleFinalCost());
 			
-			if (storagecheck.getStorageRateCurrent() == Integer
-					.parseInt(salesCountArray[i])) {
-				storagecheck.setStorageRateCurrent(0);
-				storagecheck.setEndtime(new Date());
-				storagecheckService.updateStoragecheck(storagecheck);
-			} else {
-				storagecheck.setStorageRateCurrent(storagecheck
-						.getStorageRateCurrent()
-						- Integer.parseInt(salesCountArray[i]));
-				storagecheckService.updateStoragecheck(storagecheck);
+			List<TbStoragecheck> storagechecks=new ArrayList<TbStoragecheck>();
+			storagechecks=storagecheckService.selectTbStoragecheckByName(storagecheck.getGoodsName());
+			int salesCount=Integer.parseInt(salesCountArray[i]);
+			if (storagechecks!=null) {
+				for (int j = 0; j < storagechecks.size(); j++) {
+					TbStoragecheck tbStoragecheck=storagechecks.get(j);
+					if (tbStoragecheck.getStorageRateCurrent()<salesCount) {
+						storagecheck.setStorageRateCurrent(0);
+						storagecheck.setEndtime(new Date());
+						storagecheckService.updateTbStoragecheck(tbStoragecheck);
+						salesCount=salesCount-tbStoragecheck.getStorageRateCurrent();
+					}else if (tbStoragecheck.getStorageRateCurrent()==salesCount) {
+						storagecheck.setStorageRateCurrent(0);
+						storagecheck.setEndtime(new Date());
+						storagecheckService.updateTbStoragecheck(tbStoragecheck);
+						break;
+					}else {
+						storagecheck.setStorageRateCurrent(storagecheck
+								.getStorageRateCurrent()
+								- salesCount);
+						storagecheckService.updateStoragecheck(storagecheck);
+						break;
+					}
+				}
 			}
+//			
+//			if (storagecheck.getStorageRateCurrent() == Integer
+//					.parseInt(salesCountArray[i])) {
+//				storagecheck.setStorageRateCurrent(0);
+//				storagecheck.setEndtime(new Date());
+//				storagecheckService.updateStoragecheck(storagecheck);
+//			} else {
+//				storagecheck.setStorageRateCurrent(storagecheck
+//						.getStorageRateCurrent()
+//						- Integer.parseInt(salesCountArray[i]));
+//				storagecheckService.updateStoragecheck(storagecheck);
+//			}
 			salesGoodsService.insertSelective(salesGoods);
 		}
 		Sales sales = new Sales();
@@ -136,7 +179,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		sales.setStorehouseName(addSalesGoodsBean.getStoreName());
 		sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
 		sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
-		sales.setTotalSalesAmount(goodsAllPay+"");
+		sales.setTotalSalesAmount(totalPriceBD.toString());
 		sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
 		salesService.insertSelective(sales);
 		return "SUCCESS";
@@ -244,5 +287,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		}
 		return "ERROR";
 	}
+
+	
 
 }

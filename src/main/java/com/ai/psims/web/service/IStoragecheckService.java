@@ -19,6 +19,8 @@ public interface IStoragecheckService {
 	public int deleteStoragecheck(Integer storageId);
 
 	public int updateStoragecheck(Storagecheck storagecheck);
+	
+	public int updateTbStoragecheck(TbStoragecheck storagecheck);
 
 	public List<Storagecheck> seekExpiration();
 
@@ -37,5 +39,9 @@ public interface IStoragecheckService {
 	public List<Storagecheck> seekDStore();
 	
 	public List<TbStoragecheck> selectTbStoragecheck(TbStoragecheckExample tbStoragecheckExample);
+	
+	public List<TbStoragecheck> selectTbStoragecheckByName(String goodsName);
+	
+	public int selectStorageRateCurrentByName(String goodsName);
 
 }

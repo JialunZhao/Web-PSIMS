@@ -25,7 +25,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 			.getLogger(StoragecheckServiceImpl.class);
 	@Resource(name = "tbStoragecheckMapper")
 	private TbStoragecheckMapper tbStoragecheckMapper;
-	
+
 	@Resource(name = "storagecheckMapper")
 	private StoragecheckMapper storagecheckMapper;
 
@@ -33,6 +33,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	public int insert(Storagecheck storagecheck) {
 		return storagecheckMapper.insertSelective(storagecheck);
 	}
+
 	public int insert(TbStoragecheck storagecheck) {
 		return tbStoragecheckMapper.insertSelective(storagecheck);
 	}
@@ -61,17 +62,19 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	public List<Storagecheck> seekExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
 		Date date = null;
-		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
+		List<Storagecheck> storagechecks = storagecheckMapper
+				.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
-		if(storagechecks.size()>0 && storagechecks!=null){
-			for(Storagecheck storagecheck : storagechecks){
+		if (storagechecks.size() > 0 && storagechecks != null) {
+			for (Storagecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
-				if(shelfLifeWarning!=null){
+				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
-					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning);
+					calendari.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning);
 					date = calendari.getTime();
-					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
-					if(goodsExpirationDate.compareTo(date)<=0){
+					Date goodsExpirationDate = storagecheck
+							.getGoodsExpirationDate();
+					if (goodsExpirationDate.compareTo(date) <= 0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -85,26 +88,30 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 		StoragecheckExample example = new StoragecheckExample();
 		Date date = null;
 		Date date1 = null;
-		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
+		List<Storagecheck> storagechecks = storagecheckMapper
+				.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
-		if(storagechecks.size()>0 && storagechecks!=null){
-			for(Storagecheck storagecheck : storagechecks){
+		if (storagechecks.size() > 0 && storagechecks != null) {
+			for (Storagecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
-				if(shelfLifeWarning!=null){
+				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
 					Calendar calendarj = Calendar.getInstance();
-					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+10);
+					calendari
+							.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning + 10);
 					date = calendari.getTime();
-					calendarj.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning);
+					calendarj.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning);
 					date1 = calendarj.getTime();
-					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
-					if(goodsExpirationDate.compareTo(date)<0 && goodsExpirationDate.compareTo(date1)>0){
+					Date goodsExpirationDate = storagecheck
+							.getGoodsExpirationDate();
+					if (goodsExpirationDate.compareTo(date) < 0
+							&& goodsExpirationDate.compareTo(date1) > 0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
 			}
 		}
-		
+
 		return newstoragecheck;
 	}
 
@@ -113,20 +120,25 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 		StoragecheckExample example = new StoragecheckExample();
 		Date date = null;
 		Date date1 = null;
-		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
+		List<Storagecheck> storagechecks = storagecheckMapper
+				.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
-		if(storagechecks.size()>0 && storagechecks!=null){
-			for(Storagecheck storagecheck : storagechecks){
+		if (storagechecks.size() > 0 && storagechecks != null) {
+			for (Storagecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
-				if(shelfLifeWarning!=null){
+				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
 					Calendar calendarj = Calendar.getInstance();
-					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
+					calendari
+							.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning + 90);
 					date = calendari.getTime();
-					calendarj.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+10);
+					calendarj
+							.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning + 10);
 					date1 = calendarj.getTime();
-					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
-					if(goodsExpirationDate.compareTo(date)<=0 && goodsExpirationDate.compareTo(date1)>=0){
+					Date goodsExpirationDate = storagecheck
+							.getGoodsExpirationDate();
+					if (goodsExpirationDate.compareTo(date) <= 0
+							&& goodsExpirationDate.compareTo(date1) >= 0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -139,17 +151,20 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	public List<Storagecheck> seekDExpiration() {
 		StoragecheckExample example = new StoragecheckExample();
 		Date date = null;
-		List<Storagecheck> storagechecks = storagecheckMapper.selectByExample(example);
+		List<Storagecheck> storagechecks = storagecheckMapper
+				.selectByExample(example);
 		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
-		if(storagechecks.size()>0 && storagechecks!=null){
-			for(Storagecheck storagecheck : storagechecks){
+		if (storagechecks.size() > 0 && storagechecks != null) {
+			for (Storagecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
-				if(shelfLifeWarning!=null){
+				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
-					calendari.add( Calendar.DAY_OF_MONTH, + shelfLifeWarning+90);
+					calendari
+							.add(Calendar.DAY_OF_MONTH, +shelfLifeWarning + 90);
 					date = calendari.getTime();
-					Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
-					if(goodsExpirationDate.compareTo(date)>0){
+					Date goodsExpirationDate = storagecheck
+							.getGoodsExpirationDate();
+					if (goodsExpirationDate.compareTo(date) > 0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -178,11 +193,30 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 		return storagecheckMapper.seekDStore();
 	}
 
-	@Override
+	
 	public List<TbStoragecheck> selectTbStoragecheck(
 			TbStoragecheckExample tbStoragecheckExample) {
 		logger.info("selectTbStoragecheck");
 		return tbStoragecheckMapper.selectByExample(tbStoragecheckExample);
+	}
+	
+
+	@Override
+	public List<TbStoragecheck> selectTbStoragecheckByName(String goodsName){
+		logger.info("selectTbStoragecheckByName");
+		return tbStoragecheckMapper.selectTbStoragecheckByName(goodsName);
+	};
+
+	@Override
+	public int selectStorageRateCurrentByName(String goodsName) {
+		logger.info("selectStorageRateCurrentByName");
+		return tbStoragecheckMapper.selectStorageRateCurrentByName(goodsName);
+	}
+
+	@Override
+	public int updateTbStoragecheck(TbStoragecheck storagecheck) {
+		logger.info("selectStorageRateCurrentByName");
+		return tbStoragecheckMapper.updateByPrimaryKeySelective(storagecheck);
 	}
 
 }

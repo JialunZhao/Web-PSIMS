@@ -88,7 +88,7 @@ String date=sdf.format(new Date());
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">入库流水号:</span> <input
 								type="text" class="form-control" value=""
-								name="importSerialNumber" id="importSerialNumber"> <span
+								name="importSerialNumber" id="importSerialNumber" readonly="readonly"> <span
 								class="input-group-addon" style="background-color: #1abc9c;">存储仓库:</span>
 							<select class="form-control" value="请选择仓库" tabindex="1"
 								name="storeName" id="storeName">
@@ -175,6 +175,15 @@ String date=sdf.format(new Date());
     		$("#goodsName").append( "<option value=''>请选择商品</option>" );
     		$("#importSerialNumber").val(importSerialNumber);
 			$("#importgoods").modal("show");
+			var _len = $("#addGoodsTab tbody tr").length;
+			var goodsNameList="";
+	      	if(_len>0){      		
+	      		$('#addGoodsTab tbody tr').find('td').each(function() {
+	      		  if ($(this).index() == "0") {
+	      			goodsNameList=goodsNameList+$(this).text()+",";
+	  		      }
+	            });
+	      	}
 			$.ajax(  
                     {  
                         url:'<%=path%>/importController/goodsImport.do',  
@@ -185,8 +194,18 @@ String date=sdf.format(new Date());
                                 {   
                         		var json = $.parseJSON(data);
 								var goodsName=$.parseJSON(json.RES_DATA.goodsName);
+								var goodsNames=goodsNameList.split(",");
 								for (var i = 0; i < goodsName.length; i++) {
-									$("#goodsName").append( "<option value='"+goodsName[i]+"'>"+goodsName[i]+"</option>" );
+									var f=true;
+									for (var j = 0; j < goodsNames.length; j++) {
+										if(goodsName[i]==goodsNames[j]){
+											f=false;
+											break;
+										}
+									}
+									if(f){
+										$("#goodsName").append( "<option value='"+goodsName[i]+"'>"+goodsName[i]+"</option>" );
+									}
 								}								
 							}
                                 
@@ -267,6 +286,8 @@ String date=sdf.format(new Date());
 					+"</tr>");
         len++;
         $("#addgoodstb").show();
+        var importSerialNumber=$("#importSerialNumber").val();
+        goodsImport(importSerialNumber)
 		}
 		
 		function deteleGoods(len){

@@ -417,7 +417,11 @@ public class ImportController extends BaseController {
 		criteria.andImportSerialNumberEqualTo(importSerialNumber);
 		criteria.andGoodsNameEqualTo(goodName);
 		importGoodsList = imporBusinessImpl.queryImportGoods(example);
-		request.setAttribute("importGoods", importGoodsList.get(0));
+		TbImportGoods importGoods=new TbImportGoods();
+		if (importGoodsList!=null) {
+			importGoods=importGoodsList.get(0);
+		}		
+		request.setAttribute("importGoods", importGoods);
 		return "goodsimport";
 	}
 

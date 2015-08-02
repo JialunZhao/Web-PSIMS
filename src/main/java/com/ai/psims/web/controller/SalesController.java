@@ -45,6 +45,8 @@ import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbEmployeeExample;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
@@ -195,18 +197,17 @@ public class SalesController extends BaseController {
 	public String queryGoodsDemo(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String goodsName = request.getParameter("goodName");
-		List<Storagecheck> storagechecksList = new ArrayList<Storagecheck>();
-		StoragecheckExample storagecheckExample = new StoragecheckExample();
-		Criteria criteria = storagecheckExample.createCriteria();
-		criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
+		TbStoragecheck storagechecks = new TbStoragecheck();
+		TbStoragecheckExample storagecheckExample = new TbStoragecheckExample();
+		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = storagecheckExample.createCriteria();
+//		criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
 		if (goodsName != null && goodsName != "") {
 			goodsName = URLDecoder.decode(goodsName);
 			criteria.andGoodsNameEqualTo(goodsName);
 		}
 		criteria.andEndtimeIsNull();
-		storagechecksList = salesBusiness
-				.queryStrStoragechecks(storagecheckExample);
-		request.setAttribute("storagechecksList", storagechecksList);
+		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample, goodsName);
+		request.setAttribute("storagechecks", storagechecks);
 		return "salesgoodstab";
 	}
 
@@ -548,7 +549,7 @@ public class SalesController extends BaseController {
 		String creditCount = request.getParameter("creditCount");
 		String payTime = request.getParameter("payTime");
 		
-		SimpleDateFormat sdf=new SimpleDateFormat("hh:mm");
+		SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
 		
 		String storeManager = request.getParameter("storemanager") == "" ? null
 				: request.getParameter("storemanager");

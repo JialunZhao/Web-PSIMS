@@ -10,10 +10,15 @@ import com.ai.psims.web.model.SalesGoodsExample;
 import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 
 public interface ISalesBusiness {
 	public List<Storagecheck> queryStrStoragechecks(
 			StoragecheckExample storagecheckExample);
+
+	public TbStoragecheck queryStoragecheck(
+			TbStoragecheckExample storagecheckExample,String goodsName);
 
 	public Storagecheck selectByKey(Integer storageId);
 
@@ -25,7 +30,7 @@ public interface ISalesBusiness {
 
 	public List<SalesGoods> selectSalesGoods(SalesGoodsExample example);
 
-	public String updateSalesData(SalesUpdateData salesUpdateData,Sales sales);
+	public String updateSalesData(SalesUpdateData salesUpdateData, Sales sales);
 
 	public String deleteSalesData(String salesSerialNumber);
 }

@@ -1,6 +1,7 @@
 package com.ai.psims.web.controller;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.business.ISalesBusiness;
+import com.ai.psims.web.model.Sales;
 import com.ai.psims.web.model.SalesGoods;
 import com.ai.psims.web.model.SalesGoodsExample;
 
@@ -92,30 +94,40 @@ public class salesPrintController extends BaseController {
 				logger.info("------------建立 Excel -Sheet-------------");
 				HSSFSheet sheet = workbook.createSheet("库存清单");
 				logger.info("------------设置行列的默认宽度和高度-------------");
-				sheet.setColumnWidth(0, 32 * 180);// 对A列设置宽度为180像素
-				sheet.setColumnWidth(1, 32 * 80);
-				sheet.setColumnWidth(2, 32 * 180);
+				sheet.setColumnWidth(0, 32 * 180);
+				sheet.setColumnWidth(1, 32 * 180);
+				sheet.setColumnWidth(2, 32 * 180);// 对A列设置宽度为180像素
 				sheet.setColumnWidth(3, 32 * 80);
 				sheet.setColumnWidth(4, 32 * 180);
 				sheet.setColumnWidth(5, 32 * 80);
 				sheet.setColumnWidth(6, 32 * 180);
 				sheet.setColumnWidth(7, 32 * 80);
-				sheet.setColumnWidth(8, 32 * 180);
-				sheet.setColumnWidth(9, 32 * 80);
-				sheet.setColumnWidth(10, 32 * 180);
-				sheet.setColumnWidth(11, 32 * 80);
-				sheet.setColumnWidth(12, 32 * 180);
-				sheet.setColumnWidth(13, 32 * 80);
-				sheet.setColumnWidth(14, 32 * 180);
-				sheet.setColumnWidth(15, 32 * 80);
-				sheet.setColumnWidth(16, 32 * 180);
-				sheet.setColumnWidth(17, 32 * 80);
-				sheet.setColumnWidth(18, 32 * 180);
+				sheet.setColumnWidth(8, 32 * 80);
+				sheet.setColumnWidth(9, 32 * 180);
+				sheet.setColumnWidth(10, 32 * 80);
+				sheet.setColumnWidth(11, 32 * 180);
+				sheet.setColumnWidth(12, 32 * 80);
+				sheet.setColumnWidth(13, 32 * 180);
+				sheet.setColumnWidth(14, 32 * 80);
+				sheet.setColumnWidth(15, 32 * 180);
+				sheet.setColumnWidth(16, 32 * 80);
+				sheet.setColumnWidth(17, 32 * 180);
+				sheet.setColumnWidth(18, 32 * 80);
+				sheet.setColumnWidth(19, 32 * 180);
+				sheet.setColumnWidth(20, 32 * 180);
+				sheet.setColumnWidth(21, 32 * 180);
+				sheet.setColumnWidth(22, 32 * 180);
+				sheet.setColumnWidth(23, 32 * 180);
+				sheet.setColumnWidth(24, 32 * 180);
+				sheet.setColumnWidth(25, 32 * 180);
+				sheet.setColumnWidth(26, 32 * 180);
 
 				int rowNum = 0;
 				int idx = 0;
 				logger.info("------------建立标题-------------");
 				HSSFRow header = sheet.createRow(rowNum++);
+				header.createCell(idx++).setCellValue("客户名称");
+				header.createCell(idx++).setCellValue("下单时间");
 				header.createCell(idx++).setCellValue("商品名称");
 				header.createCell(idx++).setCellValue("数量");
 				header.createCell(idx++).setCellValue("单价");
@@ -135,11 +147,23 @@ public class salesPrintController extends BaseController {
 				header.createCell(idx++).setCellValue("单箱成本");
 				header.createCell(idx++).setCellValue("单箱毛利");
 				header.createCell(idx++).setCellValue("合计毛利");
+				header.createCell(idx++).setCellValue("送货人");
+				header.createCell(idx++).setCellValue("车牌号");
+				header.createCell(idx++).setCellValue("发车时间");
+				header.createCell(idx++).setCellValue("还车时间");
+				header.createCell(idx++).setCellValue("起始油表数");
+				header.createCell(idx++).setCellValue("返回油表数");
 				logger.info("------------输出内容-------------");
 				HSSFRow row;
 				// SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-				String singleRebate, goodsDiscount, goodsActualCost, providerSubsidy, providerPackageSubsidy, purchaseRebate, promotionRebate, annualRebate, salesGoodsPrice;
+				String singleRebate, goodsDiscount, goodsActualCost, providerSubsidy, providerPackageSubsidy, purchaseRebate, promotionRebate, annualRebate, salesGoodsPrice, departureTime, stillTime, salesGoodsCreatetime;
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				for (SalesGoods salesGoods : salesGoodsList) {
+					Sales sales = new Sales();
+					sales = salesBusiness.selectSalesByKey(salesGoods
+							.getSalesSerialNumber());
+
 					idx = 0;
 
 					singleRebate = (salesGoods.getSingleRebate() == "" || salesGoods
@@ -170,8 +194,17 @@ public class salesPrintController extends BaseController {
 					annualRebate = (salesGoods.getAnnualRebate() == "" || salesGoods
 							.getAnnualRebate() == null) ? "0.00" : salesGoods
 							.getAnnualRebate();
+					departureTime = (sales.getDepartureTime() == null) ? ""
+							: sdf.format(sales.getDepartureTime());
+					stillTime = (sales.getStillTime() == null) ? "" : sdf
+							.format(sales.getStillTime());
+					salesGoodsCreatetime = (salesGoods
+							.getSalesGoodsCreatetime() == null) ? "" : sdf1
+							.format(salesGoods.getSalesGoodsCreatetime());
 
 					row = sheet.createRow(rowNum++);
+					row.createCell(idx++).setCellValue(sales.getCustomerName());
+					row.createCell(idx++).setCellValue(salesGoodsCreatetime);
 					row.createCell(idx++).setCellValue(
 							salesGoods.getGoodsName());
 					row.createCell(idx++).setCellValue(
@@ -235,6 +268,14 @@ public class salesPrintController extends BaseController {
 									.multiply(new BigDecimal(salesGoods
 											.getSalesGoodsAmount())))
 									.toString());
+					row.createCell(idx++).setCellValue(sales.getReceiver());
+					row.createCell(idx++).setCellValue(sales.getCarNumber());
+					row.createCell(idx++).setCellValue(departureTime);
+					row.createCell(idx++).setCellValue(stillTime);
+					row.createCell(idx++).setCellValue(
+							sales.getStartOilNumber());
+					row.createCell(idx++).setCellValue(
+							sales.getReturnOilNumber());
 				}
 			}
 		};

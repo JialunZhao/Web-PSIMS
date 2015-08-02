@@ -2,7 +2,9 @@ package com.ai.psims.web.dao;
 
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TbStoragecheckMapper {
@@ -13,6 +15,10 @@ public interface TbStoragecheckMapper {
     int deleteByPrimaryKey(Integer storageId);
 
     int insert(TbStoragecheck record);
+    
+    int selectStorageRateCurrentByName(String goodsName);
+    
+    List<TbStoragecheck> selectTbStoragecheckByName(String goodsName);
 
     int insertSelective(TbStoragecheck record);
 

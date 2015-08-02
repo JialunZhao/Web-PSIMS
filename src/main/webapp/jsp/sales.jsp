@@ -357,7 +357,16 @@ String date=sdf.format(new Date());
     function selectGoods(){
 		var selOpt = $("#goodsName option");  
 		selOpt.remove();
-		$("#goodsName").append( "<option value=''>请选择商品</option>" );		
+		$("#goodsName").append( "<option value=''>请选择商品</option>" );	
+		var len=$("#addGoodsTab tbody tr").length;
+		var goodsNameList="";
+      	if(len>0){      		
+      		$('#addGoodsTab tbody tr').find('td').each(function() {
+      		  if ($(this).index() == "1") {
+      			goodsNameList=goodsNameList+$(this).text()+",";
+  		      }
+            });
+      	}
 		$.ajax({  
                     url:'<%=path%>/salesController/queryGoods.do',  
                     type:"post",  
@@ -368,8 +377,19 @@ String date=sdf.format(new Date());
                     success:function(data){  
                     			var json = $.parseJSON(data);
 								var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
+						      	var goodsNames=goodsNameList.split(",");
 									for (var i = 0; i < goodsName.length; i++) {
-    									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
+										 var f=true;
+										for (var j = 0; j < goodsNames.length; j++) {
+											if(goodsName[i]==goodsNames[j]){
+												f=false;
+												break;
+											}
+										}
+										if(f){
+											$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
+										}
+    									
     								}
 									$("#addgoods").show();
 							        /* $("#addgoodsbtn").hide();
@@ -406,6 +426,7 @@ String date=sdf.format(new Date());
 	}
     
     function addSalesGoods(storageId,salesCount,salesPrice) {
+    	alert(salesCount);
     	$.ajax({  
             url:'<%=path%>/salesController/getGoodTab.do',  
             type:"post",  
@@ -589,6 +610,7 @@ String date=sdf.format(new Date());
       	var storeName=$("#addStorehouseName").val();
       	var employeeName=$("#addEmployeeName").val();
       	var payStatus=$("#payStatus").val();
+      	     	
       	if (checkIsNull(customerName)) {
   			alert("请选择客户");
   			return;
