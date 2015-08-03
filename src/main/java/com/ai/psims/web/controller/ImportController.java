@@ -252,7 +252,7 @@ public class ImportController extends BaseController {
 			responseFailed(response, "ERROR", data);
 		} else {
 			logger.info("------------4.3.获取商品基本单位-------------");
-			tbSystemParameterCriteria.andPStatusEqualTo("01");
+//			tbSystemParameterCriteria.andPStatusEqualTo("01");
 			tbSystemParameterCriteria.andPValueEqualTo("GoodsUnit");
 			tbSystemParameterCriteria.andParamIdEqualTo(Integer.parseInt(goods.getGoodsUnit()));
 			tbSystemParameters = systemParameterBussinessImpl.selectByExample(tbSystemParameterExample);
