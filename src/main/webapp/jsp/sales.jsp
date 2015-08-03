@@ -426,7 +426,6 @@ String date=sdf.format(new Date());
 	}
     
     function addSalesGoods(storageId,salesCount,salesPrice) {
-    	alert(salesCount);
     	$.ajax({  
             url:'<%=path%>/salesController/getGoodTab.do',  
             type:"post",  
