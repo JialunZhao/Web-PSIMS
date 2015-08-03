@@ -319,6 +319,9 @@ public class SalesController extends BaseController {
 				TbEmployee employee = new TbEmployee();
 				employee = employeeBusiness.getEmployeeById(sales
 						.getEmployeeId());
+				logger.info("------------获取当前登录的员工名称-------------");
+				TbEmployee tbEmployee = (TbEmployee)request.getSession().getAttribute("mysession");
+
 
 				logger.info("------------建立 Excel -Sheet-------------");
 				HSSFSheet sheet = workbook.createSheet("销售清单");
@@ -495,7 +498,7 @@ public class SalesController extends BaseController {
 				row.createCell(idx++).setCellValue("送货人");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("核单人");
-				row.createCell(idx++).setCellValue("管理员");
+				row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName());
 				row.createCell(idx++).setCellValue("发车时间");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("还车时间");
