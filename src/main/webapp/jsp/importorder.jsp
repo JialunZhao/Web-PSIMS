@@ -377,15 +377,14 @@
 		var totalPrice = goodsPrice*goodsCount;
 		var discountDutyTotalPrice = goodsPrice*goodsCount-(prizePool*1.17);
 		var discountDutyTotalPrice2 = goodsPrice*goodsCount*(100-discountRate)/100;
-		
 		if (prizePool<=prizePoolUsed) {
-			$("#prizePoolUsed").val(prizePool);
-			$("#totalPrice").val(totalPrice);
-			$("#discountDutyTotalPrice").val(discountDutyTotalPrice);
+			$("#prizePoolUsed").val(prizePool.toFixed(2));
+			$("#totalPrice").val(totalPrice.toFixed(2));
+			$("#discountDutyTotalPrice").val(discountDutyTotalPrice.toFixed(2));
 		}else{
-			$("#prizePoolUsed").val(prizePoolUsed);
-			$("#totalPrice").val(totalPrice);
-			$("#discountDutyTotalPrice").val(discountDutyTotalPrice2);
+			$("#prizePoolUsed").val(prizePoolUsed.toFixed(2));
+			$("#totalPrice").val(totalPrice.toFixed(2));
+			$("#discountDutyTotalPrice").val(discountDutyTotalPrice2.toFixed(2));
 		}
 	}
 	

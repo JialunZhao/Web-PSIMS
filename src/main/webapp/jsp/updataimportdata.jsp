@@ -166,7 +166,8 @@
 			});
 			$("input[name=goodsAmount]").each(function(){
 				goodsAmountList=goodsAmountList+$(this).val()+",";
-			})
+			});
+			alert(goodsAmountList);
 			 var url="<%=_base%>/importController/updataImprotGoodsList.do?providerId="
 					+ providerId
 					+ "&providerName="
@@ -182,6 +183,8 @@
 					+ "&importGoodsIdList="
 					+ importGoodsIdList
 					+ "&importSerialNumber=" + importSerialNumber;
+				alert(url);
+
 			api.reload(this, url);
 			W.location.reload();
 			api.close();
@@ -218,7 +221,6 @@
 				  alert("日期格式不正确!正确格式为:yyyy-mm-dd");
 			  };
 		  }
-		 
 	</script>
 
 </body>
