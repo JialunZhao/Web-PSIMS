@@ -705,7 +705,6 @@
 							$("#formA").submit();
 						}
 					});
-					$("#formA").submit();
 				};
 			});
 

@@ -20,8 +20,25 @@ public class Storagecheck {
     private Integer storageRateTotal;
 
     private Date goodsProductionDate;
+    private String strgoodsProductionDate;
 
-    private Date goodsExpirationDate;
+    public String getStrgoodsProductionDate() {
+		return strgoodsProductionDate;
+	}
+
+	public void setStrgoodsProductionDate(String strgoodsProductionDate) {
+		this.strgoodsProductionDate = strgoodsProductionDate;
+	}
+
+	public String getStrcreatetime() {
+		return strcreatetime;
+	}
+
+	public void setStrcreatetime(String strcreatetime) {
+		this.strcreatetime = strcreatetime;
+	}
+
+	private Date goodsExpirationDate;
 
     private Integer goodsShelfLife;
 
@@ -32,6 +49,7 @@ public class Storagecheck {
     private String storageType;
 
     private Date createtime;
+    private String strcreatetime;
 
     private Date modifytime;
 

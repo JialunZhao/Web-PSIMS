@@ -81,6 +81,12 @@ public class SystemParameterController {
     			Date logDatetime = log.getLogDatetime();
     			String format = df.format(logDatetime);
     			log.setPpKey(format);
+    			BigDecimal PpValueBD = new BigDecimal(log.getPpValue());
+    			BigDecimal pRemarkBD = new BigDecimal(log.getpRemark());
+    			PpValueBD = PpValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+    			pRemarkBD = pRemarkBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+    			log.setPpValue(PpValueBD.toString());
+    			log.setpRemark(pRemarkBD.toString());
     			list.add(log);
     		}
     	}
@@ -105,14 +111,19 @@ public class SystemParameterController {
     	TbSystemParameter sysParamete = systemParameterBussinessImpl.getSysById(paramId);
     	String pKey = request.getParameter("pKey");
     	String ppValue = request.getParameter("ppValue");
-    	BigDecimal ppValueBD = new BigDecimal(ppValue);
-    	ppValueBD = ppValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+    	BigDecimal ppValueBD = null;
+    	if(ppValue!=null && ppValue.length()>0){
+    		ppValueBD = new BigDecimal(ppValue);
+    		ppValueBD = ppValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+    	}
     	TbSystemParameter systemParameter = new TbSystemParameter();
     	systemParameter.setPpDesc(ppDesc);
     	systemParameter.setpDesc(pDesc);
     	systemParameter.setParamId(paramId);
     	systemParameter.setpKey(pKey);
-    	systemParameter.setPpValue(ppValueBD.toString());
+    	if(ppValueBD!=null){
+    		systemParameter.setPpValue(ppValueBD.toString());
+    	}
     	systemParameterBussinessImpl.update(systemParameter);
     	if(systemParameter.getPpValue()!=null){
     		sysParamete.setpRemark(ppValue);
@@ -147,9 +158,11 @@ public class SystemParameterController {
    		    			Date logDatetime = log.getLogDatetime();
    		    			String format = df.format(logDatetime);
    		    			log.setPpKey(format);
+   		    			
    		    			tbSystemParameterLogs.add(log);
    		    		}
    		    	}
+   		    	
    				
    				logger.info("------------建立 Excel -Sheet-------------");
    				HSSFSheet sheet = workbook.createSheet("库存清单");
@@ -177,16 +190,22 @@ public class SystemParameterController {
    				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
 
    				for (TbSystemParameterLog systemParameterLog : tbSystemParameterLogs) {
+   					BigDecimal PpValueBD = new BigDecimal(systemParameterLog.getPpValue());
+	    			BigDecimal pRemarkBD = new BigDecimal(systemParameterLog.getpRemark());
+	    			PpValueBD = PpValueBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+	    			pRemarkBD = pRemarkBD.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+	    			systemParameterLog.setPpValue(PpValueBD.toString());
+	    			systemParameterLog.setpRemark(pRemarkBD.toString());
    					idx = 0;
    					row = sheet.createRow(rowNum++);
    					row.createCell(idx++).setCellValue(systemParameterLog.getLogId().equals(null)||systemParameterLog.getLogId().equals("") ? "无" : systemParameterLog.getLogId().toString());
    					row.createCell(idx++).setCellValue(systemParameterLog.getPpDesc().equals(null)||systemParameterLog.getPpDesc().equals("") ? "无" : systemParameterLog.getPpDesc().toString());
    					row.createCell(idx++).setCellValue(systemParameterLog.getPpKey().equals(null)||systemParameterLog.getPpKey().equals("") ? "无" : systemParameterLog.getPpKey().toString());
    					row.createCell(idx++).setCellValue(systemParameterLog.getPpValue().equals(null)||systemParameterLog.getPpValue().equals("") ? "无" : systemParameterLog.getPpValue().toString());
-   					float pRemark = Float.parseFloat(systemParameterLog.getpRemark());
-   					float PpValue = Float.parseFloat(systemParameterLog.getPpValue());
-   					row.createCell(idx++).setCellValue(pRemark-PpValue);
-   					row.createCell(idx++).setCellValue(PpValue-pRemark);
+//   					float pRemark = systemParameterLog.getpRemark();
+//   					float PpValue = systemParameterLog.getPpValue();
+   					row.createCell(idx++).setCellValue((pRemarkBD.subtract(PpValueBD)).toString());
+   					row.createCell(idx++).setCellValue((PpValueBD.subtract(pRemarkBD)).toString());
    					row.createCell(idx++).setCellValue(systemParameterLog.getpRemark().equals(null)||systemParameterLog.getpRemark().equals("") ? "无" : systemParameterLog.getpRemark().toString());
    				}
    			}

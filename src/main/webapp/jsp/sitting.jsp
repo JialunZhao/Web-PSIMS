@@ -37,7 +37,7 @@
 								<td><c:out value="${seq}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
+									onclick="chenge(${s.paramId},'GoodsUnit')">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
@@ -69,7 +69,7 @@
 								<td><c:out value="${seq1}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a></td>
+									onclick="chenge(${s.paramId},'GoodsType')">修改</a></td>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -100,7 +100,7 @@
 								<td><c:out value="${sqe2}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
+									onclick="chenge(${s.paramId},'PaymentType')">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
@@ -132,7 +132,7 @@
 								<td><c:out value="${sqe3}" /></td>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
+									onclick="chenge(${s.paramId},'IncomeType')">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
@@ -173,7 +173,7 @@
 								<td><a href="#" data-toggle="modal"
 									onclick="detail(${s.paramId},'p_ee')" data-target="#goods-10">详情</a>/
 									<a href="#" data-toggle="modal"
-									onclick="delcommit(${s.paramId},'p_ee')">打印</a></td>
+									onclick="delcommit(${s.paramId},'p_ee')">导出</a></td>
 								<td><a href="#" data-toggle="modal"
 									onclick="chenge(${s.paramId},'p_ee')">修改</a>/ <a href="#"
 									data-toggle="modal" onclick="deleted(${s.paramId})">删除</a></td>
@@ -243,7 +243,7 @@
 								<%-- 								<td><c:out value="${s.ppDesc}" /></td> --%>
 								<td><c:out value="${s.ppDesc}" /></td>
 								<td><a href="#" data-toggle="modal"
-									onclick="chenge(${s.paramId})">修改</a>/ <a
+									onclick="chenge(${s.paramId},'CheckoutType')">修改</a>/ <a
 									href="${s.paramId}/delete.do">删除</a></td>
 							</tr>
 						</c:if>
@@ -264,14 +264,14 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">新增系统参数</h4>
+				<h4 class="modal-title" id="addmyModalLabel">新增系统参数</h4>
 			</div>
 			<form id="formA" action="${ctx}/sys/add.do" method="post">
 				<div class="modal-body">
 					<div class="row">
 						<div class="input-group col-xs-6 col-md-offset-3">
-							<input type="hidden" name="pValue" id="pValue"> <input
-								type="hidden" name="pDesc" id="pDesc"> <span
+							<input type="hidden" name="pValue" id="addpValue"> <input
+								type="hidden" name="pDesc" id="addpDesc"> <span id="pram"
 								class="input-group-addon" style="background-color: #1abc9c;">参数名称:</span>
 							<input id="ppDesc" name="ppDesc" type="text" class="form-control"
 								placeholder="参数名称" value="">
@@ -340,16 +340,16 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">修改系统参数</h4>
+				<h4 class="modal-title" id="modmyModalLabel">修改系统参数</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row">
 					<div class="input-group col-xs-6 col-md-offset-3">
-						<span class="input-group-addon" style="background-color: #1abc9c;">参数名称:</span>
+						<span id ="modpram" class="input-group-addon" style="background-color: #1abc9c;">参数名称:</span>
 						<input id="ppDesc1" name="ppDesc1" type="text"
 							class="form-control" placeholder="参数名称"> <input
 							id="paramId1" name="paramId1" type="hidden" class="form-control"
-							placeholder="参数名称"> <input id="pValue1" name="pValue1"
+							placeholder="参数名称"> <input id="pValue12" name="pValue1"
 							type="hidden" class="form-control" placeholder="参数名称"> <input
 							id="pDesc1" name="pDesc1" type="hidden" class="form-control"
 							placeholder="参数名称">
@@ -518,9 +518,9 @@
 					mun = Math.round(mun*vv)/vv;
 					var td = $("<td>"+ j +"</td>"+ "<td>"+ messageRespon[i].ppDesc +
 							"</td>"+"<td>"+ messageRespon[i].ppKey +"</td>"+ 
-							"<td>"+ Math.round(messageRespon[i].ppValue) +"</td>"+ "<td>"+ mun +
-							"</td>" + "<td>"+ num +
-							"</td>" + "<td>"+ Math.round(messageRespon[i].pRemark) +
+							"<td>"+ messageRespon[i].ppValue +"</td>"+ "<td>"+ mun  +
+							"</td>" + "<td>"+ num+
+							"</td>" + "<td>"+ messageRespon[i].pRemark +
 							"</td>")
 					tr.append(td);
 					$("#tableGood").append(tr);
@@ -536,6 +536,31 @@
 // 		alert(id);
 		var pValue = pValue;
 // 		alert(pValue);
+		if(pValue=="GoodsUnit"){
+			$("#modmyModalLabel").html("修改基本单位");
+			modparm(id);
+			$("#modpram").html("基本单位名称");
+		}
+		if(pValue=="GoodsType"){
+			$("#modmyModalLabel").html("修改商品类型");
+			modparm(id);
+			$("#modpram").html("商品类型名称");
+		}
+		if(pValue=="PaymentType"){
+			$("#modmyModalLabel").html("修改支付方式");
+			modparm(id);
+			$("#modpram").html("支付方式名称");
+		}
+		if(pValue=="IncomeType"){
+			$("#modmyModalLabel").html("修改收款方式");
+			modparm(id);
+			$("#modpram").html("收款方式名称");
+		}
+		if(pValue=="CheckoutType"){
+			$("#modmyModalLabel").html("修改结账方式");
+			modparm(id);
+			$("#modpram").html("结账方式名称");
+		}
 		if(pValue=="p_ee"){
 			$("#modifyrecoveryimport1").modal(id);
 			$.ajax({
@@ -552,9 +577,11 @@
 						$("#ppValueint3").val(messageInfor.ppValue);
 					}
 			})
-		}else{
-			
-		
+		}
+	}
+	function modparm(paramId){
+		var id = paramId;
+// 		alert(id);
 		$("#modifyrecoveryimport").modal(id);
 		$.ajax({
 			url : '${ctx}/sys/'+id+'/toUpdate.do',
@@ -570,7 +597,6 @@
 				},
 				
 		})
-		}
 	}
 	
 	
@@ -588,33 +614,38 @@
 		}
 		if(pValue=="GoodsUnit"){
 			$("#addrecoveryimport").modal();
-			$("#myModalLabel").html("新增基本单位");
-			$("#pValue").attr("value",pValue);
-			$("#pDesc").attr("value","基本单位");
+			$("#addmyModalLabel").html("新增基本单位");
+			$("#addpValue").attr("value",pValue);
+			$("#addpDesc").attr("value","基本单位");
+			$("#pram").html("基本单位名称");
 		}
 		if(pValue=="GoodsType"){
 			$("#addrecoveryimport").modal();
-			$("#myModalLabel").html("新增商品类型");
-			$("#pValue").attr("value",pValue);
-			$("#pDesc").attr("value","商品类型");
+			$("#addmyModalLabel").html("新增商品类型");
+			$("#addpValue").attr("value",pValue);
+			$("#addpDesc").attr("value","商品类型");
+			$("#pram").html("商品类型名称");
 		}
 		if(pValue=="PaymentType"){
 			$("#addrecoveryimport").modal();
-			$("#myModalLabel").html("新增支付方式");
-			$("#pValue").attr("value",pValue);
-			$("#pDesc").attr("value","支付方式");
+			$("#addmyModalLabel").html("新增支付方式");
+			$("#addpValue").attr("value",pValue);
+			$("#addpDesc").attr("value","支付方式");
+			$("#pram").html("支付方式名称");
 		}
 		if(pValue=="IncomeType"){
 			$("#addrecoveryimport").modal();
-			$("#myModalLabel").html("新增收款方式");
-			$("#pValue").attr("value",pValue);
-			$("#pDesc").attr("value","收款方式");
+			$("#addmyModalLabel").html("新增收款方式");
+			$("#addpValue").attr("value",pValue);
+			$("#addpDesc").attr("value","收款方式");
+			$("#pram").html("收款方式名称");
 		}
 		if(pValue=="CheckoutType"){
 			$("#addrecoveryimport").modal();
-			$("#myModalLabel").html("新增结账方式");
-			$("#pValue").attr("value",pValue);
-			$("#pDesc").attr("value","结账方式");
+			$("#addmyModalLabel").html("新增结账方式");
+			$("#addpValue").attr("value",pValue);
+			$("#addpDesc").attr("value","结账方式");
+			$("#pram").html("结账方式名称");
 		}
 // 		$("#addrecoveryimport").modal();
 // 		$("#pValue").attr("value",pValue);
@@ -682,7 +713,7 @@
 		var obj = {
 				ppDesc : $("#ppDesc1").val(),
 				paramId : $("#paramId1").val(),
-				pValue : $("#pValue1").val(),
+				pValue : $("#pValue12").val(),
 				pDesc : $("#pDesc1").val(),
 		};
 		$.ajax({
