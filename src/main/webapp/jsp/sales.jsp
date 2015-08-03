@@ -331,16 +331,34 @@ String date=sdf.format(new Date());
                     success:function(data){  
                     			var json = $.parseJSON(data);
 								var salesList=$.parseJSON(json.RES_DATA.salesList);
+								var salesGoodsList=$.parseJSON(json.RES_DATA.salesGoodsList);
 								for (var i = 0; i < salesList.length; i++) {
     										$("#saleTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
-    					                  	+'<td>'+isNull(salesList[i].salesSerialNumber)+'</td>'
-    					                  	+'<td>'+getLocalTime(salesList[i].salesDate)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].employeeName)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].customerName)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].storehouseName)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].totalSalesAmount)+'</td>'
-    					                  	+'<td>'+isNull(salesList[i].salesStatus)+'</td>'
-    					                  	+'<td><a href="#">打印</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>' );
+    					                  	+'<td><font color="#16a085">'+isNull(salesList[i].salesSerialNumber)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+getLocalTime(salesList[i].salesDate)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].employeeName)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].customerName)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].storehouseName)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].totalSalesAmount)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].salesStatus)+'</font></td>'
+    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">打印</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>');
+    					                  	$("#saleTab tbody").append( '<tr><td>订单详情</td>'
+		    					                  	+'<td>商品名称</td>'
+		    					                  	+'<td>商品单价</td>'
+		    					                  	+'<td>商品数量</td>'
+		    					                  	+'<td>总价</td>'
+		    					                  	+'</tr>');
+    					                  	for (var j = 0; j < salesGoodsList.length; j++) {
+												if(salesList[i].salesSerialNumber==salesGoodsList[j].salesSerialNumber){
+													$("#saleTab tbody").append('<tr id="#collapse'+isNull(salesGoodsList[j].salesSerialNumber)+'">'
+		    					                  	+'<td>订单详情</td>'
+		    					                  	+'<td>'+isNull(salesGoodsList[j].goodsName)+'</td>'
+		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsPrice)+'</td>'
+		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsAmount)+'</td>'
+		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsTotalPrice)+'</td>'
+		    					                  	+'</tr>');
+												}
+											}   					                  	
         								
 								}
                             
