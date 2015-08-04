@@ -573,8 +573,12 @@ String date=sdf.format(new Date());
                     	  if($.parseJSON(data).RES_RESULT=="SUCCESS"){
                     		  alert("成功添加销售单");
                     		  location.reload();
-                    	  }else{
+                    	  }else if ($.parseJSON(data).RES_RESULT=="ERRORS") {
+                    		  alert("库存不足");
+                    		  location.reload();
+						  }else{
                     		  alert("添加销售单失败");
+                    		  location.reload();
                     	  }
                     	  var selOpt = $("#addGoodsTab tbody tr");  
                   		  selOpt.remove();

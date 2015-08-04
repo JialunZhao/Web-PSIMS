@@ -94,7 +94,7 @@ public class CustomerController extends BaseController {
 		
 		
 		TbEmployee employee = (TbEmployee)request.getSession().getAttribute("mysession");
-		String nameString = employee.getEmployeeName();
+		String employeeName = employee.getEmployeeName();
 		logger.info("------------3.数据校验-------------");
 		if (customer_name != null && customer_name.length() > 0) {
 			customer_name = "%" + customer_name + "%";
@@ -138,6 +138,7 @@ public class CustomerController extends BaseController {
 		request.setAttribute("tbCustomers", tbCustomers);
 		request.setAttribute("tbSystemParameters", tbSystemParameters);
 		
+		request.setAttribute("employeeName", employeeName);
 		request.setAttribute("customer_name", customer_name);
 		request.setAttribute("customer_type", customer_type);
 		request.setAttribute("contact_name", contact_name);
