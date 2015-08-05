@@ -86,12 +86,20 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		String[] salesPriceArray = addSalesGoodsBean.getSalesPriceList().split(
 				",");
 		BigDecimal totalPriceBD=new BigDecimal(0);
+		boolean falg=true;
 		for (int i = 0; i < storageIdArray.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
 			TbGoods goods=new TbGoods();
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIdArray[i]));
+			
+			int storeRateCurrt=storagecheckService.selectStorageRateCurrentByName(storagecheck.getGoodsName());
+			if(storeRateCurrt<Integer.parseInt(salesCountArray[i])){
+				falg=false;
+				break;
+			}
+			
 			goods=goodsService.selectGoodsInfo(storagecheck.getGoodsId());
 			BigDecimal salesPriceBD = new BigDecimal(salesPriceArray[i]).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
 			BigDecimal goodsAmountBD = new BigDecimal(salesCountArray[i]);
@@ -170,19 +178,25 @@ public class SalesBusinessImpl implements ISalesBusiness {
 //			}
 			salesGoodsService.insertSelective(salesGoods);
 		}
-		Sales sales = new Sales();
-		sales.setSalesSerialNumber(salesSerialNumber);
-		sales.setSalesDate(new Date());
-		sales.setCustomerId(Integer.parseInt(addSalesGoodsBean.getCustomerId()));
-		sales.setCustomerName(addSalesGoodsBean.getCustomerName());
-		sales.setStorehouseId(Integer.parseInt(addSalesGoodsBean.getStoreId()));
-		sales.setStorehouseName(addSalesGoodsBean.getStoreName());
-		sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
-		sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
-		sales.setTotalSalesAmount(totalPriceBD.toString());
-		sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
-		salesService.insertSelective(sales);
-		return "SUCCESS";
+		if (falg) {
+			Sales sales = new Sales();
+			sales.setSalesSerialNumber(salesSerialNumber);
+			sales.setSalesDate(new Date());
+			sales.setCustomerId(Integer.parseInt(addSalesGoodsBean.getCustomerId()));
+			sales.setCustomerName(addSalesGoodsBean.getCustomerName());
+			sales.setStorehouseId(Integer.parseInt(addSalesGoodsBean.getStoreId()));
+			sales.setStorehouseName(addSalesGoodsBean.getStoreName());
+			sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
+			sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
+			sales.setTotalSalesAmount(totalPriceBD.toString());
+			sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
+			salesService.insertSelective(sales);
+			return "SUCCESS";
+		}else {
+			return "ERROR";
+		}
+		
+		
 	}
 
 	@Override

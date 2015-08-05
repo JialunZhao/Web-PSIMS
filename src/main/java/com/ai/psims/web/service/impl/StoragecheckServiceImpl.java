@@ -74,7 +74,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 					date = calendari.getTime();
 					Date goodsExpirationDate = storagecheck
 							.getGoodsExpirationDate();
-					if (goodsExpirationDate.compareTo(date) <= 0) {
+					if (goodsExpirationDate.compareTo(date) <= 0 && storagecheck.getStorageRateCurrent()>0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -105,7 +105,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 					Date goodsExpirationDate = storagecheck
 							.getGoodsExpirationDate();
 					if (goodsExpirationDate.compareTo(date) < 0
-							&& goodsExpirationDate.compareTo(date1) > 0) {
+							&& goodsExpirationDate.compareTo(date1) > 0 && storagecheck.getStorageRateCurrent()>0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -138,7 +138,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 					Date goodsExpirationDate = storagecheck
 							.getGoodsExpirationDate();
 					if (goodsExpirationDate.compareTo(date) <= 0
-							&& goodsExpirationDate.compareTo(date1) >= 0) {
+							&& goodsExpirationDate.compareTo(date1) >= 0 && storagecheck.getStorageRateCurrent()>0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}
@@ -164,7 +164,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 					date = calendari.getTime();
 					Date goodsExpirationDate = storagecheck
 							.getGoodsExpirationDate();
-					if (goodsExpirationDate.compareTo(date) > 0) {
+					if (goodsExpirationDate.compareTo(date) > 0 && storagecheck.getStorageRateCurrent()>0) {
 						newstoragecheck.add(storagecheck);
 					}
 				}

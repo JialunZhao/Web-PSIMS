@@ -25,8 +25,14 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.ai.psims.web.business.ISalesBusiness;
 import com.ai.psims.web.model.Sales;
+import com.ai.psims.web.model.SalesExample;
 import com.ai.psims.web.model.SalesGoods;
 import com.ai.psims.web.model.SalesGoodsExample;
+import com.ai.psims.web.model.TbCustomer;
+import com.ai.psims.web.model.TbCustomerExample;
+import com.ai.psims.web.model.TbEmployee;
+import com.ai.psims.web.model.TbEmployeeExample;
+import com.ai.psims.web.model.TbStorehouse;
 
 /**
  * 库存报表Controller
@@ -56,7 +62,27 @@ public class salesPrintController extends BaseController {
 	@RequestMapping(value = "/init")
 	public String init(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
+		java.util.Date date = new java.util.Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		String salesSerialNumber=sdf.format(date);
+		
+		List<Sales> salesList = new ArrayList<Sales>();
+		SalesExample salesExample = new SalesExample();
+		com.ai.psims.web.model.SalesExample.Criteria criteria=salesExample.createCriteria();		
+		criteria.andSalesStatusNotEqualTo("00");
+		criteria.andSalesSerialNumberLike("%"+salesSerialNumber+"%");
+		
+		SalesGoodsExample salesGoodsExample=new SalesGoodsExample();
+		com.ai.psims.web.model.SalesGoodsExample.Criteria c=salesGoodsExample.createCriteria();
+		c.andSalesGoodsEndtimeIsNull();
+		c.andSalesSerialNumberLike("%"+salesSerialNumber+"%");
+		
+		List<SalesGoods> salesGoodsList=new ArrayList<SalesGoods>();
+		
+		salesGoodsList=salesBusiness.selectSalesGoods(salesGoodsExample);
+		salesList = salesBusiness.selectByExample(salesExample);
+		request.setAttribute("salesList", salesList);
+		request.setAttribute("salesGoodsList", salesGoodsList);
 		return "saleslistreport";
 	}
 

@@ -85,6 +85,7 @@ public class SalesController extends BaseController {
 		com.ai.psims.web.model.SalesExample.Criteria criteria=salesExample.createCriteria();		
 		criteria.andSalesStatusNotEqualTo("00");
 		criteria.andSalesSerialNumberLike("%"+salesSerialNumber+"%");
+		salesExample.setOrderByClause("sales_serial_number desc");
 		
 		TbCustomerExample customerExample = new TbCustomerExample();
 		customerExample.createCriteria().andEndtimeIsNull();
@@ -135,7 +136,7 @@ public class SalesController extends BaseController {
 		} else {
 			// data.put("list", JSON.toJSONString(storagechecksList));
 			data.put("goodsNameSet", JSON.toJSONString(goodsNameSet));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -151,7 +152,7 @@ public class SalesController extends BaseController {
 		} else {
 			// data.put("list", JSON.toJSONString(storagechecksList));
 			data.put("storagechecks", JSON.toJSONString(storagechecks));
-			responseSuccess(response, "SUCCESS*", data);
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -182,14 +183,28 @@ public class SalesController extends BaseController {
 		}
 		if (salesSerialNumber != null && salesSerialNumber != "") {
 			criteria.andSalesSerialNumberLike("%" + salesSerialNumber + "%");
-		}
+		}		
 		criteria.andSalesStatusNotEqualTo("00");
+		salesExample.setOrderByClause("sales_serial_number desc");		
 		salesList = salesBusiness.selectByExample(salesExample);
 		if (salesList == null) {
 			responseFailed(response, "ERROR", data);
 		} else {
+			List<SalesGoods> salesGoodsList=new ArrayList<SalesGoods>();
+			for (Sales sales : salesList) {
+				List<SalesGoods> salesGoodList=new ArrayList<SalesGoods>();
+				SalesGoodsExample salesGoodsExample=new SalesGoodsExample();
+				com.ai.psims.web.model.SalesGoodsExample.Criteria c=salesGoodsExample.createCriteria();
+				c.andSalesGoodsEndtimeIsNull();
+				c.andSalesSerialNumberLike("%"+sales.getSalesSerialNumber()+"%");
+				salesGoodList=salesBusiness.selectSalesGoods(salesGoodsExample);
+				for (SalesGoods salesGoods : salesGoodList) {
+					salesGoodsList.add(salesGoods);
+				}
+			}
 			data.put("salesList", JSON.toJSONString(salesList));
-			responseSuccess(response, "SUCCESS*", data);
+			data.put("salesGoodsList", JSON.toJSONString(salesGoodsList));
+			responseSuccess(response, "SUCCESS", data);
 		}
 	}
 
@@ -271,7 +286,9 @@ public class SalesController extends BaseController {
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "ERROR", data);
-		} else {
+		} else if (result=="ERROR") {
+			responseFailed(response, "ERRORS", data);
+		}else {
 			responseSuccess(response, "SUCCESS", data);
 		}
 
@@ -318,6 +335,9 @@ public class SalesController extends BaseController {
 				TbEmployee employee = new TbEmployee();
 				employee = employeeBusiness.getEmployeeById(sales
 						.getEmployeeId());
+				logger.info("------------获取当前登录的员工名称-------------");
+				TbEmployee tbEmployee = (TbEmployee)request.getSession().getAttribute("mysession");
+
 
 				logger.info("------------建立 Excel -Sheet-------------");
 				HSSFSheet sheet = workbook.createSheet("销售清单");
@@ -494,7 +514,7 @@ public class SalesController extends BaseController {
 				row.createCell(idx++).setCellValue("送货人");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("核单人");
-				row.createCell(idx++).setCellValue("管理员");
+				row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName());
 				row.createCell(idx++).setCellValue("发车时间");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("还车时间");

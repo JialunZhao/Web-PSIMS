@@ -70,6 +70,9 @@
 							<tr>
 								<th>商品名称</th>
 								<th>商品编码</th>
+								<th>入库日期</th>
+								<th>生产日期</th>
+								<th>预警值</th>
 								<th>保质期剩余（天）</th>
 								<th>数量</th>
 							</tr>
@@ -149,7 +152,8 @@
     			//	alert(messageRespon[i].goodsName);
     				var tr=$("<tr></tr>");
     				var td=$("<td>"+messageRespon[i].goodsName+"</td>"+
-   	                     "<td>"+messageRespon[i].goodsId+"</td>"+
+   	                     "<td>"+messageRespon[i].goodsId+"</td>"+"<td>"+messageRespon[i].strcreatetime+"</td>"+
+   	                  	 "<td>"+messageRespon[i].strgoodsProductionDate+"</td>"+"<td>"+messageRespon[i].shelfLifeWarning+"天</td>"+
    	                       "<td>"+messageRespon[i].overDate+"</td><td>"+messageRespon[i].storageRateCurrent+"</td>");
    	                tr.append(td);
     				$("#tableGood").append(tr);
