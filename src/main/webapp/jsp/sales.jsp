@@ -401,7 +401,7 @@ String date=sdf.format(new Date());
     
     function showTable(goodName){
     	if (!checkIsNull(goodName)) {
-    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName));
+    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName;
     		$.dialog({
     			title:'可销售商品',
     			width:1200,
