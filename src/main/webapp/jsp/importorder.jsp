@@ -378,7 +378,7 @@
 		var discountDutyTotalPrice = goodsPrice*goodsCount-(prizePool*1.17);
 		var discountDutyTotalPrice2 = goodsPrice*goodsCount*(100-discountRate)/100;
 		if (prizePool<=prizePoolUsed) {
-			$("#prizePoolUsed").val(prizePool.toFixed(2));
+			$("#prizePoolUsed").val(prizePool);
 			$("#totalPrice").val(totalPrice.toFixed(2));
 			$("#discountDutyTotalPrice").val(discountDutyTotalPrice.toFixed(2));
 		}else{

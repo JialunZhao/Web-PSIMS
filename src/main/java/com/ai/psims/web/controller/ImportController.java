@@ -293,7 +293,7 @@ public class ImportController extends BaseController {
 		logger.info("------------2.获取参数-------------");
 		String importcreatetime = request.getParameter("importcreatetime");
 		Integer providerId = Integer.parseInt(request.getParameter("providerId"));
-		String prizePool = request.getParameter("prizePool");
+//		String prizePool = request.getParameter("prizePool");
 		String payStatus = request.getParameter("payStatus"); 
 		String payMed = request.getParameter("payMed");
 		String payTime = request.getParameter("payTime");
@@ -407,9 +407,6 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String importSerialNumber = request.getParameter("importSerialNumber");
 		String goodName = request.getParameter("goodsName");
-		if (goodName != null) {
-			goodName = URLDecoder.decode(goodName);
-		}
 		List<TbImportGoods> importGoodsList = new ArrayList<TbImportGoods>();
 		TbImportGoodsExample example = new TbImportGoodsExample();
 		com.ai.psims.web.model.TbImportGoodsExample.Criteria criteria = example

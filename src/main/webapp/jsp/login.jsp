@@ -11,7 +11,7 @@
 <meta name="author" content="">
 <link rel="icon" href="${ctx}/img/favicon.ico">
 
-<title>供销存系统DEMO</title>
+<title>北京市金瑞超达商贸有限公司-食品库存管理系统</title>
 <!-- Loading Bootstrap -->
 <link href="${ctx}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
