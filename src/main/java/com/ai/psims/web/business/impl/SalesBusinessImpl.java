@@ -37,7 +37,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	private ISalesService salesService;
 	@Resource(name = "salesGoodsServiceImpl")
 	private ISalesGoodsService salesGoodsService;
-	@Resource(name="goodsServiceImpl")
+	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
 
 	@Override
@@ -51,19 +51,21 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	public Storagecheck selectByKey(Integer storageId) {
 		return storagecheckService.selectByKey(storageId);
 	}
-	
+
 	@Override
 	public TbStoragecheck queryStoragecheck(
-			TbStoragecheckExample storagecheckExample,String goodsName) {
+			TbStoragecheckExample storagecheckExample, String goodsName) {
 		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
-		storagechecksList=storagecheckService.selectTbStoragecheck(storagecheckExample);
-		Integer storageRateCurrent=storagecheckService.selectStorageRateCurrentByName(goodsName);
-		if (storagechecksList.size()>0) {
+		storagechecksList = storagecheckService
+				.selectTbStoragecheck(storagecheckExample);
+		Integer storageRateCurrent = storagecheckService
+				.selectStorageRateCurrentByName(goodsName);
+		if (storagechecksList.size() > 0) {
 			storagechecksList.get(0).setStorageRateCurrent(storageRateCurrent);
 			return storagechecksList.get(0);
-		}else {
+		} else {
 			return null;
-		}		
+		}
 	}
 
 	@Override
@@ -85,25 +87,28 @@ public class SalesBusinessImpl implements ISalesBusiness {
 				",");
 		String[] salesPriceArray = addSalesGoodsBean.getSalesPriceList().split(
 				",");
-		BigDecimal totalPriceBD=new BigDecimal(0);
-		boolean falg=true;
+		BigDecimal totalPriceBD = new BigDecimal(0);
+		boolean falg = true;
 		for (int i = 0; i < storageIdArray.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
 			Storagecheck storagecheck = new Storagecheck();
-			TbGoods goods=new TbGoods();
+			TbGoods goods = new TbGoods();
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIdArray[i]));
-			
-			int storeRateCurrt=storagecheckService.selectStorageRateCurrentByName(storagecheck.getGoodsName());
-			if(storeRateCurrt<Integer.parseInt(salesCountArray[i])){
-				falg=false;
+
+			int storeRateCurrt = storagecheckService
+					.selectStorageRateCurrentByName(storagecheck.getGoodsName());
+			if (storeRateCurrt < Integer.parseInt(salesCountArray[i])) {
+				falg = false;
 				break;
 			}
-			
-			goods=goodsService.selectGoodsInfo(storagecheck.getGoodsId());
-			BigDecimal salesPriceBD = new BigDecimal(salesPriceArray[i]).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
+
+			goods = goodsService.selectGoodsInfo(storagecheck.getGoodsId());
+			BigDecimal salesPriceBD = new BigDecimal(salesPriceArray[i])
+					.divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP);
 			BigDecimal goodsAmountBD = new BigDecimal(salesCountArray[i]);
-			totalPriceBD = salesPriceBD.multiply(goodsAmountBD).add(totalPriceBD);
+			totalPriceBD = salesPriceBD.multiply(goodsAmountBD).add(
+					totalPriceBD);
 			salesGoods.setSalesSerialNumber(salesSerialNumber);
 			salesGoods.setGoodsId(storagecheck.getGoodsId());
 			salesGoods.setGoodsName(storagecheck.getGoodsName());
@@ -116,9 +121,10 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods.setSalesGoodsExpirationDate(storagecheck
 					.getGoodsExpirationDate());
 			salesGoods.setSalesGoodsCreatetime(new java.util.Date());
-			salesGoods.setSalesGoodsTotalPrice(salesPriceBD.multiply(goodsAmountBD).toString());
+			salesGoods.setSalesGoodsTotalPrice(salesPriceBD.multiply(
+					goodsAmountBD).toString());
 			salesGoods.setStorageId(storagecheck.getStorageId());
-			
+
 			salesGoods.setGoodsCurrentStock(goods.getGoodsCurrentStock());
 			salesGoods.setGoodsTotalStock(goods.getGoodsTotalStock());
 			salesGoods.setGoodsActualCost(goods.getGoodsActualCost());
@@ -133,70 +139,77 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods.setPromotionRebate(goods.getPromotionRebate());
 			salesGoods.setPurchaseRebate(goods.getPurchaseRebate());
 			salesGoods.setProviderSubsidy(goods.getProviderSubsidy());
-			salesGoods.setCustomerBottleSubsidy(goods.getCustomerBottleSubsidy());
-			salesGoods.setProviderPackageSubsidy(goods.getProviderPackageSubsidy());
+			salesGoods.setCustomerBottleSubsidy(goods
+					.getCustomerBottleSubsidy());
+			salesGoods.setProviderPackageSubsidy(goods
+					.getProviderPackageSubsidy());
 			salesGoods.setCustomerSubsidy(goods.getCustomerSubsidy());
 			salesGoods.setOtherSubsidy(goods.getOtherSubsidy());
 			salesGoods.setSingleFinalCost(goods.getSingleFinalCost());
-			
-			List<TbStoragecheck> storagechecks=new ArrayList<TbStoragecheck>();
-			storagechecks=storagecheckService.selectTbStoragecheckByName(storagecheck.getGoodsName());
-			int salesCount=Integer.parseInt(salesCountArray[i]);
-			if (storagechecks!=null) {
+
+			List<TbStoragecheck> storagechecks = new ArrayList<TbStoragecheck>();
+			storagechecks = storagecheckService
+					.selectTbStoragecheckByName(storagecheck.getGoodsName());
+			int salesCount = Integer.parseInt(salesCountArray[i]);
+			if (storagechecks != null) {
 				for (int j = 0; j < storagechecks.size(); j++) {
-					TbStoragecheck tbStoragecheck=storagechecks.get(j);
-					if (tbStoragecheck.getStorageRateCurrent()<salesCount) {
+					TbStoragecheck tbStoragecheck = storagechecks.get(j);
+					if (tbStoragecheck.getStorageRateCurrent() < salesCount) {
 						storagecheck.setStorageRateCurrent(0);
 						storagecheck.setEndtime(new Date());
-						storagecheckService.updateTbStoragecheck(tbStoragecheck);
-						salesCount=salesCount-tbStoragecheck.getStorageRateCurrent();
-					}else if (tbStoragecheck.getStorageRateCurrent()==salesCount) {
+						storagecheckService
+								.updateTbStoragecheck(tbStoragecheck);
+						salesCount = salesCount
+								- tbStoragecheck.getStorageRateCurrent();
+					} else if (tbStoragecheck.getStorageRateCurrent() == salesCount) {
 						storagecheck.setStorageRateCurrent(0);
 						storagecheck.setEndtime(new Date());
-						storagecheckService.updateTbStoragecheck(tbStoragecheck);
+						storagecheckService
+								.updateTbStoragecheck(tbStoragecheck);
 						break;
-					}else {
+					} else {
 						storagecheck.setStorageRateCurrent(storagecheck
-								.getStorageRateCurrent()
-								- salesCount);
+								.getStorageRateCurrent() - salesCount);
 						storagecheckService.updateStoragecheck(storagecheck);
 						break;
 					}
 				}
 			}
-//			
-//			if (storagecheck.getStorageRateCurrent() == Integer
-//					.parseInt(salesCountArray[i])) {
-//				storagecheck.setStorageRateCurrent(0);
-//				storagecheck.setEndtime(new Date());
-//				storagecheckService.updateStoragecheck(storagecheck);
-//			} else {
-//				storagecheck.setStorageRateCurrent(storagecheck
-//						.getStorageRateCurrent()
-//						- Integer.parseInt(salesCountArray[i]));
-//				storagecheckService.updateStoragecheck(storagecheck);
-//			}
+			//
+			// if (storagecheck.getStorageRateCurrent() == Integer
+			// .parseInt(salesCountArray[i])) {
+			// storagecheck.setStorageRateCurrent(0);
+			// storagecheck.setEndtime(new Date());
+			// storagecheckService.updateStoragecheck(storagecheck);
+			// } else {
+			// storagecheck.setStorageRateCurrent(storagecheck
+			// .getStorageRateCurrent()
+			// - Integer.parseInt(salesCountArray[i]));
+			// storagecheckService.updateStoragecheck(storagecheck);
+			// }
 			salesGoodsService.insertSelective(salesGoods);
 		}
 		if (falg) {
 			Sales sales = new Sales();
 			sales.setSalesSerialNumber(salesSerialNumber);
 			sales.setSalesDate(new Date());
-			sales.setCustomerId(Integer.parseInt(addSalesGoodsBean.getCustomerId()));
+			sales.setCustomerId(Integer.parseInt(addSalesGoodsBean
+					.getCustomerId()));
 			sales.setCustomerName(addSalesGoodsBean.getCustomerName());
-			sales.setStorehouseId(Integer.parseInt(addSalesGoodsBean.getStoreId()));
+			sales.setStorehouseId(Integer.parseInt(addSalesGoodsBean
+					.getStoreId()));
 			sales.setStorehouseName(addSalesGoodsBean.getStoreName());
-			sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean.getEmployeeId()));
+			sales.setEmployeeId(Integer.parseInt(addSalesGoodsBean
+					.getEmployeeId()));
 			sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
 			sales.setTotalSalesAmount(totalPriceBD.toString());
 			sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
 			salesService.insertSelective(sales);
 			return "SUCCESS";
-		}else {
+		} else {
 			return "ERROR";
 		}
-		
-		
+
 	}
 
 	@Override
@@ -220,7 +233,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	}
 
 	@Override
-	public String updateSalesData(SalesUpdateData salesUpdateData,Sales sales) {
+	public String updateSalesData(SalesUpdateData salesUpdateData, Sales sales) {
 		String[] salesGoodsIds = salesUpdateData.getSalesGoodsIdList().split(
 				",");
 		String[] goodsAmounts = salesUpdateData.getGoodsAmountList().split(",");
@@ -231,13 +244,38 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			Storagecheck storagecheck = new Storagecheck();
 			salesGoods = salesGoodsService.selectSalesGoodsByKey(Integer
 					.parseInt(salesGoodsIds[i]));
+			List<TbStoragecheck> storagechecksList = storagecheckService
+					.selectTbStoragecheckByName(salesGoods.getGoodsName());
 			storagecheck = storagecheckService.selectByKey(salesGoods
 					.getStorageId());
-			totalPrice = totalPrice + Float.parseFloat(salesGoods.getSalesGoodsPrice())
+			totalPrice = totalPrice
+					+ Float.parseFloat(salesGoods.getSalesGoodsPrice())
 					* Long.parseLong(goodsAmounts[i]);
 			int count = salesGoods.getSalesGoodsAmount()
 					- Integer.parseInt(goodsAmounts[i]);
 			if (count != 0) {
+				for (int j = 0; j < storagechecksList.size(); j++) {
+					TbStoragecheck tbStoragecheck = storagechecksList.get(j);
+					if (tbStoragecheck.getStorageRateCurrent() < count) {
+						storagecheck.setStorageRateCurrent(0);
+						storagecheck.setEndtime(new Date());
+						storagecheckService
+								.updateTbStoragecheck(tbStoragecheck);
+						count = count
+								- tbStoragecheck.getStorageRateCurrent();
+					} else if (tbStoragecheck.getStorageRateCurrent() == count) {
+						storagecheck.setStorageRateCurrent(0);
+						storagecheck.setEndtime(new Date());
+						storagecheckService
+								.updateTbStoragecheck(tbStoragecheck);
+						break;
+					} else {
+						storagecheck.setStorageRateCurrent(storagecheck
+								.getStorageRateCurrent() - count);
+						storagecheckService.updateStoragecheck(storagecheck);
+						break;
+					}
+				}
 				storagecheck.setStorageRateCurrent(storagecheck
 						.getStorageRateCurrent() + count);
 				if (storagecheck.getStorageRateCurrent() == 0) {
@@ -249,13 +287,16 @@ public class SalesBusinessImpl implements ISalesBusiness {
 				}
 				SalesGoods salesGoods2 = new SalesGoods();
 				salesGoods2.setSalesGoodsId(Integer.parseInt(salesGoodsIds[i]));
-				salesGoods2.setSalesGoodsAmount(Integer.parseInt(goodsAmounts[i]));
-				salesGoods2.setSalesGoodsTotalPrice((Float.parseFloat(salesGoods.getSalesGoodsPrice())
-						* Long.parseLong(goodsAmounts[i]))+"");
+				salesGoods2.setSalesGoodsAmount(Integer
+						.parseInt(goodsAmounts[i]));
+				salesGoods2.setSalesGoodsTotalPrice((Float
+						.parseFloat(salesGoods.getSalesGoodsPrice()) * Long
+						.parseLong(goodsAmounts[i]))
+						+ "");
 				salesGoodsService.updateSalesGoodsByKey(salesGoods2);
-			}			
+			}
 		}
-//		Sales sales = new Sales();
+		// Sales sales = new Sales();
 		if (salesUpdateData.getSalesStatus().equals(
 				Constants.SalesStatus.SQUARE)) {
 			sales.setIncomeType(salesUpdateData.getPayMed());
@@ -264,7 +305,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		}
 		sales.setSalesStatus(salesUpdateData.getSalesStatus());
 		sales.setSalesSerialNumber(salesSerialNumber);
-		sales.setTotalSalesAmount(totalPrice+"");
+		sales.setTotalSalesAmount(totalPrice + "");
 		salesService.updateSalesByKey(sales);
 		return "SUCCESS";
 	}
@@ -301,7 +342,5 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		}
 		return "ERROR";
 	}
-
-	
 
 }

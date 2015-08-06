@@ -47,7 +47,7 @@
                   			<td style="display: none" id="storageId">${storagechecks.storageId }</td>
                   			<td>${storagechecks.goodsName }</td>
                   			<td>${storagechecks.importGoodsUnit }</td>
-                  			<td id="storeCount">${storagechecks.storageRateCurrent }</td>
+                  			<td id="storeCount">${storagechecks.storageRateCurrent-goodsCount }</td>
                   			<td><input type="text" id="goodsPrice" value="${storagechecks.goodsPrice }"></td>
                   			<td><input type="text" id="salesCount"></td>
                   			<td><input type="text" id="goodsTotalPay" onclick="getGoodsAllPay()"></td>

@@ -375,16 +375,7 @@ String date=sdf.format(new Date());
     function selectGoods(){
 		var selOpt = $("#goodsName option");  
 		selOpt.remove();
-		$("#goodsName").append( "<option value=''>请选择商品</option>" );	
-		var len=$("#addGoodsTab tbody tr").length;
-		var goodsNameList="";
-      	if(len>0){      		
-      		$('#addGoodsTab tbody tr').find('td').each(function() {
-      		  if ($(this).index() == "1") {
-      			goodsNameList=goodsNameList+$(this).text()+",";
-  		      }
-            });
-      	}
+		$("#goodsName").append( "<option value=''>请选择商品</option>" );			
 		$.ajax({  
                     url:'<%=path%>/salesController/queryGoods.do',  
                     type:"post",  
@@ -395,23 +386,12 @@ String date=sdf.format(new Date());
                     success:function(data){  
                     			var json = $.parseJSON(data);
 								var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
-						      	var goodsNames=goodsNameList.split(",");
-									for (var i = 0; i < goodsName.length; i++) {
-										 var f=true;
-										for (var j = 0; j < goodsNames.length; j++) {
-											if(goodsName[i]==goodsNames[j]){
-												f=false;
-												break;
-											}
-										}
-										if(f){
-											$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
-										}
-    									
-    								}
+						      	for (var i = 0; i < goodsName.length; i++) {
+									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
 									$("#addgoods").show();
 							        /* $("#addgoodsbtn").hide();
 							        $("#salesgoodsform").hide(); */
+								}
 								}
                             
                 });       
@@ -419,7 +399,26 @@ String date=sdf.format(new Date());
     
     function showTable(goodName){
     	if (!checkIsNull(goodName)) {
-    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName;
+    		
+    		var len=$("#addGoodsTab tbody tr").length;
+    		var goodsName=null;
+    		var goodsCount=0;
+          	if(len>0){      		
+          		$('#addGoodsTab tbody tr').find('td').each(function() {
+          		  if ($(this).index() == "1") {
+          			goodsName=$(this).text();
+      		      }
+          		  if($(this).index() == "4"){
+          				if(goodsName==goodName){
+              				goodsCount=$(this).text();
+              		  	}
+          		  }
+          		  
+          		})
+          	}
+    		alert(goodsCount);
+    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
+<%--     		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
     		$.dialog({
     			title:'可销售商品',
     			width:1200,

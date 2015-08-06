@@ -76,32 +76,34 @@ public class SalesController extends BaseController {
 	public String init(HttpServletRequest request) throws Exception {
 		java.util.Date date = new java.util.Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-		String salesSerialNumber=sdf.format(date);
-		
+		String salesSerialNumber = sdf.format(date);
+
 		List<TbCustomer> customersList = new ArrayList<TbCustomer>();
 		List<TbEmployee> employeesList = new ArrayList<TbEmployee>();
 		List<Sales> salesList = new ArrayList<Sales>();
 		SalesExample salesExample = new SalesExample();
-		com.ai.psims.web.model.SalesExample.Criteria criteria=salesExample.createCriteria();		
+		com.ai.psims.web.model.SalesExample.Criteria criteria = salesExample
+				.createCriteria();
 		criteria.andSalesStatusNotEqualTo("00");
-		criteria.andSalesSerialNumberLike("%"+salesSerialNumber+"%");
+		criteria.andSalesSerialNumberLike("%" + salesSerialNumber + "%");
 		salesExample.setOrderByClause("sales_serial_number desc");
-		
+
 		TbCustomerExample customerExample = new TbCustomerExample();
 		customerExample.createCriteria().andEndtimeIsNull();
-		
+
 		TbEmployeeExample employeeExample = new TbEmployeeExample();
 		employeeExample.createCriteria().andEndtimeIsNull();
-		
-		SalesGoodsExample salesGoodsExample=new SalesGoodsExample();
-		com.ai.psims.web.model.SalesGoodsExample.Criteria c=salesGoodsExample.createCriteria();
+
+		SalesGoodsExample salesGoodsExample = new SalesGoodsExample();
+		com.ai.psims.web.model.SalesGoodsExample.Criteria c = salesGoodsExample
+				.createCriteria();
 		c.andSalesGoodsEndtimeIsNull();
-		c.andSalesSerialNumberLike("%"+salesSerialNumber+"%");
-		
-		List<SalesGoods> salesGoodsList=new ArrayList<SalesGoods>();
+		c.andSalesSerialNumberLike("%" + salesSerialNumber + "%");
+
+		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
-		
-		salesGoodsList=salesBusiness.selectSalesGoods(salesGoodsExample);
+
+		salesGoodsList = salesBusiness.selectSalesGoods(salesGoodsExample);
 		salesList = salesBusiness.selectByExample(salesExample);
 		employeesList = queryBus.queryEmployee(employeeExample);
 		customersList = queryBus.queryCustomer(customerExample);
@@ -183,21 +185,24 @@ public class SalesController extends BaseController {
 		}
 		if (salesSerialNumber != null && salesSerialNumber != "") {
 			criteria.andSalesSerialNumberLike("%" + salesSerialNumber + "%");
-		}		
+		}
 		criteria.andSalesStatusNotEqualTo("00");
-		salesExample.setOrderByClause("sales_serial_number desc");		
+		salesExample.setOrderByClause("sales_serial_number desc");
 		salesList = salesBusiness.selectByExample(salesExample);
 		if (salesList == null) {
 			responseFailed(response, "ERROR", data);
 		} else {
-			List<SalesGoods> salesGoodsList=new ArrayList<SalesGoods>();
+			List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
 			for (Sales sales : salesList) {
-				List<SalesGoods> salesGoodList=new ArrayList<SalesGoods>();
-				SalesGoodsExample salesGoodsExample=new SalesGoodsExample();
-				com.ai.psims.web.model.SalesGoodsExample.Criteria c=salesGoodsExample.createCriteria();
+				List<SalesGoods> salesGoodList = new ArrayList<SalesGoods>();
+				SalesGoodsExample salesGoodsExample = new SalesGoodsExample();
+				com.ai.psims.web.model.SalesGoodsExample.Criteria c = salesGoodsExample
+						.createCriteria();
 				c.andSalesGoodsEndtimeIsNull();
-				c.andSalesSerialNumberLike("%"+sales.getSalesSerialNumber()+"%");
-				salesGoodList=salesBusiness.selectSalesGoods(salesGoodsExample);
+				c.andSalesSerialNumberLike("%" + sales.getSalesSerialNumber()
+						+ "%");
+				salesGoodList = salesBusiness
+						.selectSalesGoods(salesGoodsExample);
 				for (SalesGoods salesGoods : salesGoodList) {
 					salesGoodsList.add(salesGoods);
 				}
@@ -212,16 +217,21 @@ public class SalesController extends BaseController {
 	public String queryGoodsDemo(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String goodsName = request.getParameter("goodName");
+		String goodsCount = request.getParameter("goodsCount");
 		TbStoragecheck storagechecks = new TbStoragecheck();
 		TbStoragecheckExample storagecheckExample = new TbStoragecheckExample();
-		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = storagecheckExample.createCriteria();
-//		criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
-		if (goodsName != null && goodsName != "") {
+		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = storagecheckExample
+				.createCriteria();
+		// criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
+		/*if (goodsName != null && goodsName != "") {
+			goodsName = URLDecoder.decode(goodsName);
 			criteria.andGoodsNameEqualTo(goodsName);
-		}
+		}*/
 		criteria.andEndtimeIsNull();
-		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample, goodsName);
+		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
+				goodsName);
 		request.setAttribute("storagechecks", storagechecks);
+		request.setAttribute("goodsCount", goodsCount);
 		return "salesgoodstab";
 	}
 
@@ -242,9 +252,10 @@ public class SalesController extends BaseController {
 
 		for (SalesGoods salesGoods : salesGoodsList) {
 			SalesUpdataGoods saUpdataGoods = new SalesUpdataGoods();
-			Storagecheck storagecheck = new Storagecheck();
-			storagecheck = storagecheckService.selectByKey(salesGoods
-					.getStorageId());
+			int storeRateCrrent = storagecheckService
+					.selectStorageRateCurrentByName(salesGoods.getGoodsName());
+//			storagecheck = storagecheckService.selectByKey(salesGoods
+//					.getStorageId());
 			saUpdataGoods.setGoodsName(salesGoods.getGoodsName());
 			saUpdataGoods.setSalesGoodsAmount(salesGoods.getSalesGoodsAmount());
 			saUpdataGoods.setSalesGoodsId(salesGoods.getSalesGoodsId());
@@ -253,8 +264,7 @@ public class SalesController extends BaseController {
 					.getSalesGoodsTotalPrice());
 			saUpdataGoods.setSalesSerialNumber(salesGoods
 					.getSalesSerialNumber());
-			saUpdataGoods.setStorageRateCurrent(storagecheck
-					.getStorageRateCurrent());
+			saUpdataGoods.setStorageRateCurrent(storeRateCrrent);
 			salesUpdataGoodsList.add(saUpdataGoods);
 		}
 
@@ -286,9 +296,9 @@ public class SalesController extends BaseController {
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "ERROR", data);
-		} else if (result=="ERROR") {
+		} else if (result == "ERROR") {
 			responseFailed(response, "ERRORS", data);
-		}else {
+		} else {
 			responseSuccess(response, "SUCCESS", data);
 		}
 
@@ -336,11 +346,25 @@ public class SalesController extends BaseController {
 				employee = employeeBusiness.getEmployeeById(sales
 						.getEmployeeId());
 				logger.info("------------获取当前登录的员工名称-------------");
-				TbEmployee tbEmployee = (TbEmployee)request.getSession().getAttribute("mysession");
-
+				TbEmployee tbEmployee = (TbEmployee) request.getSession()
+						.getAttribute("mysession");
 
 				logger.info("------------建立 Excel -Sheet-------------");
-				HSSFSheet sheet = workbook.createSheet("销售清单");
+				boolean falg=true;
+				if (salesGoodsList!=null) {
+					if (salesGoodsList.get(0).getSalesGoodsAmount()<0) {
+						falg=false;
+					}
+				}
+				HSSFSheet sheet;
+				if (falg) {
+					logger.info("------------打印销售单-------------");
+					sheet = workbook.createSheet("北京市金瑞超达商贸有限公司商品销售单");
+				}else {
+					logger.info("------------打印退货单-------------");
+					sheet = workbook.createSheet("北京市金瑞超达商贸有限公司商品退货单");
+				}
+				
 				logger.info("------------设置行列的默认宽度和高度-------------");
 				sheet.setColumnWidth(0, 32 * 80);// 对A列设置宽度为180像素
 				sheet.setColumnWidth(1, 32 * 80);
@@ -462,7 +486,8 @@ public class SalesController extends BaseController {
 					// row.createCell(idx++).setCellValue("");
 					row.createCell(idx++).setCellValue(
 							salesGoods.getSalesGoodsTotalPrice());
-					totalPrice += Float.parseFloat(salesGoods.getSalesGoodsTotalPrice());
+					totalPrice += Float.parseFloat(salesGoods
+							.getSalesGoodsTotalPrice());
 				}
 
 				rowNum++;
@@ -504,7 +529,9 @@ public class SalesController extends BaseController {
 						(short) 8));
 				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
 						(short) 9));
-				row.createCell(idx++).setCellValue(NumToFont.number2CNMontrayUnit(BigDecimal.valueOf(totalPrice)));
+				row.createCell(idx++).setCellValue(
+						NumToFont.number2CNMontrayUnit(BigDecimal
+								.valueOf(totalPrice)));
 
 				rowNum++;
 				idx = 0;
@@ -514,7 +541,8 @@ public class SalesController extends BaseController {
 				row.createCell(idx++).setCellValue("送货人");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("核单人");
-				row.createCell(idx++).setCellValue(tbEmployee.getEmployeeName());
+				row.createCell(idx++)
+						.setCellValue(tbEmployee.getEmployeeName());
 				row.createCell(idx++).setCellValue("发车时间");
 				row.createCell(idx++).setCellValue("");
 				row.createCell(idx++).setCellValue("还车时间");
@@ -536,20 +564,27 @@ public class SalesController extends BaseController {
 				sheet.addMergedRegion(new Region(rowNum, (short) 8, rowNum,
 						(short) 9));
 				row.createCell(idx++).setCellValue("");
-				
-				
+
 				rowNum++;
 				idx = 0;
 				row = sheet.createRow(rowNum);
 				row.createCell(idx++).setCellValue("备注");
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 2));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 3));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 4));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 5));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 6));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 7));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 8));
-				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,(short) 9));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 2));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 3));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 4));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 5));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 6));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 7));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 8));
+				sheet.addMergedRegion(new Region(rowNum, (short) 1, rowNum,
+						(short) 9));
 				row.createCell(idx++).setCellValue("");
 			}
 		};
@@ -567,21 +602,22 @@ public class SalesController extends BaseController {
 		String payMed = request.getParameter("payMed");
 		String creditCount = request.getParameter("creditCount");
 		String payTime = request.getParameter("payTime");
-		
-		SimpleDateFormat sdf=new SimpleDateFormat("HH:mm");
-		
+
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
 		String storeManager = request.getParameter("storemanager") == "" ? null
 				: request.getParameter("storemanager");
 		String touchManager = request.getParameter("touchmanager") == "" ? null
 				: request.getParameter("touchmanager");
 		String receiver = request.getParameter("receiver") == "" ? null
 				: request.getParameter("receiver");
-		String sender = request.getParameter("sender") == "" ? null
-				: request.getParameter("sender");
+		String sender = request.getParameter("sender") == "" ? null : request
+				.getParameter("sender");
 		String carNumber = request.getParameter("carnumber") == "" ? null
 				: request.getParameter("carnumber");
-		String totalSettlementAmount = request.getParameter("totalsettlementamount") == "" ? null
-				: request.getParameter("totalsettlementamount");
+		String totalSettlementAmount = request
+				.getParameter("totalsettlementamount") == "" ? null : request
+				.getParameter("totalsettlementamount");
 		String departureTime = request.getParameter("departuretime") == "" ? null
 				: request.getParameter("departuretime");
 		String stillTime = request.getParameter("stilltime") == "" ? null
@@ -590,7 +626,7 @@ public class SalesController extends BaseController {
 				: request.getParameter("startoilnum");
 		String returnOilNum = request.getParameter("returnoilnum") == "" ? null
 				: request.getParameter("returnoilnum");
-		Sales sales=new Sales();
+		Sales sales = new Sales();
 		sales.setStorehouseManager(storeManager);
 		sales.setTouchingManager(touchManager);
 		sales.setReceiver(receiver);
@@ -599,18 +635,17 @@ public class SalesController extends BaseController {
 		sales.setTotalSettlementAmount(totalSettlementAmount);
 		sales.setStartOilNumber(startOilNum);
 		sales.setReturnOilNumber(returnOilNum);
-		if (departureTime!=null) {
+		if (departureTime != null) {
 			sales.setDepartureTime(sdf.parse(departureTime));
 		}
-		if (stillTime!=null) {
+		if (stillTime != null) {
 			sales.setStillTime(sdf.parse(stillTime));
 		}
-		
-		
+
 		SalesUpdateData salesUpdateData = new SalesUpdateData(salesGoodsIdList,
 				goodsAmountList, salesSerialNumber, salesStatus, payMed,
 				creditCount, payTime);
-		String result = salesBusiness.updateSalesData(salesUpdateData,sales);
+		String result = salesBusiness.updateSalesData(salesUpdateData, sales);
 		request.setAttribute("result", result);
 		return "import";
 	}

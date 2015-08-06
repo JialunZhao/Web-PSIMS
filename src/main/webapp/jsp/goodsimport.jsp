@@ -53,8 +53,8 @@ String date=sdf.format(new Date());
 
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">生产日期:</span>
-				<input type="text" class="form-control" value=""
-					id="goodsProductionDate">
+				<input type="text" class="form-control" name="goodsProductionDate"
+					id="goodsProductionDate" maxlength="30"	onclick="showCalendar(this)" >
 			</div>
 
 			<div class="input-group col-xs-10 col-md-offset-1">

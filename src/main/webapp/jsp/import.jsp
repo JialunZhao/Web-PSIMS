@@ -35,7 +35,6 @@ String date=sdf.format(new Date());
 								<th>入库流水号</th>
 								<th>供应商名称</th>
 								<th>入库下单日期</th>
-								<th>入库批次号</th>
 								<th>支付方式</th>
 								<th>入库状态</th>
 								<th>备注</th>
@@ -47,26 +46,47 @@ String date=sdf.format(new Date());
 								<tr>
 									<td class="chk" style="display: none"><input
 										type="checkbox" aria-label="..."></td>
-									<td>${imports.importSerialNumber}</td>
-									<td>${imports.providerName}</td>
-									<td><fmt:formatDate value="${imports.importDatetime }"
-											pattern="yyyy-MM-dd" /></td>
-									<td>${imports.importBatchNumber}</td>
-									<td>${imports.paymentType}</td>
-									<td>${imports.importStatus}</td>
-									<td>${imports.importRemark}</td>
+									<td><font color="#16a085">${imports.importSerialNumber}</font></td>
+									<td><font size="4" color="#16a085">${imports.providerName}</font></td>
+									<td><font size="4" color="#16a085"><fmt:formatDate value="${imports.importDatetime }"
+											pattern="yyyy-MM-dd" /></font></td>
+									<%-- <td><font size="4" color="#16a085">${imports.importBatchNumber}</font></td> --%>
+									<td><font size="4" color="#16a085">${imports.paymentType}</font></td>
+									<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
+									<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
 									<priv:privilege power="货品入库.增删改">
 									<td><a href="#"
 										onclick="goodsImport(${imports.importSerialNumber})">入库</a></td>
 									</priv:privilege>
 								</tr>
+								<tr>
+									<td>订单详情</td>
+									<td>商品名称</td>
+									<td>商品价格</td>
+									<td>商品数量</td>
+									<td>总价</td>
+									<td>奖金池支付总额</td>
+									<td>现金支付总额</td>
+								</tr>
+								<c:forEach var="importGoods" items="${importGoodsList}"
+									varStatus="status">
+								<c:if test="${importGoods.importSerialNumber==imports.importSerialNumber}">
+									<tr id="#collapse${importGoods.importSerialNumber}">
+										<td>订单详情</td>
+										<td>${importGoods.goodsName}</td>
+										<td>${importGoods.importGoodsPrice}</td>
+										<td>${importGoods.importGoodsAmount}</td>
+										<td>${importGoods.importGoodsTotalPrice}</td>
+										<td>${importGoods.discountDutyTotalPrice}</td>
+										<td>${importGoods.discountGoodsTotalPrice}</td>
+									</tr>
+								</c:if>
+							</c:forEach>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		</div>
-	</div>
 
 
 
@@ -227,17 +247,46 @@ String date=sdf.format(new Date());
                         success:function(data){  
                         			var json = $.parseJSON(data);
     								var goodsList=$.parseJSON(json.RES_DATA.goods);
-    								for (var i = 0; i < goodsList.length; i++) {
-	    										$("#importGoodListTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
-	    					                  	+'<td>'+isNull(goodsList[i].importSerialNumber)+'</td>'
-	    					                  	+'<td>'+isNull(goodsList[i].providerName)+'</td>'
-	    					                  	+'<td>'+getLocalTime(goodsList[i].importDatetime)+'</td>'
-	    					                  	+'<td>'+isNull(goodsList[i].importBatchNumber)+'</td>'
-	    					                  	+'<td>'+isNull(goodsList[i].paymentType)+'</td>'
-	    					                  	+'<td>'+isNull(goodsList[i].importStatus)+'</td>'
-	    					                  	+'<td><a href="#" onclick="goodsImport('+isNull(goodsList[i].importSerialNumber)+')">入库</a></td>' );
-	        								
-    								}
+    								var importGoodsList=$.parseJSON(json.RES_DATA.importGoodsList);
+    								if(goodsList.length!=0){
+    									for (var i = 0; i < goodsList.length; i++) {
+    										$("#importGoodListTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
+    					                  	+'<td><font color="#16a085">'+isNull(goodsList[i].importSerialNumber)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(goodsList[i].providerName)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+getLocalTime(goodsList[i].importDatetime)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(goodsList[i].paymentType)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(goodsList[i].importStatus)+'</font></td>'
+    					                  	+'<td><font size="4" color="#16a085">'+isNull(goodsList[i].importRemark)+'</font></td>'
+    					                  	+'<priv:privilege power="货品入库.增删改"><td><a href="#" onclick="goodsImport('+isNull(goodsList[i].importSerialNumber)+')">入库</a></td></priv:privilege></tr>' );
+    										
+    										$("#importGoodListTab tbody").append( '<tr><td>订单详情</td>'
+		    					                  	+'<td>商品名称</td>'
+		    					                  	+'<td>商品单价</td>'
+		    					                  	+'<td>商品数量</td>'
+		    					                  	+'<td>总价</td>'
+		    					                  	+'<td>奖金池支付总额</td>'
+		    					                  	+'<td>现金支付总额</td>'
+		    					                  	+'</tr>');
+    										
+    										for (var j = 0; j < importGoodsList.length; j++) {
+												if(goodsList[i].importSerialNumber==importGoodsList[j].importSerialNumber){
+													$("#importGoodListTab tbody").append('<tr id="#collapse'+isNull(importGoodsList[j].salesSerialNumber)+'">'
+		    					                  	+'<td>订单详情</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].goodsName)+'</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].importGoodsPrice)+'</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].importGoodsAmount)+'</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].importGoodsTotalPrice)+'</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].discountDutyTotalPrice)+'</td>'
+		    					                  	+'<td>'+isNull(importGoodsList[j].discountGoodsTotalPrice)+'</td>'
+		    					                  	+'</tr>');
+												}
+											}   	
+        								
+										}
+    								}else {
+										alert("没有要查询的入库订单信息");
+									}
+    								
                                 
                     }  
                     }); 
@@ -264,6 +313,7 @@ String date=sdf.format(new Date());
 		function showTable(goodsName){
 			var importSerialNumber=$("#importSerialNumber").val();
 			if (!checkIsNull(goodsName)) {
+			<%-- var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+encodeURI(encodeURI(goodsName)); --%>
 			var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+goodsName;
     		$.dialog({
     			title:'修改入库单',

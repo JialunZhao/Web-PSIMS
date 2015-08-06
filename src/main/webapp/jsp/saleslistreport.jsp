@@ -33,7 +33,6 @@
 								<th>仓库名称</th>
 								<th>应收总价</th>
 								<th>销售状态</th>
-								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -49,9 +48,6 @@
 									<td><font size="4" color="#16a085">${sales.storehouseName }</font></td>
 									<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td>
 									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
-									<priv:privilege power="销售出库.增删改">
-									<td><a href="#" onclick="printSalesData(${sales.salesSerialNumber })">打印</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
-									</priv:privilege>
 								</tr>
 								<tr>
 									<td>订单详情</td>

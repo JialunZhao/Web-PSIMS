@@ -101,6 +101,7 @@ public class ImportController extends BaseController {
 	public String importInit(HttpServletRequest request) throws Exception {
 		List<TbImport> importList = new ArrayList<TbImport>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
+		List<TbImportGoods> importGoodsList=new ArrayList<TbImportGoods>();
 		storehouse = queryBus.queryStorehouse();
 		List<String> importStatusList = new ArrayList<String>();
 		importStatusList.add(Constants.ImportStatus.ORDERNOPAY);
@@ -111,6 +112,17 @@ public class ImportController extends BaseController {
 		criteria.andImportStatusNotEqualTo("00");
 		criteria.andImportStatusIn(importStatusList);
 		importList = queryBus.queryImport(example);
+		if(importList!=null){
+			for (TbImport tbImport : importList) {
+				List<TbImportGoods> importGoodList=new ArrayList<TbImportGoods>();
+				importGoodList=imporBusinessImpl.selBySerNum(tbImport.getImportSerialNumber());
+				for (TbImportGoods tbImportGoods : importGoodList) {
+					importGoodsList.add(tbImportGoods);
+				}
+			}
+		}
+		
+		request.setAttribute("importGoodsList", importGoodsList);
 		request.setAttribute("importList", importList);
 		request.setAttribute("storehouseList", storehouse);
 		return "import";
@@ -181,20 +193,38 @@ public class ImportController extends BaseController {
 		String importSerialNumber = request.getParameter("importSerialNumber");
 		TbImportExample example = new TbImportExample();
 		Criteria criteria = example.createCriteria();
+		
+		List<String> importStatusList = new ArrayList<String>();
+		importStatusList.add(Constants.ImportStatus.ORDERNOPAY);
+		importStatusList.add(Constants.ImportStatus.ORDERYESPAY);
+		importStatusList.add(Constants.ImportStatus.GOODSLITARRIVAL);
+		
 		JSONObject data = new JSONObject();
 		if (importSerialNumber != null && importSerialNumber != "") {
 			criteria.andImportSerialNumberLike("%" + importSerialNumber + "%");
 		}
 		criteria.andImportStatusNotEqualTo("00");
+		criteria.andImportStatusIn(importStatusList);
 		List<TbImport> importList = new ArrayList<TbImport>();
 		importList = queryImportList.queryImportByColum(example);
 		if (importList == null) {
 			responseFailed(response, "ERROR", data);
 		} else {
+			List<TbImportGoods> importGoodsList=new ArrayList<TbImportGoods>();
+			for (TbImport tbImport : importList) {
+				List<TbImportGoods> importGoodList=new ArrayList<TbImportGoods>();
+				importGoodList=imporBusinessImpl.selBySerNum(tbImport.getImportSerialNumber());
+				for (TbImportGoods tbImportGoods : importGoodList) {
+					importGoodsList.add(tbImportGoods);
+				}
+			}
+			data.put("importGoodsList", JSON.toJSONString(importGoodsList));
 			data.put("goods", JSON.toJSONString(importList));
 			responseSuccess(response, "SUCCESS", data);
 		}
 	}
+
+
 	
 	
 	
@@ -415,7 +445,7 @@ public class ImportController extends BaseController {
 		criteria.andGoodsNameEqualTo(goodName);
 		importGoodsList = imporBusinessImpl.queryImportGoods(example);
 		TbImportGoods importGoods=new TbImportGoods();
-		if (importGoodsList!=null) {
+		if (importGoodsList.size()>0) {
 			importGoods=importGoodsList.get(0);
 		}		
 		request.setAttribute("importGoods", importGoods);
