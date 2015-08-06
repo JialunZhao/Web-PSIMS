@@ -437,11 +437,15 @@ public class ImportController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		String importSerialNumber = request.getParameter("importSerialNumber");
 		String goodName = request.getParameter("goodsName");
+		
 		List<TbImportGoods> importGoodsList = new ArrayList<TbImportGoods>();
 		TbImportGoodsExample example = new TbImportGoodsExample();
 		com.ai.psims.web.model.TbImportGoodsExample.Criteria criteria = example
 				.createCriteria();
 		criteria.andImportSerialNumberEqualTo(importSerialNumber);
+		/*if (goodName != null && goodName != "") {
+			goodName = URLDecoder.decode(goodName);
+		}*/
 		criteria.andGoodsNameEqualTo(goodName);
 		importGoodsList = imporBusinessImpl.queryImportGoods(example);
 		TbImportGoods importGoods=new TbImportGoods();

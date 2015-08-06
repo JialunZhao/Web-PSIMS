@@ -224,9 +224,9 @@ public class SalesController extends BaseController {
 				.createCriteria();
 		// criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
 		/*if (goodsName != null && goodsName != "") {
-			goodsName = URLDecoder.decode(goodsName);
-			criteria.andGoodsNameEqualTo(goodsName);
+			goodsName = URLDecoder.decode(goodsName);			
 		}*/
+		criteria.andGoodsNameEqualTo(goodsName);
 		criteria.andEndtimeIsNull();
 		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
 				goodsName);
