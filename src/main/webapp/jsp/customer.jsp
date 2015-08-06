@@ -343,6 +343,31 @@
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	<!-- 模态框（Modal） -->
+	<!-- 修改客户模态框（Modal） -->
+	<div class="modal fade" id="deletecustomer" tabindex="-1" role="dialog"
+		aria-labelledby="modifycustomer" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">删除客户资料</h4>
+				</div>
+				<div class="modal-body">
+					请确认是否删除
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary"
+						onClick="modifyCurrentCustomerInfo(this)">确认删除</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 	<!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
 	<script src="<%=path%>/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
