@@ -69,19 +69,22 @@ function delCurrentProvider(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
 	var provider_id = $(obj).parent().parent().children("td").get(1).innerHTML;
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'deleteProvider.do',
-		// data : $('#addcustomerForm').serialize(),
-		data : {
-			'provider_id' : provider_id
-		},
-		success : function(data) {
-			$(obj).parent().parent().remove();
-
-		},
-	});
+	if (confirm("确定删除么?")) {
+		// 删除
+		$.ajax({
+			type : 'POST',
+			async : true,
+			url : 'deleteProvider.do',
+			// data : $('#addcustomerForm').serialize(),
+			data : {
+				'provider_id' : provider_id
+			},
+			success : function(data) {
+				$(obj).parent().parent().remove();
+	
+			},
+		});
+	}
 }
 // 修改客户信息
 // 1.修改模态框数据获取

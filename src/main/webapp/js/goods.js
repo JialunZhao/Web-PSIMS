@@ -84,18 +84,21 @@ function delCurrentGoods(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
 	var goodsId = $(obj).parent().parent().children("td").get(1).innerHTML;
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'deleteGoods.do',
-		// data : $('#addcustomerForm').serialize(),
-		data : {
-			'goodsId' : goodsId
-		},
-		success : function(data) {
-			$(obj).parent().parent().remove();
-		},
-	});
+	if (confirm("确定删除么?")) {
+		// 删除
+		$.ajax({
+			type : 'POST',
+			async : true,
+			url : 'deleteGoods.do',
+			// data : $('#addcustomerForm').serialize(),
+			data : {
+				'goodsId' : goodsId
+			},
+			success : function(data) {
+				$(obj).parent().parent().remove();
+			},
+		});
+	}
 }
 
 // 下架商品信息

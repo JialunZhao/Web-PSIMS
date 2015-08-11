@@ -106,7 +106,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 					goodsArray.get(i).getImportDiscountRate())) {
 				return "商品奖金池折扣校验失败";
 			}
-
+			
 			// 单项商品总价：（正价销售总额(含税)）
 			BigDecimal goodsAmountBD = new BigDecimal(goodsArray.get(i)
 					.getImportGoodsAmount()); // 100
@@ -140,7 +140,10 @@ public class ImporBusinessImpl implements IImporBusiness {
 			}
 
 			goodsArray.get(i).setGoodsName(tbGoods.getGoodsName());
-			;
+			goodsArray.get(i).setGoodsCode(tbGoods.getGoodsCode());
+			goodsArray.get(i).setImportGoodsType(tbGoods.getGoodsType());
+			
+			
 			goodsArray.get(i).setImportGoodsTotalPrice(totalPriceBD.toString());
 			goodsArray.get(i).setImportGoodsCreatetime(new java.util.Date());
 			// goodsArray.get(i).setImportGoodsRemark(goodsBean.getTbImport().getImportRemark());
@@ -168,7 +171,6 @@ public class ImporBusinessImpl implements IImporBusiness {
 			goodsArray.get(i).setProviderCode(tbImport.getProviderCode());
 			goodsArray.get(i).setProviderName(tbImport.getProviderName());
 			goodsArray.get(i).setResImportGoodsAmount(goodsArray.get(i).getImportGoodsAmount());
-			
 			importGoodsService.insertImportGoods(goodsArray.get(i));
 
 			// 奖金池金额更新

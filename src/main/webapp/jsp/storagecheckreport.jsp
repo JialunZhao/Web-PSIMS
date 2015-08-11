@@ -85,11 +85,6 @@
 						<td><fmt:formatDate value="${tbStoragechecks.createtime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><fmt:formatDate value="${tbStoragechecks.goodsExpirationDate}" pattern="yyyy-MM-dd" /> </td>
 						<td>${tbStoragechecks.remark}</td>
-						<priv:privilege power="客户管理.增删改">
-							<td><a href="javascript:void(0);"
-								onClick="modifyCurrentCustomer(this)">修改</a>/<a
-								href="javascript:void(0);" onClick="delCurrentCustomer(this);">删除</a></td>
-						</priv:privilege>
 					</tr>
 				</c:forEach>
 			</tbody>

@@ -107,9 +107,15 @@ public class StorageCheckReportController extends BaseController {
 
 		 }
 		logger.info("------------4.2.转译商品类型-------------");
-//		 for (TbStoragecheck tbStoragecheck : tbStoragechecks) {
-//
-//		 }
+		 for (TbStoragecheck tbStoragecheck : tbStoragechecks) {
+			 if (tbStoragecheck.getGoodsType() != null)
+				tbStoragecheck
+						.setGoodsType(systemParameterBussinessImpl
+								.getSystemParameterPrizePool(
+										Integer.parseInt(tbStoragecheck
+												.getGoodsType())).getPpDesc());
+
+		 }
 //		row.createCell(idx++).setCellValue(sdf.format(tbStoragecheck.getCreatetime()));
 //		row.createCell(idx++).setCellValue(sdf.format(tbStoragecheck.getGoodsExpirationDate()));
 //	
