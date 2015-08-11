@@ -443,9 +443,9 @@ public class ImportController extends BaseController {
 		com.ai.psims.web.model.TbImportGoodsExample.Criteria criteria = example
 				.createCriteria();
 		criteria.andImportSerialNumberEqualTo(importSerialNumber);
-		/*if (goodName != null && goodName != "") {
+		if (goodName != null && goodName != "") {
 			goodName = URLDecoder.decode(goodName);
-		}*/
+		}
 		criteria.andGoodsNameEqualTo(goodName);
 		importGoodsList = imporBusinessImpl.queryImportGoods(example);
 		TbImportGoods importGoods=new TbImportGoods();

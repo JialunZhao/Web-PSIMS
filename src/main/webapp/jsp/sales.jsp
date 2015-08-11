@@ -1,85 +1,88 @@
 <%@page import="com.ai.psims.web.util.Constants"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String date = sdf.format(new Date());
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+String date=sdf.format(new Date());
+
 %>
 <%@ include file="all.jsp"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<h3 class="page-header">销售出库</h3>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h3 class="page-header">销售出库</h3>
 
-	<div class="row placeholders">
-		<form class="form-inline">
-			<div class="form-group">
-				<label for="exampleInputEmail2">客户名称：</label> <select
-					class="form-control" value="请选择客户名称" tabindex="1"
-					name="customerName" id="customerName">
-					<option value="">请选择客户名称</option>
-					<c:forEach var="customers" items="${customersList}"
-						varStatus="status">
-						<option value="${customers.customerId }">${customers.customerName }</option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail2">仓库名称：</label> <select
-					class="form-control" value="请选仓库" tabindex="1"
-					name="storehouseName" id="storehouseName">
-					<option value="">请选择仓库</option>
-					<c:forEach var="storehouse" items="${storehouseList}"
-						varStatus="status">
-						<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail2">收款方式：</label> <select
-					class="form-control" value="请选择收款方式" tabindex="1" name="quyPayMed">
-					<option value="">请选择收款方式</option>
-					<option value="00">现金</option>
-					<option value="01">转账</option>
-					<option value="02">支票</option>
-					<option value="03">赊账</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail2">销售人员：</label> <select
-					class="form-control" value="请选仓库" tabindex="1" name="employeeName"
-					id="employeeName">
-					<option value="">请选择销售人员</option>
-					<c:forEach var="employees" items="${employeesList}"
-						varStatus="status">
-						<option value="${employees.employeeId }">${employees.employeeName }</option>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputEmail2">销售流水号</label> <input type="text"
-					class="form-control" id="qurSalesSerialNumber" placeholder="销售流水号">
-			</div>
-			<button type="button" class="btn btn-primary"
-				onclick="queryImportList()">搜索</button>
-		</form>
-	</div>
+				<div class="row placeholders">
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="exampleInputEmail2">客户名称：</label> <select
+								class="form-control" value="请选择客户名称" tabindex="1"
+								name="customerName" id="customerName" onkeyup="cc()">
+								 <option value="">请选择客户名称</option>
+								<%--<c:forEach var="customers" items="${customersList}"
+									varStatus="status">
+									<option value="${customers.customerId }">${customers.customerName }</option>
+								</c:forEach> --%>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">仓库名称：</label> <select
+								class="form-control" value="请选仓库" tabindex="1"
+								name="storehouseName" id="storehouseName">
+								<option value="">请选择仓库</option>
+								<c:forEach var="storehouse" items="${storehouseList}"
+									varStatus="status">
+									<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">收款方式：</label> <select
+								class="form-control" value="请选择收款方式" tabindex="1"
+								name="quyPayMed">
+								<option value="">请选择收款方式</option>
+								<option value="00">现金</option>
+								<option value="01">转账</option>
+								<option value="02">支票</option>
+								<option value="03">赊账</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">销售人员：</label> <select
+								class="form-control" value="请选仓库" tabindex="1"
+								name="employeeName" id="employeeName">
+								<option value="">请选择销售人员</option>
+								<c:forEach var="employees" items="${employeesList}"
+									varStatus="status">
+									<option value="${employees.employeeId }">${employees.employeeName }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">销售流水号</label> <input type="text"
+								class="form-control" id="qurSalesSerialNumber"
+								placeholder="销售流水号">
+						</div>
+						<button type="button" class="btn btn-primary"
+							onclick="queryImportList()">搜索</button>
+					</form>
+				</div>
 
-	<div class="row placeholders ">
-		<div class="col-sm-2">
-			<priv:privilege power="销售出库.增删改">
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#salesgoods">新增销售单</button>
-			</priv:privilege>
-			<!-- <button type="button" id="delbtn" class="btn btn-primary">批量删除销售单</button>
+				<div class="row placeholders ">
+					<div class="col-sm-2">
+					<priv:privilege power="销售出库.增删改">
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#salesgoods">新增销售单</button>
+					</priv:privilege>
+						<!-- <button type="button" id="delbtn" class="btn btn-primary">批量删除销售单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的销售单</button>
             <button type="button" id="delcancle" class="btn btn-primary" style="display:none">取消</button> -->
-		</div>
-	</div>
+					</div>
+				</div>
 
-	<h4 class="sub-header">销售清单</h4>
-	<div class="table-responsive">
-		<table class="table table-striped" id="saleTab">
+				<h4 class="sub-header">销售清单</h4>
+				<div class="table-responsive">
+					<table class="table table-striped" id="saleTab">
 			<thead>
 				<tr>
 					<th class="chk" style="display: none"><input type="checkbox"
@@ -156,127 +159,129 @@
 
 			</tbody>
 		</table>
-	</div>
-</div>
-</div>
-</div>
-
-
-<!-- 模态框（Modal） -->
-<!-- 添加入库单模态框（Modal） -->
-<div class="modal fade" id="salesgoods" tabindex="-1" role="dialog"
-	aria-labelledby="importgoods" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">新增销售单</h4>
-			</div>
-			<div class="modal-body" id="salesgoodsform">
-				<div class="row">
-					<div class="input-group col-xs-10 col-md-offset-1">
-						<span class="input-group-addon" style="background-color: #1abc9c;">销售时间:</span>
-						<input type="text" class="form-control"
-							placeholder="2015-03-03 10:12:00" value="<%=date%>"
-							id="salesTime"> <span class="input-group-addon"
-							style="background-color: #1abc9c;">存储仓库:</span> <select
-							class="form-control" value="请选仓库" tabindex="1"
-							name="addStorehouseName" id="addStorehouseName">
-							<option value="">请选择仓库</option>
-							<c:forEach var="storehouse" items="${storehouseList}"
-								varStatus="status">
-								<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="input-group col-xs-10 col-md-offset-1">
-						<span class="input-group-addon" style="background-color: #1abc9c;">客户名称:</span>
-						<select class="form-control" value="请选择客户名称" tabindex="1"
-							name="addCustomerName" id="addCustomerName">
-							<option value="" emp="" remark="无">请选择客户名称</option>
-							<c:forEach var="customers" items="${customersList}"
-								varStatus="status">
-								<option value="${customers.customerId }"
-									emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
-							</c:forEach>
-						</select> <span class="input-group-addon"
-							style="background-color: #1abc9c;">销售人员：</span> <select
-							class="form-control" value="请选仓库" tabindex="1"
-							name="addEmployeeName" id="addEmployeeName">
-							<option value="">请选择销售人员</option>
-							<c:forEach var="employees" items="${employeesList}"
-								varStatus="status">
-								<option value="${employees.employeeId }">${employees.employeeName }</option>
-							</c:forEach>
-						</select>
-					</div>
-					<div class="input-group col-xs-10 col-md-offset-1">
-						<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
-
-					</div>
-					<div class="input-group col-xs-10 col-md-offset-1">
-						<span class="col-xs-12" id="addremark"></span>
-					</div>
 				</div>
-			</div>
-
-			<div class="modal-body" id="addgoods" style="display: none">
-				<div class="row placeholders">
-					<div class="input-group col-xs-6 col-md-offset-3">
-						<span class="input-group-addon" style="background-color: #1abc9c;">商品名称:</span>
-						<select class="form-control" value="请选择商品" tabindex="1"
-							name="goodsName" id="goodsName" onChange="showTable(this.value)">
-
-						</select>
-					</div>
-				</div>
-			</div>
-
-			<div class="modal-body" id="addgoodstb">
-				<div class="row">
-					<div class="table-responsive col-xs-15">
-						<table class="table table-striped" id="addGoodsTab">
-							<thead>
-								<tr>
-									<th>商品名称</th>
-									<th>基本单位</th>
-									<th>生产日期</th>
-									<th>销售数量</th>
-									<th>销售价格</th>
-									<th>应付总金额</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
-
-					<div class="input-group col-xs-1">
-						<!-- 							<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button> -->
-
-					</div>
-				</div>
-			</div>
-
-
-			<div class="modal-footer">
-				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-				<button type="button" class="btn btn-primary" id="suerAdd">确认新增</button>
-				<button type="button" class="btn btn-primary" id="getBack">返回</button>
 			</div>
 		</div>
-		<!-- /.modal-content -->
 	</div>
-	<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
 
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<%=path%>/js/vendor/video.js"></script>
-<script src="<%=path%>/js/flat-ui.min.js"></script>
-<script type="text/javascript">
+
+	<!-- 模态框（Modal） -->
+	<!-- 添加入库单模态框（Modal） -->
+	<div class="modal fade" id="salesgoods" tabindex="-1" role="dialog"
+		aria-labelledby="importgoods" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">新增销售单</h4>
+				</div>
+				<div class="modal-body" id="salesgoodsform">
+					<div class="row">
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">销售时间:</span> <input
+								type="text" class="form-control"
+								placeholder="2015-03-03 10:12:00" value="<%=date%>"
+								id="salesTime"> <span class="input-group-addon"
+								style="background-color: #1abc9c;">存储仓库:</span> <select
+								class="form-control" value="请选仓库" tabindex="1"
+								name="addStorehouseName" id="addStorehouseName">
+								<option value="">请选择仓库</option>
+								<c:forEach var="storehouse" items="${storehouseList}"
+									varStatus="status">
+									<option value="${storehouse.storehouseId }">${storehouse.storehouseName }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">客户名称:</span> <select
+								class="form-control" value="请选择客户名称" tabindex="1"
+								name="addCustomerName" id="addCustomerName">
+								<option value="" emp="" remark="无">请选择客户名称</option>
+								<c:forEach var="customers" items="${customersList}"
+									varStatus="status">
+									<option value="${customers.customerId }" emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
+								</c:forEach>
+							</select> <span class="input-group-addon"
+								style="background-color: #1abc9c;">销售人员：</span> <select
+								class="form-control" value="请选仓库" tabindex="1"
+								name="addEmployeeName" id="addEmployeeName">
+								<option value="">请选择销售人员</option>
+								<c:forEach var="employees" items="${employeesList}"
+									varStatus="status">
+									<option value="${employees.employeeId }">${employees.employeeName }</option>
+								</c:forEach>
+							</select>
+						</div>						
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
+							
+						</div>
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="col-xs-12" id="addremark"></span>			
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-body" id="addgoods" style="display: none">
+					<div class="row placeholders">
+						<div class="input-group col-xs-6 col-md-offset-3">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">商品名称:</span> <select
+								class="form-control" value="请选择商品" tabindex="1" name="goodsName"
+								id="goodsName" onChange="showTable(this.value)">
+
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-body" id="addgoodstb" >
+					<div class="row">
+						<div class="table-responsive col-xs-15">
+							<table class="table table-striped" id="addGoodsTab">
+								<thead>
+									<tr>
+										<th>商品名称</th>
+										<th>基本单位</th>
+										<th>生产日期</th>
+										<th>销售数量</th>
+										<th>销售价格</th>
+										<th>应付总金额</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="input-group col-xs-1">
+<!-- 							<button type="submit" class="btn btn-primary" id="suerAdd">确认新增</button> -->
+						
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+            <button type="button" class="btn btn-primary" id="suerAdd">确认新增</button> 
+					<button type="button" class="btn btn-primary" id="getBack">返回</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="<%=path%>/js/vendor/video.js"></script>
+	<script src="<%=path%>/js/flat-ui.min.js"></script>
+	<script type="text/javascript">
 	$("#addCustomerName").change(function(e) {
 		// $('#addcustomer').modal('hide');
 		var employeeId = $("#addCustomerName").children('option:selected').attr("emp");
@@ -325,6 +330,10 @@
                     
         });       
 	}
+    
+    function cc(){
+    	alert("cc");
+    }
     
     function queryImportList() {
   		var selOpt = $("#saleTab tbody tr");  
@@ -434,8 +443,8 @@
           		})
           	}
     		alert(goodsCount);
-    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
-<%--     		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
+    		<%--   var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;--%>
+  			var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; 
     		$.dialog({
     			title:'可销售商品',
     			width:1200,
@@ -544,7 +553,7 @@
 		return y+"-"+m+"-"+d;
 	} 
     </script>
-<script type="text/javascript">
+	<script type="text/javascript">
     $(document).ready(function(){
       $("#delbtn").click(function(){
         $("#delbtn").hide();

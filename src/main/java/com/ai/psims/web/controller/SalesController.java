@@ -223,9 +223,9 @@ public class SalesController extends BaseController {
 		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = storagecheckExample
 				.createCriteria();
 		// criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
-		/*if (goodsName != null && goodsName != "") {
+		if (goodsName != null && goodsName != "") {
 			goodsName = URLDecoder.decode(goodsName);			
-		}*/
+		}
 		criteria.andGoodsNameEqualTo(goodsName);
 		criteria.andEndtimeIsNull();
 		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
@@ -316,6 +316,49 @@ public class SalesController extends BaseController {
 			responseSuccess(response, "SUCCESS", data);
 		}
 
+	}
+	
+	
+	@RequestMapping("/printSales")
+	public View printSales(Model model, HttpServletRequest request)
+			throws Exception {
+		
+		String salesSerialNumber = request
+				.getParameter("salesSerialNumber");
+
+		Sales sales = new Sales();
+		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
+		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+		SalesGoodsExample example = new SalesGoodsExample();
+		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
+				.createCriteria();
+		criteria.andSalesSerialNumberEqualTo(salesSerialNumber);
+		criteria.andSalesGoodsEndtimeIsNull();
+		salesGoodsList = salesBusiness.selectSalesGoods(example);
+		TbCustomer customer = new TbCustomer();
+		customer = customerBusiness.customerById(sales.getCustomerId());
+		logger.info("------------获取当前登录的员工名称-------------");
+		TbEmployee tbEmployee = (TbEmployee) request.getSession()
+				.getAttribute("mysession");
+
+		logger.info("------------建立 Excel -Sheet-------------");
+		String title=null;
+		if (salesGoodsList!=null) {
+			if (salesGoodsList.get(0).getSalesGoodsAmount()<0) {
+				title="北京市金瑞超达商贸有限公司商品退货单";
+			}else {
+				title="北京市金瑞超达商贸有限公司商品销售单";
+			}
+		}
+		request.setAttribute("sales", sales);
+		request.setAttribute("salesGoodsList", salesGoodsList);
+		request.setAttribute("customer", customer);
+		request.setAttribute("tbEmployee", tbEmployee);
+		request.setAttribute("title", title);
+		
+		
+		return null;
+		
 	}
 
 	@RequestMapping("/printSalesData")

@@ -313,8 +313,8 @@ String date=sdf.format(new Date());
 		function showTable(goodsName){
 			var importSerialNumber=$("#importSerialNumber").val();
 			if (!checkIsNull(goodsName)) {
-			<%-- var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+encodeURI(encodeURI(goodsName)); --%>
-			var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+goodsName;
+			 var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+encodeURI(encodeURI(goodsName)); 
+			 <%--var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+goodsName;--%>
     		$.dialog({
     			title:'修改入库单',
     			width:900,

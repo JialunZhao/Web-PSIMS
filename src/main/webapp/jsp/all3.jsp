@@ -23,6 +23,7 @@
 <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
 <!-- Loading Bootstrap -->
 <link href="${ctx}/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/css/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 <!-- Loading Flat UI -->
 <link href="${ctx}/css/flatUI/flat-ui.min.css" rel="stylesheet">
@@ -33,6 +34,8 @@
 <link rel="shortcut icon" href="${ctx}/img/favicon.ico">
 <script type="text/javascript" src="${ctx}/js/vendor/jquery.min.js"></script>
 <script type="text/javascript" src="${ctx}/js/dialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="${ctx}/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="${ctx}/js/bootstrap-datetimepicker.zh-CN.js"></script>
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
 <!--[if lt IE 9]>
       <script src="./js/vendor/html5shiv.js"></script>

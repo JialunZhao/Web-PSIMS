@@ -9,6 +9,7 @@ String date=sdf.format(new Date());
 %>
 <%@ include file="all3.jsp"%>
 
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 	<div class="col-sm-offset-3">
 		<div class="row placeholders">
@@ -53,14 +54,15 @@ String date=sdf.format(new Date());
 
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">生产日期:</span>
-				<input type="text" class="form-control" name="goodsProductionDate"
-					id="goodsProductionDate" maxlength="30"	onclick="showCalendar(this)" >
+				<!-- <input type="text" class="form-control" name="goodsProductionDate"
+					id="goodsProductionDate" maxlength="30"	onclick="showCalendar(this)" > -->
+				<input type="text" class="form-control" value="<%=date %>" id="goodsProductionDate" readonly="readonly">				
 			</div>
 
 			<div class="input-group col-xs-10 col-md-offset-1">
 				<span class="input-group-addon" style="background-color: #1abc9c;">失效日期:</span>
 				<input type="text" class="form-control" value=""
-					id="goodsExpirationDate" onblur="getGoodsExpirationDate()">
+					id="goodsExpirationDate" onblur="getGoodsExpirationDate()" readonly="readonly">
 			</div>
 
 		</div>
@@ -84,6 +86,18 @@ String date=sdf.format(new Date());
 				$("#importCount").val("");
 			}
 		}
+		
+		$("#goodsProductionDate").datetimepicker({
+			format: "yyyy-mm-dd",
+			language:"zh-CN",
+	        weekStart: 1,
+	        todayBtn:  true,
+			autoclose: true,
+			todayHighlight: true,
+			startView: 2,
+			minView: 2,
+			/* forceParse: 0 */
+		});
 
 		function checkDataFomat(data){
 			  var a = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -98,9 +112,9 @@ String date=sdf.format(new Date());
 		function getGoodsExpirationDate(){
 			var goodsProductionDate=$("#goodsProductionDate").val();
 			if(!checkIsNull(goodsProductionDate)){
-				if (checkDataFomat(goodsProductionDate)) {
+				/* if (checkDataFomat(goodsProductionDate)) {
 					return;
-				}
+				} */
 	  			var goodsShelfLife=$("#goodsShelfLife").val();
 	  			var goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
 	  			$("#goodsExpirationDate").val(goodsExpirationDate);
@@ -148,9 +162,9 @@ String date=sdf.format(new Date());
 				alert("请填写生产日期");
 				return;
 			}else {
-				if (checkDataFomat(goodsProductionDate)) {
+				/* if (checkDataFomat(goodsProductionDate)) {
 					return;
-				}
+				} */
 	  			var goodsShelfLife=$("#goodsShelfLife").val();
 	  			goodsExpirationDate=getthedate(goodsProductionDate, goodsShelfLife);
 	  			$("#goodsExpirationDate").val(goodsExpirationDate);
