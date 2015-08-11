@@ -83,86 +83,70 @@ String date=sdf.format(new Date());
 				<h4 class="sub-header">销售清单</h4>
 				<div class="table-responsive">
 					<table class="table table-striped" id="saleTab">
-			<thead>
-				<tr>
-					<th class="chk" style="display: none"><input type="checkbox"
-						aria-label="..."></th>
-					<th>销售流水号</th>
-					<th>销售时间</th>
-					<th>仓库名称</th>
-					<th>客户名称</th>
-					<th>商品名称</th>
-					<th>商品数量</th>
-					<th>商品单价</th>
-					<th>商品总价</th>
-					<th>单据应收总价</th>
-					<th>业务员名称</th>
-					<th>销售状态</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:set value="0" var="sum" />
-				<c:forEach var="sales" items="${salesList}" varStatus="status">
-
-					<!-- 								<tr> -->
-					<!-- 									<td class="chk" style="display: none"><input -->
-					<!-- 										type="checkbox" aria-label="..."></td> -->
-					<%-- 									<td><font color="#16a085">${sales.salesSerialNumber }</font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085"><fmt:formatDate value="${sales.salesDate }" --%>
-					<%-- 											pattern="yyyy-MM-dd" /></font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085">${sales.employeeName }</font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085">${sales.customerName }</font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085">${sales.storehouseName }</font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td> --%>
-					<%-- 									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td> --%>
-					<%-- 									<priv:privilege power="销售出库.增删改"> --%>
-					<%-- 									<td><a href="#" onclick="printSalesData(${sales.salesSerialNumber })">打印</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td> --%>
-					<%-- 									</priv:privilege> --%>
-					<!-- 								</tr> -->
-
-					<c:forEach var="salesGoods" items="${salesGoodsList}"
-						varStatus="status">
-						<c:if
-							test="${salesGoods.salesSerialNumber==sales.salesSerialNumber}">
-							<tr id="#collapse${salesGoods.salesSerialNumber}">
-								<td>${sales.salesSerialNumber }</td>
-								<td><fmt:formatDate value="${sales.salesDate }"
-										pattern="yyyy-MM-dd" /></td>
-								<td>${sales.storehouseName}</td>
-								<td>${sales.customerName}</td>
-								<td>${salesGoods.goodsName}</td>
-								<td>${salesGoods.salesGoodsAmount}</td>
-								<td>${salesGoods.salesGoodsPrice}</td>
-								<td>${salesGoods.salesGoodsTotalPrice}</td>
-
-								<td>${sales.totalSalesAmount}</td>
-								<td>${sales.employeeName}</td>
-								<td>${sales.salesStatus }</td>
-								<priv:privilege power="销售出库.增删改">
-									<td><a href="#"
-										onclick="printSalesData(${sales.salesSerialNumber })">打印</a>/<a
-										href="#"
-										onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a
-										href="#"
-										onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
-								</priv:privilege>
+						<thead>
+							<tr>
+								<th class="chk" style="display: none"><input
+									type="checkbox" aria-label="..."></th>
+								<th>销售流水号</th>
+								<th>销售时间</th>
+								<th>业务员名称</th>
+								<th>客户名称</th>
+								<th>仓库名称</th>
+								<th>应收总价</th>
+								<th>销售状态</th>
+								<th>操作</th>
 							</tr>
-							<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
-						</c:if>
-					</c:forEach>
-				</c:forEach>
-				<tr>
-					<td>合计</td>
-					<td>${sum}</td>
-				</tr>
-
-			</tbody>
-		</table>
+						</thead>
+						<tbody>
+						
+							<c:set value="0" var="sum" />
+							<c:forEach var="sales" items="${salesList}" varStatus="status">
+								<tr>
+									<td class="chk" style="display: none"><input
+										type="checkbox" aria-label="..."></td>
+									<td><font color="#16a085">${sales.salesSerialNumber }</font></td>
+									<td><font size="4" color="#16a085"><fmt:formatDate value="${sales.salesDate }"
+											pattern="yyyy-MM-dd" /></font></td>
+									<td><font size="4" color="#16a085">${sales.employeeName }</font></td>
+									<td><font size="4" color="#16a085">${sales.customerName }</font></td>
+									<td><font size="4" color="#16a085">${sales.storehouseName }</font></td>
+									<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td>
+									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
+									<priv:privilege power="销售出库.增删改">
+									<td><a href="#" onclick="printSalesData(${sales.salesSerialNumber })">明细</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
+									</priv:privilege>
+								</tr>
+								<tr>
+									<td>订单详情</td>
+									<td>商品名称</td>
+									<td>商品单价</td>
+									<td>商品数量</td>
+									<td>总价</td>
+								</tr>
+								<c:forEach var="salesGoods" items="${salesGoodsList}"
+									varStatus="status">
+								<c:if
+									test="${salesGoods.salesSerialNumber==sales.salesSerialNumber}">
+									<tr id="#collapse${salesGoods.salesSerialNumber}">
+										<td>订单详情</td>
+										<td>${salesGoods.goodsName}</td>
+										<td>${salesGoods.salesGoodsPrice}</td>
+										<td>${salesGoods.salesGoodsAmount}</td>
+										<td>${salesGoods.salesGoodsTotalPrice}</td>
+									</tr>
+									<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
+								</c:if>
+								</c:forEach>
+							</c:forEach>
+							<tr>
+								<td>合计</td>
+								<td>${sum}</td>
+							</tr>
+						</tbody>
+					</table>
+		
 				</div>
 			</div>
-		</div>
-	</div>
 
 
 	<!-- 模态框（Modal） -->
@@ -307,7 +291,7 @@ String date=sdf.format(new Date());
     }
     
     function printSalesData(salesSerialNumber){
-    	window.location.href = '<%=path%>/salesController/printSalesData.do?salesSerialNumber='+salesSerialNumber;		    
+    	window.location.href = '<%=path%>/salesController/printSales.do?salesSerialNumber='+salesSerialNumber;		    
 	}
     
     
@@ -358,6 +342,7 @@ String date=sdf.format(new Date());
                     			var json = $.parseJSON(data);
 								var salesList=$.parseJSON(json.RES_DATA.salesList);
 								var salesGoodsList=$.parseJSON(json.RES_DATA.salesGoodsList);
+								var totalMoney=0.0;
 								for (var i = 0; i < salesList.length; i++) {
     										$("#saleTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
     					                  	+'<td><font color="#16a085">'+isNull(salesList[i].salesSerialNumber)+'</font></td>'
@@ -367,7 +352,7 @@ String date=sdf.format(new Date());
     					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].storehouseName)+'</font></td>'
     					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].totalSalesAmount)+'</font></td>'
     					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].salesStatus)+'</font></td>'
-    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">打印</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>');
+    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">明细</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>');
     					                  	$("#saleTab tbody").append( '<tr><td>订单详情</td>'
 		    					                  	+'<td>商品名称</td>'
 		    					                  	+'<td>商品单价</td>'
@@ -383,10 +368,14 @@ String date=sdf.format(new Date());
 		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsAmount)+'</td>'
 		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsTotalPrice)+'</td>'
 		    					                  	+'</tr>');
+													totalMoney+=parseFloat(isNull(salesGoodsList[j].salesGoodsTotalPrice));
 												}
-											}   					                  	
-        								
+											} 
 								}
+    					                  	$("#saleTab tbody").append('<tr><td>合计</td>'
+    												+'<td>'+totalMoney+'</td></tr>');
+        								
+								
                             
                 }  
                 }); 
@@ -443,8 +432,8 @@ String date=sdf.format(new Date());
           		})
           	}
     		alert(goodsCount);
-    		<%--   var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;--%>
-  			var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; 
+    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
+    		<%--   var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
     		$.dialog({
     			title:'可销售商品',
     			width:1200,

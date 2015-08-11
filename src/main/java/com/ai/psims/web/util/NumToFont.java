@@ -46,7 +46,8 @@ public class NumToFont {
 	 *            输入的金额
 	 * @return 对应的汉语大写
 	 */
-	public static String number2CNMontrayUnit(BigDecimal numberOfMoney) {
+	public static String number2CNMontrayUnit(String s) {
+		BigDecimal numberOfMoney=new BigDecimal(s);
 		StringBuffer sb = new StringBuffer();
 		// -1, 0, or 1 as the value of this BigDecimal is negative, zero, or
 		// positive.

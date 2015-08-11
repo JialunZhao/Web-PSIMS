@@ -223,9 +223,9 @@ public class SalesController extends BaseController {
 		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = storagecheckExample
 				.createCriteria();
 		// criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
-		if (goodsName != null && goodsName != "") {
-			goodsName = URLDecoder.decode(goodsName);			
-		}
+//		if (goodsName != null && goodsName != "") {
+//			goodsName = URLDecoder.decode(goodsName);			
+//		}
 		criteria.andGoodsNameEqualTo(goodsName);
 		criteria.andEndtimeIsNull();
 		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
@@ -320,8 +320,8 @@ public class SalesController extends BaseController {
 	
 	
 	@RequestMapping("/printSales")
-	public View printSales(Model model, HttpServletRequest request)
-			throws Exception {
+	public String printSales(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		
 		String salesSerialNumber = request
 				.getParameter("salesSerialNumber");
@@ -355,9 +355,10 @@ public class SalesController extends BaseController {
 		request.setAttribute("customer", customer);
 		request.setAttribute("tbEmployee", tbEmployee);
 		request.setAttribute("title", title);
+		request.setAttribute("salesSerialNumber", salesSerialNumber);
 		
 		
-		return null;
+		return "salesdetail";
 		
 	}
 
@@ -572,9 +573,9 @@ public class SalesController extends BaseController {
 						(short) 8));
 				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
 						(short) 9));
-				row.createCell(idx++).setCellValue(
+				/*row.createCell(idx++).setCellValue(
 						NumToFont.number2CNMontrayUnit(BigDecimal
-								.valueOf(totalPrice)));
+								.valueOf(totalPrice)));*/
 
 				rowNum++;
 				idx = 0;
