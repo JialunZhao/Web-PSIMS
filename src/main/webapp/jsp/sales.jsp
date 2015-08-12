@@ -114,9 +114,7 @@ String date=sdf.format(new Date());
 									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
 									<priv:privilege power="销售出库.增删改">
 									<td>
-									<c:if test="${sales.salesStatus eq '下单' }">
 										<a href="#" onclick="printSalesData(${sales.salesSerialNumber })">明细</a>/
-									</c:if>
 									<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
 									</priv:privilege>
 								</tr>
