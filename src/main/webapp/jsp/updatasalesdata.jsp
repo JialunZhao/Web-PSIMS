@@ -61,31 +61,21 @@
 					</c:if>
 					<c:if test="${sales.salesStatus eq 'C' }">
 						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
-						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
-						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
-						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
 						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
 					</c:if>
 					<c:if test="${sales.salesStatus eq 'OO' }">
 						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
-						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
 						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
 						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
 						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
 					</c:if>
 					<c:if test="${sales.salesStatus eq 'OS' }">
 						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
-						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
 						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
-						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
 						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
 					</c:if>
 					<c:if test="${sales.salesStatus eq 'S' }">
 						<option value="<%=Constants.SalesStatus.SQUARE%>"><%=Constants.SalesStatus.SQUARE01%></option>
-						<option value="<%=Constants.SalesStatus.DOWNORDER%>"><%=Constants.SalesStatus.DOWNORDER01%></option>
-						<option value="<%=Constants.SalesStatus.CREDIT%>"><%=Constants.SalesStatus.CREDIT01%></option>
-						<option value="<%=Constants.SalesStatus.OUTORDER%>"><%=Constants.SalesStatus.OUTORDER01%></option>
-						<option value="<%=Constants.SalesStatus.OUTSTORE%>"><%=Constants.SalesStatus.OUTSTORE01%></option>
 					</c:if>
 				</select>
 			</div>

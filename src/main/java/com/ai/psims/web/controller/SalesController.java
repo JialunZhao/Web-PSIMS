@@ -48,6 +48,7 @@ import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.model.TbStorehouse;
+import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
 import com.ai.psims.web.util.NumToFont;
@@ -71,6 +72,8 @@ public class SalesController extends BaseController {
 	private ISalesBusiness salesBusiness;
 	@Resource(name = "storagecheckServiceImpl")
 	private IStoragecheckService storagecheckService;
+	@Resource(name = "salesServiceImpl")
+	private ISalesService salesService;
 
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
@@ -328,7 +331,10 @@ public class SalesController extends BaseController {
 
 		Sales sales = new Sales();
 		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
-		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+		sales = salesBusiness.selectSalesByKey(salesSerialNumber);	
+		request.setAttribute("sales", sales);
+		sales.setSalesStatus(Constants.SalesStatus.OUTORDER);
+		salesService.updateSalesByKey(sales);
 		SalesGoodsExample example = new SalesGoodsExample();
 		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
 				.createCriteria();
@@ -341,7 +347,7 @@ public class SalesController extends BaseController {
 		TbEmployee tbEmployee = (TbEmployee) request.getSession()
 				.getAttribute("mysession");
 
-		logger.info("------------建立 Excel -Sheet-------------");
+		logger.info("------------根据销售数量判断销售还是退货-------------");
 		String title=null;
 		if (salesGoodsList!=null) {
 			if (salesGoodsList.get(0).getSalesGoodsAmount()<0) {
@@ -350,7 +356,6 @@ public class SalesController extends BaseController {
 				title="北京市金瑞超达商贸有限公司商品销售单";
 			}
 		}
-		request.setAttribute("sales", sales);
 		request.setAttribute("salesGoodsList", salesGoodsList);
 		request.setAttribute("customer", customer);
 		request.setAttribute("tbEmployee", tbEmployee);

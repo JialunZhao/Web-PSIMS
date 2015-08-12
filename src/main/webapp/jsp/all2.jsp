@@ -56,7 +56,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#" onclick="main()">北京市金瑞超达商贸有限公司-食品库存管理系统</a>
+			<a class="navbar-brand hidden-print" href="#" onclick="main()">北京市金瑞超达商贸有限公司-食品库存管理系统</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul id='title' class="nav navbar-nav navbar-right">
@@ -67,7 +67,7 @@
 	</div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid hidden-print">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul id='tree' class="nav nav-sidebar">
