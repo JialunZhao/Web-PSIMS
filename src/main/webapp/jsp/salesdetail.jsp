@@ -120,7 +120,12 @@
 						</tr>
 					</table>
 	</div>
-	<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print();"/>
+	<c:if test="${sales.salesStatus eq 'DO' }">		
+		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print();"/>
+	</c:if>
+	<c:if test="${sales.salesStatus ne 'DO' }">		
+		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print();" disabled="disabled"/>
+	</c:if>
 						
 </div>
 
