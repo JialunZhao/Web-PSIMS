@@ -73,7 +73,6 @@
 						</tbody>
 					</table>
 	</div>
-	<input type="button" value="打印" onclick="javascript:window.print();"/>
 </div>
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
