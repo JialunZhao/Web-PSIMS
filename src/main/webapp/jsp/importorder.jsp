@@ -98,9 +98,10 @@
 						<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
 						<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
 						<priv:privilege power="货品入库下单.增删改">
-							<td><a href="#"
-								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/<a
-								href="#"
+						<td>
+<!-- 							<a href="#" -->
+<%-- 								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/ --%>
+						<a href="#"
 								onclick="updateImportData(${imports.importSerialNumber})">修改</a>/<a
 								href="#"
 								onclick="deleteImportData(${imports.importSerialNumber},'${imports.importStatus}')">删除</a></td>
@@ -294,8 +295,7 @@
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-3">
 							<button type="button" class="btn btn-primary" id="addgoodsokbtn">确认添加</button>
-							<button type="button" class="btn btn-primary"
-								id="continAddgoodsokbtn">继续添加</button>
+ 								id="continAddgoodsokbtn">继续添加</button>
 						</div>
 					</div>
 				</div>

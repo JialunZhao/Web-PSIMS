@@ -739,7 +739,7 @@ public class GoodsController extends BaseController {
 		}
 		logger.info("------------4.业务处理-------------");
 		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
-//		criteria.andGoodsStatusNotEqualTo("00");
+		criteria.andGoodsStatusNotEqualTo("00");
 		tbGoods2customers = goods2CustomerBusiness.goods2CustomerQuery(tbGoods2customerExample);
 		request.setAttribute("tbGoodss", tbGoods2customers);
 		logger.info("------------5.返回结果-------------");
@@ -767,14 +767,26 @@ public class GoodsController extends BaseController {
 		logger.info("------------1.初始化-------------");
 		List<TbCustomer> tbCustomers = new ArrayList<TbCustomer>();
 		TbCustomerExample tbCustomerExample = new TbCustomerExample();
-		TbCustomerExample.Criteria criteria = tbCustomerExample.createCriteria();
+		TbCustomerExample.Criteria tbCustomerscriteria = tbCustomerExample.createCriteria();
+		List<TbGoods2customer> tbGoods2customers = new ArrayList<TbGoods2customer>();
+		TbGoods2customerExample tbGoods2customerExample = new TbGoods2customerExample();
+		TbGoods2customerExample.Criteria tbGoods2customerscriteria = tbGoods2customerExample.createCriteria();
+
+		
 		logger.info("------------2.获取参数-------------");
+		String goodsId = request.getParameter("goodsId");
 
 		logger.info("------------3.数据校验-------------");
 
 		logger.info("------------4.业务处理-------------");
+		//查询已有的客户
+		tbGoods2customerscriteria.andGoodsIdEqualTo(Integer.parseInt(goodsId)).andGoodsStatusNotEqualTo("00");
+		tbGoods2customers= goods2CustomerBusiness.goods2CustomerQuery(tbGoods2customerExample);
+		for (TbGoods2customer tbGoods2customer : tbGoods2customers) {
+			tbCustomerscriteria.andCustomerIdNotEqualTo(tbGoods2customer.getCustomerId());
+		}
 		// 只查询状态为正常的记录 （00-失效 01-正常 02-下架 99-异常）
-		criteria.andStatusNotEqualTo("00");
+		tbCustomerscriteria.andStatusNotEqualTo("00");
 		tbCustomers = goods2CustomerBusiness.customerListQuery(tbCustomerExample);
 		logger.info("------------5.返回结果-------------");
 		if (tbCustomers == null || tbCustomers.isEmpty()) {
@@ -814,7 +826,7 @@ public class GoodsController extends BaseController {
 			tbGoods2customer.setGoodsId(Integer.parseInt(goodsId));
 			tbGoods2customer.setCustomerId(Integer.parseInt(customerId[i]));
 			tbGoods2customer.setGoodsNormalPrice(tbGoods.getGoodsPrice());
-			tbGoods2customer.setGoodsPrice(goodsPrice[i]);
+			tbGoods2customer.setGoodsPrice(new BigDecimal(goodsPrice[i]).divide(new BigDecimal(1), 2, BigDecimal.ROUND_HALF_UP).toString());
 			if (goods2customerId[i].isEmpty()) {
 				tbGoods2CustomersInsert.add(tbGoods2customer);
 			}else {
@@ -851,8 +863,8 @@ public class GoodsController extends BaseController {
 		if (goods2customerId == null ||goods2customerId.isEmpty()) {
 		} else {
 			tbGoods2customer.setGoods2customerId(Integer.parseInt(goods2customerId));
+			tbGoods2CustomerDeleteNum= goods2CustomerBusiness.deleteGoods2CustomerInfo(tbGoods2customer);
 		}
-		tbGoods2CustomerDeleteNum= goods2CustomerBusiness.deleteGoods2CustomerInfo(tbGoods2customer);
 		logger.info("------------删除了：+ " + tbGoods2CustomerDeleteNum+ "条记录-------------");
 		logger.info("------------5.返回结果-------------");
 		return tbGoods2CustomerDeleteNum;

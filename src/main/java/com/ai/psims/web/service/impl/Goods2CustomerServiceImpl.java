@@ -95,6 +95,6 @@ public class Goods2CustomerServiceImpl implements IGoods2CustomerService {
 	@Override
 	public int deleteGoods2CustomerInfo(TbGoods2customer tbGoods2customer) {
 		tbGoods2customer.setGoodsStatus("00");
-		return tbGoods2customerMapper.updateByPrimaryKey(tbGoods2customer);
+		return tbGoods2customerMapper.updateByPrimaryKeySelective(tbGoods2customer);
 	}
 }

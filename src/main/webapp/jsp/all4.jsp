@@ -66,65 +66,10 @@
 		</div>
 	</div>
 </nav>
-
-<div class="container-fluid hidden-print">
-	<div class="row hidden-print">
-		<div class="col-sm-3 col-md-2 sidebar hidden-print">
-			<ul id='tree' class="nav nav-sidebar hidden-print">
-			</ul>
-		</div>
-	</div>
-</div>
-<script type="text/javascript">
-	$(document).ready(
-			function() {
-				$.post("${ctx}/menu.do", function(resp) {
-					if (resp != null) {
-						var title = resp.title;
-						for (var i = 0; i < title.length; i++) {
-							$("#title").html(
-									"<li><a href='${ctx}"+title[i].menuUrl+"' >"
-											+ title[i].menuName + "</a></li>"
-											+ $("#title").html());
-						}
-						var tree = resp.tree;
-						for (var i = 0; i < tree.length; i++) {
-							$("#tree").html(
-									"<li><a href='${ctx}"+tree[i].menuUrl+"' >"
-											+ tree[i].menuName + "</a></li>"
-											+ $("#tree").html());
-						}
-					}
-				});
-			});
-	function emAu() {
-		document.location.href = "${ctx}/user/show.do";
-
-		//             $.ajax({
-		//                 url: '${ctx}/user/show.do',
-		//                 type: 'get'
-
-		//             })
-	}
-	function sysSet() {
-		document.location.href = "${ctx}/sys/show.do";
-	}
-	function out() {
-		document.location.href = "${ctx}/LogOut.do";
-	}
+<script>
 	function main() {
 		document.location.href = "${ctx}/reLogin.do";
 	}
-	function clearNoNum(obj) {
-		//先把非数字的都替换掉，除了数字和.
-		obj.value = obj.value.replace(/[^\d.-]/g, "");
-		//必须保证第一个为数字而不是.
-		obj.value = obj.value.replace(/^\./g, "");
-		//保证只有出现一个.而没有多个.
-		obj.value = obj.value.replace(/\.{2,}/g, ".");
-		obj.value = obj.value.replace(/\-{2,}/g, "-");
-		//保证.只出现一次，而不能出现两次以上
-		obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-		obj.value = obj.value.replace("-", "$#$").replace(/\-/g, "").replace("$#$", "-");
-	}
 </script>
+
+

@@ -289,13 +289,34 @@ function goods2customer(obj) {
 };
 
 // 新增商品和客户关系--查询客户信息
+function addgoods2customerselect(customerIdSelect) {
+	var repeatfalg = '1';
+	$("select[name='customerId']").each(function() {
+		// alert($(this).val() )
+		if ($(this).val() == customerIdSelect) {
+			repeatfalg = '0';
+			// alert(0);
+			// return '0' ;
+		} else {
+			// alert(1);
+			// return '1';
+		}
+	});
+	return repeatfalg;
+
+}
 function addgoods2customer(obj) {
 	// console.dir(obj);
 	var goodsId = $('#tmpGoodId').val();
+
+	// $("select[name='customerId']").each(function() {
+	// return $(this).val();
+	// });
+
 	$
 			.ajax({
 				type : 'POST',
-				async : false,
+				async : true,
 				url : 'addGoods2Customer.do',
 				dataType : 'json',
 				data : {
@@ -318,16 +339,24 @@ function addgoods2customer(obj) {
 											+ '<td><a onClick="deleteGoods2Customer(this)" >删除</a></td></tr>');
 
 					for (var i = 0; i < data.length; i++) {
-						$("select:last").append(
-								'<option value="' + data[i].customerId + '">'
-										+ data[i].customerName + '</option>');
-					}
+						// $("select:last").append(
+						// '<option value="' + data[i].customerId + '">'
+						// + data[i].customerName + '</option>');
 
+						if (addgoods2customerselect(data[i].customerId) == '1') {
+							$("select:last").append(
+									'<option value="' + data[i].customerId
+											+ '">' + data[i].customerName
+											+ '</option>');
+						} else {
+							// alert(data[i].customerId+"123zdas");
+						}
+					}
 				},
 			});
 };
 
-// 新增商品和客户关系--查询客户信息
+// 新增商品和客户关系--保存客户信息
 function savegoods2customer(obj) {
 	console.dir($('#goods2CustomerForm'));
 	var num = 0;
@@ -363,20 +392,21 @@ function savegoods2customer(obj) {
 // 删除商品和客户关系
 function deleteGoods2Customer(obj) {
 	// 获取选中行的goods2customerId
-	var goods2customerId = $(obj).parent().parent().children("td")
-			.find("input").val();
-	// alert(goods2customerId);
-	$(obj).parent().parent().remove();
-	//
-	$.ajax({
-		type : 'POST',
-		async : true,
-		url : 'deleteGoods2Customer.do',
-		data : {
-			'goods2customerId' : goods2customerId
-		},
-		success : function(data) {
-			$(obj).parent().parent().remove();
-		},
-	});
+	if (confirm("确定删除么?")) {
+		var goods2customerId = $(obj).parent().parent().children("td").find(
+				"input").val();
+		// alert(goods2customerId);
+		//
+		$.ajax({
+			type : 'POST',
+			async : true,
+			url : 'deleteGoods2Customer.do',
+			data : {
+				'goods2customerId' : goods2customerId
+			},
+			success : function(data) {
+				$(obj).parent().parent().remove();
+			},
+		});
+	}
 }

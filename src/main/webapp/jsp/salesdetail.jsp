@@ -6,127 +6,144 @@
 <meta charset="utf-8">
 <%@ page pageEncoding="UTF-8"%>
 
-<%@ include file="all2.jsp"%>
+<%@ include file="all4.jsp"%>
+<!-- <style type="text/css" media="print"> -->
+<style type="text/css" media="print">
+page {
+	margin: 0.5cm;
+	padding: 1pt;
+}
+
+h1 {
+	font-size: 16pt;
+	margin-bottom: 0px;
+	text-align: center;
+}
+
+h1.page-header {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+table td {
+	font-size: 6pt;
+	padding: 1pt !important;
+}
+
+table.tbody {
+	font-size: 6pt;
+	border: #CCCCCC 1pt solid;
+}
+</style>
 <style type="text/css">
-	table td{ height:20px; width:30px; border:#CCCCCC 1px solid;}
+h1 {
+	text-align: center;
+}
 </style>
 </head>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<h5 class="page-header">${title}</h5>
+<div class="col-sm-12 col-md-12  main">
+	<h1 class="page-header">${title}</h1>
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
-						<tr>
-							<td><font size="2">电话</font></td>
-							<td colspan="2"><font size="2"></font></td>
-							<td><font size="2">地址</font></td>
-							<td colspan="2"><font size="2"></font></td>
-							<td><font size="2">单据编号</font></td>
-							<td colspan="3"><font size="2">${salesSerialNumber}</font></td>
-						</tr>
-						<tr>
-							<td><font size="2">客户</font></td>
-							<td colspan="4"><font size="2">${customer.customerName}</font></td>
-							<td><font size="2">客户地址</font></td>
-							<td colspan="4"><font size="2">${customer.contactAddr}</font></td>
-						</tr>
-						<tr>
-							<td><font size="2">联系电话</font></td>
-							<td colspan="2"><font size="2">${customer.contactTel}</font></td>
-							<td><font size="2">联系人</font></td>
-							<td><font size="2">${customer.employeeName}</font></td>
-							<td><font size="2">结账方式</font></td>
-							<td colspan="4"><font size="2">${customer.checkoutName}</font></td>
-						</tr>
-						<tr>
-							<td><font size="2">商品编号</font></td>
-							<td colspan="3"><font size="2">商品全名</font></td>
-							<td colspan="2"><font size="2">规格</font></td>
-							<td><font size="2">单位</font></td>
-							<td><font size="2">数量</font></td>
-							<td><font size="2">单价</font></td>
-							<td><font size="2">金额</font></td>
-						</tr>
-						<c:set value="0" var="sum" />
-						<c:forEach var="salesGoods" items="${salesGoodsList}" varStatus="status">
-								<tr>
-									<td><font size="2">${salesGoods.goodsId}</font></td>
-									<td colspan="3"><font size="2">${salesGoods.goodsName}</font></td>
-									<td colspan="2"><font size="2"></font></td>
-									<td><font size="2">${salesGoods.salesGoodsUnit}</font></td>
-									<td><font size="2">${salesGoods.salesGoodsAmount}</font></td>
-									<td><font size="2">${salesGoods.salesGoodsPrice}</font></td>
-									<td><font size="2">${salesGoods.salesGoodsTotalPrice}</font></td>
-								</tr>
-								<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
-						</c:forEach>
-						<tr>
-							<td><font size="2"> </font></td>
-							<td colspan="3"><font size="2"> </font></td>
-							<td colspan="2"><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-						</tr>
-						<tr>
-							<td><font size="2"> </font></td>
-							<td colspan="3"><font size="2"> </font></td>
-							<td colspan="2"><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-							<td><font size="2"> </font></td>
-						</tr>
-						<tr>
-							<td><font size="2">总计</font></td>
-							<td colspan="3"><font size="2"></font></td>
-							<td colspan="2"><font size="2"></font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">${sum }</font></td>
-						</tr>
-						<tr>
-							<td><font size="2">联系人</font></td>
-							<td colspan="4"><font size="2"></font></td>
-							<td colspan="2"><font size="2">金额大写</font></td>
-							<td colspan="3"><font size="2"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute("sum").toString()) %></font></td>
-						</tr>
-						<tr>
-							<td><font size="2">收货人</font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">送货人</font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">核单人</font></td>
-							<td><font size="2">${tbEmployee.employeeName }</font></td>
-							<td><font size="2">发车时间</font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">还车时间</font></td>
-							<td><font size="2"></font></td>
-						</tr>
-						<tr>
-							<td><font size="2">库管</font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">车牌号</font></td>
-							<td><font size="2"></font></td>
-							<td><font size="2">起始油表数</font></td>
-							<td colspan="2"><font size="2"></font></td>
-							<td><font size="2">返回油表数</font></td>
-							<td colspan="2"><font size="2"></font></td>
-						</tr>
-						<tr>
-							<td><font size="2">备注</font></td>
-							<td colspan="9"><font size="2"></font></td>
-						</tr>
-					</table>
+			<tr>
+				<td>电话</td>
+				<td colspan="2"></td>
+				<td>地址</td>
+				<td colspan="2"></td>
+				<td>单据编号</td>
+				<td colspan="3">${salesSerialNumber}</td>
+			</tr>
+			<tr>
+				<td>客户</td>
+				<td colspan="4">${customer.customerName}</td>
+				<td>客户地址</td>
+				<td colspan="4">${customer.contactAddr}</td>
+			</tr>
+			<tr>
+				<td>联系电话</td>
+				<td colspan="2">${customer.contactTel}</td>
+				<td>联系人</td>
+				<td>${customer.employeeName}</td>
+				<td>结账方式</td>
+				<td colspan="4">${customer.checkoutName}</td>
+			</tr>
+			<tr>
+				<td>商品编号</td>
+				<td colspan="3">商品全名</td>
+				<td colspan="2">规格</td>
+				<td>单位</td>
+				<td>数量</td>
+				<td>单价</td>
+				<td>金额</td>
+			</tr>
+			<c:set value="0" var="sum" />
+			<c:forEach var="salesGoods" items="${salesGoodsList}"
+				varStatus="status">
+				<tr>
+					<td>${salesGoods.goodsId}</td>
+					<td colspan="3">${salesGoods.goodsName}</td>
+					<td colspan="2"></td>
+					<td>${salesGoods.salesGoodsUnit}</td>
+					<td>${salesGoods.salesGoodsAmount}</td>
+					<td>${salesGoods.salesGoodsPrice}</td>
+					<td>${salesGoods.salesGoodsTotalPrice}</td>
+				</tr>
+				<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
+			</c:forEach>
+			<tr>
+				<td>总计</td>
+				<td colspan="3"></td>
+				<td colspan="2"></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>${sum }</td>
+			</tr>
+			<tr>
+				<td>联系人</td>
+				<td colspan="4"></td>
+				<td colspan="2">金额大写</td>
+				<td colspan="3"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
+					"sum").toString())%></td>
+			</tr>
+			<tr>
+				<td>收货人</td>
+				<td></td>
+				<td>送货人</td>
+				<td></td>
+				<td>核单人</td>
+				<td>${tbEmployee.employeeName }</td>
+				<td>发车时间</td>
+				<td></td>
+				<td>还车时间</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>库管</td>
+				<td></td>
+				<td>车牌号</td>
+				<td></td>
+				<td>起始油表数</td>
+				<td colspan="2"></td>
+				<td>返回油表数</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td>备注</td>
+				<td colspan="9"></td>
+			</tr>
+		</table>
 	</div>
-	<c:if test="${sales.salesStatus eq 'DO' }">		
-		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print();"/>
+	<c:if test="${sales.salesStatus eq 'DO' }">
+		<input class="hidden-print" type="button" value="打印"
+			onclick="javascript:window.print();" />
 	</c:if>
-	<c:if test="${sales.salesStatus ne 'DO' }">		
-		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print();" disabled="disabled"/>
+	<c:if test="${sales.salesStatus ne 'DO' }">
+		<input class="hidden-print" type="button" value="已打印"
+			onclick="javascript:window.print();" />
 	</c:if>
-						
+	<input class="hidden-print" type="button" value="返 回" name="btBack"
+		onclick="history.go(-1)">
 </div>
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
@@ -138,8 +155,11 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 	});
+	function printpreview() {
+		wb.execwb(7, 1);
+	}
 </script>
 </body>
 </html>
