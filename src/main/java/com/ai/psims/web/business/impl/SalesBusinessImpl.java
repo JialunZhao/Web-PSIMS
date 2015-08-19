@@ -54,12 +54,12 @@ public class SalesBusinessImpl implements ISalesBusiness {
 
 	@Override
 	public TbStoragecheck queryStoragecheck(
-			TbStoragecheckExample storagecheckExample, String goodsName) {
+			TbStoragecheckExample storagecheckExample, int goodsName) {
 		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
 		storagechecksList = storagecheckService
 				.selectTbStoragecheck(storagecheckExample);
 		Integer storageRateCurrent = storagecheckService
-				.selectStorageRateCurrentByName(goodsName);
+				.selectStorageRateCurrentById(goodsName);
 		if (storagechecksList.size() > 0) {
 			storagechecksList.get(0).setStorageRateCurrent(storageRateCurrent);
 			return storagechecksList.get(0);

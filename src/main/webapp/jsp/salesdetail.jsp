@@ -42,7 +42,16 @@ h1 {
 </style>
 </head>
 <div class="col-sm-12 col-md-12  main">
-	<h1 class="page-header">${title}</h1>
+	<h1 class="page-header" id="titles">${title}</h1>
+	<button type="button" class="btn btn-primary hidden-print" data-toggle="modal"
+							data-target="#salesgoods">修改</button>
+	<div class="modal fade hidden-print" id="salesgoods" tabindex="-1" role="dialog"
+		aria-labelledby="importgoods" aria-hidden="true">
+		<label for="exampleInputEmail2">输入抬头名称：</label> <input type="text"
+								class="form-control" id="titleName"
+								placeholder="${title}">
+		<button type="button" class="btn btn-primary" id="addgoodsbtn">确认修改</button>
+	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
 			<tr>
@@ -135,7 +144,7 @@ h1 {
 		</table>
 	</div>
 	 <c:if test="${sales.salesStatus eq 'DO' }">
-		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print(); printSalesData()"/>
+		<input class="hidden-print" type="button" id="print" value="打印" onclick="javascript:window.print(); printSalesData()"/>
 	</c:if>
 		
 	<c:if test="${sales.salesStatus ne 'DO' }">		
@@ -154,10 +163,16 @@ h1 {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		$("#addgoodsbtn").click(function(){
+			titleName=$("#titleName").val();
+			$("#titles").text(titleName);
+			$("#salesgoods").hide();
+		})
 	});
 	function printSalesData(){
 		var salesSerialNumber='${salesSerialNumber}';
+		$("#print").attr('disabled','disabled');
+		$("#print").css("background-color","gray");
 		$.ajax({  
             url:'<%=path%>/salesController/changeStatus.do',  
             type:"post",  
@@ -173,6 +188,8 @@ h1 {
 	function printpreview() {
 		wb.execwb(7, 1);
 	}
+	
+	
 </script>
 </body>
 </html>

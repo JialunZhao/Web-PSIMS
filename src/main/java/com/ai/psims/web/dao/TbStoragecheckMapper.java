@@ -18,6 +18,8 @@ public interface TbStoragecheckMapper {
     
     int selectStorageRateCurrentByName(String goodsName);
     
+    int selectStorageRateCurrentById(Integer goodsId);
+    
     List<TbStoragecheck> selectTbStoragecheckByName(String goodsName);
 
     int insertSelective(TbStoragecheck record);

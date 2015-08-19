@@ -18,7 +18,7 @@ public interface ISalesBusiness {
 			StoragecheckExample storagecheckExample);
 
 	public TbStoragecheck queryStoragecheck(
-			TbStoragecheckExample storagecheckExample,String goodsName);
+			TbStoragecheckExample storagecheckExample,int goodsName);
 
 	public Storagecheck selectByKey(Integer storageId);
 
