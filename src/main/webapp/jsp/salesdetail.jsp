@@ -158,7 +158,6 @@ h1 {
 	});
 	function printSalesData(){
 		var salesSerialNumber='${salesSerialNumber}';
-		alert(salesSerialNumber);
 		$.ajax({  
             url:'<%=path%>/salesController/changeStatus.do',  
             type:"post",  

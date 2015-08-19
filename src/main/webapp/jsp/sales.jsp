@@ -433,9 +433,8 @@ String date=sdf.format(new Date());
           		  
           		})
           	}
-    		alert(goodsCount);
     		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
-    		<%--   var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
+    		<%--  var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
     		$.dialog({
     			title:'可销售商品',
     			width:1200,
