@@ -321,6 +321,19 @@ public class SalesController extends BaseController {
 
 	}
 	
+	@RequestMapping("/changeStatus")
+	public void changeStatus(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String salesSerialNumber = request.getParameter("salesSerialNumber");
+
+		Sales sales = new Sales();
+		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+		sales.setSalesStatus(Constants.SalesStatus.OUTORDER);
+		salesService.updateSalesByKey(sales);
+	}
+
+	
 	
 	@RequestMapping("/printSales")
 	public String printSales(HttpServletRequest request,
@@ -333,8 +346,6 @@ public class SalesController extends BaseController {
 		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
 		sales = salesBusiness.selectSalesByKey(salesSerialNumber);	
 		request.setAttribute("sales", sales);
-		sales.setSalesStatus(Constants.SalesStatus.OUTORDER);
-		salesService.updateSalesByKey(sales);
 		SalesGoodsExample example = new SalesGoodsExample();
 		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
 				.createCriteria();

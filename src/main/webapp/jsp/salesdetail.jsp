@@ -134,16 +134,15 @@ h1 {
 			</tr>
 		</table>
 	</div>
-	<c:if test="${sales.salesStatus eq 'DO' }">
-		<input class="hidden-print" type="button" value="打印"
-			onclick="javascript:window.print();" />
+	 <c:if test="${sales.salesStatus eq 'DO' }">
+		<input class="hidden-print" type="button" value="打印" onclick="javascript:window.print(); printSalesData()"/>
 	</c:if>
-	<c:if test="${sales.salesStatus ne 'DO' }">
-		<input class="hidden-print" type="button" value="已打印"
-			onclick="javascript:window.print();" />
+		
+	<c:if test="${sales.salesStatus ne 'DO' }">		
+		<input class="hidden-print" type="button" value="已打印" onclick="javascript:window.print();" disabled="disabled" style="background-color: gray"/>
 	</c:if>
 	<input class="hidden-print" type="button" value="返 回" name="btBack"
-		onclick="history.go(-1)">
+				onclick="history.go(-1)">
 </div>
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
@@ -157,6 +156,21 @@ h1 {
 	$(document).ready(function() {
 
 	});
+	function printSalesData(){
+		var salesSerialNumber='${salesSerialNumber}';
+		alert(salesSerialNumber);
+		$.ajax({  
+            url:'<%=path%>/salesController/changeStatus.do',  
+            type:"post",  
+            async:false,
+            modal : true,
+            showBusi : false,
+            data:{'salesSerialNumber':salesSerialNumber},
+            success:function(data){  
+			}
+                    
+        });       
+	}
 	function printpreview() {
 		wb.execwb(7, 1);
 	}
