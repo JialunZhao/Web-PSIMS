@@ -50,7 +50,7 @@ h1 {
 		<label for="exampleInputEmail2">输入抬头名称：</label> <input type="text"
 								class="form-control" id="titleName"
 								placeholder="${title}">
-		<button type="button" class="btn btn-primary" id="addgoodsbtn">确认修改</button>
+		<button type="button" class="btn" id="addgoodsbtn">确认修改</button>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
