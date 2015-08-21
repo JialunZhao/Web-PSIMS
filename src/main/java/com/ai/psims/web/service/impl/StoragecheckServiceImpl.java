@@ -212,12 +212,6 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 		logger.info("selectStorageRateCurrentByName");
 		return tbStoragecheckMapper.selectStorageRateCurrentByName(goodsName);
 	}
-	
-	@Override
-	public int selectStorageRateCurrentById(int goodsId) {
-		logger.info("selectStorageRateCurrentByName");
-		return tbStoragecheckMapper.selectStorageRateCurrentById(goodsId);
-	}
 
 	@Override
 	public int updateTbStoragecheck(TbStoragecheck storagecheck) {

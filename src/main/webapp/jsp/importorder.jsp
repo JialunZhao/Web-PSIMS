@@ -80,54 +80,50 @@
 					<th>供应商名称</th>
 					<th>入库下单日期</th>
 					<th>入库批次号</th>
-					<th>备注</th>
 					<th>入库状态</th>
+					<td>商品名称</td>
+					<td>商品单价</td>
+					<td>商品数量</td>
+					<td>总价</td>
+					<td>奖金池支付总额</td>
+					<td>现金支付总额</td>
+					<th>备注</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody id="accordion">
 				<c:forEach var="imports" items="${importList}" varStatus="status">
-					<tr>
-						<td class="chk" style="display: none"><input type="checkbox"
-							aria-label="..."></td>
-						<td><font color="#16a085">${imports.importSerialNumber}</font></td>
-						<td><font size="4" color="#16a085">${imports.providerName}</font></td>
-						<td><font size="4" color="#16a085"><fmt:formatDate value="${imports.importDatetime}"
-								pattern="yyyy-MM-dd" /></font></td>
-						<td><font size="4" color="#16a085">${imports.importBatchNumber}</font></td>
-						<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
-						<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
-						<priv:privilege power="货品入库下单.增删改">
-						<td>
-<!-- 							<a href="#" -->
-<%-- 								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/ --%>
-						<a href="#"
-								onclick="updateImportData(${imports.importSerialNumber})">修改</a>/<a
-								href="#"
-								onclick="deleteImportData(${imports.importSerialNumber},'${imports.importStatus}')">删除</a></td>
-						</priv:privilege>
-					</tr>
-					<tr>
-						<td>订单详情</td>
-						<td>商品名称</td>
-						<td>商品单价</td>
-						<td>商品数量</td>
-						<td>总价</td>
-						<td>奖金池支付总额</td>
-						<td>现金支付总额</td>
-					</tr>
 					<c:forEach var="tbImportGoodsList" items="${tbImportGoodsList}"
 						varStatus="status">
 						<c:if
 							test="${tbImportGoodsList.importSerialNumber==imports.importSerialNumber}">
 							<tr id="#collapse${tbImportGoodsList.importSerialNumber}">
-								<td>订单详情</td>
+								<td class="chk" style="display: none"><input
+									type="checkbox" aria-label="..."></td>
+								<td><font color="#16a085">${imports.importSerialNumber}</font></td>
+								<td><font size="4" color="#16a085">${imports.providerName}</font></td>
+								<td><font size="4" color="#16a085"><fmt:formatDate
+											value="${imports.importDatetime}" pattern="yyyy-MM-dd" /></font></td>
+								<td><font size="4" color="#16a085">${imports.importBatchNumber}</font></td>
+								<td><font size="4" color="#16a085">${imports.importStatus}</font></td>
+
 								<td>${tbImportGoodsList.goodsName}</td>
 								<td>${tbImportGoodsList.importGoodsPrice}</td>
 								<td>${tbImportGoodsList.importGoodsAmount}</td>
 								<td>${tbImportGoodsList.importGoodsTotalPrice}</td>
 								<td>${tbImportGoodsList.discountDutyTotalPrice}</td>
 								<td>${tbImportGoodsList.discountGoodsTotalPrice}</td>
+								<td><font size="4" color="#16a085">${imports.importRemark}</font></td>
+
+								<priv:privilege power="货品入库下单.增删改">
+									<td>
+										<!-- 							<a href="#" --> <%-- 								onclick="importgoodsprint(${imports.importSerialNumber})">打印</a>/ --%>
+										<a href="#"
+										onclick="updateImportData(${imports.importSerialNumber})">修改</a>/<a
+										href="#"
+										onclick="deleteImportData(${imports.importSerialNumber},'${imports.importStatus}')">删除</a>
+									</td>
+								</priv:privilege>
 							</tr>
 						</c:if>
 					</c:forEach>
@@ -138,7 +134,8 @@
 </div>
 
 
-  
+
+
 <!-- 模态框（Modal） -->
 <!-- 添加入库单模态框（Modal） -->
 <div class="modal fade" id="importgoods" tabindex="-1" role="dialog"
@@ -223,8 +220,8 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品名称:</span> <select
-								class="form-control" tabindex="1" 
-								id="goodsName" onChange="showTable()">
+								class="form-control" tabindex="1" id="goodsName"
+								onChange="showTable()">
 
 							</select>
 						</div>
@@ -289,13 +286,14 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">进货数量：</span><input
-								type="text" id="goodsCount" class="form-control"
+								type="number" id="goodsCount" class="form-control"
 								placeholder="进货数量" onChange="showPrizePoolUsed()"
 								onkeyup="showPrizePoolUsed()">
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-3">
 							<button type="button" class="btn btn-primary" id="addgoodsokbtn">确认添加</button>
- 								id="continAddgoodsokbtn">继续添加</button>
+							<button type="button" class="btn btn-primary"
+								id="continAddgoodsokbtn">继续添加</button>
 						</div>
 					</div>
 				</div>

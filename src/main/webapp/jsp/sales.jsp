@@ -181,7 +181,7 @@ String date=sdf.format(new Date());
 							</select>
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-1">
-							 <span class="input-group-addon"
+							<span class="input-group-addon"
 								style="background-color: #1abc9c;">客户名称:</span> <select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="addCustomerName" id="addCustomerName">
@@ -189,7 +189,7 @@ String date=sdf.format(new Date());
 								<c:forEach var="customers" items="${customersList}"
 									varStatus="status">
 									<option value="${customers.customerId }" emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
-								</c:forEach> 
+								</c:forEach>
 							</select> <span class="input-group-addon"
 								style="background-color: #1abc9c;">销售人员：</span> <select
 								class="form-control" value="请选仓库" tabindex="1"
@@ -402,9 +402,9 @@ String date=sdf.format(new Date());
                     data:{},
                     success:function(data){  
                     			var json = $.parseJSON(data);
-								var goodsList=$.parseJSON(json.RES_DATA.goodsList);
-						      	for (var i = 0; i < goodsList.length; i++) {
-									$("#goodsName").append( "<option value="+goodsList[i].goodsId+">"+goodsList[i].goodsName+"</option>" );
+								var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
+						      	for (var i = 0; i < goodsName.length; i++) {
+									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
 									$("#addgoods").show();
 							        /* $("#addgoodsbtn").hide();
 							        $("#salesgoodsform").hide(); */
@@ -414,9 +414,9 @@ String date=sdf.format(new Date());
                 });       
 	}
     
-    function showTable(goodId){
-    	if (!checkIsNull(goodId)) {
-    		var goodName=$("#goodsName").find("option:selected").text();
+    function showTable(goodName){
+    	if (!checkIsNull(goodName)) {
+    		
     		var len=$("#addGoodsTab tbody tr").length;
     		var goodsName=null;
     		var goodsCount=0;
@@ -433,8 +433,8 @@ String date=sdf.format(new Date());
           		  
           		})
           	}
-          	<%-- var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;--%>
-    		 var url='<%=path%>/salesController/queryGoodsDemo.do?goodId='+goodId+'&goodsCount='+goodsCount; 
+    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
+    		<%--  var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
     		$.dialog({
     			title:'可销售商品',
     			width:1200,

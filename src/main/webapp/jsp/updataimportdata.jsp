@@ -183,9 +183,10 @@
 					+ "&importGoodsIdList="
 					+ importGoodsIdList
 					+ "&importSerialNumber=" + importSerialNumber;
-				alert(url);
-
-			api.reload(this, url);
+				
+				api.content(url).title('提示');
+			
+				reload(this, url);
 			W.location.reload();
 			api.close();
 		}

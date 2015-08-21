@@ -45,11 +45,9 @@ import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbEmployeeExample;
-import com.ai.psims.web.model.TbGoods;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.model.TbStorehouse;
-import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
@@ -76,8 +74,6 @@ public class SalesController extends BaseController {
 	private IStoragecheckService storagecheckService;
 	@Resource(name = "salesServiceImpl")
 	private ISalesService salesService;
-	@Resource(name = "goodsServiceImpl")
-	private IGoodsService goodsService;
 
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
@@ -136,22 +132,15 @@ public class SalesController extends BaseController {
 		criteria.andEndtimeIsNull();
 		storagechecksList = salesBusiness
 				.queryStrStoragechecks(storagecheckExample);
-		Set<Integer> goodsIdSet = new HashSet<Integer>();
+		Set<String> goodsNameSet = new HashSet<String>();
 		for (Storagecheck storagecheck : storagechecksList) {
-			goodsIdSet.add(storagecheck.getGoodsId());
-		}
-
-		List<TbGoods> goodsList = new ArrayList<TbGoods>();
-		for (Integer integer : goodsIdSet) {
-			TbGoods goods=new TbGoods();
-			goods=goodsService.selectGoodsInfo(integer);
-			goodsList.add(goods);
+			goodsNameSet.add(storagecheck.getGoodsName());
 		}
 		if (storagechecksList == null && storagechecksList.size() == 0) {
 			responseFailed(response, "ERROR", data);
 		} else {
 			// data.put("list", JSON.toJSONString(storagechecksList));
-			data.put("goodsList", JSON.toJSONString(goodsList));
+			data.put("goodsNameSet", JSON.toJSONString(goodsNameSet));
 			responseSuccess(response, "SUCCESS", data);
 		}
 	}
@@ -230,7 +219,7 @@ public class SalesController extends BaseController {
 	@RequestMapping("/queryGoodsDemo")
 	public String queryGoodsDemo(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		String goodId = request.getParameter("goodId");
+		String goodsName = request.getParameter("goodName");
 		String goodsCount = request.getParameter("goodsCount");
 		TbStoragecheck storagechecks = new TbStoragecheck();
 		TbStoragecheckExample storagecheckExample = new TbStoragecheckExample();
@@ -238,12 +227,12 @@ public class SalesController extends BaseController {
 				.createCriteria();
 		// criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
 //		if (goodsName != null && goodsName != "") {
-//			goodsName = URLDecoder.decode(goodsName);
+//			goodsName = URLDecoder.decode(goodsName);			
 //		}
-		criteria.andGoodsIdEqualTo(Integer.parseInt(goodId));
+		criteria.andGoodsNameEqualTo(goodsName);
 		criteria.andEndtimeIsNull();
 		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
-				Integer.parseInt(goodId));
+				goodsName);
 		request.setAttribute("storagechecks", storagechecks);
 		request.setAttribute("goodsCount", goodsCount);
 		return "salesgoodstab";
@@ -268,8 +257,8 @@ public class SalesController extends BaseController {
 			SalesUpdataGoods saUpdataGoods = new SalesUpdataGoods();
 			int storeRateCrrent = storagecheckService
 					.selectStorageRateCurrentByName(salesGoods.getGoodsName());
-			// storagecheck = storagecheckService.selectByKey(salesGoods
-			// .getStorageId());
+//			storagecheck = storagecheckService.selectByKey(salesGoods
+//					.getStorageId());
 			saUpdataGoods.setGoodsName(salesGoods.getGoodsName());
 			saUpdataGoods.setSalesGoodsAmount(salesGoods.getSalesGoodsAmount());
 			saUpdataGoods.setSalesGoodsId(salesGoods.getSalesGoodsId());
@@ -331,7 +320,7 @@ public class SalesController extends BaseController {
 		}
 
 	}
-
+	
 	@RequestMapping("/changeStatus")
 	public void changeStatus(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -344,15 +333,18 @@ public class SalesController extends BaseController {
 		salesService.updateSalesByKey(sales);
 	}
 
+	
+	
 	@RequestMapping("/printSales")
 	public String printSales(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-
-		String salesSerialNumber = request.getParameter("salesSerialNumber");
+		
+		String salesSerialNumber = request
+				.getParameter("salesSerialNumber");
 
 		Sales sales = new Sales();
 		List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
-		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+		sales = salesBusiness.selectSalesByKey(salesSerialNumber);	
 		request.setAttribute("sales", sales);
 		SalesGoodsExample example = new SalesGoodsExample();
 		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria = example
@@ -363,16 +355,16 @@ public class SalesController extends BaseController {
 		TbCustomer customer = new TbCustomer();
 		customer = customerBusiness.customerById(sales.getCustomerId());
 		logger.info("------------获取当前登录的员工名称-------------");
-		TbEmployee tbEmployee = (TbEmployee) request.getSession().getAttribute(
-				"mysession");
+		TbEmployee tbEmployee = (TbEmployee) request.getSession()
+				.getAttribute("mysession");
 
 		logger.info("------------根据销售数量判断销售还是退货-------------");
-		String title = null;
-		if (salesGoodsList != null) {
-			if (salesGoodsList.get(0).getSalesGoodsAmount() < 0) {
-				title = "北京市金瑞超达商贸有限公司商品退货单";
-			} else {
-				title = "北京市金瑞超达商贸有限公司商品销售单";
+		String title=null;
+		if (salesGoodsList!=null) {
+			if (salesGoodsList.get(0).getSalesGoodsAmount()<0) {
+				title="北京市金瑞超达商贸有限公司商品退货单";
+			}else {
+				title="北京市金瑞超达商贸有限公司商品销售单";
 			}
 		}
 		request.setAttribute("salesGoodsList", salesGoodsList);
@@ -380,9 +372,10 @@ public class SalesController extends BaseController {
 		request.setAttribute("tbEmployee", tbEmployee);
 		request.setAttribute("title", title);
 		request.setAttribute("salesSerialNumber", salesSerialNumber);
-
+		
+		
 		return "salesdetail";
-
+		
 	}
 
 	@RequestMapping("/printSalesData")
@@ -417,21 +410,21 @@ public class SalesController extends BaseController {
 						.getAttribute("mysession");
 
 				logger.info("------------建立 Excel -Sheet-------------");
-				boolean falg = true;
-				if (salesGoodsList != null) {
-					if (salesGoodsList.get(0).getSalesGoodsAmount() < 0) {
-						falg = false;
+				boolean falg=true;
+				if (salesGoodsList!=null) {
+					if (salesGoodsList.get(0).getSalesGoodsAmount()<0) {
+						falg=false;
 					}
 				}
 				HSSFSheet sheet;
 				if (falg) {
 					logger.info("------------打印销售单-------------");
 					sheet = workbook.createSheet("北京市金瑞超达商贸有限公司商品销售单");
-				} else {
+				}else {
 					logger.info("------------打印退货单-------------");
 					sheet = workbook.createSheet("北京市金瑞超达商贸有限公司商品退货单");
 				}
-
+				
 				logger.info("------------设置行列的默认宽度和高度-------------");
 				sheet.setColumnWidth(0, 32 * 80);// 对A列设置宽度为180像素
 				sheet.setColumnWidth(1, 32 * 80);
@@ -596,11 +589,9 @@ public class SalesController extends BaseController {
 						(short) 8));
 				sheet.addMergedRegion(new Region(rowNum, (short) 7, rowNum,
 						(short) 9));
-				/*
-				 * row.createCell(idx++).setCellValue(
-				 * NumToFont.number2CNMontrayUnit(BigDecimal
-				 * .valueOf(totalPrice)));
-				 */
+				/*row.createCell(idx++).setCellValue(
+						NumToFont.number2CNMontrayUnit(BigDecimal
+								.valueOf(totalPrice)));*/
 
 				rowNum++;
 				idx = 0;
