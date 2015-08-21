@@ -43,5 +43,7 @@ public interface IStoragecheckService {
 	public List<TbStoragecheck> selectTbStoragecheckByName(String goodsName);
 	
 	public int selectStorageRateCurrentByName(String goodsName);
+	
+	public int selectStorageRateCurrentById(int goodsId);
 
 }

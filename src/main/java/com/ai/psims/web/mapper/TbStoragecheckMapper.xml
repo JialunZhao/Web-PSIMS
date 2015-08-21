@@ -114,6 +114,10 @@
   <select id="selectStorageRateCurrentByName" resultType="java.lang.Integer" parameterType="java.lang.String" >
     select sum(storage_rate_current) from tb_storagecheck where goods_name=#{goodsName,jdbcType=VARCHAR} and endtime is null
   </select>
+  
+  <select id="selectStorageRateCurrentById" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select sum(storage_rate_current) from tb_storagecheck where goods_id=#{goodsId,jdbcType=VARCHAR} and endtime is null
+  </select>
 
   <select id="selectTbStoragecheckByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
