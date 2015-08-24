@@ -192,7 +192,7 @@ public class SalesController extends BaseController {
 				.createCriteria();
 		List<Sales> salesList = new ArrayList<Sales>();
 		if (customerId != null && customerId != "") {
-			criteria.andCustomerIdEqualTo(Integer.parseInt(customerId));
+			criteria.andCustomerNameEqualTo(customerId);
 		}
 		if (storehouseId != null && storehouseId != "") {
 			criteria.andStorehouseIdEqualTo(Integer.parseInt(storehouseId));
