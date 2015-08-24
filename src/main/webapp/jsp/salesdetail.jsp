@@ -18,9 +18,11 @@ h1 {
 	font-size: 16pt;
 	margin-bottom: 0px;
 	text-align: center;
+	margin-top: -100px;
 }
 
 h1.page-header {
+	margin-top: -100px;
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 }
@@ -46,6 +48,18 @@ table tr {
 	padding: 1pt !important;
 	border: 1pt solid black !important;
 }
+
+.navbar {
+	min-height: 0px;
+	margin-bottom: 0px;
+	font-size: 16px;
+	border: none;
+	border-radius: 6px;
+}
+
+.main {
+	padding-top: 0px;
+}
 </style>
 <style type="text/css">
 h1 {
@@ -68,9 +82,9 @@ h1 {
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
 			<tr>
-				<td class="aa">电话</td>
+				<td class="aa">公司电话</td>
 				<td colspan="2"></td>
-				<td>地址</td>
+				<td>公司地址</td>
 				<td colspan="2"></td>
 				<td>单据编号</td>
 				<td colspan="3">${salesSerialNumber}</td>
@@ -82,12 +96,12 @@ h1 {
 				<td colspan="4">${customer.contactAddr}</td>
 			</tr>
 			<tr>
-				<td>联系电话</td>
+				<td>客户电话</td>
 				<td colspan="2">${customer.contactTel}</td>
-				<td>联系人</td>
+				<td>业务员</td>
 				<td>${customer.employeeName}</td>
-				<td>结账方式</td>
-				<td colspan="4">${customer.checkoutName}</td>
+				<td>经手人</td>
+				<td colspan="4">${tbEmployee.employeeName}</td>
 			</tr>
 			<tr>
 				<td>商品编号</td>
@@ -99,6 +113,7 @@ h1 {
 				<td>金额</td>
 			</tr>
 			<c:set value="0" var="sum" />
+			<c:set value="0" var="row" />
 			<c:forEach var="salesGoods" items="${salesGoodsList}"
 				varStatus="status">
 				<tr>
@@ -111,6 +126,19 @@ h1 {
 					<td>${salesGoods.salesGoodsTotalPrice}</td>
 				</tr>
 				<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
+				<c:set value="${row + 1}" var="row" />
+			</c:forEach>
+			<c:forEach var="row" begin="${row}" end="9">
+				<c:set value="${row + 1}" var="row" />
+				<tr>
+					<td>&nbsp;</td>
+					<td colspan="4"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
 			</c:forEach>
 			<tr>
 				<td>总计</td>
@@ -122,37 +150,31 @@ h1 {
 				<td>${sum }</td>
 			</tr>
 			<tr>
-				<td>联系人</td>
-				<td colspan="4"></td>
-				<td colspan="2">金额大写</td>
-				<td colspan="3"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
+				<td>摘要</td>
+				<td colspan="6">${customer.checkoutName}</td>
+				<td colspan="1">金额大写</td>
+				<td colspan="2"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
 					"sum").toString())%></td>
 			</tr>
 			<tr>
 				<td>收货人</td>
-				<td style="width: 75px"></td>
+				<td colspan="1" style="width: 75px"></td>
 				<td>送货人</td>
 				<td colspan="1"></td>
-				<td>核单人</td>
-				<td>${tbEmployee.employeeName }</td>
 				<td>发车时间</td>
-				<td colspan="1"></td>
+				<td colspan="2"></td>
 				<td>还车时间</td>
-				<td colspan="1"></td>
+				<td colspan="2"></td>
 			</tr>
 			<tr>
 				<td>库管</td>
-				<td style="width: 75px"></td>
+				<td colspan="1" style="width: 75px"></td>
 				<td>车牌号</td>
 				<td colspan="1"></td>
 				<td>起始油表数</td>
 				<td colspan="2"></td>
 				<td>返回油表数</td>
 				<td colspan="2"></td>
-			</tr>
-			<tr>
-				<td>备注</td>
-				<td colspan="9"></td>
 			</tr>
 		</table>
 	</div>
