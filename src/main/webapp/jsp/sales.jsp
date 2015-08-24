@@ -1,3 +1,4 @@
+<%@page import="com.ai.psims.web.model.TbCustomer"%>
 <%@page import="com.ai.psims.web.util.Constants"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,6 +6,7 @@
 <%
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 String date=sdf.format(new Date());
+List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList");
 
 %>
 <%@ include file="all.jsp"%>
@@ -15,18 +17,22 @@ String date=sdf.format(new Date());
 				<div class="row placeholders">
 					<form class="form-inline">
 						<div class="form-group">
-							<label for="exampleInputEmail2">客户名称：</label> <select
+							<label for="exampleInputEmail2">客户名称：</label> 
+							 <input type="text"
+								class="form-control" id="customerName"
+								>
+							<%--<select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="customerName" id="customerName" onkeyup="cc()">
 								 <option value="">请选择客户名称</option>
-								<%--<c:forEach var="customers" items="${customersList}"
+								<c:forEach var="customers" items="${customersList}"
 									varStatus="status">
 									<option value="${customers.customerId }">${customers.customerName }</option>
-								</c:forEach> --%>
-							</select>
+								</c:forEach>
+							</select> --%>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputEmail2">仓库名称：</label> <select
+							<label for="exampleInputEmail2">仓库名称：</label>  <select
 								class="form-control" value="请选仓库" tabindex="1"
 								name="storehouseName" id="storehouseName">
 								<option value="">请选择仓库</option>
@@ -71,8 +77,10 @@ String date=sdf.format(new Date());
 				<div class="row placeholders ">
 					<div class="col-sm-2">
 					<priv:privilege power="销售出库.增删改">
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#salesgoods">新增销售单</button>
+						<!-- <button type="button" class="btn btn-primary" data-toggle="modal" 
+							data-target="#salesgoods">新增销售单</button> -->
+							<button type="button" class="btn btn-primary" data-toggle="modal" id="showModal" 
+							>新增销售单</button>
 					</priv:privilege>
 						<!-- <button type="button" id="delbtn" class="btn btn-primary">批量删除销售单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的销售单</button>
@@ -182,15 +190,18 @@ String date=sdf.format(new Date());
 						</div>
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
-								style="background-color: #1abc9c;">客户名称:</span> <select
+								style="background-color: #1abc9c;">客户名称:</span>
+								<!-- <input type="text" class="form-control" id="addCustomerName"> -->
+								 <select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="addCustomerName" id="addCustomerName">
 								<option value="" emp="" remark="无">请选择客户名称</option>
 								<c:forEach var="customers" items="${customersList}"
 									varStatus="status">
 									<option value="${customers.customerId }" emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
-								</c:forEach>
-							</select> <span class="input-group-addon"
+								</c:forEach> 
+							</select>
+							 <span class="input-group-addon"
 								style="background-color: #1abc9c;">销售人员：</span> <select
 								class="form-control" value="请选仓库" tabindex="1"
 								name="addEmployeeName" id="addEmployeeName">
@@ -266,7 +277,9 @@ String date=sdf.format(new Date());
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="<%=path%>/js/vendor/video.js"></script>
-	<script src="<%=path%>/js/flat-ui.min.js"></script>
+	<script src="<%=path%>/js/flat-ui.min.js"></script>	
+	 <script type="text/javascript" src="${ctx}/js/jquery.autocomplete.min.js"></script>
+	<link rel="stylesheet" href="${ctx}/css/jquery.autocomplete.css" /> 
 	<script type="text/javascript">
 	$("#addCustomerName").change(function(e) {
 		// $('#addcustomer').modal('hide');
@@ -295,6 +308,9 @@ String date=sdf.format(new Date());
     function printSalesData(salesSerialNumber){
     	window.location.href = '<%=path%>/salesController/printSales.do?salesSerialNumber='+salesSerialNumber;		    
 	}
+    function quer(){
+    	window.location.href = '<%=path%>/salesController/quer.do';		    
+	}
     
     
     function deleteSalesData(salesSerialNumber){
@@ -316,10 +332,6 @@ String date=sdf.format(new Date());
                     
         });       
 	}
-    
-    function cc(){
-    	alert("cc");
-    }
     
     function queryImportList() {
   		var selOpt = $("#saleTab tbody tr");  
@@ -402,9 +414,9 @@ String date=sdf.format(new Date());
                     data:{},
                     success:function(data){  
                     			var json = $.parseJSON(data);
-								var goodsName=$.parseJSON(json.RES_DATA.goodsNameSet);
-						      	for (var i = 0; i < goodsName.length; i++) {
-									$("#goodsName").append( "<option>"+goodsName[i]+"</option>" );
+								var goodsList=$.parseJSON(json.RES_DATA.goodsList);
+						      	for (var i = 0; i < goodsList.length; i++) {
+									$("#goodsName").append( "<option value="+goodsList[i].goodsId+">"+goodsList[i].goodsName+"</option>" );
 									$("#addgoods").show();
 							        /* $("#addgoodsbtn").hide();
 							        $("#salesgoodsform").hide(); */
@@ -414,9 +426,9 @@ String date=sdf.format(new Date());
                 });       
 	}
     
-    function showTable(goodName){
-    	if (!checkIsNull(goodName)) {
-    		
+    function showTable(goodId){
+    	if (!checkIsNull(goodId)) {
+    		var goodName=$("#goodsName").find("option:selected").text();
     		var len=$("#addGoodsTab tbody tr").length;
     		var goodsName=null;
     		var goodsCount=0;
@@ -433,8 +445,8 @@ String date=sdf.format(new Date());
           		  
           		})
           	}
-    		var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;
-    		<%--  var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+encodeURI(encodeURI(goodName))+'&goodsCount='+goodsCount; --%>
+          	<%-- var url='<%=path%>/salesController/queryGoodsDemo.do?goodName='+goodName+'&goodsCount='+goodsCount;--%>
+    		 var url='<%=path%>/salesController/queryGoodsDemo.do?goodId='+goodId+'&goodsCount='+goodsCount; 
     		$.dialog({
     			title:'可销售商品',
     			width:1200,
@@ -545,12 +557,76 @@ String date=sdf.format(new Date());
     </script>
 	<script type="text/javascript">
     $(document).ready(function(){
+    	
+    	var customers=new Array();
+    	<%
+    		for(int i=0;i<cusList.size();i++){
+    	%>
+    		var customer={};	
+    		customer.name='<%=cusList.get(i).getCustomerName() %>';
+    		customer.id='<%=cusList.get(i).getCustomerId() %>';
+    		customer.empName='<%=cusList.get(i).getEmployeeName() %>';
+    		customers.push(customer);
+    	<%
+    		}
+    	%>
+    	
+    	
+    
+    		                $('#customerName').autocomplete(customers, {
+    		                    max: 10,    //列表里的条目数
+    		                     minChars: 0,    //自动完成激活之前填入的最小字符
+    		                     width: 200,     //提示的宽度，溢出隐藏
+    		                     scrollHeight: 300,   //提示的高度，溢出显示滚动条
+    		                     matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
+    		                     autoFill: false,    //自动填充
+    		                     multiple:true,
+    		                     formatItem: function(row, i, max) {
+    		                         return row.name;
+    		                     },
+    		                     formatMatch: function(row, i, max) {
+    		                         return row.name + row.id;
+    		                     },
+    		                     formatResult: function(row) {
+    		                         return row.name;
+    		                     }
+    		                 }).result(function(event, row, formatted) {
+    		                 });
+    		                
+    		                
+    		               
+
+    		                 		                
+    	
       $("#delbtn").click(function(){
         $("#delbtn").hide();
         $("#delcommit").show();
         $("#delcancle").show();
         $(".chk").show();
       });
+      
+      $("#showModal").click(function(){
+    	  $("#salesgoods").modal('show');
+    	  /* $('#addCustomerName').autocomplete(customers, {
+              max: 10,    //列表里的条目数
+               minChars: 0,    //自动完成激活之前填入的最小字符
+               width: 200,     //提示的宽度，溢出隐藏
+               scrollHeight: 300,   //提示的高度，溢出显示滚动条
+               matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
+               autoFill: false,    //自动填充
+               formatItem: function(row, i, max) {
+                   return row.name;
+               },
+               formatMatch: function(row, i, max) {
+                   return row.name + row.id;
+               },
+               formatResult: function(row) {
+                   return row.name;
+               }
+           }).result(function(event, row, formatted) {
+           }); */
+   
+        });  
       $("#delcommit").click(function(){
         $("#delbtn").show();
         $("#delcommit").hide();

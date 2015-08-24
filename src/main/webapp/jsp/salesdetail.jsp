@@ -14,7 +14,6 @@ page {
 	padding: 1pt;
 }
 
-
 h1 {
 	font-size: 16pt;
 	margin-bottom: 0px;
@@ -35,7 +34,6 @@ h1.page-header {
 table th {
 	font-size: 6pt;
 	padding: 1pt !important;
-
 }
 
 table tr {
@@ -48,8 +46,6 @@ table tr {
 	padding: 1pt !important;
 	border: 1pt solid black !important;
 }
-
-
 </style>
 <style type="text/css">
 h1 {
@@ -59,19 +55,20 @@ h1 {
 </head>
 <div class="col-sm-12 col-md-12  main">
 	<h1 class="page-header" id="titles">${title}</h1>
-	<button type="button" class="btn btn-primary hidden-print" data-toggle="modal"
-							data-target="#salesgoods">修改</button>
-	<div class="modal fade hidden-print" id="salesgoods" tabindex="-1" role="dialog"
-		aria-labelledby="importgoods" aria-hidden="true">
+	<c:if test="${sales.salesStatus eq 'DO' }">
+		<button type="button" class="btn btn-primary hidden-print"
+			data-toggle="modal" data-target="#salesgoods" id="change">修改</button>
+	</c:if>
+	<div class="modal fade hidden-print" id="salesgoods" tabindex="-1"
+		role="dialog" aria-labelledby="importgoods" aria-hidden="true">
 		<label for="exampleInputEmail2">输入抬头名称：</label> <input type="text"
-								class="form-control" id="titleName"
-								placeholder="${title}">
+			class="form-control" id="titleName" placeholder="${title}">
 		<button type="button" class="btn" id="addgoodsbtn">确认修改</button>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
 			<tr>
-				<td class="aa" >电话</td>
+				<td class="aa">电话</td>
 				<td colspan="2"></td>
 				<td>地址</td>
 				<td colspan="2"></td>
@@ -133,7 +130,7 @@ h1 {
 			</tr>
 			<tr>
 				<td>收货人</td>
-				<td colspan="1"></td>
+				<td style="width: 75px"></td>
 				<td>送货人</td>
 				<td colspan="1"></td>
 				<td>核单人</td>
@@ -145,7 +142,7 @@ h1 {
 			</tr>
 			<tr>
 				<td>库管</td>
-				<td colspan="1"></td>
+				<td style="width: 75px"></td>
 				<td>车牌号</td>
 				<td colspan="1"></td>
 				<td>起始油表数</td>
@@ -159,15 +156,18 @@ h1 {
 			</tr>
 		</table>
 	</div>
-	 <c:if test="${sales.salesStatus eq 'DO' }">
-		<input class="hidden-print" type="button" id="print" value="打印" onclick="javascript:window.print(); printSalesData()"/>
+	<c:if test="${sales.salesStatus eq 'DO' }">
+		<input class="hidden-print" type="button" id="print" value="打印"
+			onclick="javascript:window.print(); printSalesData()" />
 	</c:if>
-		
-	<c:if test="${sales.salesStatus ne 'DO' }">		
-		<input class="hidden-print" type="button" value="已打印" onclick="javascript:window.print();" disabled="disabled" style="background-color: gray"/>
+
+	<c:if test="${sales.salesStatus ne 'DO' }">
+		<input class="hidden-print" type="button" value="已打印"
+			onclick="javascript:window.print();" disabled="disabled"
+			style="background-color: gray" />
 	</c:if>
 	<input class="hidden-print" type="button" value="返 回" name="btBack"
-				onclick="history.go(-1)">
+		onclick="history.go(-1)">
 </div>
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
@@ -189,23 +189,24 @@ h1 {
 		var salesSerialNumber='${salesSerialNumber}';
 		$("#print").attr('disabled','disabled');
 		$("#print").css("background-color","gray");
-		$.ajax({  
-            url:'<%=path%>/salesController/changeStatus.do',  
-            type:"post",  
-            async:false,
-            modal : true,
-            showBusi : false,
-            data:{'salesSerialNumber':salesSerialNumber},
-            success:function(data){  
+		$.ajax({ 
+            url:'<%=path%>/salesController/changeStatus.do',
+			type : "post",
+			async : false,
+			modal : true,
+			showBusi : false,
+			data : {
+				'salesSerialNumber' : salesSerialNumber
+			},
+			success : function(data) {
+				$("#change").hide();
 			}
-                    
-        });       
+
+		});
 	}
 	function printpreview() {
 		wb.execwb(7, 1);
 	}
-	
-	
 </script>
 </body>
 </html>
