@@ -29,7 +29,7 @@ h1.page-header {
 .table-responsive table {
 	font-size: 6pt;
 	padding: 1pt !important;
-	border: 2pt solid black !important;
+	border: 1pt solid black !important;
 }
 
 table th {
@@ -46,7 +46,7 @@ table tr {
 .table-responsive table td {
 	font-size: 6pt;
 	padding: 1pt !important;
-	border: 2pt solid black !important;
+	border: 1pt solid black !important;
 }
 
 
