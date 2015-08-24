@@ -58,9 +58,18 @@ h1 {
 </style>
 </head>
 <div class="col-sm-12 col-md-12  main">
-	<h1 class="page-header">${title}</h1>
+	<h1 class="page-header" id="titles">${title}</h1>
+	<button type="button" class="btn btn-primary hidden-print" data-toggle="modal"
+							data-target="#salesgoods">修改</button>
+	<div class="modal fade hidden-print" id="salesgoods" tabindex="-1" role="dialog"
+		aria-labelledby="importgoods" aria-hidden="true">
+		<label for="exampleInputEmail2">输入抬头名称：</label> <input type="text"
+								class="form-control" id="titleName"
+								placeholder="${title}">
+		<button type="button" class="btn" id="addgoodsbtn">确认修改</button>
+	</div>
 	<div class="table-responsive">
-		<table class="table table-bordered" id="saleTab" >
+		<table class="table table-bordered" id="saleTab">
 			<tr>
 				<td class="aa" >电话</td>
 				<td colspan="2"></td>
@@ -85,8 +94,8 @@ h1 {
 			</tr>
 			<tr>
 				<td>商品编号</td>
-				<td colspan="3">商品全名</td>
-				<td colspan="2">规格</td>
+				<td colspan="4">商品全名</td>
+				<td>规格</td>
 				<td>单位</td>
 				<td>数量</td>
 				<td>单价</td>
@@ -97,8 +106,8 @@ h1 {
 				varStatus="status">
 				<tr>
 					<td>${salesGoods.goodsId}</td>
-					<td colspan="3">${salesGoods.goodsName}</td>
-					<td colspan="2"></td>
+					<td colspan="4">${salesGoods.goodsName}</td>
+					<td></td>
 					<td>${salesGoods.salesGoodsUnit}</td>
 					<td>${salesGoods.salesGoodsAmount}</td>
 					<td>${salesGoods.salesGoodsPrice}</td>
@@ -108,8 +117,8 @@ h1 {
 			</c:forEach>
 			<tr>
 				<td>总计</td>
-				<td colspan="3"></td>
-				<td colspan="2"></td>
+				<td colspan="4"></td>
+				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -130,15 +139,15 @@ h1 {
 				<td>核单人</td>
 				<td>${tbEmployee.employeeName }</td>
 				<td>发车时间</td>
-				<td></td>
+				<td colspan="1"></td>
 				<td>还车时间</td>
-				<td></td>
+				<td colspan="1"></td>
 			</tr>
 			<tr>
 				<td>库管</td>
-				<td></td>
+				<td colspan="1"></td>
 				<td>车牌号</td>
-				<td></td>
+				<td colspan="1"></td>
 				<td>起始油表数</td>
 				<td colspan="2"></td>
 				<td>返回油表数</td>
@@ -150,18 +159,15 @@ h1 {
 			</tr>
 		</table>
 	</div>
-	<c:if test="${sales.salesStatus eq 'DO' }">
-		<input class="hidden-print" type="button" value="打印"
-			onclick="javascript:window.print(); printSalesData()" />
+	 <c:if test="${sales.salesStatus eq 'DO' }">
+		<input class="hidden-print" type="button" id="print" value="打印" onclick="javascript:window.print(); printSalesData()"/>
 	</c:if>
-
-	<c:if test="${sales.salesStatus ne 'DO' }">
-		<input class="hidden-print" type="button" value="已打印"
-			onclick="javascript:window.print();" disabled="disabled"
-			style="background-color: gray" />
+		
+	<c:if test="${sales.salesStatus ne 'DO' }">		
+		<input class="hidden-print" type="button" value="已打印" onclick="javascript:window.print();" disabled="disabled" style="background-color: gray"/>
 	</c:if>
 	<input class="hidden-print" type="button" value="返 回" name="btBack"
-		onclick="history.go(-1)">
+				onclick="history.go(-1)">
 </div>
 
 <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
@@ -173,27 +179,33 @@ h1 {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		$("#addgoodsbtn").click(function(){
+			titleName=$("#titleName").val();
+			$("#titles").text(titleName);
+			$("#salesgoods").hide();
+		})
 	});
 	function printSalesData(){
 		var salesSerialNumber='${salesSerialNumber}';
+		$("#print").attr('disabled','disabled');
+		$("#print").css("background-color","gray");
 		$.ajax({  
-            url:'<%=path%>salesController/changeStatus.do',
-			type : "post",
-			async : false,
-			modal : true,
-			showBusi : false,
-			data : {
-				'salesSerialNumber' : salesSerialNumber
-			},
-			success : function(data) {
+            url:'<%=path%>/salesController/changeStatus.do',  
+            type:"post",  
+            async:false,
+            modal : true,
+            showBusi : false,
+            data:{'salesSerialNumber':salesSerialNumber},
+            success:function(data){  
 			}
-
-		});
+                    
+        });       
 	}
 	function printpreview() {
 		wb.execwb(7, 1);
 	}
+	
+	
 </script>
 </body>
 </html>

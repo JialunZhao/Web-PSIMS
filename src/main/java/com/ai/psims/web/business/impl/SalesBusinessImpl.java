@@ -20,14 +20,18 @@ import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbGoods2customer;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
+import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.ISalesGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
+import com.ai.psims.web.service.ISystemParameterService;
 import com.ai.psims.web.util.Constants;
 import com.ai.psims.web.util.CreateIdUtil;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 @Service
 public class SalesBusinessImpl implements ISalesBusiness {
@@ -39,6 +43,8 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	private ISalesGoodsService salesGoodsService;
 	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
+	@Resource(name = "systemParameterServiceImpl")
+	private ISystemParameterService systemParameterService;
 
 	@Override
 	public List<Storagecheck> queryStrStoragechecks(
@@ -54,12 +60,12 @@ public class SalesBusinessImpl implements ISalesBusiness {
 
 	@Override
 	public TbStoragecheck queryStoragecheck(
-			TbStoragecheckExample storagecheckExample, String goodsName) {
+			TbStoragecheckExample storagecheckExample, int goodsName) {
 		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
 		storagechecksList = storagecheckService
 				.selectTbStoragecheck(storagecheckExample);
 		Integer storageRateCurrent = storagecheckService
-				.selectStorageRateCurrentByName(goodsName);
+				.selectStorageRateCurrentById(goodsName);
 		if (storagechecksList.size() > 0) {
 			storagechecksList.get(0).setStorageRateCurrent(storageRateCurrent);
 			return storagechecksList.get(0);
@@ -229,7 +235,14 @@ public class SalesBusinessImpl implements ISalesBusiness {
 
 	@Override
 	public List<SalesGoods> selectSalesGoods(SalesGoodsExample example) {
-		return salesGoodsService.selectSalesGoods(example);
+		List<SalesGoods> saList=new ArrayList<SalesGoods>();
+		saList=salesGoodsService.selectSalesGoods(example);
+		for (SalesGoods salesGoods : saList) {
+			TbSystemParameter systemParameter=new TbSystemParameter();			
+			systemParameter=systemParameterService.getSysById(Integer.parseInt(salesGoods.getSalesGoodsUnit()));
+			salesGoods.setSalesGoodsUnit(systemParameter.getPpValue());
+		}
+		return saList;
 	}
 
 	@Override
