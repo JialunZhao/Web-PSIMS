@@ -101,7 +101,9 @@ h1 {
 				<td>业务员</td>
 				<td>${customer.employeeName}</td>
 				<td>经手人</td>
-				<td colspan="4">${tbEmployee.employeeName}</td>
+				<td>${tbEmployee.employeeName}</td>
+				<td>结账方式</td>
+				<td colspan="2">${customer.checkoutName}</td>
 			</tr>
 			<tr>
 				<td>商品编号</td>
@@ -128,7 +130,7 @@ h1 {
 				<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
 				<c:set value="${row + 1}" var="row" />
 			</c:forEach>
-			<c:forEach var="row" begin="${row}" end="9">
+			<c:forEach var="row" begin="${row}" end="7">
 				<c:set value="${row + 1}" var="row" />
 				<tr>
 					<td>&nbsp;</td>
@@ -147,11 +149,11 @@ h1 {
 				<td></td>
 				<td></td>
 				<td></td>
-				<td>${sum }</td>
+				<td>${sum}</td>
 			</tr>
 			<tr>
-				<td>摘要</td>
-				<td colspan="6">${customer.checkoutName}</td>
+				<td>备注</td>
+				<td colspan="6"></td>
 				<td colspan="1">金额大写</td>
 				<td colspan="2"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
 					"sum").toString())%></td>
