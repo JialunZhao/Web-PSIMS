@@ -241,8 +241,11 @@
 					+ salesSerialNumber + "&goodsAmountList="
 					+ goodsAmountList;
 			api.reload(this, url);
-			W.location.reload();
-			api.close();
+			alert("修改成功！");
+			/* W.location.reload(); */
+			parent.location.reload()
+			/* api.close(); */
+			location.close();
 		}
 		
 		function getTotalPrict(index){

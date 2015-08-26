@@ -22,7 +22,7 @@ public interface ISalesBusiness {
 
 	public Storagecheck selectByKey(Integer storageId);
 
-	public String addSalesList(AddSalesGoodsBean addSalesGoodsBean);
+	public String addSalesList(AddSalesGoodsBean addSalesGoodsBean,String remark);
 
 	public List<Sales> selectByExample(SalesExample example);
 
