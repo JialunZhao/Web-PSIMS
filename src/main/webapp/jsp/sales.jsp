@@ -78,10 +78,10 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 				<div class="row placeholders ">
 					<div class="col-sm-2">
 					<priv:privilege power="销售出库.增删改">
-						<!-- <button type="button" class="btn btn-primary" data-toggle="modal" 
-							data-target="#salesgoods">新增销售单</button> -->
-							<button type="button" class="btn btn-primary" data-toggle="modal" id="showModal" 
-							>新增销售单</button>
+						 <button type="button" class="btn btn-primary" data-toggle="modal" 
+							data-target="#salesgoods">新增销售单</button> 
+							<!--<button type="button" class="btn btn-primary" data-toggle="modal" id="showModal" 
+							>新增销售单</button>-->
 					</priv:privilege>
 						<!-- <button type="button" id="delbtn" class="btn btn-primary">批量删除销售单</button>
             <button type="button" id="delcommit" class="btn btn-primary" style="display:none">确认删除选中的销售单</button>
@@ -568,6 +568,8 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     $(document).ready(function(){
     	
     	var customers=new Array();
+    	var customerNames=new Array();
+    	
     	<%
     		for(int i=0;i<cusList.size();i++){
     	%>
@@ -577,6 +579,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     		customer.empName='<%=cusList.get(i).getEmployeeName() %>';
     		customer.empId='<%=cusList.get(i).getEmployeeId() %>';
     		customers.push(customer);
+    		customerNames.push(customer.name);
     	<%
     		}
     	%>
@@ -604,6 +607,27 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     		                	 $('#customerId').val(row.id);
     		                 });
     		                
+    		                $('#addCustomerName').autocomplete(customers, {
+    		                    max: 10,    //列表里的条目数
+    		                     minChars: 0,    //自动完成激活之前填入的最小字符
+    		                     width: 200,     //提示的宽度，溢出隐藏
+    		                     scrollHeight: 300,   //提示的高度，溢出显示滚动条
+    		                     matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
+    		                     autoFill: false,    //自动填充
+    		                     formatItem: function(row, i, max) {
+    		                         return row.name+"["+row.id+"]";
+    		                     },
+    		                     formatMatch: function(row, i, max) {
+    		                         return row.name + row.id;
+    		                     },
+    		                     formatResult: function(row) {
+    		                         return row.name;
+    		                     }
+    		                 }).result(function(event, row, formatted) {
+    		              	   $('#addEmployeeName').val(row.empId);
+    		              	   $('#addCustomerId').val(row.id);
+    		                 }); 
+    		                
     		                
     		               
 
@@ -616,9 +640,9 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
         $(".chk").show();
       });
       
-      $("#showModal").click(function(){
+      /* $("#showModal").click(function(){
     	  $("#salesgoods").modal('show');
-    	   $('#addCustomerName').autocomplete(customers, {
+    	  $('#addCustomerName').autocomplete(customers, {
               max: 10,    //列表里的条目数
                minChars: 0,    //自动完成激活之前填入的最小字符
                width: 200,     //提示的宽度，溢出隐藏
@@ -638,8 +662,8 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
         	   $('#addEmployeeName').val(row.empId);
         	   $('#addCustomerId').val(row.id);
            }); 
-   
-        });  
+    
+        });   */
       $("#delcommit").click(function(){
         $("#delbtn").show();
         $("#delcommit").hide();
@@ -743,6 +767,12 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
       	if (checkIsNull(customerName)) {
   			alert("请选择客户");
   			return;
+  		}else{
+  			if(customerNames.toString().indexOf(customerName)==(-1)){
+  				alert("该客户不存在，请从新选择！");
+  				$("#addCustomerName").val("");
+  				return;
+  			}
   		}
       	if (checkIsNull(storeName)) {
   			alert("请选择仓库");
