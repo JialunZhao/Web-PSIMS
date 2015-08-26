@@ -1,7 +1,5 @@
 package com.ai.psims.web.controller;
 
-import java.math.BigDecimal;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,7 +51,6 @@ import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
-import com.ai.psims.web.util.NumToFont;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -192,7 +189,7 @@ public class SalesController extends BaseController {
 				.createCriteria();
 		List<Sales> salesList = new ArrayList<Sales>();
 		if (customerId != null && customerId != "") {
-			criteria.andCustomerNameEqualTo(customerId);
+			criteria.andCustomerIdEqualTo(Integer.parseInt(customerId));
 		}
 		if (storehouseId != null && storehouseId != "") {
 			criteria.andStorehouseIdEqualTo(Integer.parseInt(storehouseId));
@@ -303,6 +300,7 @@ public class SalesController extends BaseController {
 		String storeId = request.getParameter("storeId");
 		String customerName = request.getParameter("customerName");
 		String customerId = request.getParameter("customerId");
+		String remark = request.getParameter("remark");
 		String salesListCreateTime = request
 				.getParameter("salesListCreateTime");
 		String employeeName = request.getParameter("employeeName");
@@ -312,7 +310,7 @@ public class SalesController extends BaseController {
 				customerName, storeName, customerId, salesListCreateTime,
 				employeeName, storeId, employeeId, salesCountList,
 				salesPriceList);
-		String result = salesBusiness.addSalesList(addGoodsBean);
+		String result = salesBusiness.addSalesList(addGoodsBean,remark);
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "ERROR", data);

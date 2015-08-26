@@ -20,7 +20,6 @@ import com.ai.psims.web.model.SalesUpdateData;
 import com.ai.psims.web.model.Storagecheck;
 import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.TbGoods;
-import com.ai.psims.web.model.TbGoods2customer;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.model.TbSystemParameter;
@@ -31,7 +30,6 @@ import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.service.ISystemParameterService;
 import com.ai.psims.web.util.Constants;
 import com.ai.psims.web.util.CreateIdUtil;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 @Service
 public class SalesBusinessImpl implements ISalesBusiness {
@@ -75,10 +73,11 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	}
 
 	@Override
-	public String addSalesList(AddSalesGoodsBean addSalesGoodsBean) {
+	public String addSalesList(AddSalesGoodsBean addSalesGoodsBean,
+			String remark) {
 		java.util.Date date = new java.util.Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		String number = sdf.format(date);
 		String salesSerialNumber = salesService.selectSalesSerialNumber(number);
 		if (salesSerialNumber == null) {
@@ -209,6 +208,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					.getEmployeeId()));
 			sales.setEmployeeName(addSalesGoodsBean.getEmployeeName());
 			sales.setTotalSalesAmount(totalPriceBD.toString());
+			sales.setSalesRemark(remark);
 			sales.setSalesStatus(Constants.SalesStatus.DOWNORDER);
 			salesService.insertSelective(sales);
 			return "SUCCESS";
@@ -235,11 +235,12 @@ public class SalesBusinessImpl implements ISalesBusiness {
 
 	@Override
 	public List<SalesGoods> selectSalesGoods(SalesGoodsExample example) {
-		List<SalesGoods> saList=new ArrayList<SalesGoods>();
-		saList=salesGoodsService.selectSalesGoods(example);
+		List<SalesGoods> saList = new ArrayList<SalesGoods>();
+		saList = salesGoodsService.selectSalesGoods(example);
 		for (SalesGoods salesGoods : saList) {
-			TbSystemParameter systemParameter=new TbSystemParameter();			
-			systemParameter=systemParameterService.getSysById(Integer.parseInt(salesGoods.getSalesGoodsUnit()));
+			TbSystemParameter systemParameter = new TbSystemParameter();
+			systemParameter = systemParameterService.getSysById(Integer
+					.parseInt(salesGoods.getSalesGoodsUnit()));
 			salesGoods.setSalesGoodsUnit(systemParameter.getPpValue());
 		}
 		return saList;
@@ -274,8 +275,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 						storagecheck.setEndtime(new Date());
 						storagecheckService
 								.updateTbStoragecheck(tbStoragecheck);
-						count = count
-								- tbStoragecheck.getStorageRateCurrent();
+						count = count - tbStoragecheck.getStorageRateCurrent();
 					} else if (tbStoragecheck.getStorageRateCurrent() == count) {
 						storagecheck.setStorageRateCurrent(0);
 						storagecheck.setEndtime(new Date());

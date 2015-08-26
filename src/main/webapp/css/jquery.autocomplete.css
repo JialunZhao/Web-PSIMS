@@ -1,14 +1,14 @@
-.acInput {
+.ac_input {
 	width: 200px;
 }
-.acResults {
+.ac_Results {
 	padding: 0px;
 	border: 1px solid WindowFrame;
 	background-color: Window;
 	overflow: hidden;
 }
 
-.acResults ul {
+.ac_results ul {
 	width: 100%;
 	list-style-position: outside;
 	list-style: none;
@@ -16,7 +16,7 @@
 	margin: 0;
 }
 
-.acResults li {
+.ac_results li {
 	margin: 0px;
 	padding: 2px 5px;
 	cursor: pointer;
@@ -27,11 +27,11 @@
 	overflow: hidden;
 }
 
-.acLoading {
+.ac_loading {
 	background : url('indicator.gif') right center no-repeat;
 }
 
-.acSelect {
+.ac_loading {
 	background-color: Highlight;
 	color: HighlightText;
 }

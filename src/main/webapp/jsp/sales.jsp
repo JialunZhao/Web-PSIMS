@@ -21,6 +21,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 							 <input type="text"
 								class="form-control" id="customerName"
 								>
+							<input type="hidden" id="customerId">
 							<%--<select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="customerName" id="customerName" onkeyup="cc()">
@@ -191,8 +192,10 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">客户名称:</span>
-								<!-- <input type="text" class="form-control" id="addCustomerName"> -->
-								 <select
+								<input type="text" class="form-control" id="addCustomerName">
+								<input type="hidden" id="addCustomerId">
+								
+								<%--  <select
 								class="form-control" value="请选择客户名称" tabindex="1"
 								name="addCustomerName" id="addCustomerName">
 								<option value="" emp="" remark="无">请选择客户名称</option>
@@ -200,7 +203,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 									varStatus="status">
 									<option value="${customers.customerId }" emp="${customers.employeeId}" remark="${customers.remark}">${customers.customerName }</option>
 								</c:forEach> 
-							</select>
+							</select> --%>
 							 <span class="input-group-addon"
 								style="background-color: #1abc9c;">销售人员：</span> <select
 								class="form-control" value="请选仓库" tabindex="1"
@@ -211,14 +214,19 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 									<option value="${employees.employeeId }">${employees.employeeName }</option>
 								</c:forEach>
 							</select>
-						</div>						
+						</div>
+						<div class="input-group col-xs-10 col-md-offset-1">
+							<span class="input-group-addon"
+								style="background-color: #1abc9c;">备注:</span>
+								<input type="text" class="form-control" id="remark">
+						</div>							
 						<div class="input-group col-xs-10 col-md-offset-1">
 							<button type="button" class="btn btn-primary" id="addgoodsbtn">添加商品</button>
 							
 						</div>
-						<div class="input-group col-xs-10 col-md-offset-1">
+						<!-- <div class="input-group col-xs-10 col-md-offset-1">
 							<span class="col-xs-12" id="addremark"></span>			
-						</div>
+						</div> -->
 					</div>
 				</div>
 
@@ -281,13 +289,13 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 	 <script type="text/javascript" src="${ctx}/js/jquery.autocomplete.min.js"></script>
 	<link rel="stylesheet" href="${ctx}/css/jquery.autocomplete.css" /> 
 	<script type="text/javascript">
-	$("#addCustomerName").change(function(e) {
+	/* $("#addCustomerName").change(function(e) {
 		// $('#addcustomer').modal('hide');
 		var employeeId = $("#addCustomerName").children('option:selected').attr("emp");
 		var remark = $("#addCustomerName").children('option:selected').attr("remark");
 		$("#addEmployeeName").val(employeeId);		
 		$("#addremark").text("客户备注："+remark);		
-	});
+	}); */
 	
     var len=$("#addGoodsTab tbody tr").length;
     function isPay(payStatus){
@@ -336,7 +344,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     function queryImportList() {
   		var selOpt = $("#saleTab tbody tr");  
 		selOpt.remove();
-		var customerId=$("#customerName").val();
+		var customerId=$("#customerId").val();
 		var storehouseId=$("#storehouseName").val();
 		var payMed=$("#quyPayMed").val();
 		var employeeId=$("#employeeName").val();
@@ -400,6 +408,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 		}
 		return str;
 	}
+    
     
     function selectGoods(){
 		var selOpt = $("#goodsName option");  
@@ -566,6 +575,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     		customer.name='<%=cusList.get(i).getCustomerName() %>';
     		customer.id='<%=cusList.get(i).getCustomerId() %>';
     		customer.empName='<%=cusList.get(i).getEmployeeName() %>';
+    		customer.empId='<%=cusList.get(i).getEmployeeId() %>';
     		customers.push(customer);
     	<%
     		}
@@ -582,7 +592,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     		                     autoFill: false,    //自动填充
     		                     multiple:true,
     		                     formatItem: function(row, i, max) {
-    		                         return row.name;
+    		                         return row.name+"["+row.id+"]";
     		                     },
     		                     formatMatch: function(row, i, max) {
     		                         return row.name + row.id;
@@ -591,6 +601,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     		                         return row.name;
     		                     }
     		                 }).result(function(event, row, formatted) {
+    		                	 $('#customerId').val(row.id);
     		                 });
     		                
     		                
@@ -607,7 +618,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
       
       $("#showModal").click(function(){
     	  $("#salesgoods").modal('show');
-    	  /* $('#addCustomerName').autocomplete(customers, {
+    	   $('#addCustomerName').autocomplete(customers, {
               max: 10,    //列表里的条目数
                minChars: 0,    //自动完成激活之前填入的最小字符
                width: 200,     //提示的宽度，溢出隐藏
@@ -615,7 +626,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
                matchContains: true,    //包含匹配，就是data参数里的数据，是否只要包含文本框里的数据就显示
                autoFill: false,    //自动填充
                formatItem: function(row, i, max) {
-                   return row.name;
+                   return row.name+"["+row.id+"]";
                },
                formatMatch: function(row, i, max) {
                    return row.name + row.id;
@@ -624,7 +635,9 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
                    return row.name;
                }
            }).result(function(event, row, formatted) {
-           }); */
+        	   $('#addEmployeeName').val(row.empId);
+        	   $('#addCustomerId').val(row.id);
+           }); 
    
         });  
       $("#delcommit").click(function(){
@@ -646,11 +659,14 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
     	  var salesPriceList="";
     	  var storeName=$("#addStorehouseName").find("option:selected").text();
     	  var storeId=$("#addStorehouseName").val();
-    	  var customerName=$("#addCustomerName").find("option:selected").text();
-    	  var customerId=$("#addCustomerName").val();
+    	  /* var customerName=$("#addCustomerName").find("option:selected").text();
+    	  var customerId=$("#addCustomerName").val(); */
+    	  var customerName=$("#addCustomerName").val();
+    	  var customerId=$("#addCustomerId").val();
     	  var employeeName=$("#addEmployeeName").find("option:selected").text();
     	  var employeeId=$("#addEmployeeName").val();
     	  var salesListCreateTime=$("#salesTime").val();
+    	  var remark=$("#remark").val();
     	  $('#addGoodsTab tbody tr').find('td').each(function() {
     		  if ($(this).index() == "0") {
     			  storageIdList=storageIdList+$(this).text()+",";
@@ -677,6 +693,7 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
                     	    'salesListCreateTime':salesListCreateTime,
                     	    'storeId':storeId,
                     	    'employeeName':employeeName,
+                    	    'remark':remark,
                     	    'employeeId':employeeId},
                       success:function(data){
                     	  if($.parseJSON(data).RES_RESULT=="SUCCESS"){
