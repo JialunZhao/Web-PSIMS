@@ -88,7 +88,10 @@ public class ImporBusinessImpl implements IImporBusiness {
 		// 获取商品信息及数量
 		List<TbImportGoods> goodsArray = goodsBean.getGoodList();
 		int n = goodsArray.size();
-		for (int i = 0; i < n; i++) {
+		logger.info("------------获取商品信息及数量:总共n种商品-------------"+n);
+
+		int i = 0 ;
+		while ( i < n) {
 			// 获取奖金池信息
 			prizePool = systemParameterService.getSystemParameterPrizePool(
 					Integer.parseInt(providerInfo.getProviderPrizePool()))
@@ -172,6 +175,7 @@ public class ImporBusinessImpl implements IImporBusiness {
 			goodsArray.get(i).setProviderName(tbImport.getProviderName());
 			goodsArray.get(i).setResImportGoodsAmount(goodsArray.get(i).getImportGoodsAmount());
 			importGoodsService.insertImportGoods(goodsArray.get(i));
+			logger.info("------------i-------------当前循环："+i);
 
 			// 奖金池金额更新
 			// addRecord
@@ -191,6 +195,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 						.getPpValue()).subtract(discountDutyTotalPriceBD).toString());
 				systemParameterService.update(tbSystemParameter);
 			}
+			i++;
+
 		}
 
 		tbImport.setImportSerialNumber(importSerialNumber);
@@ -209,63 +215,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 			tbImport.setPaymentType(goodsBean.getPayMed());
 			tbImport.setPaymentTime(Date.valueOf(goodsBean.getPayTime()));
 		}
-
-		//
-		// String[] goodsArray = goodsBean.getGoodList().split(",");
-		// int n = (goodsArray.length) / 12;
-		// for (int i = 0; i < n; i++) {
-		// int j = i * 12;
-		// goodsCount = Integer.parseInt(goodsArray[5 + j]);
-		// goodsPrice = (long) (Float.parseFloat(goodsArray[6 + j]) * 1000);
-		// isDiscount = goodsArray[7 + j];
-		// discountRate = (long) (Float.parseFloat(goodsArray[8 + j]) * 10);
-		// haveBox = goodsArray[9 + j];
-		// haveBoxNamePrice = (long) (Float.parseFloat(goodsArray[10 + j]) *
-		// 1000);
-		// TbImportGoods goodsDemo = new TbImportGoods();
-		// goodsDemo.setGoodsId(Integer.parseInt(goodsArray[0 + j]));
-		// goodsDemo.setGoodsName(goodsArray[2 + j]);
-		// goodsDemo.setImportGoodsUnit(goodsArray[3 + j]);
-		// goodsDemo.setImportGoodsAmount(goodsCount);
-		// goodsDemo.setResImportGoodsAmount(goodsCount);
-		// goodsDemo.setImportSerialNumber(importSerialNumber);
-		// goodsDemo.setImportGoodsPrice(goodsPrice);
-		// goodsDemo.setGoodsShelfLife(Integer.parseInt(goodsArray[4 + j]));
-		// goodsDemo.setTotalPrice(goodsCount * goodsPrice);
-		// goodsDemo.setDiscountRate(discountRate);
-		// goodsDemo.setDiscountDutyTotalPrice((long) (goodsCount
-		// * goodsPrice * (1 - discountRate * 1.0 / 1000)));
-		// goodsDemo.setDiscountTotalPrice((long) ((goodsCount
-		// * goodsPrice * discountRate * 1.0 / 1000) / 1.17));
-		// goodsDemo.setBoxBottlePrice(haveBoxNamePrice);
-		// goodsDemo.setBoxBottleTotalPrice(haveBoxNamePrice * goodsCount);
-		// if (isDiscount.equals(Constants.DiscountMed.YES01)) {
-		// goodsDemo.setIsDiscount(Constants.DiscountMed.YES);
-		// } else {
-		// goodsDemo.setIsDiscount(Constants.DiscountMed.NO);
-		// }
-		// if (haveBox.equals(Constants.DiscountMed.YES01)) {
-		// goodsDemo.setIsBoxBottle(Constants.DiscountMed.YES);
-		//
-		// } else {
-		// goodsDemo.setIsBoxBottle(Constants.DiscountMed.NO);
-		// }
-		// goodsAllPay = (long) (goodsAllPay + haveBoxNamePrice * goodsCount
-		// + goodsCount * goodsPrice - (goodsCount * goodsPrice
-		// * discountRate * 1.0 / 1000) / 1.17);
-		// prizePool+=(long)(((goodsCount * goodsPrice
-		// * discountRate * 1.0 / 1000) / 1.17)*1000);
-		// goodsDemo.setImportGoodsCreatetime(Date.valueOf(goodsBean
-		// .getImportcreatetime()));
-		// importGoodsService.insertImportGoods(goodsDemo);
-		// }
-
-		// TbProvider provider=new TbProvider();
-		// provider=providerService.selectProvider(Integer.parseInt(goodsBean.getProviderId()));
-		// provider.setProviderPrizePool(Integer.parseInt(provider.getProviderPrizePool())-prizePool+"");
-		// providerService.modifyProviderInfo(provider);
-
 		importService.InsertImport(tbImport);
+		
 		return "SUCCESS";
 	}
 

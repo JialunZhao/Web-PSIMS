@@ -704,10 +704,10 @@
         var haveBoxPrice=$("#haveBoxPrice").val();
         var goodsShelfLife=$("#goodsShelfLife").val();
         var prizePool=$("#prizePool").val();
-        var discountRate=$("#discountRate").val();
         var totalPrice=$("#totalPrice").val();
         var discountDutyTotalPrice=$("#discountDutyTotalPrice").val();
         var prizePoolUsed=$("#prizePoolUsed").val();
+
         if (checkIsNull(goodsName)) {
 			alert("请选择入库商品名称");
 			return;
@@ -802,7 +802,8 @@
                     		  alert("成功添加入库单");
                     		  location.reload();
                     	  }else{
-                    		  alert("添加入库单失败");
+                    		  
+                    		  alert("添加入库单失败:" + $.parseJSON(data).RES_MSG);
                     	  }
                     	  var selOpt = $("#addGoodsTab tbody tr");  
                   		  selOpt.remove();
@@ -847,7 +848,6 @@
           var haveBoxPrice=$("#haveBoxPrice").val();
           var goodsShelfLife=$("#goodsShelfLife").val();
           var prizePool=$("#prizePool").val();
-          var discountRate=$("#discountRate").val();
           var totalPrice=$("#totalPrice").val();
           var discountDutyTotalPrice=$("#discountDutyTotalPrice").val();
           var prizePoolUsed=$("#prizePoolUsed").val();
@@ -855,54 +855,33 @@
   			alert("请选择进货商品名称");
   			return;
   		}
-          if (checkIsNull(haveBox)) {
-  			alert("请选择是否有箱瓶");
-  			return;
-  		}else if(haveBox=='<%=Constants.DiscountMed.YES%>'){
-  			if (!grantToZero(haveBoxPrice)) {
-  				$("#haveBoxPrice").val("");
-  				alert("箱皮价格小于0，请重新填写！");
-  				return;
-  			}
-  		} 
-          if (checkIsNull(isDiscount)) {
-  			alert("请选择是否有折扣");
-  			return;
-  		}
-          if (isDiscount=='<%=Constants.DiscountMed.YES%>') {
-          	if (checkIsNull(discountRate)) {
-      			alert("请填写折扣率");
-      			return;
-      		} else {
-      			if (parseInt(discountRate)<0||parseInt(discountRate)>100) {
-      				$("#discountRate").val("");
-      				alert("折扣率应在0~100之间！");
-      				return;
-      			}else{
-// 					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117)*1000);
-// 					prizePool=parseInt(prizePool)*1000;
-					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117));
-					prizePool=parseInt(prizePool);
-					if (prize>prizePool) {
-						$("#discountRate").val("");
-						alert("奖金池金额不够，请从新选择折扣方式！");
-						return;
-					}
-				}
-      		}
-  		}else {
-  			discountRate='0';
-  			$("#discountRate").val("");
-  		}
-          if (haveBox=='<%=Constants.DiscountMed.YES%>') {
-          	if (checkIsNull(haveBoxPrice)) {
-      			alert("请填写折扣率");
-      			return;
-      		}
-  		}else {
-  			haveBoxPrice='0';
-  			$("#haveBoxPrice").val("");
-  		}
+<%-- 		if(haveBox=='<%=Constants.DiscountMed.YES%>'){ --%>
+//   			if (!grantToZero(haveBoxPrice)) {
+//   				$("#haveBoxPrice").val("");
+//   				alert("箱皮价格小于0，请重新填写！");
+//   				return;
+//   			}
+//   		} 
+
+
+
+//       			if (parseInt(discountRate)<0||parseInt(discountRate)>100) {
+//       				$("#discountRate").val("");
+//       				alert("折扣率应在0~100之间！");
+//       				return;
+//       			}else{
+// // 					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117)*1000);
+// // 					prizePool=parseInt(prizePool)*1000;
+// 					var prize=parseInt((parseFloat(goodsCount)*parseFloat(goodsPrice)*parseFloat(discountRate)/117));
+// 					prizePool=parseInt(prizePool);
+// 					if (prize>prizePool) {
+// 						$("#discountRate").val("");
+// 						alert("奖金池金额不够，请从新选择折扣方式！");
+// 						return;
+// 					}
+// 				}
+  		
+
           if (checkIsNull(goodsCount)) {
   			alert("请选择进货商品数量");
   			return;

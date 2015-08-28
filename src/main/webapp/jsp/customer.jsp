@@ -148,7 +148,7 @@
 									<option value="0">请选择结账方式：</option>
 									<c:forEach var="tbSystemParameters"
 										items="${tbSystemParameters}">
-										<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+										<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppDesc}</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -270,7 +270,7 @@
 									<option value="0">请选择结账方式：</option>
 									<c:forEach var="tbSystemParameters"
 										items="${tbSystemParameters}">
-										<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+										<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppDesc}</option>
 									</c:forEach>
 								</select>
 							</div>

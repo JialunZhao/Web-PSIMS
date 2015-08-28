@@ -373,14 +373,14 @@ public class ImportController extends BaseController {
 
 
 		String result = imporBusinessImpl.addGoodsList(addGoodsBean);
-		logger.info("------------5.返回结果-------------");
+		logger.info("------------5.返回结果-------------" +result);
 		JSONObject data = new JSONObject();
-		if (result == null) {
-			logger.info("------------importOrder page finished!-------------");
-			responseFailed(response, "ERROR", data);
-		} else {
+		if (result == "SUCCESS") {
 			logger.info("------------importOrder page finished!-------------");
 			responseSuccess(response, "SUCCESS", data);
+		} else {
+			logger.info("------------importOrder page finished!-------------");
+			responseFailed(response, result, data);
 		}
 	}
 
