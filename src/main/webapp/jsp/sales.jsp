@@ -103,47 +103,48 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 								<th>仓库名称</th>
 								<th>应收总价</th>
 								<th>销售状态</th>
+								<td>商品名称</td>
+								<td>商品单价</td>
+								<td>商品数量</td>
+								<td>总价</td>
 								<th>操作</th>
 							</tr>
 						</thead>
 						<tbody>
 						
-							<c:set value="0" var="sum" />
+							<c:set value="0.00" var="sum" />
 							<c:forEach var="sales" items="${salesList}" varStatus="status">
-								<tr>
-									<td class="chk" style="display: none"><input
-										type="checkbox" aria-label="..."></td>
-									<td><font color="#16a085">${sales.salesSerialNumber }</font></td>
-									<td><font size="4" color="#16a085"><fmt:formatDate value="${sales.salesDate }"
-											pattern="yyyy-MM-dd" /></font></td>
-									<td><font size="4" color="#16a085">${sales.employeeName }</font></td>
-									<td><font size="4" color="#16a085">${sales.customerName }</font></td>
-									<td><font size="4" color="#16a085">${sales.storehouseName }</font></td>
-									<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td>
-									<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
-									<priv:privilege power="销售出库.增删改">
-									<td>
-										<a href="#" onclick="printSalesData(${sales.salesSerialNumber })">明细</a>/
-									<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
-									</priv:privilege>
-								</tr>
-								<tr>
-									<td>订单详情</td>
-									<td>商品名称</td>
-									<td>商品单价</td>
-									<td>商品数量</td>
-									<td>总价</td>
-								</tr>
 								<c:forEach var="salesGoods" items="${salesGoodsList}"
 									varStatus="status">
 								<c:if
 									test="${salesGoods.salesSerialNumber==sales.salesSerialNumber}">
 									<tr id="#collapse${salesGoods.salesSerialNumber}">
-										<td>订单详情</td>
+										<td class="chk" style="display: none"><input
+										type="checkbox" aria-label="..."></td>
+										<td><font color="#16a085">${sales.salesSerialNumber }</font></td>
+										<td><font size="4" color="#16a085"><fmt:formatDate value="${sales.salesDate }"
+											pattern="yyyy-MM-dd" /></font></td>
+										<td><font size="4" color="#16a085">${sales.employeeName }</font></td>
+										<td><font size="4" color="#16a085">${sales.customerName }</font></td>
+										<td><font size="4" color="#16a085">${sales.storehouseName }</font></td>
+										<td><font size="4" color="#16a085">${sales.totalSalesAmount }</font></td>
+										<td><font size="4" color="#16a085">${sales.salesStatus }</font></td>
 										<td>${salesGoods.goodsName}</td>
 										<td>${salesGoods.salesGoodsPrice}</td>
 										<td>${salesGoods.salesGoodsAmount}</td>
 										<td>${salesGoods.salesGoodsTotalPrice}</td>
+										<c:if test="${sales.salesStatus ne '结清'}">
+										<priv:privilege power="销售出库.增删改">
+											<td>
+											<a href="#" onclick="printSalesData(${sales.salesSerialNumber })">明细</a>/<a href="#" onclick="updateSalesData(${sales.salesSerialNumber })">修改</a>/<a href="#" onclick="deleteSalesData(${sales.salesSerialNumber })">删除</a></td>
+										</priv:privilege>
+										</c:if>
+										<c:if test="${sales.salesStatus eq '结清'}">
+										<priv:privilege power="销售出库.增删改">
+											<td>
+											<a href="#" onclick="printSalesData(${sales.salesSerialNumber })">明细</a></td>
+										</priv:privilege>
+										</c:if>
 									</tr>
 									<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
 								</c:if>
@@ -366,33 +367,42 @@ List<TbCustomer> cusList=(List<TbCustomer>)request.getAttribute("customersList")
 								var salesGoodsList=$.parseJSON(json.RES_DATA.salesGoodsList);
 								var totalMoney=0.0;
 								for (var i = 0; i < salesList.length; i++) {
-    										$("#saleTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
-    					                  	+'<td><font color="#16a085">'+isNull(salesList[i].salesSerialNumber)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+getLocalTime(salesList[i].salesDate)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].employeeName)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].customerName)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].storehouseName)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].totalSalesAmount)+'</font></td>'
-    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].salesStatus)+'</font></td>'
-    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">明细</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>');
-    					                  	$("#saleTab tbody").append( '<tr><td>订单详情</td>'
-		    					                  	+'<td>商品名称</td>'
-		    					                  	+'<td>商品单价</td>'
-		    					                  	+'<td>商品数量</td>'
-		    					                  	+'<td>总价</td>'
-		    					                  	+'</tr>');
-    					                  	for (var j = 0; j < salesGoodsList.length; j++) {
-												if(salesList[i].salesSerialNumber==salesGoodsList[j].salesSerialNumber){
-													$("#saleTab tbody").append('<tr id="#collapse'+isNull(salesGoodsList[j].salesSerialNumber)+'">'
-		    					                  	+'<td>订单详情</td>'
-		    					                  	+'<td>'+isNull(salesGoodsList[j].goodsName)+'</td>'
-		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsPrice)+'</td>'
-		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsAmount)+'</td>'
-		    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsTotalPrice)+'</td>'
-		    					                  	+'</tr>');
-													totalMoney+=parseFloat(isNull(salesGoodsList[j].salesGoodsTotalPrice));
-												}
-											} 
+									for (var j = 0; j < salesGoodsList.length; j++) {
+										if(salesList[i].salesSerialNumber==salesGoodsList[j].salesSerialNumber){											
+											if(isNull(salesList[i].salesStatus)!='结清'){
+												$("#saleTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
+			    					                  	+'<tr id="#collapse'+isNull(salesGoodsList[j].salesSerialNumber)+'">'
+			    					                  	+'<td><font color="#16a085">'+isNull(salesList[i].salesSerialNumber)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+getLocalTime(salesList[i].salesDate)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].employeeName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].customerName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].storehouseName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].totalSalesAmount)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].salesStatus)+'</font></td>'+'<td>'+isNull(salesGoodsList[j].goodsName)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsPrice)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsAmount)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsTotalPrice)+'</td>'
+			    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">明细</a>/<a href="#" data-toggle="modal" data-target="#salesgoodsmodify" onclick="updateSalesData('+isNull(salesList[i].salesSerialNumber)+')">修改</a>/<a href="#" onclick="deleteSalesData('+isNull(salesList[i].salesSerialNumber)+')" >删除</a></td></tr>');
+											}else{
+												$("#saleTab tbody").append( '<tr><td class="chk" style="display:none"><input type="checkbox" aria-label="..."></td>'
+			    					                  	+'<tr id="#collapse'+isNull(salesGoodsList[j].salesSerialNumber)+'">'
+			    					                  	+'<td><font color="#16a085">'+isNull(salesList[i].salesSerialNumber)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+getLocalTime(salesList[i].salesDate)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].employeeName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].customerName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].storehouseName)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].totalSalesAmount)+'</font></td>'
+			    					                  	+'<td><font size="4" color="#16a085">'+isNull(salesList[i].salesStatus)+'</font></td>'+'<td>'+isNull(salesGoodsList[j].goodsName)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsPrice)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsAmount)+'</td>'
+			    					                  	+'<td>'+isNull(salesGoodsList[j].salesGoodsTotalPrice)+'</td>'
+			    					                  	+'<td><a href="#" onclick="printSalesData('+isNull(salesList[i].salesSerialNumber)+')">明细</a></td></tr>');
+											}
+											totalMoney+=parseFloat(isNull(salesGoodsList[j].salesGoodsTotalPrice));       	
+										}
+										
+									}
+										
 								}
     					                  	$("#saleTab tbody").append('<tr><td>合计</td>'
     												+'<td>'+totalMoney+'</td></tr>');

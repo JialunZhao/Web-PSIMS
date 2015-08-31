@@ -16,6 +16,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<%=_base%>/css/bootstrap/bootstrap.min.css"
 	rel="stylesheet">
+<link href="<%=_base%>/css/bootstrap/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 <!-- Loading Flat UI -->
 <link href="<%=_base%>/css/flatUI/flat-ui.min.css" rel="stylesheet">
@@ -25,6 +26,7 @@
 <%-- <script src="<%=_base %>/js/flat-ui.min.js"></script> --%>
 <script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
 <script type="text/javascript" src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="<%=_base%>/js/bootstrap-datetimepicker.js"></script>
 
 </head>
 <body>
@@ -248,6 +250,31 @@
 			location.close();
 		}
 		
+		$("#departuretime").datetimepicker({
+			format: "hh:ii",
+			language:"zh-CN",
+	       /*  weekStart: 1,
+	        todayBtn:  true,*/
+			autoclose: true,
+			todayHighlight: true, 
+			startView: 1,
+			/*minView: 2,
+			 forceParse: 0 */
+		});
+		
+		
+		$("#stilltime").datetimepicker({
+			format: "hh:ii",
+			language:"zh-CN",
+	       /*  weekStart: 1,
+	        todayBtn:  true,*/
+			autoclose: true,
+			todayHighlight: true, 
+			startView: 1,
+			/*minView: 2,
+			 forceParse: 0 */
+		});
+		
 		function getTotalPrict(index){
 			var goodsPrice=$("#goodsPrice"+index).text();
 			var goodsAmount=$("#goodsAmount"+index).val();
@@ -273,7 +300,7 @@
 		}
 		
 		function checkTimeFomat(data){
-	      	  var a = /^(\d{2}):(\d{2})$/;
+	      	  var a = /^(\d{2}|\d{1}):(\d{2})$/;
 	      	  if (!a.test(data)) { 
 	      		  alert("时间格式不正确!正确格式为:HH:MM"); 
 	      		  return true;
