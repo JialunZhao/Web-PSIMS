@@ -151,7 +151,7 @@
 								<option value="0">请选择商品类型：</option>
 								<c:forEach var="tbSystemParameters"
 									items="${tbSystemParameters}">
-									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppDesc}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -253,40 +253,40 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品名称:</span> <input
-								type="text" class="form-control" id="modify_goodsName" value=""
+								type="text" class="form-control modifyclass" id="modify_goodsName" value=""
 								name="modify_goodsName" placeholder="商品名称" maxlength="200">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品编码:</span> <input
-								type="text" class="form-control" id="modify_goodsCode" value=""
+								type="text" class="form-control modifyclass" id="modify_goodsCode" value=""
 								name="modify_goodsCode" placeholder="商品编码" maxlength="20">
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品类型:</span> <select
-								class="form-control" tabindex="1" id="modify_goodsType"
-								name="modify_goodsType">
+								class="form-control modifyselectclass" tabindex="1" id="modify_goodsType"
+								name="modify_goodsType" placeholder="商品类型">
 								<option value="0">请选择商品类型：</option>
 								<c:forEach var="tbSystemParameters"
 									items="${tbSystemParameters}">
-									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppValue}</option>
+									<option value="${tbSystemParameters.paramId}">${tbSystemParameters.ppDesc}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">商品供应商:</span> <select
-								class="form-control" tabindex="1" name="modify_providerId"
-								id="modify_providers">
+								class="form-control modifyselectclass" tabindex="1" name="modify_providerId"
+								id="modify_providers"  placeholder="商品供应商">
 								<option value="0">请选择商品供应商：</option>
 							</select>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">基本单位:</span> <select
-								class="form-control" tabindex="1" name="modify_goodsUnit"
-								id="modify_goodsUnit">
+								class="form-control modifyselectclass" tabindex="1" name="modify_goodsUnit"
+								id="modify_goodsUnit" placeholder="基本单位">
 								<option value="0">请选择商品基本单位：</option>
 							</select>
 						</div>
@@ -294,42 +294,42 @@
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">进货价格:</span> <input
-								type="text" class="form-control" id="modify_goodsActualCost"
+								type="text" class="form-control modifyclass" id="modify_goodsActualCost"
 								value="" name="modify_goodsActualCost" placeholder="进货价格"
 								maxlength="20"> <span class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">销售价格:</span> <input
-								type="text" class="form-control" id="modify_goodsPrice" value=""
+								type="text" class="form-control modifyclass" id="modify_goodsPrice" value=""
 								name="modify_goodsPrice" placeholder="销售价格"> <span
 								class="input-group-addon">元</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">奖金折扣:</span> <input
-								type="text" class="form-control" id="modify_goodsPrizePoolRatio"
+								type="text" class="form-control modifyclass" id="modify_goodsPrizePoolRatio"
 								value="" name="modify_goodsPrizePoolRatio" placeholder="奖金折扣"
 								maxlength="20"> <span class="input-group-addon">%</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">保质期：</span> <input
-								type="text" class="form-control" id="modify_goodsShelfLife"
+								type="text" class="form-control modifyclass" id="modify_goodsShelfLife"
 								value="" name="modify_goodsShelfLife" placeholder="保质期"
 								maxlength="20"> <span class="input-group-addon">（天）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">保质期预警值：</span> <input
-								type="text" class="form-control" id="modify_shelfLifePrewarning"
+								type="text" class="form-control modifyclass" id="modify_shelfLifePrewarning"
 								value="" name="modify_shelfLifePrewarning" placeholder="保质期预警值"
 								maxlength="20"> <span class="input-group-addon">（天）</span>
 						</div>
 						<div class="input-group col-xs-6 col-md-offset-3">
 							<span class="input-group-addon"
 								style="background-color: #1abc9c;">库存量预警值：</span> <input
-								type="text" class="form-control" id="modify_storagePrewarning"
+								type="text" class="form-control modifyclass" id="modify_storagePrewarning"
 								value="" name="modify_storagePrewarning" placeholder="库存量预警值"
 								maxlength="20"> <span class="input-group-addon">（单位）</span>
 						</div>

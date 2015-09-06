@@ -169,7 +169,7 @@ function modifyCurrentGoods(obj) {
 	});
 	$.ajax({
 		type : 'POST',
-		async : true,
+		async : false,
 		url : 'getGoodsUnit.do',
 		success : function(data) {
 			console.dir(data);
@@ -213,19 +213,46 @@ function modifyCurrentGoods(obj) {
 };
 
 // 2.修改后信息传输
+function modifyGoodsCheckNull() {
+	var num = 0;
+	var str = "";
+	$(".modifyclass").each(function(n) {
+		if ($(this).val() == "") {
+			num++;
+			str += $(this).attr("placeholder") + "不能为空！\r\n";
+		}
+	});
+	$(".modifyselectclass").each(function(n) {
+		if ($(this).val() == "0") {
+			num++;
+			str += "请选择" + $(this).attr("placeholder") + "！\r\n";
+		}
+	});
+	if (num > 0) {
+		alert(str);
+		return false;
+	} else {
+		return true;
+	}
+}
+
+
 function modifyCurrentGoodsInfo(obj) {
 	// console.dir(obj);
 	// 获取选中行的id
-	$.ajax({
-		type : 'POST',
-		async : false,
-		url : 'modify.do',
-		data : $('#modifyGoodsForm').serialize(),
-		success : function(data) {
-			$('#modifygoods').modal('hide');
-			window.location.href = "goods";
-		},
-	});
+	if (modifyGoodsCheckNull()) {
+		$.ajax({
+			type : 'POST',
+			async : false,
+			url : 'modify.do',
+			data : $('#modifyGoodsForm').serialize(),
+			success : function(data) {
+				$('#modifygoods').modal('hide');
+				window.location.href = "goods";
+			},
+		});
+	}
+
 }
 
 // 查询商品和客户关系--查询
