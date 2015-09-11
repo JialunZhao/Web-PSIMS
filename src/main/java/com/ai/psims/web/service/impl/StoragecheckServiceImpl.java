@@ -213,7 +213,7 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Override
 	public int deleteTbStoragecheck(TbStoragecheck tbStoragecheck) {
 		// TODO Auto-generated method stub
-		tbStoragecheck.setGoodsStatus("00");
+		tbStoragecheck.setStorageType("00");
 		return tbStoragecheckMapper.updateByPrimaryKeySelective(tbStoragecheck);
 	}
 

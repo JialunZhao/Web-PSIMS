@@ -1,20 +1,19 @@
 package com.ai.psims.web.service.impl;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.github.*;
-
-import org.junit.Test;
+//
+//import org.apache.ibatis.session.SqlSession;
+//import org.apache.ibatis.session.SqlSessionFactory;
+//
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
+//
+//import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.dao.TbImportLogMapper;
@@ -30,64 +29,64 @@ public class ImportServiceImpl implements IImportService {
 	private TbImportMapper tbImportMapper;
 	@Resource(name = "tbImportLogMapper")
 	private TbImportLogMapper tbImportLogMapper;
-
-    private static SqlSessionFactory sqlSessionFactory;
-    
-    /**
-     * 获取Session
-     *
-     * @return
-     */
-    public static SqlSession getSqlSession() {
-        return sqlSessionFactory.openSession();
-    }
-
-    /**
-     * 使用Mapper接口调用时，使用PageHelper.startPage效果更好，不需要添加Mapper接口参数
-     */
-    @Test
-    public void testNavigatePages() {
-        SqlSession sqlSession = getSqlSession();
-        TbImportMapper countryMapper = sqlSession.getMapper(TbImportMapper.class);
-        try {
-            //获取第1页，10条内容，默认查询总数count
-            PageHelper.startPage(1, 10);
-            TbImportExample example = new TbImportExample();
-            List<TbImport> list = countryMapper.selectByExample(example);
-            PageInfo page = new PageInfo(list, 20);
-            assertEquals(1, page.getPageNum());
-            assertEquals(10, page.getPageSize());
-            assertEquals(1, page.getStartRow());
-            assertEquals(10, page.getEndRow());
-            assertEquals(183, page.getTotal());
-            assertEquals(19, page.getPages());
-            assertEquals(1, page.getFirstPage());
-            assertEquals(19, page.getLastPage());
-            assertEquals(true, page.isIsFirstPage());
-            assertEquals(false, page.isIsLastPage());
-            assertEquals(false, page.isHasPreviousPage());
-            assertEquals(true, page.isHasNextPage());
-
-            //获取第2页，50条内容，默认查询总数count
-            PageHelper.startPage(2, 50);
-            list = countryMapper.selectByExample(example);
-            page = new PageInfo(list, 2);
-            assertEquals(2, page.getPageNum());
-            assertEquals(50, page.getPageSize());
-            assertEquals(51, page.getStartRow());
-            assertEquals(100, page.getEndRow());
-            assertEquals(183, page.getTotal());
-            assertEquals(4, page.getPages());
-            assertEquals(1, page.getFirstPage());
-            assertEquals(2, page.getLastPage());
-            assertEquals(false, page.isIsFirstPage());
-            assertEquals(false, page.isIsLastPage());
-            assertEquals(true, page.isHasPreviousPage());
-            assertEquals(true, page.isHasNextPage());
-        } finally {
-            sqlSession.close();
-        }
-    }
+//
+//    private static SqlSessionFactory sqlSessionFactory;
+//    
+//    /**
+//     * 获取Session
+//     *
+//     * @return
+//     */
+//    public static SqlSession getSqlSession() {
+//        return sqlSessionFactory.openSession();
+//    }
+//
+//    /**
+//     * 使用Mapper接口调用时，使用PageHelper.startPage效果更好，不需要添加Mapper接口参数
+//     */
+//    @Test
+//    public void testNavigatePages() {
+//        SqlSession sqlSession = getSqlSession();
+//        TbImportMapper countryMapper = sqlSession.getMapper(TbImportMapper.class);
+//        try {
+//            //获取第1页，10条内容，默认查询总数count
+//            PageHelper.startPage(1, 10);
+//            TbImportExample example = new TbImportExample();
+//            List<TbImport> list = countryMapper.selectByExample(example);
+//            PageInfo page = new PageInfo(list, 20);
+//            assertEquals(1, page.getPageNum());
+//            assertEquals(10, page.getPageSize());
+//            assertEquals(1, page.getStartRow());
+//            assertEquals(10, page.getEndRow());
+//            assertEquals(183, page.getTotal());
+//            assertEquals(19, page.getPages());
+//            assertEquals(1, page.getFirstPage());
+//            assertEquals(19, page.getLastPage());
+//            assertEquals(true, page.isIsFirstPage());
+//            assertEquals(false, page.isIsLastPage());
+//            assertEquals(false, page.isHasPreviousPage());
+//            assertEquals(true, page.isHasNextPage());
+//
+//            //获取第2页，50条内容，默认查询总数count
+//            PageHelper.startPage(2, 50);
+//            list = countryMapper.selectByExample(example);
+//            page = new PageInfo(list, 2);
+//            assertEquals(2, page.getPageNum());
+//            assertEquals(50, page.getPageSize());
+//            assertEquals(51, page.getStartRow());
+//            assertEquals(100, page.getEndRow());
+//            assertEquals(183, page.getTotal());
+//            assertEquals(4, page.getPages());
+//            assertEquals(1, page.getFirstPage());
+//            assertEquals(2, page.getLastPage());
+//            assertEquals(false, page.isIsFirstPage());
+//            assertEquals(false, page.isIsLastPage());
+//            assertEquals(true, page.isHasPreviousPage());
+//            assertEquals(true, page.isHasNextPage());
+//        } finally {
+//            sqlSession.close();
+//        }
+//    }
 
 	
 	public int InsertImport(TbImport import1) {
