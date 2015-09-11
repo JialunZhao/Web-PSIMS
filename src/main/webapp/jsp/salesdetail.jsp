@@ -210,6 +210,7 @@ h1 {
 	});
 	function printSalesData(){
 		var salesSerialNumber='${salesSerialNumber}';
+		var titleName=$("#titles").text();
 		$("#print").attr('disabled','disabled');
 		$("#print").css("background-color","gray");
 		$.ajax({ 
@@ -219,7 +220,8 @@ h1 {
 			modal : true,
 			showBusi : false,
 			data : {
-				'salesSerialNumber' : salesSerialNumber
+				'salesSerialNumber' : salesSerialNumber,
+				'titleName' : titleName
 			},
 			success : function(data) {
 				$("#change").hide();

@@ -41,10 +41,12 @@ import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbEmployeeExample;
 import com.ai.psims.web.model.TbGoods;
+import com.ai.psims.web.model.TbSalesGoods;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.service.IGoodsService;
+import com.ai.psims.web.service.ISalesGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.IStoragecheckService;
 import com.ai.psims.web.util.Constants;
@@ -72,6 +74,8 @@ public class SalesController extends BaseController {
 	private ISalesService salesService;
 	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
+	@Resource(name = "salesGoodsServiceImpl")
+	private ISalesGoodsService salesGoodsService;
 
 	@RequestMapping("/init")
 	public String init(HttpServletRequest request) throws Exception {
@@ -337,11 +341,23 @@ public class SalesController extends BaseController {
 			HttpServletResponse response) throws Exception {
 
 		String salesSerialNumber = request.getParameter("salesSerialNumber");
+		String titleName = request.getParameter("titleName");
 
 		Sales sales = new Sales();
+		List<SalesGoods> tbSalesGoodsList=new ArrayList<SalesGoods>();
+		SalesGoodsExample salesGoodsExample=new SalesGoodsExample();
+		com.ai.psims.web.model.SalesGoodsExample.Criteria criteria=salesGoodsExample.createCriteria();
+		criteria.andSalesSerialNumberEqualTo(salesSerialNumber);
+		
 		sales = salesBusiness.selectSalesByKey(salesSerialNumber);
+		tbSalesGoodsList=salesGoodsService.selectSalesGoods(salesGoodsExample);
 		sales.setSalesStatus(Constants.SalesStatus.OUTORDER);
 		salesService.updateSalesByKey(sales);
+		
+		for (SalesGoods salesGoods : tbSalesGoodsList) {
+			salesGoods.setSalesGoodsRemark(titleName);
+			salesGoodsService.updateSalesGoodsByKey(salesGoods);
+		}
 	}
 	
 	@RequestMapping("/getCustomeName")
@@ -384,11 +400,16 @@ public class SalesController extends BaseController {
 		logger.info("------------根据销售数量判断销售还是退货-------------");
 		String title = null;
 		if (salesGoodsList != null) {
-			if (salesGoodsList.get(0).getSalesGoodsAmount() < 0) {
-				title = "北京市金瑞超达商贸有限公司商品退货单";
-			} else {
-				title = "北京市金瑞超达商贸有限公司商品销售单";
+			if (salesGoodsList.get(0).getSalesGoodsRemark()!=null) {
+				title=salesGoodsList.get(0).getSalesGoodsRemark();
+			}else{
+				if (salesGoodsList.get(0).getSalesGoodsAmount() < 0) {
+					title = "北京市金瑞超达商贸有限公司商品退货单";
+				} else {
+					title = "北京市金瑞超达商贸有限公司商品销售单";
+				}
 			}
+			
 		}
 		request.setAttribute("salesGoodsList", salesGoodsList);
 		request.setAttribute("customer", customer);
