@@ -53,6 +53,7 @@ public class ImportController extends BaseController {
 	
 	@Resource(name = "queryImportListImpl")
 	private IQueryImportList queryImportList;
+	
 
 	@Resource(name = "systemParameterBussinessImpl")
 	private ISystemParameterBussiness systemParameterBussinessImpl;
@@ -71,7 +72,6 @@ public class ImportController extends BaseController {
 		TbImportGoodsExample tbImportGoodsExample = new TbImportGoodsExample();
 		TbImportGoodsExample.Criteria tbImportGoodsExampleCriteria = tbImportGoodsExample.createCriteria();
 
-		
 		logger.info("------------2.获取参数-------------");
 		
 		logger.info("------------3.数据校验-------------");
@@ -107,6 +107,8 @@ public class ImportController extends BaseController {
 		importStatusList.add(Constants.ImportStatus.ORDERNOPAY);
 		importStatusList.add(Constants.ImportStatus.ORDERYESPAY);
 		importStatusList.add(Constants.ImportStatus.GOODSLITARRIVAL);
+		importStatusList.add(Constants.ImportStatus.GOODSARRIVAL);
+		
 		TbImportExample example = new TbImportExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andImportStatusNotEqualTo("00");

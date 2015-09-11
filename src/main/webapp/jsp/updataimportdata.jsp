@@ -23,8 +23,7 @@
 <script src="<%=_base%>/js/vendor/video.js"></script>
 <%-- <script src="<%=_base %>/js/flat-ui.min.js"></script> --%>
 <script type="text/javascript" src="<%=_base%>/js/vendor/jquery.min.js"></script>
-<script type="text/javascript"
-	src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
+<script type="text/javascript" src="<%=_base%>/js/dialog/lhgdialog.min.js"></script>
 
 </head>
 <body>
@@ -168,7 +167,8 @@
 				goodsAmountList=goodsAmountList+$(this).val()+",";
 			});
 			alert(goodsAmountList);
-			 var url="<%=_base%>/importController/updataImprotGoodsList.do?providerId="
+			
+			var url="<%=_base%>/importController/updataImprotGoodsList.do?providerId="
 					+ providerId
 					+ "&providerName="
 					+ providerName
@@ -182,12 +182,10 @@
 					+ goodsAmountList
 					+ "&importGoodsIdList="
 					+ importGoodsIdList
-					+ "&importSerialNumber=" + importSerialNumber;
-				
-				api.content(url).title('提示');
-			
-				reload(this, url);
-			W.location.reload();
+					+ "&importSerialNumber="
+					+ importSerialNumber;
+			alert(url);
+			W.location.reload(this, url);
 			api.close();
 		}
 

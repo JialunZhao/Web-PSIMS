@@ -275,7 +275,7 @@ public class EmployeeController extends BaseController{
 				header.createCell(idx++).setCellValue("备注");
 				logger.info("------------输出内容-------------");
 				HSSFRow row;
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 
 				for (TbEmployee tbEmployee : tbEmployees) {
 					idx = 0;

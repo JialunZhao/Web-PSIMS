@@ -37,17 +37,19 @@ import com.alibaba.fastjson.JSONObject;
 public class BackGoodsController extends BaseController {
 	@Resource(name = "queryBus")
 	private IQueryBus queryBus;
+	
 	@Resource(name = "salesbackBusinessImpl")
-	private ISalesbackBusiness salesbackBusiness;
+	private ISalesbackBusiness salesbackBusinessImpl;
+	
 	@Resource(name = "importBackBusinessImpl")
-	private IImportBackBusiness importBackBusiness;
+	private IImportBackBusiness importBackBusinessImpl;
 
 	@RequestMapping("/providerBackInit")
 	public String providerBackInit(HttpServletRequest request) throws Exception {
 		List<TbProvider> provider = new ArrayList<TbProvider>();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
 		List<Importback> importbacksList = new ArrayList<Importback>();
-		importbacksList = importBackBusiness.queryImportback();
+		importbacksList = importBackBusinessImpl.queryImportback();
 		provider = queryBus.queryProvider();
 		storehouse = queryBus.queryStorehouse();
 		request.setAttribute("providerList", provider);
@@ -68,7 +70,7 @@ public class BackGoodsController extends BaseController {
 		TbEmployeeExample employeeExample = new TbEmployeeExample();
 		employeeExample.createCriteria().andEndtimeIsNull();
 		List<TbStorehouse> storehouse = new ArrayList<TbStorehouse>();
-		salesbackList = salesbackBusiness.selectSalesback();
+		salesbackList = salesbackBusinessImpl.selectSalesback();
 		employeesList = queryBus.queryEmployee(employeeExample);
 		customersList = queryBus.queryCustomer(customerExample);
 		storehouse = queryBus.queryStorehouse();
@@ -84,7 +86,7 @@ public class BackGoodsController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		JSONObject data = new JSONObject();
 		String salesSerialNumber = request.getParameter("salesSerialNumber");
-		Set<String> goodsNameSet = salesbackBusiness
+		Set<String> goodsNameSet = salesbackBusinessImpl
 				.queryGoodsName(salesSerialNumber);
 		if (goodsNameSet == null || goodsNameSet.size() == 0) {
 			responseFailed(response, "ERROR", data);
@@ -136,7 +138,7 @@ public class BackGoodsController extends BaseController {
 			criteria.andSalesbackSerialNumberLike("%" + salesbackSerialNumber
 					+ "%");
 		}
-		salesList = salesbackBusiness.querySalesbacks(salesbackExample);
+		salesList = salesbackBusinessImpl.querySalesbacks(salesbackExample);
 		if (salesList == null) {
 			responseFailed(response, "ERROR", data);
 		} else {
@@ -154,7 +156,7 @@ public class BackGoodsController extends BaseController {
 		String salesSerialNumber = request.getParameter("salesSerialNumber");
 
 		List<SalesBackGoodsData> salesBackGoodsDatasList = new ArrayList<SalesBackGoodsData>();
-		salesBackGoodsDatasList = salesbackBusiness.getSalesBackGoodsData(
+		salesBackGoodsDatasList = salesbackBusinessImpl.getSalesBackGoodsData(
 				goodsName, backType, salesSerialNumber);
 		request.setAttribute("salesBackGoodsDatasList", salesBackGoodsDatasList);
 		request.setAttribute("backType", backType);
@@ -168,12 +170,12 @@ public class BackGoodsController extends BaseController {
 				.getParameter("salesbackSerialNumber");
 		Salesback salesback = new Salesback();
 		List<SalesbackGoods> salesbackGoodsList = new ArrayList<SalesbackGoods>();
-		salesback = salesbackBusiness
+		salesback = salesbackBusinessImpl
 				.selectSalesbackByKey(salesbackSerialNumber);
 		SalesbackGoodsExample example = new SalesbackGoodsExample();
 		example.createCriteria().andSalesbackSerialNumberEqualTo(
 				salesbackSerialNumber);
-		salesbackGoodsList = salesbackBusiness.selectSalesbackGoods(example);
+		salesbackGoodsList = salesbackBusinessImpl.selectSalesbackGoods(example);
 
 		request.setAttribute("salesbackGoodsList", salesbackGoodsList);
 		request.setAttribute("salesback", salesback);
@@ -191,7 +193,7 @@ public class BackGoodsController extends BaseController {
 
 		AddSalesbackData addSalesbackData = new AddSalesbackData(storageIdList,
 				changeCountList, salesSerialNumber, backReson, backgoodsTime);
-		String result = salesbackBusiness.addSalesbackList(addSalesbackData);
+		String result = salesbackBusinessImpl.addSalesbackList(addSalesbackData);
 		JSONObject data = new JSONObject();
 		if (result == null) {
 			responseFailed(response, "ERROR", data);
@@ -205,7 +207,7 @@ public class BackGoodsController extends BaseController {
 	public void deleteImportData(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String salesbackSerialNumber = request.getParameter("salesbackSerialNumber");
-		String result = salesbackBusiness
+		String result = salesbackBusinessImpl
 				.deleteSalesbackData(salesbackSerialNumber);
 		JSONObject data = new JSONObject();
 		if (result == null) {
@@ -225,7 +227,7 @@ public class BackGoodsController extends BaseController {
 		String salesbackType = request.getParameter("salesbackType");
 		String salesbackReason = request.getParameter("salesbackReason");
 		String storageIdList = request.getParameter("storageIdList");
-		String result = salesbackBusiness.updateSalesbackInfo(goodsAmountList,
+		String result = salesbackBusinessImpl.updateSalesbackInfo(goodsAmountList,
 				salesbackSerialNumber, salesbackType, salesbackReason,
 				storageIdList);
 		request.setAttribute("result", result);

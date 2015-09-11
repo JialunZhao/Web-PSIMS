@@ -11,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.ai.psims.web.dao.StoragecheckMapper;
 import com.ai.psims.web.dao.TbStoragecheckMapper;
-import com.ai.psims.web.model.Storagecheck;
-import com.ai.psims.web.model.StoragecheckExample;
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.service.IStoragecheckService;
@@ -26,47 +23,35 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	@Resource(name = "tbStoragecheckMapper")
 	private TbStoragecheckMapper tbStoragecheckMapper;
 
-	@Resource(name = "storagecheckMapper")
-	private StoragecheckMapper storagecheckMapper;
-
 	@Override
-	public int insert(Storagecheck storagecheck) {
-		return storagecheckMapper.insertSelective(storagecheck);
-	}
-
 	public int insert(TbStoragecheck storagecheck) {
 		return tbStoragecheckMapper.insertSelective(storagecheck);
 	}
 
 	@Override
-	public List<Storagecheck> selectByExample(StoragecheckExample example) {
-		return storagecheckMapper.selectByExample(example);
+	public List<TbStoragecheck> selectByExample(TbStoragecheckExample example) {
+		return tbStoragecheckMapper.selectByExample(example);
 	}
 
 	@Override
-	public Storagecheck selectByKey(Integer storageId) {
-		return storagecheckMapper.selectByPrimaryKey(storageId);
+	public TbStoragecheck selectByKey(Integer storageId) {
+		return tbStoragecheckMapper.selectByPrimaryKey(storageId);
 	}
 
-	@Override
-	public int deleteStoragecheck(Integer storageId) {
-		return storagecheckMapper.deleteByPrimaryKey(storageId);
-	}
+//	@Override
+//	public int deleteStoragecheck(Integer storageId) {
+//		return tbStoragecheckMapper.deleteByPrimaryKey(storageId);
+//	}
 
 	@Override
-	public int updateStoragecheck(Storagecheck storagecheck) {
-		return storagecheckMapper.updateByPrimaryKeySelective(storagecheck);
-	}
-
-	@Override
-	public List<Storagecheck> seekExpiration() {
-		StoragecheckExample example = new StoragecheckExample();
+	public List<TbStoragecheck> seekExpiration() {
+		TbStoragecheckExample example = new TbStoragecheckExample();
 		Date date = null;
-		List<Storagecheck> storagechecks = storagecheckMapper
+		List<TbStoragecheck> storagechecks = tbStoragecheckMapper
 				.selectByExample(example);
-		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> newstoragecheck = new ArrayList<TbStoragecheck>();
 		if (storagechecks.size() > 0 && storagechecks != null) {
-			for (Storagecheck storagecheck : storagechecks) {
+			for (TbStoragecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
@@ -84,15 +69,15 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	}
 
 	@Override
-	public List<Storagecheck> seekBExpiration() {
-		StoragecheckExample example = new StoragecheckExample();
+	public List<TbStoragecheck> seekBExpiration() {
+		TbStoragecheckExample example = new TbStoragecheckExample();
 		Date date = null;
 		Date date1 = null;
-		List<Storagecheck> storagechecks = storagecheckMapper
+		List<TbStoragecheck> storagechecks = tbStoragecheckMapper
 				.selectByExample(example);
-		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> newstoragecheck = new ArrayList<TbStoragecheck>();
 		if (storagechecks.size() > 0 && storagechecks != null) {
-			for (Storagecheck storagecheck : storagechecks) {
+			for (TbStoragecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
@@ -116,15 +101,15 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	}
 
 	@Override
-	public List<Storagecheck> seekCExpiration() {
-		StoragecheckExample example = new StoragecheckExample();
+	public List<TbStoragecheck> seekCExpiration() {
+		TbStoragecheckExample example = new TbStoragecheckExample();
 		Date date = null;
 		Date date1 = null;
-		List<Storagecheck> storagechecks = storagecheckMapper
+		List<TbStoragecheck> storagechecks = tbStoragecheckMapper
 				.selectByExample(example);
-		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> newstoragecheck = new ArrayList<TbStoragecheck>();
 		if (storagechecks.size() > 0 && storagechecks != null) {
-			for (Storagecheck storagecheck : storagechecks) {
+			for (TbStoragecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
@@ -148,14 +133,14 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	}
 
 	@Override
-	public List<Storagecheck> seekDExpiration() {
-		StoragecheckExample example = new StoragecheckExample();
+	public List<TbStoragecheck> seekDExpiration() {
+		TbStoragecheckExample example = new TbStoragecheckExample();
 		Date date = null;
-		List<Storagecheck> storagechecks = storagecheckMapper
+		List<TbStoragecheck> storagechecks = tbStoragecheckMapper
 				.selectByExample(example);
-		List<Storagecheck> newstoragecheck = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> newstoragecheck = new ArrayList<TbStoragecheck>();
 		if (storagechecks.size() > 0 && storagechecks != null) {
-			for (Storagecheck storagecheck : storagechecks) {
+			for (TbStoragecheck storagecheck : storagechecks) {
 				Integer shelfLifeWarning = storagecheck.getShelfLifeWarning();
 				if (shelfLifeWarning != null) {
 					Calendar calendari = Calendar.getInstance();
@@ -174,23 +159,23 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	}
 
 	@Override
-	public List<Storagecheck> seekStore() {
-		return storagecheckMapper.seekStore();
+	public List<TbStoragecheck> seekStore() {
+		return tbStoragecheckMapper.seekStore();
 	}
 
 	@Override
-	public List<Storagecheck> seekBStore() {
-		return storagecheckMapper.seekBStore();
+	public List<TbStoragecheck> seekBStore() {
+		return tbStoragecheckMapper.seekBStore();
 	}
 
 	@Override
-	public List<Storagecheck> seekCStore() {
-		return storagecheckMapper.seekCStore();
+	public List<TbStoragecheck> seekCStore() {
+		return tbStoragecheckMapper.seekCStore();
 	}
 
 	@Override
-	public List<Storagecheck> seekDStore() {
-		return storagecheckMapper.seekDStore();
+	public List<TbStoragecheck> seekDStore() {
+		return tbStoragecheckMapper.seekDStore();
 	}
 
 	
@@ -223,6 +208,13 @@ public class StoragecheckServiceImpl implements IStoragecheckService {
 	public int updateTbStoragecheck(TbStoragecheck storagecheck) {
 		logger.info("selectStorageRateCurrentByName");
 		return tbStoragecheckMapper.updateByPrimaryKeySelective(storagecheck);
+	}
+
+	@Override
+	public int deleteTbStoragecheck(TbStoragecheck tbStoragecheck) {
+		// TODO Auto-generated method stub
+		tbStoragecheck.setGoodsStatus("00");
+		return tbStoragecheckMapper.updateByPrimaryKeySelective(tbStoragecheck);
 	}
 
 }

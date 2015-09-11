@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -15,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * controller基类
  */
+@Controller
 public class BaseController {
 
 	private Logger logger = Logger.getLogger(BaseController.class);

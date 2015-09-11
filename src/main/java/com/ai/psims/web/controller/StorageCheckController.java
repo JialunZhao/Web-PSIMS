@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ai.psims.web.model.Storagecheck;
+import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.service.IStoragecheckService;
 
 /**
@@ -38,15 +38,15 @@ public class StorageCheckController {
 	 */
 	@RequestMapping(value = "/tenAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Storagecheck> seek(HttpServletRequest request,
+	public List<TbStoragecheck> seek(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Storagecheck> list = new ArrayList<Storagecheck>();
-		List<Storagecheck> storagecheckList = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> list = new ArrayList<TbStoragecheck>();
+		List<TbStoragecheck> storagecheckList = new ArrayList<TbStoragecheck>();
 		String number = request.getParameter("number");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		if (number.equals("1")) {
 			storagecheckList = storagecheckServiceImpl.seekExpiration();
-			for (Storagecheck storagecheck : storagecheckList) {
+			for (TbStoragecheck storagecheck : storagecheckList) {
 				storagecheck.setStrcreatetime(df.format(storagecheck
 						.getCreatetime()));
 				storagecheck.setStrgoodsProductionDate(df.format(storagecheck
@@ -54,7 +54,7 @@ public class StorageCheckController {
 			}
 		} else if (number.equals("2")) {
 			storagecheckList = storagecheckServiceImpl.seekBExpiration();
-			for (Storagecheck storagecheck : storagecheckList) {
+			for (TbStoragecheck storagecheck : storagecheckList) {
 				storagecheck.setStrcreatetime(df.format(storagecheck
 						.getCreatetime()));
 				storagecheck.setStrgoodsProductionDate(df.format(storagecheck
@@ -62,7 +62,7 @@ public class StorageCheckController {
 			}
 		} else if (number.equals("3")) {
 			storagecheckList = storagecheckServiceImpl.seekCExpiration();
-			for (Storagecheck storagecheck : storagecheckList) {
+			for (TbStoragecheck storagecheck : storagecheckList) {
 				storagecheck.setStrcreatetime(df.format(storagecheck
 						.getCreatetime()));
 				storagecheck.setStrgoodsProductionDate(df.format(storagecheck
@@ -70,14 +70,14 @@ public class StorageCheckController {
 			}
 		} else if (number.equals("4")) {
 			storagecheckList = storagecheckServiceImpl.seekDExpiration();
-			for (Storagecheck storagecheck : storagecheckList) {
+			for (TbStoragecheck storagecheck : storagecheckList) {
 				storagecheck.setStrcreatetime(df.format(storagecheck
 						.getCreatetime()));
 				storagecheck.setStrgoodsProductionDate(df.format(storagecheck
 						.getGoodsProductionDate()));
 			}
 		}
-		for (Storagecheck storagecheck : storagecheckList) {
+		for (TbStoragecheck storagecheck : storagecheckList) {
 			Date goodsExpirationDate = storagecheck.getGoodsExpirationDate();
 			String days = daysBetween(new Date(), goodsExpirationDate);
 			storagecheck.setOverDate(days);
@@ -94,9 +94,9 @@ public class StorageCheckController {
 	 */
 	@RequestMapping(value = "/tensAll.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Storagecheck> seeks(HttpServletRequest request,
+	public List<TbStoragecheck> seeks(HttpServletRequest request,
 			HttpServletResponse response) {
-		List<Storagecheck> list = new ArrayList<Storagecheck>();
+		List<TbStoragecheck> list = new ArrayList<TbStoragecheck>();
 		String number = request.getParameter("number");
 		if (number.equals("1")) {
 			list = storagecheckServiceImpl.seekStore();

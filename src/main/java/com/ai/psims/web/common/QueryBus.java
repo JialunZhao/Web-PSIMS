@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.ai.psims.web.common.interfaces.IQueryBus;
-import com.ai.psims.web.dao.TbImportMapper;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
@@ -26,6 +25,7 @@ import com.ai.psims.web.service.IEmployeeService;
 import com.ai.psims.web.service.IGoodsService;
 import com.ai.psims.web.service.IProviderService;
 import com.ai.psims.web.service.IStorehouseService;
+import com.ai.psims.web.service.impl.ImportServiceImpl;
 import com.ai.psims.web.util.CreateIdUtil;
 
 @Service
@@ -36,12 +36,13 @@ public class QueryBus implements IQueryBus {
 	private IStorehouseService storehouseService;
 	@Resource(name = "goodsServiceImpl")
 	private IGoodsService goodsService;
-	@Resource(name = "tbImportMapper")
-	private TbImportMapper tbImportMapper;
 	@Resource(name = "customerServiceImpl")
 	private ICustomerService customerService;
 	@Resource(name = "employeeServiceImpl")
 	private IEmployeeService employeeService;
+	@Resource(name = "importServiceImpl")
+	private ImportServiceImpl importServiceImpl;
+	
 
 	public List<TbProvider> queryProvider() {
 		List<TbProvider> tbProviders = new ArrayList<TbProvider>();
@@ -72,7 +73,7 @@ public class QueryBus implements IQueryBus {
 
 	public List<TbImport> queryImport(TbImportExample example) {
 		List<TbImport> importList = new ArrayList<TbImport>();
-		importList = tbImportMapper.selectByExample(example);
+		importList = importServiceImpl.selectByExample(example);
 		for (TbImport import1 : importList) {
 			import1.setImportStatus(CreateIdUtil.getTranslation(import1
 					.getImportStatus()));

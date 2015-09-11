@@ -83,9 +83,9 @@ h1 {
 		<table class="table table-bordered" id="saleTab">
 			<tr>
 				<td class="aa">公司电话</td>
-				<td colspan="2"></td>
+				<td colspan="2">4000305919</td>
 				<td>公司地址</td>
-				<td colspan="2"></td>
+				<td colspan="2">北京市朝阳区王四营北路华能电厂正对面百富公寓左侧23号配房</td>
 				<td>单据编号</td>
 				<td colspan="3">${salesSerialNumber}</td>
 			</tr>
@@ -108,7 +108,7 @@ h1 {
 			<tr>
 				<td>商品编号</td>
 				<td colspan="4">商品全名</td>
-				<td>规格</td>
+				<td>商品类型</td>
 				<td>单位</td>
 				<td>数量</td>
 				<td>单价</td>
@@ -116,18 +116,17 @@ h1 {
 			</tr>
 			<c:set value="0" var="sum" />
 			<c:set value="0" var="row" />
-			<c:forEach var="salesGoods" items="${salesGoodsList}"
-				varStatus="status">
+			<c:forEach var="salesGoodsList" items="${salesGoodsList}" varStatus="status">
 				<tr>
-					<td>${salesGoods.goodsId}</td>
-					<td colspan="4">${salesGoods.goodsName}</td>
-					<td></td>
-					<td>${salesGoods.salesGoodsUnit}</td>
-					<td>${salesGoods.salesGoodsAmount}</td>
-					<td>${salesGoods.salesGoodsPrice}</td>
-					<td>${salesGoods.salesGoodsTotalPrice}</td>
+					<td>${salesGoodsList.goodsId}</td>
+					<td colspan="4">${salesGoodsList.goodsName}</td>
+					<td>${salesGoodsList.salesGoodsType}</td>
+					<td>${salesGoodsList.salesGoodsUnit}</td>
+					<td>${salesGoodsList.salesGoodsAmount}</td>
+					<td>${salesGoodsList.salesGoodsPrice}</td>
+					<td>${salesGoodsList.salesGoodsTotalPrice}</td>
 				</tr>
-				<c:set value="${sum + salesGoods.salesGoodsTotalPrice}" var="sum" />
+				<c:set value="${sum + salesGoodsList.salesGoodsTotalPrice}" var="sum" />
 				<c:set value="${row + 1}" var="row" />
 			</c:forEach>
 			<c:forEach var="row" begin="${row}" end="7">

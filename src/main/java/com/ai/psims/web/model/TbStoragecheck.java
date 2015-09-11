@@ -30,8 +30,12 @@ public class TbStoragecheck {
     private Integer storageRateTotal;
 
     private Date goodsProductionDate;
+    
+    private String strgoodsProductionDate;
 
     private Date goodsExpirationDate;
+
+    private String strgoodsExpirationDate;
 
     private Integer goodsShelfLife;
 
@@ -41,13 +45,21 @@ public class TbStoragecheck {
 
     private String goodsType;
 
+    private String goodsUnit;
+
     private String storageType;
 
     private Date createtime;
 
+    private String strcreatetime;
+    
     private Date modifytime;
+    
+    private String strmodifytime;
 
     private Date endtime;
+    
+    private String strendtime;
 
     private String remark;
 
@@ -58,6 +70,8 @@ public class TbStoragecheck {
     private Integer storageWarning;
 
     private Integer shelfLifeWarning;
+
+    private String overDate;
 
     public Integer getStorageId() {
         return storageId;
@@ -211,6 +225,14 @@ public class TbStoragecheck {
         this.goodsType = goodsType == null ? null : goodsType.trim();
     }
 
+    public String getGoodsUnit() {
+        return goodsUnit;
+    }
+
+    public void setGoodsUnit(String goodsUnit) {
+        this.goodsUnit = goodsUnit == null ? null : goodsUnit.trim();
+    }
+
     public String getStorageType() {
         return storageType;
     }
@@ -282,4 +304,52 @@ public class TbStoragecheck {
     public void setShelfLifeWarning(Integer shelfLifeWarning) {
         this.shelfLifeWarning = shelfLifeWarning;
     }
+
+	public String getOverDate() {
+		return overDate;
+	}
+
+	public void setOverDate(String overDate) {
+		this.overDate = overDate;
+	}
+
+	public String getStrcreatetime() {
+		return strcreatetime;
+	}
+
+	public void setStrcreatetime(String strcreatetime) {
+		this.strcreatetime = strcreatetime;
+	}
+
+	public String getStrmodifytime() {
+		return strmodifytime;
+	}
+
+	public void setStrmodifytime(String strmodifytime) {
+		this.strmodifytime = strmodifytime;
+	}
+
+	public String getStrendtime() {
+		return strendtime;
+	}
+
+	public void setStrendtime(String strendtime) {
+		this.strendtime = strendtime;
+	}
+
+	public String getStrgoodsProductionDate() {
+		return strgoodsProductionDate;
+	}
+
+	public void setStrgoodsProductionDate(String strgoodsProductionDate) {
+		this.strgoodsProductionDate = strgoodsProductionDate;
+	}
+
+	public String getStrgoodsExpirationDate() {
+		return strgoodsExpirationDate;
+	}
+
+	public void setStrgoodsExpirationDate(String strgoodsExpirationDate) {
+		this.strgoodsExpirationDate = strgoodsExpirationDate;
+	}
 }

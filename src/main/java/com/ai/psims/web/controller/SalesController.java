@@ -36,9 +36,6 @@ import com.ai.psims.web.model.SalesGoods;
 import com.ai.psims.web.model.SalesGoodsExample;
 import com.ai.psims.web.model.SalesUpdataGoods;
 import com.ai.psims.web.model.SalesUpdateData;
-import com.ai.psims.web.model.Storagecheck;
-import com.ai.psims.web.model.StoragecheckExample;
-import com.ai.psims.web.model.StoragecheckExample.Criteria;
 import com.ai.psims.web.model.TbCustomer;
 import com.ai.psims.web.model.TbCustomerExample;
 import com.ai.psims.web.model.TbEmployee;
@@ -126,15 +123,14 @@ public class SalesController extends BaseController {
 	public void queryGoods(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		JSONObject data = new JSONObject();
-		List<Storagecheck> storagechecksList = new ArrayList<Storagecheck>();
-		StoragecheckExample storagecheckExample = new StoragecheckExample();
-		Criteria criteria = storagecheckExample.createCriteria();
+		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
+		TbStoragecheckExample tbStoragecheckExample = new TbStoragecheckExample();
+		com.ai.psims.web.model.TbStoragecheckExample.Criteria criteria = tbStoragecheckExample.createCriteria();
 		criteria.andGoodsStatusEqualTo(Constants.ImportGoodsStatus.CANSALE);
 		criteria.andEndtimeIsNull();
-		storagechecksList = salesBusiness
-				.queryStrStoragechecks(storagecheckExample);
+		storagechecksList = salesBusiness.queryStrTbStoragechecks(tbStoragecheckExample);
 		Set<Integer> goodsIdSet = new HashSet<Integer>();
-		for (Storagecheck storagecheck : storagechecksList) {
+		for (TbStoragecheck storagecheck : storagechecksList) {
 			goodsIdSet.add(storagecheck.getGoodsId());
 		}
 
@@ -164,7 +160,7 @@ public class SalesController extends BaseController {
 			HttpServletResponse response) throws Exception {
 		JSONObject data = new JSONObject();
 		String storageId = request.getParameter("storageId");
-		Storagecheck storagechecks = new Storagecheck();
+		TbStoragecheck storagechecks = new TbStoragecheck();
 		storagechecks = salesBusiness.selectByKey(Integer.parseInt(storageId));
 		if (storagechecks == null) {
 			responseFailed(response, "ERROR", data);
@@ -245,7 +241,7 @@ public class SalesController extends BaseController {
 //		}
 		criteria.andGoodsIdEqualTo(Integer.parseInt(goodId));
 		criteria.andEndtimeIsNull();
-		storagechecks = salesBusiness.queryStoragecheck(storagecheckExample,
+		storagechecks = salesBusiness.queryTbStoragecheck(storagecheckExample,
 				Integer.parseInt(goodId));
 		request.setAttribute("storagechecks", storagechecks);
 		request.setAttribute("goodsCount", goodsCount);
@@ -383,8 +379,7 @@ public class SalesController extends BaseController {
 		TbCustomer customer = new TbCustomer();
 		customer = customerBusiness.customerById(sales.getCustomerId());
 		logger.info("------------获取当前登录的员工名称-------------");
-		TbEmployee tbEmployee = (TbEmployee) request.getSession().getAttribute(
-				"mysession");
+		TbEmployee tbEmployee = (TbEmployee) request.getSession().getAttribute("mysession");
 
 		logger.info("------------根据销售数量判断销售还是退货-------------");
 		String title = null;

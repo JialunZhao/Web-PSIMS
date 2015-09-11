@@ -2,41 +2,37 @@ package com.ai.psims.web.service;
 
 import java.util.List;
 
-import com.ai.psims.web.model.Storagecheck;
-import com.ai.psims.web.model.StoragecheckExample;
+
 import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbStoragecheckExample;
 
 public interface IStoragecheckService {
-	public int insert(Storagecheck storagecheck);
 	
 	public int insert(TbStoragecheck storagecheck) ;
 
-	public List<Storagecheck> selectByExample(StoragecheckExample example);
+	public List<TbStoragecheck> selectByExample(TbStoragecheckExample example);
 
-	public Storagecheck selectByKey(Integer storageId);
+	public TbStoragecheck selectByKey(Integer storageId);
 
-	public int deleteStoragecheck(Integer storageId);
+	public int deleteTbStoragecheck(TbStoragecheck tbStoragecheck);
 
-	public int updateStoragecheck(Storagecheck storagecheck);
-	
 	public int updateTbStoragecheck(TbStoragecheck storagecheck);
+	
+	public List<TbStoragecheck> seekExpiration();
 
-	public List<Storagecheck> seekExpiration();
+	public List<TbStoragecheck> seekBExpiration();
 
-	public List<Storagecheck> seekBExpiration();
+	public List<TbStoragecheck> seekCExpiration();
 
-	public List<Storagecheck> seekCExpiration();
+	public List<TbStoragecheck> seekDExpiration();
 
-	public List<Storagecheck> seekDExpiration();
+	public List<TbStoragecheck> seekStore();
 
-	public List<Storagecheck> seekStore();
+	public List<TbStoragecheck> seekBStore();
 
-	public List<Storagecheck> seekBStore();
+	public List<TbStoragecheck> seekCStore();
 
-	public List<Storagecheck> seekCStore();
-
-	public List<Storagecheck> seekDStore();
+	public List<TbStoragecheck> seekDStore();
 	
 	public List<TbStoragecheck> selectTbStoragecheck(TbStoragecheckExample tbStoragecheckExample);
 	

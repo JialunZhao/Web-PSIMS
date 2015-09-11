@@ -315,7 +315,8 @@ String date=sdf.format(new Date());
 			if (!checkIsNull(goodsName)) {
 			 var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+encodeURI(encodeURI(goodsName)); 
 			 <%--var url='<%=path%>/importController/showImportGoods.do?importSerialNumber='+importSerialNumber+'&goodsName='+goodsName;--%>
-    		$.dialog({
+    		alert(url);
+			 $.dialog({
     			title:'修改入库单',
     			width:900,
     			height:700,

@@ -305,6 +305,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 			example.createCriteria().andImportSerialNumberEqualTo(
 					importSerialNumber);
 		}
+		//TODO 完成奖金池数据退回。 
+
 		importGoodsList = importGoodsService.selectByExample(example);
 		importService.deleteImport(importSerialNumber);
 		for (TbImportGoods importGoods : importGoodsList) {

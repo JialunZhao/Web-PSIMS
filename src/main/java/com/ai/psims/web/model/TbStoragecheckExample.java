@@ -1345,6 +1345,76 @@ public class TbStoragecheckExample {
             return (Criteria) this;
         }
 
+        public Criteria andGoodsUnitIsNull() {
+            addCriterion("goods_unit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitIsNotNull() {
+            addCriterion("goods_unit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitEqualTo(String value) {
+            addCriterion("goods_unit =", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitNotEqualTo(String value) {
+            addCriterion("goods_unit <>", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitGreaterThan(String value) {
+            addCriterion("goods_unit >", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitGreaterThanOrEqualTo(String value) {
+            addCriterion("goods_unit >=", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitLessThan(String value) {
+            addCriterion("goods_unit <", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitLessThanOrEqualTo(String value) {
+            addCriterion("goods_unit <=", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitLike(String value) {
+            addCriterion("goods_unit like", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitNotLike(String value) {
+            addCriterion("goods_unit not like", value, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitIn(List<String> values) {
+            addCriterion("goods_unit in", values, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitNotIn(List<String> values) {
+            addCriterion("goods_unit not in", values, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitBetween(String value1, String value2) {
+            addCriterion("goods_unit between", value1, value2, "goodsUnit");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsUnitNotBetween(String value1, String value2) {
+            addCriterion("goods_unit not between", value1, value2, "goodsUnit");
+            return (Criteria) this;
+        }
+
         public Criteria andStorageTypeIsNull() {
             addCriterion("storage_type is null");
             return (Criteria) this;

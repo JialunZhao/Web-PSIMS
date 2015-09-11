@@ -116,7 +116,6 @@
 	</div>
 </div>
 
-
 <!-- 模态框（Modal） -->
 <!-- 添加商品模态框（Modal） -->
 <div class="modal fade" id="addGoods" tabindex="-1" role="dialog"

@@ -81,12 +81,12 @@
 					<th>入库下单日期</th>
 					<th>入库批次号</th>
 					<th>入库状态</th>
-					<td>商品名称</td>
-					<td>商品单价</td>
-					<td>商品数量</td>
-					<td>总价</td>
-					<td>奖金池支付总额</td>
-					<td>现金支付总额</td>
+					<th>商品名称</th>
+					<th>商品单价</th>
+					<th>商品数量</th>
+					<th>总价</th>
+					<th>奖金池支付总额</th>
+					<th>现金支付总额</th>
 					<th>备注</th>
 					<th>操作</th>
 				</tr>
@@ -594,30 +594,31 @@
 		}
     	
     	function deleteImportData(importSerialNumber,importStatus){
-    		alert(importSerialNumber+importStatus);
-    		if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01%>') {
+    		if (confirm("确定删除么?")) {
+    			// 删除    		
+    			if (importStatus=='<%=Constants.ImportStatus.GOODSLITARRIVAL01%>') {
 				alert("商品部分到货，该订单不能删除。");
-			}else {
-				$.ajax({  
-	                url:'<%=path%>/importController/deleteImportData.do',  
-	                type:"post",  
-	                async:false,
-	                modal : true,
-	                showBusi : false,
-	                data:{'importSerialNumber':importSerialNumber},
-	                success:function(data){  
-	                	if($.parseJSON(data).RES_RESULT=="SUCCESS"){
-	              		  alert("成功删除入库单");
-	              		  location.reload();
-	              	  	}else{
-	              		  alert("添加删除单失败");
-	              	  	}
+				}else {
+					$.ajax({
+						url:'<%=path%>/importController/deleteImportData.do',  
+						type:"post",  
+	                	async:false,
+	                	modal : true,
+	                	showBusi : false,
+	                	data:{'importSerialNumber':importSerialNumber},
+	                	success:function(data){
+	                		if($.parseJSON(data).RES_RESULT=="SUCCESS"){
+	                			alert("成功删除入库单");
+	                			location.reload();
+	                			}else
+	                			{
+	                				alert("添加删除单失败");
+	                				}
+	                		}
+	                	});
 					}
-	                        
-	            });      
-			}
-    		 
-    	}
+    			}
+    		}
     	
     	
     	
@@ -921,10 +922,6 @@
           $("#totalPrice").val("");
           $("#importgoodsform").show();
         });
-      
-      
-      
-      
     });
     </script>
 

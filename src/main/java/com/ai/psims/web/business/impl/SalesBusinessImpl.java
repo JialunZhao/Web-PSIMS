@@ -45,19 +45,19 @@ public class SalesBusinessImpl implements ISalesBusiness {
 	private ISystemParameterService systemParameterService;
 
 	@Override
-	public List<Storagecheck> queryStrStoragechecks(
-			StoragecheckExample storagecheckExample) {
+	public List<TbStoragecheck> queryStrTbStoragechecks(
+			TbStoragecheckExample tbStoragecheckExample) {
 
-		return storagecheckService.selectByExample(storagecheckExample);
+		return storagecheckService.selectByExample(tbStoragecheckExample);
 	}
 
 	@Override
-	public Storagecheck selectByKey(Integer storageId) {
+	public TbStoragecheck selectByKey(Integer storageId) {
 		return storagecheckService.selectByKey(storageId);
 	}
 
 	@Override
-	public TbStoragecheck queryStoragecheck(
+	public TbStoragecheck queryTbStoragecheck(
 			TbStoragecheckExample storagecheckExample, int goodsName) {
 		List<TbStoragecheck> storagechecksList = new ArrayList<TbStoragecheck>();
 		storagechecksList = storagecheckService
@@ -96,7 +96,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		boolean falg = true;
 		for (int i = 0; i < storageIdArray.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
-			Storagecheck storagecheck = new Storagecheck();
+			TbStoragecheck storagecheck = new TbStoragecheck();
 			TbGoods goods = new TbGoods();
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIdArray[i]));
@@ -119,7 +119,8 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			salesGoods.setGoodsName(storagecheck.getGoodsName());
 			salesGoods
 					.setSalesGoodsAmount(Integer.parseInt(salesCountArray[i]));
-			salesGoods.setSalesGoodsUnit(storagecheck.getImportGoodsUnit());
+			salesGoods.setSalesGoodsUnit(storagecheck.getGoodsUnit());
+			salesGoods.setSalesGoodsType(storagecheck.getGoodsType());
 			salesGoods.setSalesGoodsPrice(salesPriceArray[i]);
 			salesGoods.setSalesGoodsProductionDate(storagecheck
 					.getGoodsProductionDate());
@@ -175,7 +176,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					} else {
 						storagecheck.setStorageRateCurrent(storagecheck
 								.getStorageRateCurrent() - salesCount);
-						storagecheckService.updateStoragecheck(storagecheck);
+						storagecheckService.updateTbStoragecheck(storagecheck);
 						break;
 					}
 				}
@@ -241,7 +242,14 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			TbSystemParameter systemParameter = new TbSystemParameter();
 			systemParameter = systemParameterService.getSysById(Integer
 					.parseInt(salesGoods.getSalesGoodsUnit()));
-			salesGoods.setSalesGoodsUnit(systemParameter.getPpValue());
+			salesGoods.setSalesGoodsUnit(systemParameter.getPpDesc());
+			salesGoods.setGoodsUnit(systemParameter.getPpDesc());
+		}
+		for (SalesGoods salesGoods : saList) {
+			TbSystemParameter systemParameter = new TbSystemParameter();
+			systemParameter = systemParameterService.getSysById(Integer.parseInt(salesGoods.getSalesGoodsType()));
+			salesGoods.setSalesGoodsType(systemParameter.getPpDesc());
+			salesGoods.setGoodsType(systemParameter.getPpDesc());
 		}
 		return saList;
 	}
@@ -255,7 +263,7 @@ public class SalesBusinessImpl implements ISalesBusiness {
 		float totalPrice = 0.0f;
 		for (int i = 0; i < goodsAmounts.length; i++) {
 			SalesGoods salesGoods = new SalesGoods();
-			Storagecheck storagecheck = new Storagecheck();
+			TbStoragecheck storagecheck = new TbStoragecheck();
 			salesGoods = salesGoodsService.selectSalesGoodsByKey(Integer
 					.parseInt(salesGoodsIds[i]));
 			List<TbStoragecheck> storagechecksList = storagecheckService
@@ -285,18 +293,17 @@ public class SalesBusinessImpl implements ISalesBusiness {
 					} else {
 						storagecheck.setStorageRateCurrent(storagecheck
 								.getStorageRateCurrent() - count);
-						storagecheckService.updateStoragecheck(storagecheck);
+						storagecheckService.updateTbStoragecheck(storagecheck);
 						break;
 					}
 				}
 				storagecheck.setStorageRateCurrent(storagecheck
 						.getStorageRateCurrent() + count);
 				if (storagecheck.getStorageRateCurrent() == 0) {
-					storagecheckService.deleteStoragecheck(storagecheck
-							.getStorageId());
+					storagecheckService.deleteTbStoragecheck(storagecheck);
 				} else {
 					storagecheck.setEndtime(null);
-					storagecheckService.updateStoragecheck(storagecheck);
+					storagecheckService.updateTbStoragecheck(storagecheck);
 				}
 				SalesGoods salesGoods2 = new SalesGoods();
 				salesGoods2.setSalesGoodsId(Integer.parseInt(salesGoodsIds[i]));
@@ -333,19 +340,19 @@ public class SalesBusinessImpl implements ISalesBusiness {
 			List<SalesGoods> salesGoodsList = new ArrayList<SalesGoods>();
 			salesGoodsList = salesGoodsService.selectSalesGoods(example);
 			for (SalesGoods salesGoods : salesGoodsList) {
-				Storagecheck storagecheck = new Storagecheck();
-				storagecheck = storagecheckService.selectByKey(salesGoods
+				TbStoragecheck tbStoragecheck = new TbStoragecheck();
+				tbStoragecheck = storagecheckService.selectByKey(salesGoods
 						.getStorageId());
-				if (storagecheck.getEndtime() != null) {
-					storagecheck.setEndtime(null);
-					storagecheck.setStorageRateCurrent(salesGoods
+				if (tbStoragecheck.getEndtime() != null) {
+					tbStoragecheck.setEndtime(null);
+					tbStoragecheck.setStorageRateCurrent(salesGoods
 							.getSalesGoodsAmount());
-					storagecheckService.updateStoragecheck(storagecheck);
+					storagecheckService.updateTbStoragecheck(tbStoragecheck);
 				} else {
-					storagecheck.setStorageRateCurrent(storagecheck
+					tbStoragecheck.setStorageRateCurrent(tbStoragecheck
 							.getStorageRateCurrent()
 							+ salesGoods.getSalesGoodsAmount());
-					storagecheckService.updateStoragecheck(storagecheck);
+					storagecheckService.updateTbStoragecheck(tbStoragecheck);
 				}
 				salesGoodsService.deleteByPrimaryKey(salesGoods
 						.getSalesGoodsId());

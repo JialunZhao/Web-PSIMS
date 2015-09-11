@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.ai.psims.web.model.Storagecheck;
+import com.ai.psims.web.model.TbStoragecheck;
 import com.ai.psims.web.model.TbEmployee;
 import com.ai.psims.web.model.TbPrivilege;
 import com.ai.psims.web.service.IEmployeeService;
@@ -110,14 +110,14 @@ public class LoginController {
     @ResponseBody
     public Map<String, Object> seek(){
     	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	List<Storagecheck> storagecheck = storagecheckServiceImpl.seekExpiration();
-    	List<Storagecheck> storagecheckB = storagecheckServiceImpl.seekBExpiration();
-    	List<Storagecheck> storagecheckC = storagecheckServiceImpl.seekCExpiration();
-    	List<Storagecheck> storagecheckD = storagecheckServiceImpl.seekDExpiration();
-    	List<Storagecheck> storage = storagecheckServiceImpl.seekStore();
-    	List<Storagecheck> storageB = storagecheckServiceImpl.seekBStore();
-    	List<Storagecheck> storageC = storagecheckServiceImpl.seekCStore();
-    	List<Storagecheck> storageD = storagecheckServiceImpl.seekDStore();
+    	List<TbStoragecheck> storagecheck = storagecheckServiceImpl.seekExpiration();
+    	List<TbStoragecheck> storagecheckB = storagecheckServiceImpl.seekBExpiration();
+    	List<TbStoragecheck> storagecheckC = storagecheckServiceImpl.seekCExpiration();
+    	List<TbStoragecheck> storagecheckD = storagecheckServiceImpl.seekDExpiration();
+    	List<TbStoragecheck> storage = storagecheckServiceImpl.seekStore();
+    	List<TbStoragecheck> storageB = storagecheckServiceImpl.seekBStore();
+    	List<TbStoragecheck> storageC = storagecheckServiceImpl.seekCStore();
+    	List<TbStoragecheck> storageD = storagecheckServiceImpl.seekDStore();
     	int date = storagecheck.size();
     	int dateB = storagecheckB.size();
     	int dateC = storagecheckC.size();

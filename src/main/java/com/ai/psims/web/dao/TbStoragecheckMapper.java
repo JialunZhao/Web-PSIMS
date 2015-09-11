@@ -35,4 +35,12 @@ public interface TbStoragecheckMapper {
     int updateByPrimaryKeySelective(TbStoragecheck record);
 
     int updateByPrimaryKey(TbStoragecheck record);
+
+	List<TbStoragecheck> seekStore();
+
+	List<TbStoragecheck> seekBStore();
+
+	List<TbStoragecheck> seekCStore();
+
+	List<TbStoragecheck> seekDStore();
 }

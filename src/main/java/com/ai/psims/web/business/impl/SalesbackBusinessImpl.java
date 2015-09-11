@@ -22,8 +22,8 @@ import com.ai.psims.web.model.Salesback;
 import com.ai.psims.web.model.SalesbackExample;
 import com.ai.psims.web.model.SalesbackGoods;
 import com.ai.psims.web.model.SalesbackGoodsExample;
-import com.ai.psims.web.model.Storagecheck;
-import com.ai.psims.web.model.StoragecheckExample;
+import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStoragecheckExample;
 import com.ai.psims.web.service.ISalesGoodsService;
 import com.ai.psims.web.service.ISalesService;
 import com.ai.psims.web.service.ISalesbackGoodsService;
@@ -104,11 +104,11 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 			}
 
 		} else {
-			StoragecheckExample storagecheckExample = new StoragecheckExample();
+			TbStoragecheckExample storagecheckExample = new TbStoragecheckExample();
 			storagecheckExample.createCriteria().andGoodsNameEqualTo(goodsName);
-			List<Storagecheck> storagechecksList = storagecheckService
+			List<TbStoragecheck> storagechecksList = storagecheckService
 					.selectByExample(storagecheckExample);
-			for (Storagecheck storagecheck : storagechecksList) {
+			for (TbStoragecheck storagecheck : storagechecksList) {
 				SalesBackGoodsData salesBackGoodsData = new SalesBackGoodsData();
 				salesBackGoodsData.setGoodsExpirationDate(storagecheck
 						.getGoodsExpirationDate());
@@ -149,7 +149,7 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 
 		for (int i = 0; i < changeCounts.length; i++) {
 			SalesbackGoods salesbackGoods = new SalesbackGoods();
-			Storagecheck storagecheck = new Storagecheck();
+			TbStoragecheck storagecheck = new TbStoragecheck();
 			storagecheck = storagecheckService.selectByKey(Integer
 					.parseInt(storageIds[i]));
 			salesbackGoods.setSalesbackSerialNumber(salesbackSerialNumber);
@@ -169,12 +169,12 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 					.parseInt(changeCounts[i])) {
 				storagecheck.setStorageRateCurrent(0);
 				storagecheck.setEndtime(new java.util.Date());
-				storagecheckService.updateStoragecheck(storagecheck);
+				storagecheckService.updateTbStoragecheck(storagecheck);
 			} else {
 				storagecheck.setStorageRateCurrent(storagecheck
 						.getStorageRateCurrent()
 						- Integer.parseInt(changeCounts[i]));
-				storagecheckService.updateStoragecheck(storagecheck);
+				storagecheckService.updateTbStoragecheck(storagecheck);
 			}
 			salesbackGoodsService.insert(salesbackGoods);
 		}
@@ -244,7 +244,7 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 			if (count != 0) {
 				salesbackGoodsList.get(i).setGoodsAmount(
 						Integer.parseInt(goodsAmounts[i]));
-				Storagecheck storagecheck = new Storagecheck();
+				TbStoragecheck storagecheck = new TbStoragecheck();
 				storagecheck = storagecheckService.selectByKey(Integer
 						.parseInt(storageIds[i]));
 				if (storagecheck.getStorageRateCurrent() == count) {
@@ -257,7 +257,7 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 							.getStorageRateCurrent() + count);
 				}
 				salesbackGoodsService.update(salesbackGoodsList.get(i));
-				storagecheckService.updateStoragecheck(storagecheck);
+				storagecheckService.updateTbStoragecheck(storagecheck);
 			}
 		}
 		salesback.setSalesbackReason(salesbackReason);
@@ -274,19 +274,19 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 		List<SalesbackGoods> salesbackGoodsList = salesbackGoodsService
 				.selectByExample(example);
 		for (SalesbackGoods salesbackGoods : salesbackGoodsList) {
-			Storagecheck storagecheck = new Storagecheck();
+			TbStoragecheck storagecheck = new TbStoragecheck();
 			storagecheck = storagecheckService.selectByKey(salesbackGoods
 					.getStorageId());
 			if (storagecheck.getEndtime() != null) {
 				storagecheck.setEndtime(null);
 				storagecheck.setStorageRateCurrent(salesbackGoods
 						.getGoodsAmount());
-				storagecheckService.updateStoragecheck(storagecheck);
+				storagecheckService.updateTbStoragecheck(storagecheck);
 			} else {
 				storagecheck.setStorageRateCurrent(storagecheck
 						.getStorageRateCurrent()
 						+ salesbackGoods.getGoodsAmount());
-				storagecheckService.updateStoragecheck(storagecheck);
+				storagecheckService.updateTbStoragecheck(storagecheck);
 			}
 			salesbackGoodsService.deleteByPrimaryKey(salesbackGoods
 					.getSalesbackGoodsId());

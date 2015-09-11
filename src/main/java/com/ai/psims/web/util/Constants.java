@@ -54,7 +54,7 @@ public class Constants {
 			public static final String GOODSLITARRIVAL01 = "商品部分到货";
 		}
 
-		// 入库商品状态
+		// 入库商品状态 00(String), 30(String), 31(String), 35(String)
 		public static class ImportGoodsStatus {
 			public static final String CANSALE = "Y";// 可售
 			public static final String NOTSALE = "N";// 不可售
