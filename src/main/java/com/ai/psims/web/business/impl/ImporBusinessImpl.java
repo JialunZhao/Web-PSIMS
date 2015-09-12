@@ -371,17 +371,16 @@ public class ImporBusinessImpl implements IImporBusiness {
 			storagecheck.setProviderName(tbGoods.getProviderName());
 			storagecheck.setStorageRateTotal(importCount);
 			storagecheck.setStorageRateCurrent(importCount);
-			storagecheck
-					.setGoodsProductionDate(Date.valueOf(goodsArray[2 + j]));
-			storagecheck
-					.setGoodsExpirationDate(Date.valueOf(goodsArray[3 + j]));
+			storagecheck.setGoodsProductionDate(Date.valueOf(goodsArray[2 + j]));
+			storagecheck.setGoodsExpirationDate(Date.valueOf(goodsArray[3 + j]));
 			storagecheck.setGoodsShelfLife(tbGoods.getGoodsShelfLife());
 			storagecheck.setGoodsPrice(tbGoods.getGoodsPrice());
 			storagecheck.setGoodsStatus(Constants.ImportGoodsStatus.CANSALE);
-			storagecheck.setImportSerialNumber(importGoods
-					.getImportSerialNumber());
+			storagecheck.setImportSerialNumber(importGoods.getImportSerialNumber());
 			storagecheck.setCreatetime(new java.util.Date());
 			storagecheck.setImportGoodsUnit(tbGoods.getGoodsUnit());
+			storagecheck.setGoodsUnit(tbGoods.getGoodsUnit());
+			storagecheck.setGoodsType(tbGoods.getGoodsType());
 			storagecheck.setStorageWarning(tbGoods.getStorageWarning());
 			storagecheck.setShelfLifeWarning(tbGoods.getShelfLifeWarning());
 			storagecheckService.insert(storagecheck);

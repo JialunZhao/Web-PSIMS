@@ -157,7 +157,7 @@ public class SalesbackBusinessImpl implements ISalesbackBusiness {
 			salesbackGoods.setGoodsName(storagecheck.getGoodsName());
 			salesbackGoods.setGoodsType(Constants.SalesStatus.DOWNORDER);
 			salesbackGoods.setGoodsAmount(Integer.parseInt(changeCounts[i]));
-			salesbackGoods.setGoodsUnit(storagecheck.getImportGoodsUnit());
+			salesbackGoods.setGoodsUnit(storagecheck.getGoodsUnit());
 			salesbackGoods.setGoodsProduction(storagecheck
 					.getGoodsProductionDate());
 			salesbackGoods.setGoodsExpiration(storagecheck
