@@ -22,6 +22,7 @@ import com.ai.psims.web.model.TbImportGoodsExample;
 import com.ai.psims.web.model.TbImportGoodsExample.Criteria;
 import com.ai.psims.web.model.TbProvider;
 import com.ai.psims.web.model.TbStoragecheck;
+import com.ai.psims.web.model.TbStorehouse;
 import com.ai.psims.web.model.TbSystemParameter;
 import com.ai.psims.web.model.UpdateImportDemo;
 import com.ai.psims.web.service.IGoodsService;
@@ -29,6 +30,7 @@ import com.ai.psims.web.service.IImportGoodsService;
 import com.ai.psims.web.service.IImportService;
 import com.ai.psims.web.service.IProviderService;
 import com.ai.psims.web.service.IStoragecheckService;
+import com.ai.psims.web.service.IStorehouseService;
 import com.ai.psims.web.service.ISystemParameterService;
 import com.ai.psims.web.service.ISystemParameterServiceLog;
 import com.ai.psims.web.util.Constants;
@@ -45,6 +47,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 	private IGoodsService goodsService;
 	@Resource(name = "providerServiceImpl")
 	private IProviderService providerService;
+	@Resource(name = "storehouseServiceImpl")
+	private IStorehouseService storehouseService;
 
 	@Resource(name = "systemParameterServiceImpl")
 	private ISystemParameterService systemParameterService;
@@ -349,6 +353,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 	@Override
 	public String goodsImport(String goodList, String importSerialNumber,
 			String storeName, String storeId) {
+		TbStorehouse storehouse=new TbStorehouse();
+		storehouse=storehouseService.selectByPrimaryKey(Integer.parseInt(storeId));
 		String[] goodsArray = goodList.split(",");
 		int n = (goodsArray.length) / 5;
 		int importCount;
@@ -383,8 +389,9 @@ public class ImporBusinessImpl implements IImporBusiness {
 			storagecheck.setGoodsType(tbGoods.getGoodsType());
 			storagecheck.setStorageWarning(tbGoods.getStorageWarning());
 			storagecheck.setShelfLifeWarning(tbGoods.getShelfLifeWarning());
-			storagecheck.setStorehouseId(Integer.parseInt(storeId));
+			storagecheck.setStorehouseId(storehouse.getStorehouseId());
 			storagecheck.setStorehouseName(storeName);
+			storagecheck.setStorehouseCode(storehouse.getStorehouseCode());
 			storagecheckService.insert(storagecheck);
 
 			importGoods.setResImportGoodsAmount(importGoods

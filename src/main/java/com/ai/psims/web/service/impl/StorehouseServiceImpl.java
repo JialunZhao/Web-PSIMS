@@ -27,8 +27,6 @@ public class StorehouseServiceImpl implements IStorehouseService {
 	private static final Logger logger = LoggerFactory
 			.getLogger(StorehouseServiceImpl.class);
 
-
-
 	// /////////////////////////////////////////////////
 
 	@Override
@@ -38,10 +36,12 @@ public class StorehouseServiceImpl implements IStorehouseService {
 	}
 
 	@Override
-	public List<TbStorehouse> queryStorehouse(TbStorehouseExample tbStorehouseExample) {
+	public List<TbStorehouse> queryStorehouse(
+			TbStorehouseExample tbStorehouseExample) {
 		logger.info("queryStorehouse");
 		List<TbStorehouse> storehousesList = null;
-		storehousesList = tbStorehouseMapper.selectByExample(tbStorehouseExample);
+		storehousesList = tbStorehouseMapper
+				.selectByExample(tbStorehouseExample);
 		return storehousesList;
 	}
 
@@ -100,21 +100,36 @@ public class StorehouseServiceImpl implements IStorehouseService {
 		TbStorehouseLog tbStorehouseLog = new TbStorehouseLog();
 		tbStorehouseLog.setLogDatetime(new Date());
 		tbStorehouseLog.setArea(tbStorehousebackup.get(0).getArea());
-		tbStorehouseLog.setStorehouseId(tbStorehousebackup.get(0).getStorehouseId());
-		tbStorehouseLog.setStorehouseName(tbStorehousebackup.get(0).getStorehouseName());
-		tbStorehouseLog.setStorehouseCode(tbStorehousebackup.get(0).getStorehouseCode());
+		tbStorehouseLog.setStorehouseId(tbStorehousebackup.get(0)
+				.getStorehouseId());
+		tbStorehouseLog.setStorehouseName(tbStorehousebackup.get(0)
+				.getStorehouseName());
+		tbStorehouseLog.setStorehouseCode(tbStorehousebackup.get(0)
+				.getStorehouseCode());
 		tbStorehouseLog.setType(tbStorehousebackup.get(0).getType());
-		tbStorehouseLog.setContactAddress(tbStorehousebackup.get(0).getContactAddress());
-		tbStorehouseLog.setContactTel(tbStorehousebackup.get(0).getContactTel());
-		tbStorehouseLog.setContactFax(tbStorehousebackup.get(0).getContactFax());
-		tbStorehouseLog.setContactName(tbStorehousebackup.get(0).getContactName());
-		tbStorehouseLog.setContactEmail(tbStorehousebackup.get(0).getContactEmail());
-		tbStorehouseLog.setCreatetime(tbStorehousebackup.get(0).getCreatetime());
+		tbStorehouseLog.setContactAddress(tbStorehousebackup.get(0)
+				.getContactAddress());
+		tbStorehouseLog
+				.setContactTel(tbStorehousebackup.get(0).getContactTel());
+		tbStorehouseLog
+				.setContactFax(tbStorehousebackup.get(0).getContactFax());
+		tbStorehouseLog.setContactName(tbStorehousebackup.get(0)
+				.getContactName());
+		tbStorehouseLog.setContactEmail(tbStorehousebackup.get(0)
+				.getContactEmail());
+		tbStorehouseLog
+				.setCreatetime(tbStorehousebackup.get(0).getCreatetime());
 		tbStorehouseLog.setEndtime(tbStorehousebackup.get(0).getEndtime());
-		tbStorehouseLog.setModifytime(tbStorehousebackup.get(0).getModifytime());
+		tbStorehouseLog
+				.setModifytime(tbStorehousebackup.get(0).getModifytime());
 		tbStorehouseLog.setStatus(tbStorehousebackup.get(0).getStatus());
 		tbStorehouseLog.setRemark(tbStorehousebackup.get(0).getRemark());
 		return tbStorehouseLogMapper.insert(tbStorehouseLog);
+	}
+
+	@Override
+	public TbStorehouse selectByPrimaryKey(Integer storehouseId) {
+		return tbStorehouseMapper.selectByPrimaryKey(storehouseId);
 	}
 
 }

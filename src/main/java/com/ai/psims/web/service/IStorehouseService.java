@@ -17,4 +17,6 @@ public interface IStorehouseService {
 
 	public List<TbStorehouse> queryStorehouse(
 			TbStorehouseExample storehouseQuery);
+	
+	public TbStorehouse selectByPrimaryKey(Integer storehouseId);
 }
