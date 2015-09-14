@@ -108,8 +108,7 @@ h1 {
 			<tr>
 				<td>商品编号</td>
 				<td colspan="4">商品全名</td>
-				<td>商品类型</td>
-				<td>单位</td>
+				<td colspan="2">单位</td>
 				<td>数量</td>
 				<td>单价</td>
 				<td>金额</td>
@@ -120,8 +119,7 @@ h1 {
 				<tr>
 					<td>${salesGoodsList.goodsId}</td>
 					<td colspan="4">${salesGoodsList.goodsName}</td>
-					<td>${salesGoodsList.salesGoodsType}</td>
-					<td>${salesGoodsList.salesGoodsUnit}</td>
+					<td colspan="2">${salesGoodsList.salesGoodsUnit}</td>
 					<td>${salesGoodsList.salesGoodsAmount}</td>
 					<td>${salesGoodsList.salesGoodsPrice}</td>
 					<td>${salesGoodsList.salesGoodsTotalPrice}</td>
