@@ -383,6 +383,8 @@ public class ImporBusinessImpl implements IImporBusiness {
 			storagecheck.setGoodsType(tbGoods.getGoodsType());
 			storagecheck.setStorageWarning(tbGoods.getStorageWarning());
 			storagecheck.setShelfLifeWarning(tbGoods.getShelfLifeWarning());
+			storagecheck.setStorehouseId(Integer.parseInt(storeId));
+			storagecheck.setStorehouseName(storeName);
 			storagecheckService.insert(storagecheck);
 
 			importGoods.setResImportGoodsAmount(importGoods
