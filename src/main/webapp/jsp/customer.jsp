@@ -405,7 +405,7 @@
 								$('[data-toggle="tooltip"]').tooltip()
 							})
 						});
-	</script>
+	</script> 
 
 
 

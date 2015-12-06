@@ -82,47 +82,47 @@ h1 {
 	<div class="table-responsive">
 		<table class="table table-bordered" id="saleTab">
 			<tr>
-				<td class="aa">公司电话</td>
-				<td colspan="2">4000305919</td>
-				<td>公司地址</td>
-				<td colspan="2">北京市朝阳区王四营北路华能电厂正对面百富公寓左侧23号配房</td>
-				<td>单据编号</td>
-				<td colspan="3">${salesSerialNumber}</td>
+				<td colspan="2" style='width:10%;'class="aa">公司电话</td>
+				<td colspan="2" style='width:10%;'>4000305919</td>
+				<td colspan="2" style='width:10%;'>公司地址</td>
+				<td colspan="8" style='width:40%;'>朝阳区王四营北路华能电厂正对面百富公寓左侧23号配房</td>
+				<td colspan="2" style='width:10%;'>单据编号</td>
+				<td colspan="4" style='width:20%;'>${salesSerialNumber}</td>
 			</tr>
 			<tr>
-				<td>客户</td>
-				<td colspan="4">${customer.customerName}</td>
-				<td>客户地址</td>
-				<td colspan="4">${customer.contactAddr}</td>
+				<td colspan="2" style='width:10%;'>客户</td>
+				<td colspan="8" style='width:40%;'>${customer.customerName}</td>
+				<td colspan="2" style='width:10%;'>客户地址</td>
+				<td colspan="8" style='width:40%;'>${customer.contactAddr}</td>
 			</tr>
 			<tr>
-				<td>客户电话</td>
-				<td colspan="2">${customer.contactTel}</td>
-				<td>业务员</td>
-				<td>${customer.employeeName}</td>
-				<td>经手人</td>
-				<td>${tbEmployee.employeeName}</td>
-				<td>结账方式</td>
-				<td colspan="2">${customer.checkoutName}</td>
+				<td colspan="2" style='width:10%;'>客户电话</td>
+				<td colspan="4" style='width:20%;'>${customer.contactTel}</td>
+				<td colspan="2" style='width:10%;'>业务员</td>
+				<td colspan="4" style='width:20%;'>${customer.employeeName}</td>
+				<td colspan="2" style='width:10%;'>经手人</td>
+				<td colspan="2" style='width:10%;'>${tbEmployee.employeeName}</td>
+				<td colspan="2" style='width:10%;'>结账方式</td>
+				<td colspan="2" style='width:10%;'>${customer.checkoutName}</td>
 			</tr>
 			<tr>
-				<td>商品编号</td>
-				<td colspan="4">商品全名</td>
-				<td colspan="2">单位</td>
-				<td>数量</td>
-				<td>单价</td>
-				<td>金额</td>
+				<td colspan="2" style='width:10%;'>商品编号</td>
+				<td colspan="10" style='width:50%;'>商品全名</td>
+				<td colspan="3" style='width:15%;'>单位</td>
+				<td colspan="1" style='width:5%;'>数量</td>
+				<td colspan="2" style='width:10%;'>单价</td>
+				<td colspan="2" style='width:10%;'>金额</td>
 			</tr>
 			<c:set value="0" var="sum" />
 			<c:set value="0" var="row" />
 			<c:forEach var="salesGoodsList" items="${salesGoodsList}" varStatus="status">
 				<tr>
-					<td>${salesGoodsList.goodsId}</td>
-					<td colspan="4">${salesGoodsList.goodsName}</td>
-					<td colspan="2">${salesGoodsList.salesGoodsUnit}</td>
-					<td>${salesGoodsList.salesGoodsAmount}</td>
-					<td>${salesGoodsList.salesGoodsPrice}</td>
-					<td>${salesGoodsList.salesGoodsTotalPrice}</td>
+					<td colspan="2" style='width:10%;'>${salesGoodsList.goodsId}</td>
+					<td colspan="10" style='width:50%;'>${salesGoodsList.goodsName}</td>
+					<td colspan="3" style='width:15%;'>${salesGoodsList.salesGoodsUnit}</td>
+					<td colspan="1" style='width:5%;'>${salesGoodsList.salesGoodsAmount}</td>
+					<td colspan="2" style='width:10%;'>${salesGoodsList.salesGoodsPrice}</td>
+					<td colspan="2" style='width:10%;'>${salesGoodsList.salesGoodsTotalPrice}</td>
 				</tr>
 				<c:set value="${sum + salesGoodsList.salesGoodsTotalPrice}" var="sum" />
 				<c:set value="${row + 1}" var="row" />
@@ -130,50 +130,46 @@ h1 {
 			<c:forEach var="row" begin="${row}" end="7">
 				<c:set value="${row + 1}" var="row" />
 				<tr>
-					<td>&nbsp;</td>
-					<td colspan="4"></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td colspan="2" style='width:10%;'>&nbsp;</td>
+					<td colspan="10" style='width:50%;'></td>
+					<td colspan="3" style='width:15%;'></td>
+					<td colspan="1" style='width:5%;'></td>
+					<td colspan="2" style='width:10%;'></td>
+					<td colspan="2" style='width:10%;'></td>
 				</tr>
 			</c:forEach>
 			<tr>
-				<td>总计</td>
-				<td colspan="4"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>${sum}</td>
+				<td colspan="2" style='width:10%;'>销售备注</td>
+				<td colspan="10" style='width:50%;'>${sales.salesRemark}</td>
+				<td colspan="4" style='width:20%;'>总计</td>
+				<td colspan="4" style='width:20%;'>${sum}</td>
 			</tr>
 			<tr>
-				<td>备注</td>
-				<td colspan="6"></td>
-				<td colspan="1">金额大写</td>
-				<td colspan="2"><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
+				<td colspan="2" style='width:10%;'>其他备注</td>
+				<td colspan="10" style='width:50%;'></td>
+				<td colspan="2" style='width:10%;'>金额大写</td>
+				<td colspan="6" style='width:30%;'><%=NumToFont.number2CNMontrayUnit(pageContext.getAttribute(
 					"sum").toString())%></td>
 			</tr>
 			<tr>
-				<td>收货人</td>
-				<td colspan="1" style="width: 75px"></td>
-				<td>送货人</td>
-				<td colspan="1"></td>
-				<td>发车时间</td>
-				<td colspan="2"></td>
-				<td>还车时间</td>
-				<td colspan="2"></td>
+				<td colspan="2" style='width:10%;'>收货人</td>
+				<td colspan="4" style='width:20%;'></td>
+				<td colspan="2" style='width:10%;'>送货人</td>
+				<td colspan="4" style='width:20%;'></td>
+				<td colspan="2" style='width:10%;'>发车时间</td>
+				<td colspan="2" style='width:10%;'></td>
+				<td colspan="2" style='width:10%;'>还车时间</td>
+				<td colspan="2" style='width:10%;'></td>
 			</tr>
 			<tr>
-				<td>库管</td>
-				<td colspan="1" style="width: 75px"></td>
-				<td>车牌号</td>
-				<td colspan="1"></td>
-				<td>起始油表数</td>
-				<td colspan="2"></td>
-				<td>返回油表数</td>
-				<td colspan="2"></td>
+				<td colspan="2" style='width:10%;'>库管</td>
+				<td colspan="4" style='width:20%;'></td>
+				<td colspan="2" style='width:10%;'>车牌号</td>
+				<td colspan="4" style='width:20%;'></td>
+				<td colspan="2" style='width:10%;'>起始油表数</td>
+				<td colspan="2" style='width:10%;'></td>
+				<td colspan="2" style='width:10%;'>返回油表数</td>
+				<td colspan="2" style='width:10%;'></td>
 			</tr>
 		</table>
 	</div>
